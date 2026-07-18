@@ -57,6 +57,7 @@ function genGameState(rng: Rng, activeKind?: ActiveKind): GameStateT {
     },
     variables: { support: num(rng), ...numberRecord(rng, "var") },
     flags: boolRecord(rng, "flag"),
+    journal: list(rng, 0, 4, () => ({ day: rng.int(1, 5000), text: `entry ${rng.int(0, 999)}` })),
     modifiers: numberRecord(rng, "mod"),
     heroes: list(rng, 0, 3, () => genHeroState(rng)),
     personnel: {

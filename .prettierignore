@@ -2,3 +2,8 @@ dist
 coverage
 node_modules
 package-lock.json
+
+# Verbatim Fable-authored spec text — must stay byte-exact (task 1.1 request).
+# Prettier's markdown formatter misparses the multi-line inline-code span in
+# §5.3 as a list item and corrupts the "+" inside it; exclude rather than risk that.
+docs/specs/economy-and-roster.md

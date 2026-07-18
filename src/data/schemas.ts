@@ -296,7 +296,16 @@ export const GameState = z.object({
   }),
   activeMission: z
     .union([
-      z.object({ kind: z.literal("narrative"), mission: Id, script: Id, node: Id, squad: z.array(Id) }),
+      // `mission` optional: queue-fired incidents have no MissionDef wrapper.
+      // `gatedSeen` powers the debrief hint (narrative-engine spec §1, §6).
+      z.object({
+        kind: z.literal("narrative"),
+        mission: Id.optional(),
+        script: Id,
+        node: Id,
+        squad: z.array(Id),
+        gatedSeen: z.boolean(),
+      }),
       z.object({ kind: z.literal("tactical"), mission: Id, squad: z.array(Id), battle: BattleState }),
     ])
     .nullable(),

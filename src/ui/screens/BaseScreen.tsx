@@ -14,10 +14,12 @@ export function BaseScreen({
   state,
   dispatch,
   onOpenMenu,
+  onNavigate,
 }: {
   state: GameStateT;
   dispatch: (action: Action) => void;
   onOpenMenu: () => void;
+  onNavigate: (screen: "tech" | "roster" | "worldgate") => void;
 }) {
   const missionActive = state.activeMission !== null;
 
@@ -65,6 +67,19 @@ export function BaseScreen({
             A mission is in progress. Resolve it before advancing the day.
           </p>
         )}
+
+        <nav style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.5rem" }}>
+          <button type="button" style={buttonStyle("ghost")} onClick={() => onNavigate("worldgate")}>
+            🌐 Worldgate
+          </button>
+          <button type="button" style={buttonStyle("ghost")} onClick={() => onNavigate("roster")}>
+            👥 Roster
+          </button>
+          <button type="button" style={buttonStyle("ghost")} onClick={() => onNavigate("tech")}>
+            🔬 Research
+          </button>
+        </nav>
+
         <PersonnelPanel state={state} dispatch={dispatch} />
         <Journal state={state} />
       </main>

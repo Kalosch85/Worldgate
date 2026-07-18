@@ -73,6 +73,40 @@ describe("App shell", () => {
     expect(container!.textContent).toContain("0 idle / 20");
   });
 
+  it("opens the roster screen and shows a hero card with skills", () => {
+    render();
+    click("New Campaign");
+    click("Roster");
+    expect(container!.textContent).toContain("Mercer");
+    expect(container!.textContent).toContain("Combat");
+    expect(container!.textContent).toContain("Fit");
+    click("Base"); // back to base
+    expect(container!.textContent).toContain("Personnel");
+  });
+
+  it("opens the research screen and starts research", () => {
+    render();
+    click("New Campaign");
+    click("Research");
+    expect(container!.textContent).toContain("Gate Stabilizer");
+    click("Start research");
+    // Current-research panel now reflects the in-progress tech.
+    expect(container!.textContent).toContain("/ 20 RP");
+  });
+
+  it("launches a narrative mission from the worldgate and returns to base", () => {
+    render();
+    click("New Campaign");
+    click("Worldgate");
+    expect(container!.textContent).toContain("Survey: Address 04");
+    // m_survey needs 2 operatives; select both heroes, then launch.
+    click("Mercer");
+    click("Okafor");
+    click("Launch mission");
+    // Back on the base screen with a mission in progress.
+    expect(container!.textContent).toContain("A mission is in progress");
+  });
+
   it("persists the campaign to localStorage and restores it on reload", () => {
     render();
     click("New Campaign");

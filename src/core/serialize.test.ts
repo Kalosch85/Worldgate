@@ -103,13 +103,17 @@ function genHeroState(rng: Rng): GameStateT["heroes"][number] {
 function genActiveMission(rng: Rng, kind: ActiveKind): GameStateT["activeMission"] {
   if (kind === "none") return null;
   if (kind === "narrative") {
-    return {
+    // `mission` is optional (queue-fired incidents omit it); `gatedSeen`
+    // powers the debrief hint (narrative-engine spec §1). Cover both variants.
+    const narrative: NonNullable<GameStateT["activeMission"]> & { kind: "narrative" } = {
       kind: "narrative",
-      mission: id(rng, "m"),
       script: id(rng, "ev"),
       node: id(rng, "n"),
       squad: list(rng, 1, 4, () => id(rng, "h")),
+      gatedSeen: bool(rng),
     };
+    if (bool(rng)) narrative.mission = id(rng, "m");
+    return narrative;
   }
   return {
     kind: "tactical",

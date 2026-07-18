@@ -8,6 +8,7 @@
  */
 import type { ContentBundleT, GameStateT } from "../data/schemas.js";
 import { assignPersonnel, endDay, startResearch, type PersonnelAssignments } from "./economy.js";
+import { launchMission } from "./missions.js";
 import type { Rng } from "./rng.js";
 
 /**
@@ -21,14 +22,17 @@ export interface ReducerCtx {
 }
 
 /**
- * The action union. `noop` is the task-0.3 placeholder; the other three are
- * Phase 1's economy actions (docs/specs/economy-and-roster.md §3).
+ * The action union. `noop` is the task-0.3 placeholder; the economy trio are
+ * Phase 1's actions (docs/specs/economy-and-roster.md §3); `launchMission` is
+ * the task-2.4 mission hand-off (docs/specs/narrative-engine.md §2–§3).
+ * `chooseEventOption` (spec §2) arrives with the Phase 3 interpreter.
  */
 export type Action =
   | { type: "noop" }
   | { type: "endDay" }
   | { type: "startResearch"; tech: string }
-  | { type: "assignPersonnel"; assignments: PersonnelAssignments };
+  | { type: "assignPersonnel"; assignments: PersonnelAssignments }
+  | { type: "launchMission"; mission: string; squad: string[] };
 
 /**
  * Pure reducer. Returns the next GameState; never mutates `state` in place.
@@ -46,6 +50,8 @@ export function apply(state: GameStateT, action: Action, ctx: ReducerCtx): GameS
       return startResearch(state, ctx.content, action.tech);
     case "assignPersonnel":
       return assignPersonnel(state, action.assignments);
+    case "launchMission":
+      return launchMission(state, ctx.content, action.mission, action.squad);
     default: {
       const _exhaustive: never = action;
       throw new Error(`apply: unhandled action ${JSON.stringify(_exhaustive)}`);

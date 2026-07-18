@@ -6,7 +6,7 @@
  * The UI implements no rules — it dispatches actions and renders state
  * (ARCHITECTURE §1). RuleError from the reducer is surfaced as a banner.
  */
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState, type ReactNode } from "react";
 import { newCampaign } from "../core/campaign.js";
 import { RuleError } from "../core/errors.js";
 import { apply, type Action } from "../core/reducer.js";
@@ -16,9 +16,12 @@ import type { GameStateT } from "../data/schemas.js";
 import { exportSave, importSave, loadFromStorage, saveToStorage } from "./persistence.js";
 import { BaseScreen } from "./screens/BaseScreen.js";
 import { MainMenu } from "./screens/MainMenu.js";
+import { RosterScreen } from "./screens/RosterScreen.js";
+import { TechScreen } from "./screens/TechScreen.js";
+import { WorldgateScreen } from "./screens/WorldgateScreen.js";
 import { buttonStyle, theme } from "./theme.js";
 
-type Screen = "menu" | "base";
+type Screen = "menu" | "base" | "tech" | "roster" | "worldgate";
 
 /** A random 32-bit campaign seed. UI layer — free to use Math.random (§1). */
 function newSeed(): number {
@@ -82,13 +85,40 @@ export function App() {
     return null;
   };
 
-  if (screen === "base" && state) {
-    return (
+  if (state && screen !== "menu") {
+    const withBanner = (node: ReactNode) => (
       <>
-        <BaseScreen state={state} dispatch={dispatch} onOpenMenu={() => setScreen("menu")} />
+        {node}
         {message && <Banner text={message} onDismiss={() => setMessage(null)} />}
       </>
     );
+    switch (screen) {
+      case "base":
+        return withBanner(
+          <BaseScreen
+            state={state}
+            dispatch={dispatch}
+            onOpenMenu={() => setScreen("menu")}
+            onNavigate={setScreen}
+          />,
+        );
+      case "tech":
+        return withBanner(
+          <TechScreen state={state} content={content} dispatch={dispatch} onBack={() => setScreen("base")} />,
+        );
+      case "roster":
+        return withBanner(<RosterScreen state={state} content={content} onBack={() => setScreen("base")} />);
+      case "worldgate":
+        return withBanner(
+          <WorldgateScreen
+            state={state}
+            content={content}
+            dispatch={dispatch}
+            onBack={() => setScreen("base")}
+            onLaunched={() => setScreen("base")}
+          />,
+        );
+    }
   }
 
   return (

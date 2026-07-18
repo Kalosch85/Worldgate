@@ -74,6 +74,12 @@ export function assignPersonnel(state: GameStateT, assignments: PersonnelAssignm
 
 /** endDay — exact step order per spec §5. */
 export function endDay(state: GameStateT, ctx: ReducerCtx): GameStateT {
+  // A launched mission must be resolved before time advances
+  // (narrative-engine spec §3).
+  if (state.activeMission !== null) {
+    throw new RuleError("mission_active", "Resolve the active mission before ending the day.");
+  }
+
   let draft = structuredClone(state);
 
   // 1. Income.

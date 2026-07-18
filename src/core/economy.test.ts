@@ -211,6 +211,31 @@ describe("assignPersonnel", () => {
   });
 });
 
+describe("endDay guard (narrative-engine spec §3)", () => {
+  it("throws RuleError('mission_active') while a mission is in progress", () => {
+    const state: GameStateT = {
+      ...newCampaign(1),
+      activeMission: {
+        kind: "narrative",
+        mission: "m_survey",
+        script: "ev_first_contact",
+        node: "n_intro",
+        squad: ["h_mercer", "h_okafor"],
+        gatedSeen: false,
+      },
+    };
+    const err = (() => {
+      try {
+        endDay(state, ctx());
+      } catch (e) {
+        return e;
+      }
+    })();
+    expect(err).toBeInstanceOf(RuleError);
+    expect((err as RuleError).code).toBe("mission_active");
+  });
+});
+
 describe("endDay recovery (step 4)", () => {
   it("reduces fatigue by 5 + 2*infirmary + 5*healRate, floored at 0", () => {
     const state = newCampaign(1);

@@ -94,7 +94,7 @@ describe("App shell", () => {
     expect(container!.textContent).toContain("/ 20 RP");
   });
 
-  it("launches a narrative mission from the worldgate and returns to base", () => {
+  it("launches a narrative mission and plays it through to completion", () => {
     render();
     click("New Campaign");
     click("Worldgate");
@@ -103,8 +103,18 @@ describe("App shell", () => {
     click("Mercer");
     click("Okafor");
     click("Launch mission");
-    // Back on the base screen with a mission in progress.
-    expect(container!.textContent).toContain("A mission is in progress");
+    // The event screen takes over with the intro node's body text.
+    expect(container!.textContent).toContain("rival bloc's survey team is stranded");
+    // Choose the always-eligible help option, then return home to end.
+    click("Offer them passage");
+    expect(container!.textContent).toContain("crossing is tense");
+    click("Return home");
+    // Completion panel shows the outcome and a return control.
+    expect(container!.textContent).toContain("Contact established");
+    click("Return to base");
+    // Back on the base screen; the mission is resolved.
+    expect(container!.textContent).toContain("Personnel");
+    expect(container!.textContent).not.toContain("A mission is in progress");
   });
 
   it("persists the campaign to localStorage and restores it on reload", () => {

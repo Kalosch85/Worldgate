@@ -19,13 +19,11 @@ export function WorldgateScreen({
   content,
   dispatch,
   onBack,
-  onLaunched,
 }: {
   state: GameStateT;
   content: ContentBundleT;
   dispatch: (action: Action) => void;
   onBack: () => void;
-  onLaunched: () => void;
 }) {
   const [squad, setSquad] = useState<string[]>([]);
 
@@ -38,10 +36,9 @@ export function WorldgateScreen({
     .filter((m): m is ContentBundleT["missions"][number] => m !== undefined);
 
   const launch = (missionId: string) => {
-    // Pre-validated by the disabled state; dispatch runs the reducer's guard,
-    // then we hand back to the base screen where the mission awaits resolution.
+    // Pre-validated by the disabled state; dispatch runs the reducer's guard and
+    // (on success) App routes to the event screen where the mission is resolved.
     dispatch({ type: "launchMission", mission: missionId, squad });
-    onLaunched();
   };
 
   return (

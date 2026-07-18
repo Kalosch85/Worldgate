@@ -9,6 +9,7 @@ import type { ReducerCtx } from "./reducer.js";
 import { applyEffects } from "./effects.js";
 import { RuleError } from "./errors.js";
 import { getModifier } from "./modifiers.js";
+import { fireDueIncident } from "./narrative.js";
 
 /** §7: materials cost of a tactical mission launch. Narrative missions are free.
  * The constant only — `launchMission` itself lands in a later phase. */
@@ -143,9 +144,10 @@ export function endDay(state: GameStateT, ctx: ReducerCtx): GameStateT {
   // 5. Advance.
   draft.campaign.day += 1;
 
-  // 6. Queued events: NOT consumed in Phase 1 — firing semantics arrive with
-  // the Phase 3 spec.
-  // TODO(phase3): fire missions.queuedEvents whose fireOnDay <= draft.campaign.day.
+  // 6. Queued events (narrative-engine spec §7): fire at most one due incident,
+  // opening it as a narrative mission the player must resolve before further
+  // play (guaranteed by the §3 endDay guard above).
+  draft = fireDueIncident(draft, ctx.content);
 
   return draft;
 }

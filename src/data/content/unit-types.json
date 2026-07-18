@@ -1,0 +1,11 @@
+[
+  {
+    "id": "ut_raider",
+    "name": "Raider",
+    "maxHp": 4,
+    "aim": 65,
+    "mobility": 4,
+    "damage": { "min": 1, "max": 2 },
+    "abilities": ["ab_shot"]
+  }
+]

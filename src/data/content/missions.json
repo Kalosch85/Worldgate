@@ -1,0 +1,24 @@
+[
+  {
+    "id": "m_relay",
+    "name": "Secure the Relay",
+    "description": "Raiders hold a working relay station. Take the consoles intact.",
+    "availability": [ { "type": "techResearched", "tech": "t_gate_stabilizer" } ],
+    "squad": { "min": 2, "max": 4 },
+    "payload": { "kind": "tactical", "map": "map_relay" },
+    "victoryEffects": [
+      { "type": "resource", "resource": "intel", "delta": 5 },
+      { "type": "xp", "scope": "squad", "amount": 15 },
+      { "type": "fatigue", "scope": "squad", "delta": 20 }
+    ],
+    "defeatEffects": [ { "type": "variable", "variable": "support", "delta": -1 } ]
+  },
+  {
+    "id": "m_survey",
+    "name": "Survey: Address 04",
+    "description": "First crewed survey of a new address.",
+    "availability": [],
+    "squad": { "min": 2, "max": 3 },
+    "payload": { "kind": "narrative", "eventScript": "ev_first_contact" }
+  }
+]

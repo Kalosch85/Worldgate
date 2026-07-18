@@ -1,0 +1,12 @@
+node_modules/
+dist/
+coverage/
+*.local
+.DS_Store
+
+# Vite / editor caches
+.vite/
+*.tsbuildinfo
+
+# Logs
+npm-debug.log*

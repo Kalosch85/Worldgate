@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { GameStateT } from "../data/schemas.js";
+import type { ContentBundleT, GameStateT } from "../data/schemas.js";
 import { loadTestContent } from "../test/content.js";
 import { newCampaign } from "./campaign.js";
 import {
@@ -112,6 +112,76 @@ describe("startResearch", () => {
     expect(canStartResearch(state, CONTENT, "t_gate_stabilizer")).toBe(true);
     expect(canStartResearch(state, CONTENT, "t_field_medicine")).toBe(false);
     expect(canStartResearch(state, CONTENT, "t_nope")).toBe(false);
+  });
+});
+
+describe("prerequisite chains (task 1.3)", () => {
+  // A -> B -> C is a three-deep chain; D requires BOTH A and B (multi-prereq).
+  const CHAIN_TECHS: ContentBundleT["techs"] = [
+    { id: "t_a", name: "A", description: "root", cost: 10, prerequisites: [], effects: [] },
+    { id: "t_b", name: "B", description: "needs A", cost: 10, prerequisites: ["t_a"], effects: [] },
+    { id: "t_c", name: "C", description: "needs B", cost: 10, prerequisites: ["t_b"], effects: [] },
+    {
+      id: "t_d",
+      name: "D",
+      description: "needs A and B",
+      cost: 10,
+      prerequisites: ["t_a", "t_b"],
+      effects: [],
+    },
+  ];
+  const chain: ContentBundleT = { ...CONTENT, techs: CHAIN_TECHS };
+
+  function withCompleted(completed: string[]): GameStateT {
+    const state = newCampaign(1);
+    return { ...state, research: { ...state.research, completed } };
+  }
+
+  it("blocks a tech whose direct prerequisite is not completed (each chain depth)", () => {
+    const fresh = newCampaign(1);
+    expect(canStartResearch(fresh, chain, "t_a")).toBe(true); // no prereq
+    expect(canStartResearch(fresh, chain, "t_b")).toBe(false); // needs A
+    expect(canStartResearch(fresh, chain, "t_c")).toBe(false); // needs B
+    expect(() => startResearch(fresh, chain, "t_b")).toThrow(RuleError);
+    expect(() => startResearch(fresh, chain, "t_c")).toThrow(RuleError);
+  });
+
+  it("a completed deeper prereq does not skip an incomplete shallower one", () => {
+    // C's prereq is B; completing A alone must not unlock C.
+    const onlyA = withCompleted(["t_a"]);
+    expect(canStartResearch(onlyA, chain, "t_b")).toBe(true);
+    expect(canStartResearch(onlyA, chain, "t_c")).toBe(false);
+  });
+
+  it("unlocks each tech only once its immediate prerequisite is completed", () => {
+    expect(canStartResearch(withCompleted(["t_a"]), chain, "t_b")).toBe(true);
+    expect(canStartResearch(withCompleted(["t_a", "t_b"]), chain, "t_c")).toBe(true);
+  });
+
+  it("requires ALL prerequisites for a multi-prereq tech, not just one", () => {
+    expect(canStartResearch(withCompleted(["t_a"]), chain, "t_d")).toBe(false); // missing B
+    expect(canStartResearch(withCompleted(["t_b"]), chain, "t_d")).toBe(false); // missing A
+    expect(canStartResearch(withCompleted(["t_a", "t_b"]), chain, "t_d")).toBe(true);
+    expect(() => startResearch(withCompleted(["t_a"]), chain, "t_d")).toThrow(RuleError);
+  });
+
+  it("progresses a chain end to end via endDay, unlocking the next link each time", () => {
+    // research assignment 6/day, cost 10 -> each tech completes on its 2nd tick.
+    const chainCtx: ReducerCtx = { content: chain, rng: mulberry32(1) };
+    let s = startResearch(newCampaign(1), chain, "t_a");
+    s = endDay(s, chainCtx); // A: 6
+    s = endDay(s, chainCtx); // A: 12 >= 10 -> completed
+    expect(s.research.completed).toContain("t_a");
+    expect(s.research.current).toBeNull();
+
+    expect(canStartResearch(s, chain, "t_b")).toBe(true);
+    s = startResearch(s, chain, "t_b");
+    s = endDay(s, chainCtx);
+    s = endDay(s, chainCtx);
+    expect(s.research.completed).toContain("t_b");
+
+    expect(canStartResearch(s, chain, "t_c")).toBe(true);
+    expect(canStartResearch(s, chain, "t_d")).toBe(true); // both A and B now done
   });
 });
 

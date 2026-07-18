@@ -9,6 +9,7 @@
 import type { Effect, GameStateT } from "../data/schemas.js";
 import type { ReducerCtx } from "./reducer.js";
 import { getModifier } from "./modifiers.js";
+import { applyLevelUps } from "./roster.js";
 
 export function applyEffects(
   state: GameStateT,
@@ -58,9 +59,13 @@ function applyOne(
     }
     case "xp": {
       for (const heroId of squad ?? []) {
-        const heroState = state.heroes.find((h) => h.hero === heroId);
-        if (!heroState) continue;
-        heroState.xp += effect.amount;
+        const idx = state.heroes.findIndex((h) => h.hero === heroId);
+        if (idx < 0) continue;
+        const withXp = { ...state.heroes[idx]!, xp: state.heroes[idx]!.xp + effect.amount };
+        // XP can cross one or more level thresholds; roster applies the
+        // level-up skill bonuses (§7). No hero def -> XP still accrues.
+        const def = ctx.content.heroes.find((h) => h.id === heroId);
+        state.heroes[idx] = def ? applyLevelUps(withXp, def) : withXp;
       }
       return state;
     }

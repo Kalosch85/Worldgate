@@ -163,6 +163,7 @@ describe("levelUpSkill tie-break (§7)", () => {
       name: "T",
       archetypes: ["soldier"],
       skills,
+      abilities: ["ab_shot"],
     });
     // science and engineering both 5 (max) -> science wins (earlier in enum)
     expect(levelUpSkill(tied({ combat: 3, science: 5, engineering: 5, diplomacy: 1, resolve: 2 }))).toBe(

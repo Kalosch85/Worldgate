@@ -121,7 +121,7 @@ describe("launchMission — RuleError guards (§3)", () => {
   });
 });
 
-describe("launchMission — tactical placeholder (§3)", () => {
+describe("launchMission — tactical launch (§3)", () => {
   /** A campaign with m_relay (tactical) unlocked and both heroes fit. */
   function tacticalState(materials: number): GameStateT {
     const state = stateWith();
@@ -130,9 +130,45 @@ describe("launchMission — tactical placeholder (§3)", () => {
     return state;
   }
 
-  it("refuses a tactical launch with tactical_not_implemented when materials suffice", () => {
-    const err = launchError(tacticalState(50), "m_relay", ["h_mercer", "h_okafor"]);
-    expect(err.code).toBe("tactical_not_implemented");
+  it("opens a tactical battle and debits the materials cost", () => {
+    const next = launchMission(tacticalState(50), CONTENT, "m_relay", ["h_mercer", "h_okafor"]);
+    expect(next.resources.materials).toBe(45); // 50 − TACTICAL_LAUNCH_COST(5)
+    expect(next.activeMission?.kind).toBe("tactical");
+    const battle = next.activeMission?.kind === "tactical" ? next.activeMission.battle : null;
+    expect(battle?.map).toBe("map_relay");
+    expect(battle?.round).toBe(1);
+    expect(battle?.activeSide).toBe("player");
+    // 2 heroes + 2 raiders on the map.
+    expect(battle?.units.map((u) => u.id)).toEqual([
+      "u_h_mercer",
+      "u_h_okafor",
+      "u_eg_guards_0",
+      "u_eg_guards_1",
+    ]);
+    // Heroes on the first two squadSpawns in squad order, hp = HERO_MAX_HP(5).
+    expect(battle?.units[0]).toMatchObject({
+      side: "player",
+      hero: "h_mercer",
+      pos: { x: 0, y: 0 },
+      hp: 5,
+      ap: 2,
+    });
+    expect(battle?.units[1]).toMatchObject({
+      side: "player",
+      hero: "h_okafor",
+      pos: { x: 1, y: 0 },
+      hp: 5,
+      ap: 2,
+    });
+    // Raiders from the enemy group, hp = UnitTypeDef.maxHp(4).
+    expect(battle?.units[2]).toMatchObject({
+      side: "enemy",
+      unitType: "ut_raider",
+      pos: { x: 6, y: 4 },
+      hp: 4,
+    });
+    expect(battle?.objectiveProgress).toEqual({ obj_consoles: 0 });
+    expect(battle?.log).toEqual([]);
   });
 
   it("rejects a tactical launch below the materials cost", () => {
@@ -141,9 +177,16 @@ describe("launchMission — tactical placeholder (§3)", () => {
     expect(err.code).toBe("launchMission/insufficient_materials");
   });
 
-  it("never opens activeMission for a tactical mission", () => {
-    // Both the sufficient and insufficient paths throw — state is untouched.
+  it("does not mutate the input state on a tactical launch", () => {
     const state = tacticalState(50);
+    const before = JSON.stringify(state);
+    launchMission(state, CONTENT, "m_relay", ["h_mercer", "h_okafor"]);
+    expect(JSON.stringify(state)).toBe(before);
+    expect(state.activeMission).toBeNull();
+  });
+
+  it("never opens activeMission when the launch is refused", () => {
+    const state = tacticalState(4); // below cost -> throws, state untouched
     expect(() => launchMission(state, CONTENT, "m_relay", ["h_mercer", "h_okafor"])).toThrow(RuleError);
     expect(state.activeMission).toBeNull();
   });

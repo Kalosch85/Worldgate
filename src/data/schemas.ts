@@ -102,6 +102,9 @@ export const HeroDef = z.object({
   name: z.string(),
   archetypes: z.array(ArchetypeTag).min(1),
   skills: Skills,
+  // Battlefield abilities (tactics-engine spec §1). Defaults to the basic Shot
+  // so a hero without an authored list is still combat-capable.
+  abilities: z.array(Id).default(["ab_shot"]),
   bio: z.string().optional(),
 });
 export type HeroDefT = z.infer<typeof HeroDef>;

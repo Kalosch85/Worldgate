@@ -2,16 +2,16 @@
  * Mission launch (docs/specs/narrative-engine.md §3). The strategic → mission
  * hand-off: validate the squad against the MissionDef, then open the mission.
  *
- * Scope note: this is the task-2.4 "launchMission portion" only. Event
- * traversal (chooseEventOption), completion, and queued-event firing arrive
- * with the Phase 3 interpreter (§5–§7); until then a launched narrative
- * mission simply sits in `activeMission` and a launched tactical mission is
- * refused with RuleError("tactical_not_implemented") (§3).
+ * Scope note: narrative traversal (chooseEventOption), completion, and
+ * queued-event firing live in the Phase 3 interpreter (narrative.ts). As of
+ * task 4.2 a tactical launch builds a real BattleState (tactics-engine spec §3)
+ * via `createBattleState`; the battle is then driven by the `battle*` actions.
  */
 import type { ContentBundleT, GameStateT } from "../data/schemas.js";
 import { TACTICAL_LAUNCH_COST } from "./economy.js";
 import { RuleError } from "./errors.js";
 import { isExhausted } from "./roster.js";
+import { createBattleState } from "./tactics.js";
 
 type MissionDefT = ContentBundleT["missions"][number];
 
@@ -92,8 +92,8 @@ export function canLaunchMission(
  * Launch a mission (§3). Re-validates every guard and throws RuleError on any
  * failure. On success:
  *  - narrative: opens `activeMission` at the event script's entry node.
- *  - tactical: enforces the materials cost, then throws
- *    RuleError("tactical_not_implemented") — battle init is Phase 4's spec.
+ *  - tactical: debits the materials cost and opens `activeMission` on a fresh
+ *    BattleState (tactics-engine spec §3).
  * Pure: returns a new GameState, never mutates.
  */
 export function launchMission(
@@ -115,10 +115,11 @@ export function launchMission(
         `${def.name} needs ${TACTICAL_LAUNCH_COST} materials to deploy.`,
       );
     }
-    // Battle initialization is owned by the Phase 4 tactics spec. Until it
-    // lands, tactical launches are refused (§3). The materials debit that will
-    // accompany a real launch is therefore not applied here.
-    throw new RuleError("tactical_not_implemented", "Tactical missions require field systems (coming).");
+    const draft = structuredClone(state);
+    draft.resources.materials -= TACTICAL_LAUNCH_COST;
+    const battle = createBattleState(draft, content, def, squad);
+    draft.activeMission = { kind: "tactical", mission, squad: [...squad], battle };
+    return draft;
   }
 
   const scriptId = def.payload.eventScript;

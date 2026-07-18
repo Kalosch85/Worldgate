@@ -108,11 +108,22 @@ for (const ev of c.events) {
   for (const o of ev.outcomes) checkEffects(`event ${ev.id}/outcome ${o.id}`, o.effects);
 }
 
+const mapById = new Map(c.maps.map((m) => [m.id, m]));
 for (const m of c.missions) {
   if (m.payload.kind === "tactical" && !ids.maps.has(m.payload.map))
     errors.push(`mission ${m.id}: unknown map '${m.payload.map}'`);
   if (m.payload.kind === "narrative" && !ids.events.has(m.payload.eventScript))
     errors.push(`mission ${m.id}: unknown event '${m.payload.eventScript}'`);
+  // tactics-engine spec §1: a tactical map must have at least as many
+  // squadSpawns as the largest squad any mission can deploy onto it, so
+  // battle init (§3) always has a spawn tile per hero.
+  if (m.payload.kind === "tactical") {
+    const map = mapById.get(m.payload.map);
+    if (map && map.squadSpawns.length < m.squad.max)
+      errors.push(
+        `mission ${m.id}: map '${m.payload.map}' has ${map.squadSpawns.length} squadSpawns but squad.max is ${m.squad.max}`,
+      );
+  }
   checkConditions(`mission ${m.id}`, m.availability);
   checkEffects(`mission ${m.id}`, [...m.victoryEffects, ...m.defeatEffects]);
 }

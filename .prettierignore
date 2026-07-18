@@ -10,3 +10,8 @@ docs/specs/economy-and-roster.md
 
 # Verbatim Fable-authored spec text — must stay byte-exact (task 2.1/2.2 request).
 docs/specs/narrative-engine.md
+
+# Verbatim Fable-authored spec text — must stay byte-exact (task 4.2 request).
+# Prettier reflows the §10 candidate list and the §7 numbered list, corrupting
+# the authored layout; exclude rather than reformat.
+docs/specs/tactics-engine.md

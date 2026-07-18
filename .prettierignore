@@ -7,3 +7,6 @@ package-lock.json
 # Prettier's markdown formatter misparses the multi-line inline-code span in
 # §5.3 as a list item and corrupts the "+" inside it; exclude rather than risk that.
 docs/specs/economy-and-roster.md
+
+# Verbatim Fable-authored spec text — must stay byte-exact (task 2.1/2.2 request).
+docs/specs/narrative-engine.md

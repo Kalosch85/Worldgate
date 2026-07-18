@@ -13,6 +13,7 @@ import { apply, type Action } from "../core/reducer.js";
 import { mulberry32, type Rng } from "../core/rng.js";
 import { loadContent } from "../data/loadContent.js";
 import type { GameStateT } from "../data/schemas.js";
+import { BattleScreen } from "../tactics-render/BattleScreen.js";
 import { exportSave, importSave, loadFromStorage, saveToStorage } from "./persistence.js";
 import { BaseScreen } from "./screens/BaseScreen.js";
 import { EventScreen } from "./screens/EventScreen.js";
@@ -22,7 +23,17 @@ import { TechScreen } from "./screens/TechScreen.js";
 import { WorldgateScreen } from "./screens/WorldgateScreen.js";
 import { buttonStyle, theme } from "./theme.js";
 
-type Screen = "menu" | "base" | "tech" | "roster" | "worldgate" | "event";
+type Screen = "menu" | "base" | "tech" | "roster" | "worldgate" | "event" | "battle";
+
+/** The screen an in-progress mission must route directly to (spec §11 / the
+ * narrative activeMission rule): a tactical mission → the battle screen, a
+ * narrative one → the event screen. */
+function missionScreen(state: GameStateT | null): Screen | null {
+  const kind = state?.activeMission?.kind;
+  if (kind === "tactical") return "battle";
+  if (kind === "narrative") return "event";
+  return null;
+}
 
 /** A random 32-bit campaign seed. UI layer — free to use Math.random (§1). */
 function newSeed(): number {
@@ -62,10 +73,13 @@ export function App() {
       setState(next);
       saveToStorage(next);
       setMessage(null);
-      // A narrative mission just opened (launched, or a queued incident fired by
-      // endDay) — take over with the event screen until it resolves (spec §7).
-      if (prev.activeMission === null && next.activeMission?.kind === "narrative") {
-        setScreen("event");
+      // A mission just opened (launched, or a queued incident fired by endDay)
+      // — route straight to its screen and hold there until it resolves: a
+      // narrative mission to the event screen (spec §7), a tactical mission to
+      // the battle screen (tactics-engine §11).
+      if (prev.activeMission === null && next.activeMission !== null) {
+        const target = missionScreen(next);
+        if (target) setScreen(target);
       }
     } catch (err) {
       if (err instanceof RuleError) setMessage(err.message);
@@ -132,6 +146,15 @@ export function App() {
             onDone={() => setScreen("base")}
           />,
         );
+      case "battle":
+        return withBanner(
+          <BattleScreen
+            state={state}
+            content={content}
+            dispatch={dispatch}
+            onExit={() => setScreen("base")}
+          />,
+        );
     }
   }
 
@@ -140,7 +163,7 @@ export function App() {
       canContinue={state !== null}
       exportString={state ? exportSave(state) : null}
       onNewCampaign={startCampaign}
-      onContinue={() => setScreen(state?.activeMission?.kind === "narrative" ? "event" : "base")}
+      onContinue={() => setScreen(missionScreen(state) ?? "base")}
       onImport={handleImport}
     />
   );

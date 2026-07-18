@@ -44,28 +44,35 @@ const ids = {
 
 function checkEffects(where: string, effects: { type: string }[]) {
   for (const e of effects as any[]) {
-    if (e.type === "queueEvent" && !ids.events.has(e.event)) errors.push(`${where}: unknown event '${e.event}'`);
-    if (e.type === "unlockMission" && !ids.missions.has(e.mission)) errors.push(`${where}: unknown mission '${e.mission}'`);
-    if (e.type === "injury" && !ids.injuries.has(e.injury)) errors.push(`${where}: unknown injury '${e.injury}'`);
+    if (e.type === "queueEvent" && !ids.events.has(e.event))
+      errors.push(`${where}: unknown event '${e.event}'`);
+    if (e.type === "unlockMission" && !ids.missions.has(e.mission))
+      errors.push(`${where}: unknown mission '${e.mission}'`);
+    if (e.type === "injury" && !ids.injuries.has(e.injury))
+      errors.push(`${where}: unknown injury '${e.injury}'`);
   }
 }
 function checkConditions(where: string, conds: any[]) {
   for (const cond of conds) {
-    if (cond.type === "techResearched" && !ids.techs.has(cond.tech)) errors.push(`${where}: unknown tech '${cond.tech}'`);
+    if (cond.type === "techResearched" && !ids.techs.has(cond.tech))
+      errors.push(`${where}: unknown tech '${cond.tech}'`);
     if (cond.type === "all" || cond.type === "any") checkConditions(where, cond.conditions);
     if (cond.type === "not") checkConditions(where, [cond.condition]);
   }
 }
 
 for (const t of c.techs) {
-  for (const p of t.prerequisites) if (!ids.techs.has(p)) errors.push(`tech ${t.id}: unknown prerequisite '${p}'`);
+  for (const p of t.prerequisites)
+    if (!ids.techs.has(p)) errors.push(`tech ${t.id}: unknown prerequisite '${p}'`);
   checkEffects(`tech ${t.id}`, t.effects);
 }
 for (const u of c.unitTypes)
-  for (const a of u.abilities) if (!ids.abilities.has(a)) errors.push(`unitType ${u.id}: unknown ability '${a}'`);
+  for (const a of u.abilities)
+    if (!ids.abilities.has(a)) errors.push(`unitType ${u.id}: unknown ability '${a}'`);
 
 for (const m of c.maps) {
-  if (m.tiles.length !== m.height) errors.push(`map ${m.id}: tiles rows ${m.tiles.length} != height ${m.height}`);
+  if (m.tiles.length !== m.height)
+    errors.push(`map ${m.id}: tiles rows ${m.tiles.length} != height ${m.height}`);
   m.tiles.forEach((row, y) => {
     if (row.length !== m.width) errors.push(`map ${m.id}: row ${y} length ${row.length} != width ${m.width}`);
     for (const ch of row) if (!".#-+".includes(ch)) errors.push(`map ${m.id}: row ${y} illegal tile '${ch}'`);
@@ -81,7 +88,8 @@ for (const m of c.maps) {
   for (const o of m.objectives)
     if (o.kind === "interactSequence")
       for (const i of o.interactables)
-        if (!interactableIds.has(i)) errors.push(`map ${m.id}: objective ${o.id} unknown interactable '${i}'`);
+        if (!interactableIds.has(i))
+          errors.push(`map ${m.id}: objective ${o.id} unknown interactable '${i}'`);
 }
 
 for (const ev of c.events) {

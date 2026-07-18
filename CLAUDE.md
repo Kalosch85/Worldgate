@@ -38,14 +38,14 @@ universal DoD: **tests green, CI deploy succeeds, task checked off.**
 
 Vite + React + TypeScript (strict) + Vitest + ESLint + Prettier. Commands:
 
-| Command | Purpose |
-| --- | --- |
-| `npm run dev` | Vite dev server |
-| `npm run typecheck` | `tsc --noEmit` |
-| `npm run lint` | ESLint (enforces §1 boundaries) |
-| `npm test` | Vitest (headless) |
-| `npm run validate-content` | zod + referential-integrity check on `src/data/content` |
-| `npm run build` | Production build to `dist/` (GitHub Pages base `/worldgate/`) |
+| Command                    | Purpose                                                       |
+| -------------------------- | ------------------------------------------------------------- |
+| `npm run dev`              | Vite dev server                                               |
+| `npm run typecheck`        | `tsc --noEmit`                                                |
+| `npm run lint`             | ESLint (enforces §1 boundaries)                               |
+| `npm test`                 | Vitest (headless)                                             |
+| `npm run validate-content` | zod + referential-integrity check on `src/data/content`       |
+| `npm run build`            | Production build to `dist/` (GitHub Pages base `/worldgate/`) |
 
 CI (`.github/workflows/ci.yml`) runs typecheck → lint → test → validate-content
 → build on every push/PR, and deploys `dist/` to GitHub Pages on `main`.

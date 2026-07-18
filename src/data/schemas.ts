@@ -154,12 +154,8 @@ export const TacticalMapDef = z.object({
   height: z.number().int().min(4),
   tiles: z.array(z.string()),
   squadSpawns: z.array(Pos).min(1),
-  enemyGroups: z.array(
-    z.object({ id: Id, unitType: Id, positions: z.array(Pos).min(1) }),
-  ),
-  interactables: z
-    .array(z.object({ id: Id, pos: Pos, kind: z.enum(["console"]) }))
-    .default([]),
+  enemyGroups: z.array(z.object({ id: Id, unitType: Id, positions: z.array(Pos).min(1) })),
+  interactables: z.array(z.object({ id: Id, pos: Pos, kind: z.enum(["console"]) })).default([]),
   objectives: z
     .array(
       z.union([

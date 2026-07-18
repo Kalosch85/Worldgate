@@ -4,24 +4,26 @@
     "name": "Relay Station",
     "width": 8,
     "height": 6,
-    "tiles": [
-      "........",
-      ".-...#..",
-      "...+.#..",
-      ".#...-..",
-      ".#......",
-      "........"
+    "tiles": ["........", ".-...#..", "...+.#..", ".#...-..", ".#......", "........"],
+    "squadSpawns": [
+      { "x": 0, "y": 0 },
+      { "x": 1, "y": 0 },
+      { "x": 0, "y": 1 }
     ],
-    "squadSpawns": [ { "x": 0, "y": 0 }, { "x": 1, "y": 0 }, { "x": 0, "y": 1 } ],
     "enemyGroups": [
-      { "id": "eg_guards", "unitType": "ut_raider", "positions": [ { "x": 6, "y": 4 }, { "x": 7, "y": 5 } ] }
+      {
+        "id": "eg_guards",
+        "unitType": "ut_raider",
+        "positions": [
+          { "x": 6, "y": 4 },
+          { "x": 7, "y": 5 }
+        ]
+      }
     ],
     "interactables": [
       { "id": "con_a", "pos": { "x": 7, "y": 0 }, "kind": "console" },
       { "id": "con_b", "pos": { "x": 7, "y": 4 }, "kind": "console" }
     ],
-    "objectives": [
-      { "id": "obj_consoles", "kind": "interactSequence", "interactables": ["con_a", "con_b"] }
-    ]
+    "objectives": [{ "id": "obj_consoles", "kind": "interactSequence", "interactables": ["con_a", "con_b"] }]
   }
 ]

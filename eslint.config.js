@@ -51,13 +51,27 @@ export default tseslint.config(
       ],
       "no-restricted-properties": [
         "error",
-        { object: "Math", property: "random", message: "src/core uses the injected Rng, not Math.random (ARCHITECTURE §1, §4)." },
-        { object: "Date", property: "now", message: "src/core uses the injected clock, not Date.now (ARCHITECTURE §1)." },
+        {
+          object: "Math",
+          property: "random",
+          message: "src/core uses the injected Rng, not Math.random (ARCHITECTURE §1, §4).",
+        },
+        {
+          object: "Date",
+          property: "now",
+          message: "src/core uses the injected clock, not Date.now (ARCHITECTURE §1).",
+        },
       ],
       "no-restricted-syntax": [
         "error",
-        { selector: "NewExpression[callee.name='Date']", message: "src/core uses the injected clock, not new Date() (ARCHITECTURE §1)." },
-        { selector: "CallExpression[callee.name=/^(setTimeout|setInterval)$/]", message: "src/core must not use timers (ARCHITECTURE §1)." },
+        {
+          selector: "NewExpression[callee.name='Date']",
+          message: "src/core uses the injected clock, not new Date() (ARCHITECTURE §1).",
+        },
+        {
+          selector: "CallExpression[callee.name=/^(setTimeout|setInterval)$/]",
+          message: "src/core must not use timers (ARCHITECTURE §1).",
+        },
       ],
     },
   },

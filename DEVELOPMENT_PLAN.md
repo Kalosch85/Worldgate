@@ -57,8 +57,8 @@ ARCHITECTURE.md  DEVELOPMENT_PLAN.md
 
 ## Phase 2 — Strategic UI
 
-- **2.1 [S] App shell.** Routing between screens, save/load UI, new-campaign flow.
-- **2.2 [S] Base screen.** Resources bar, personnel assignment, end-day button, event log.
+- **2.1 [S] App shell.** ✅ DONE. Delivered `src/ui/App.tsx` (routing between the main menu and base screen via a `Screen` union), `src/ui/screens/MainMenu.tsx` (new-campaign flow with a random 32-bit seed, Continue, export/import save UI), `src/ui/persistence.ts` (localStorage autosave + copy-out/paste-in export string, both through core's schema-validated serialize/deserialize), and `src/data/loadContent.ts` (browser content loader over the same zod bundle, no `node:fs`). Every dispatch runs through `apply` and autosaves; `RuleError` surfaces as a banner. Minimal dark UI, no component library, touch targets ≥ 44px (ARCHITECTURE §10). Verified green (format, typecheck, lint, test, validate-content, build).
+- **2.2 [S] Base screen.** ✅ DONE. Delivered `src/ui/screens/BaseScreen.tsx` with `ResourceBar` (day + four resources + support), `PersonnelPanel` (logistics/research/infirmary steppers dispatching `assignPersonnel`, pre-validated with `canAssignPersonnel`), an End-Day button (`endDay`), and `Journal` (campaign log, newest first). Sticky header, portrait-friendly. Smoke tests in `src/ui/App.test.tsx` cover the new-campaign flow, personnel reassignment, day advance, and the save/localStorage reload round-trip. Verified green.
 - **2.3 [S] Tech + roster screens.** Research selection; hero cards with stats/fatigue/XP.
 - **2.4 [S] Worldgate screen.** Available missions from JSON (type, difficulty, squad requirements), squad select respecting fatigue/injury, launch.
 - DoD each: playable on phone browser, touch targets ≥ 44px, state survives reload.

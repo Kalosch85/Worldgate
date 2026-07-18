@@ -178,7 +178,7 @@ describe("chooseEventOption — golden paths (§5, §6)", () => {
     // Solo Mercer: n_intro's o_interrogate/o_data are gated → gatedSeen arms,
     // and the debrief line lands on completion (showLockedOptions is false).
     const base = launched(["h_mercer", "h_okafor"]);
-    // Override to the solo squad for the traversal assertion (m_survey's min-2
+    // Override to the solo squad for the traversal assertion (the squad-size
     // guard is enforced at launch, not during traversal).
     const solo = structuredClone(base);
     solo.activeMission = { ...base.activeMission!, squad: ["h_mercer"] } as typeof solo.activeMission;

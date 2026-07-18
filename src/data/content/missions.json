@@ -18,7 +18,7 @@
     "name": "Survey: Address 04",
     "description": "First crewed survey of a new address.",
     "availability": [],
-    "squad": { "min": 2, "max": 3 },
+    "squad": { "min": 1, "max": 3 },
     "payload": { "kind": "narrative", "eventScript": "ev_first_contact" }
   }
 ]

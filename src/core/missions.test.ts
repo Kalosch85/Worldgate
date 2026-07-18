@@ -84,7 +84,13 @@ describe("launchMission — RuleError guards (§3)", () => {
   });
 
   it("rejects a squad smaller than the mission minimum", () => {
-    expect(launchError(stateWith(), "m_survey", ["h_mercer"]).code).toBe("launchMission/squad_size");
+    // m_survey min is 1; an empty squad is the only size below it.
+    expect(launchError(stateWith(), "m_survey", []).code).toBe("launchMission/squad_size");
+  });
+
+  it("allows a solo squad (m_survey min is 1)", () => {
+    const next = launchMission(stateWith(), CONTENT, "m_survey", ["h_mercer"]);
+    expect(next.activeMission?.squad).toEqual(["h_mercer"]);
   });
 
   it("rejects a squad larger than the mission maximum", () => {
@@ -153,7 +159,10 @@ describe("canLaunchMission — UI guard", () => {
   });
 
   it("false when the squad is the wrong size", () => {
-    expect(canLaunchMission(stateWith(), CONTENT, "m_survey", ["h_mercer"])).toBe(false);
+    // m_survey accepts 1–3; a 4-hero squad exceeds the maximum.
+    expect(
+      canLaunchMission(stateWith(), CONTENT, "m_survey", ["h_mercer", "h_okafor", "h_x", "h_y"]),
+    ).toBe(false);
   });
 
   it("false when a squad member is exhausted", () => {

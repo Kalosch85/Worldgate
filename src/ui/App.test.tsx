@@ -99,7 +99,7 @@ describe("App shell", () => {
     click("New Campaign");
     click("Worldgate");
     expect(container!.textContent).toContain("Survey: Address 04");
-    // m_survey needs 2 operatives; select both heroes, then launch.
+    // m_survey takes 1–3 operatives; select both heroes, then launch.
     click("Mercer");
     click("Okafor");
     click("Launch mission");

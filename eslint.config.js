@@ -16,7 +16,16 @@ export default tseslint.config(
   {
     // TypeScript already resolves identifiers; no-undef would false-positive on
     // DOM/Node globals without the `globals` package.
-    rules: { "no-undef": "off" },
+    rules: {
+      "no-undef": "off",
+      // Match tsconfig's underscore convention (noUnusedLocals/Parameters
+      // ignore `_`-prefixed names), so an intentionally-unused param like a
+      // reducer's `_ctx` doesn't need two different suppressions.
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_", caughtErrorsIgnorePattern: "^_" },
+      ],
+    },
   },
 
   {

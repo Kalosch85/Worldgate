@@ -41,7 +41,7 @@ ARCHITECTURE.md  DEVELOPMENT_PLAN.md
 ## Phase 0 — Foundation
 - **0.1 [S] Repo + toolchain.** Vite/React/TS strict, Vitest, ESLint, CI pipeline to Pages. Verify the Claude Code cloud environment can `npm install` and run tests (abort criterion: if npm registry unreachable, revisit stack). DoD: hello-world deployed, one passing test in CI.
 - **0.2 [F] ARCHITECTURE.md + core schemas.** ✅ DONE. Delivered: ARCHITECTURE.md, schemas.ts (incl. campaign variables, universal Effect/Condition vocabulary, D-1 display flag), validate-content.ts with referential integrity, seed content. Verified green.
-- **0.3 [S] Utilities.** Seeded PRNG, GameState serialize/deserialize round-trip tests, action/reducer skeleton. DoD: round-trip property test passes.
+- **0.3 [S] Utilities.** ✅ DONE. Delivered in `src/core/`: seeded PRNG (`mulberry32` behind the `Rng` interface, `rng.ts`); battle-seed derivation `hash(campaign.seed, day, missionId)` (`hash.ts`, ARCHITECTURE §4); `serialize`/`deserialize` with schema-validated load (`serialize.ts`); `apply(state, action, ctx)` reducer skeleton with a single placeholder `noop` action (`reducer.ts`) — real actions arrive with Phase 1 specs. Tests: PRNG determinism/range, hash determinism/collision-avoidance, GameState round-trip property test (300 generated states across all union branches), reducer no-op/no-mutation. Verified: typecheck, lint, test, validate-content, build all green.
 
 ## Phase 1 — Strategic sim-core
 - **1.1 [O spec, S impl] Resources + time.** Day tick, income calc (personnel assignments × support meter modifier), costs. DoD: unit tests incl. edge cases.

@@ -45,7 +45,7 @@ Vite + React + TypeScript (strict) + Vitest + ESLint + Prettier. Commands:
 | `npm run lint`             | ESLint (enforces §1 boundaries)                               |
 | `npm test`                 | Vitest (headless)                                             |
 | `npm run validate-content` | zod + referential-integrity check on `src/data/content`       |
-| `npm run build`            | Production build to `dist/` (GitHub Pages base `/worldgate/`) |
+| `npm run build`            | Production build to `dist/` (GitHub Pages base `/Worldgate/`) |
 
 CI (`.github/workflows/ci.yml`) runs typecheck → lint → test → validate-content
 → build on every push/PR, and deploys `dist/` to GitHub Pages on `main`.

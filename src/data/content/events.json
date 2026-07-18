@@ -1,0 +1,52 @@
+[
+  {
+    "id": "ev_first_contact",
+    "title": "The Stranded Survey Team",
+    "entryNode": "n_intro",
+    "nodes": [
+      {
+        "id": "n_intro",
+        "text": "A rival bloc's survey team is stranded at the relay, their return address burned out. Their leader lowers her weapon first.",
+        "options": [
+          { "id": "o_help", "text": "Offer them passage through our gate.",
+            "effects": [
+              { "type": "resource", "resource": "materials", "delta": -5 },
+              { "type": "variable", "variable": "trust_rival", "delta": 2 },
+              { "type": "flag", "flag": "helped_rivals", "value": true },
+              { "type": "queueEvent", "event": "ev_first_contact", "delayDays": 30 }
+            ],
+            "next": { "kind": "node", "node": "n_help" } },
+          { "id": "o_interrogate", "text": "[Diplomat] Trade passage for what they know.",
+            "requirements": [ { "type": "squadHasArchetype", "tag": "diplomat" } ],
+            "effects": [ { "type": "resource", "resource": "intel", "delta": 8 } ],
+            "next": { "kind": "node", "node": "n_help" } },
+          { "id": "o_data", "text": "[Science 5+] Decode their burned-out address instead.",
+            "requirements": [ { "type": "squadSkillAtLeast", "skill": "science", "min": 5 } ],
+            "effects": [ { "type": "resource", "resource": "exotics", "delta": 2 } ],
+            "next": { "kind": "node", "node": "n_help" } },
+          { "id": "o_leave", "text": "Leave them. Not our problem.",
+            "effects": [
+              { "type": "flag", "flag": "abandoned_rivals", "value": true },
+              { "type": "variable", "variable": "trust_rival", "delta": -3 },
+              { "type": "fatigue", "scope": "squad", "delta": 5 }
+            ],
+            "next": { "kind": "end", "outcome": "out_cold" } }
+        ]
+      },
+      {
+        "id": "n_help",
+        "text": "The crossing is tense but quiet. Their leader memorizes every face on your team before stepping through.",
+        "options": [
+          { "id": "o_return", "text": "Return home.", "next": { "kind": "end", "outcome": "out_contact" } }
+        ]
+      }
+    ],
+    "outcomes": [
+      { "id": "out_contact", "label": "Contact established",
+        "effects": [ { "type": "xp", "scope": "squad", "amount": 10 },
+                     { "type": "log", "text": "Someone on the other side owes us. Or knows us." } ] },
+      { "id": "out_cold", "label": "Walked away",
+        "effects": [ { "type": "xp", "scope": "squad", "amount": 5 } ] }
+    ]
+  }
+]

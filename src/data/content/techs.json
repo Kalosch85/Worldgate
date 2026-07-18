@@ -1,0 +1,21 @@
+[
+  {
+    "id": "t_gate_stabilizer",
+    "name": "Gate Stabilizer",
+    "description": "Reliable dialing to surveyed addresses.",
+    "cost": 20,
+    "prerequisites": [],
+    "effects": [
+      { "type": "unlockMission", "mission": "m_relay" },
+      { "type": "log", "text": "The gate holds a stable connection for the first time." }
+    ]
+  },
+  {
+    "id": "t_field_medicine",
+    "name": "Field Medicine",
+    "description": "Improved recovery for returning teams.",
+    "cost": 15,
+    "prerequisites": ["t_gate_stabilizer"],
+    "effects": [{ "type": "modifier", "key": "healRate", "mode": "add", "value": 1 }]
+  }
+]

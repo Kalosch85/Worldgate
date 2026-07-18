@@ -16,7 +16,16 @@ export default tseslint.config(
   {
     // TypeScript already resolves identifiers; no-undef would false-positive on
     // DOM/Node globals without the `globals` package.
-    rules: { "no-undef": "off" },
+    rules: {
+      "no-undef": "off",
+      // Match tsconfig's underscore convention (noUnusedLocals/Parameters
+      // ignore `_`-prefixed names), so an intentionally-unused param like a
+      // reducer's `_ctx` doesn't need two different suppressions.
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_", caughtErrorsIgnorePattern: "^_" },
+      ],
+    },
   },
 
   {
@@ -42,13 +51,27 @@ export default tseslint.config(
       ],
       "no-restricted-properties": [
         "error",
-        { object: "Math", property: "random", message: "src/core uses the injected Rng, not Math.random (ARCHITECTURE §1, §4)." },
-        { object: "Date", property: "now", message: "src/core uses the injected clock, not Date.now (ARCHITECTURE §1)." },
+        {
+          object: "Math",
+          property: "random",
+          message: "src/core uses the injected Rng, not Math.random (ARCHITECTURE §1, §4).",
+        },
+        {
+          object: "Date",
+          property: "now",
+          message: "src/core uses the injected clock, not Date.now (ARCHITECTURE §1).",
+        },
       ],
       "no-restricted-syntax": [
         "error",
-        { selector: "NewExpression[callee.name='Date']", message: "src/core uses the injected clock, not new Date() (ARCHITECTURE §1)." },
-        { selector: "CallExpression[callee.name=/^(setTimeout|setInterval)$/]", message: "src/core must not use timers (ARCHITECTURE §1)." },
+        {
+          selector: "NewExpression[callee.name='Date']",
+          message: "src/core uses the injected clock, not new Date() (ARCHITECTURE §1).",
+        },
+        {
+          selector: "CallExpression[callee.name=/^(setTimeout|setInterval)$/]",
+          message: "src/core must not use timers (ARCHITECTURE §1).",
+        },
       ],
     },
   },

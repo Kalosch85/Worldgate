@@ -18,6 +18,7 @@ docs/decisions      logged design decisions (mirrors plan D-numbers)
 ```
 
 Import rules, enforced by ESLint (`import/no-restricted-paths`):
+
 - `src/core` imports only from `src/core` and `src/data` (types/schemas). Never from `ui`, `tactics-render`, or anything DOM/Pixi.
 - `src/core` never uses `Math.random`, `Date.now`, `new Date()`, timers, or I/O. RNG and clock are injected. ESLint bans these globals in `core`.
 - `ui` and `tactics-render` never implement rules. They dispatch actions and render state. If a screen needs a computation, it belongs in `core` as a selector.
@@ -60,6 +61,7 @@ apply(state: GameState, action: Action, ctx: { content: ContentBundle; rng: Rng 
 Techs, event options, event outcomes, and mission rewards all express
 consequences as `Effect[]` and gates as `Condition[]` (see `schemas.ts`).
 One interpreter for each lives in `core`. Rules:
+
 - Effects apply in array order.
 - Clamping is the interpreter's job: resources floor at 0, fatigue clamps to
   0–100. Variables are unclamped (design reads them with thresholds).
@@ -128,14 +130,15 @@ Every implementation session references its task id in `DEVELOPMENT_PLAN.md`
 and the relevant `docs/specs/*.md`. DoD everywhere: tests green, CI deploy
 succeeds, task checked off.
 
-| Work | Model |
-| --- | --- |
-| Architecture, schemas.ts, event/tactics system design, story bible, canon review | Fable |
-| Core systems (reducers, interpreters), save/load, enemy AI, balance simulation, tricky debugging | Opus |
+| Work                                                                                              | Model  |
+| ------------------------------------------------------------------------------------------------- | ------ |
+| Architecture, schemas.ts, event/tactics system design, story bible, canon review                  | Fable  |
+| Core systems (reducers, interpreters), save/load, enemy AI, balance simulation, tricky debugging  | Opus   |
 | UI screens, renderer features against specs, content entry, tests for specced behavior, CI wiring | Sonnet |
 
 Escalation triggers — a Sonnet session must stop and hand up (to Opus, or
 Fable if contracts change) instead of improvising, when:
+
 1. The task seems to require editing `schemas.ts`, `ARCHITECTURE.md`, or any
    reducer's action contract.
 2. A spec is ambiguous or two specs conflict.

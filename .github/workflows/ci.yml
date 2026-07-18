@@ -27,7 +27,9 @@ jobs:
 
       - run: npm ci
 
-      # DoD gate (ARCHITECTURE §9): typecheck -> lint -> test -> validate-content -> build.
+      # DoD gate (ARCHITECTURE §9): format -> typecheck -> lint -> test -> validate-content -> build.
+      - name: Format check
+        run: npm run format:check
       - name: Typecheck
         run: npm run typecheck
       - name: Lint

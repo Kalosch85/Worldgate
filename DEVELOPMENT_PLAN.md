@@ -52,8 +52,8 @@ ARCHITECTURE.md  DEVELOPMENT_PLAN.md
 ## Phase 1 — Strategic sim-core
 
 - **1.1 [O spec, S impl] Resources + time.** Day tick, income calc (personnel assignments × support meter modifier), costs. DoD: unit tests incl. edge cases.
-- **1.2 [S] Roster.** Hero creation from JSON, XP/level curve, fatigue (mission +N, rest −M per day, threshold → stat penalty, hard cap → unavailable), injury slots. Personnel as counts per assignment. DoD: tests.
-- **1.3 [S] Tech tree.** JSON defs with prerequisites + cost, research progress per tick, unlock effects as flags/modifiers. DoD: tests incl. prerequisite chains.
+- **1.2 [S] Roster.** ✅ DONE. Delivered `src/core/roster.ts`: effective-skill selector (base + skillBonuses + injury penalties + fatigue penalty, computed never stored, per ARCHITECTURE §2); fatigue thresholds (tired ≥50 → −1 to every effective skill, exhausted ≥80 → `canBeSelectedForSquad` false); XP→level curve (L2 25/L3 75/L4 150/L5 250, cap 5) with level-up bonus to the highest **base** skill, ties by schema enum order; `applyLevelUps` wired into the `xp` effect so awards cross thresholds through the reducer. Hero creation from JSON + personnel counts already in `newCampaign` (spec §2). Tests: `roster.test.ts` covers each rule and every fatigue/XP boundary, plus the effect-path integration. Verified green (typecheck, lint, test, validate-content, format, build).
+- **1.3 [S] Tech tree.** ✅ DONE. Implementation delivered with task 1.1 (JSON defs with prerequisites + cost via `TechDef`; research progress per tick in `endDay` step 3; unlock effects as flags/modifiers through the effects interpreter). This task added the remaining prerequisite-chain edge-case tests in `economy.test.ts` (three-deep chain gating, deeper-prereq-does-not-skip-shallower, multi-prerequisite requiring all, and an end-to-end chain progression via `endDay`). Verified green.
 
 ## Phase 2 — Strategic UI
 

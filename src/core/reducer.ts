@@ -1,18 +1,13 @@
 /**
- * GameState reducer skeleton (task 0.3, ARCHITECTURE §3).
+ * GameState reducer (task 0.3 skeleton; Phase 1 actions per
+ * docs/specs/economy-and-roster.md §3, ARCHITECTURE §3).
  *
  * All game-state changes go through this pure function:
  *
  *   apply(state, action, ctx): GameState
- *
- * SCOPE (task 0.3): this is a skeleton. It defines the reducer signature, the
- * injected context shape (`content` + `rng`, ARCHITECTURE §3/§4), the
- * no-mutation contract, and the exhaustive-switch pattern future actions must
- * follow. It ships a SINGLE placeholder action (`noop`). Real actions
- * (`endDay`, `startResearch`, `launchMission`, …) arrive with their Phase 1
- * specs — do NOT invent them here.
  */
 import type { ContentBundleT, GameStateT } from "../data/schemas.js";
+import { assignPersonnel, endDay, startResearch, type PersonnelAssignments } from "./economy.js";
 import type { Rng } from "./rng.js";
 
 /**
@@ -26,27 +21,34 @@ export interface ReducerCtx {
 }
 
 /**
- * The action union. Placeholder-only for task 0.3 — every real member is
- * introduced together with the Phase 1 spec that defines its contract.
+ * The action union. `noop` is the task-0.3 placeholder; the other three are
+ * Phase 1's economy actions (docs/specs/economy-and-roster.md §3).
  */
-export type Action = { type: "noop" };
+export type Action =
+  | { type: "noop" }
+  | { type: "endDay" }
+  | { type: "startResearch"; tech: string }
+  | { type: "assignPersonnel"; assignments: PersonnelAssignments };
 
 /**
  * Pure reducer. Returns the next GameState; never mutates `state` in place.
  * The switch is exhaustive: adding an `Action` member without a matching case
- * is a compile error at `assertNever`, which is exactly the guard rail future
- * tasks rely on.
+ * is a compile error at `assertNever`.
  */
-export function apply(state: GameStateT, action: Action, _ctx: ReducerCtx): GameStateT {
+export function apply(state: GameStateT, action: Action, ctx: ReducerCtx): GameStateT {
   switch (action.type) {
     case "noop":
       // Identity transition: proves the pipeline end-to-end without changing state.
       return state;
-    default:
-      // Runtime guard while `Action` has a single member. Once Phase 1 adds a
-      // second action, replace this with a compile-time exhaustiveness check —
-      // `const _exhaustive: never = action;` — which only narrows correctly for
-      // multi-member unions (TS cannot narrow a single-literal discriminant).
-      throw new Error(`apply: unhandled action ${JSON.stringify(action)}`);
+    case "endDay":
+      return endDay(state, ctx);
+    case "startResearch":
+      return startResearch(state, ctx.content, action.tech);
+    case "assignPersonnel":
+      return assignPersonnel(state, action.assignments);
+    default: {
+      const _exhaustive: never = action;
+      throw new Error(`apply: unhandled action ${JSON.stringify(_exhaustive)}`);
+    }
   }
 }

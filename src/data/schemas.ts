@@ -274,6 +274,7 @@ export const GameState = z.object({
   resources: ResourceAmounts,
   variables: z.record(Id, z.number()), // must contain "support"; numeric stance tracks
   flags: z.record(Id, z.boolean()),
+  journal: z.array(z.object({ day: z.number().int().min(1), text: z.string() })), // campaign log (task 1.1)
   modifiers: z.record(Id, z.number()), // tech/system modifiers, e.g. incomeMult
   heroes: z.array(HeroState),
   personnel: z.object({

@@ -1,8 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { ContentBundle, type ContentBundleT, type GameStateT } from "../data/schemas.js";
+import { newCampaign } from "./campaign.js";
+import { RuleError } from "./errors.js";
 import { apply, type ReducerCtx } from "./reducer.js";
 import { mulberry32 } from "./rng.js";
 import { serialize } from "./serialize.js";
+import { loadTestContent } from "../test/content.js";
 
 const EMPTY_CONTENT: ContentBundleT = ContentBundle.parse({
   heroes: [],
@@ -25,6 +28,7 @@ function baseState(): GameStateT {
     resources: { funds: 100, materials: 50, intel: 0, exotics: 0 },
     variables: { support: 50 },
     flags: {},
+    journal: [],
     modifiers: {},
     heroes: [],
     personnel: { total: 3, assignments: { logistics: 1, research: 1, infirmary: 1 } },
@@ -48,5 +52,48 @@ describe("apply (reducer skeleton)", () => {
     const snapshot = serialize(state);
     apply(state, { type: "noop" }, CTX);
     expect(serialize(state)).toBe(snapshot);
+  });
+});
+
+describe("apply — Phase 1 economy actions dispatch to their handlers", () => {
+  const REAL_CTX: ReducerCtx = { content: loadTestContent(), rng: mulberry32(1) };
+
+  it("endDay advances the day and applies income/upkeep", () => {
+    const state = newCampaign(1);
+    const next = apply(state, { type: "endDay" }, REAL_CTX);
+    expect(next.campaign.day).toBe(2);
+    expect(next.resources.funds).toBe(112);
+  });
+
+  it("startResearch sets research.current", () => {
+    const state = newCampaign(1);
+    const next = apply(state, { type: "startResearch", tech: "t_gate_stabilizer" }, REAL_CTX);
+    expect(next.research.current).toEqual({ tech: "t_gate_stabilizer", progress: 0 });
+  });
+
+  it("startResearch on an invalid tech throws RuleError through apply", () => {
+    const state = newCampaign(1);
+    expect(() => apply(state, { type: "startResearch", tech: "t_nope" }, REAL_CTX)).toThrow(RuleError);
+  });
+
+  it("assignPersonnel updates assignments", () => {
+    const state = newCampaign(1);
+    const next = apply(
+      state,
+      { type: "assignPersonnel", assignments: { logistics: 10, research: 5, infirmary: 5 } },
+      REAL_CTX,
+    );
+    expect(next.personnel.assignments).toEqual({ logistics: 10, research: 5, infirmary: 5 });
+  });
+
+  it("assignPersonnel over budget throws RuleError through apply", () => {
+    const state = newCampaign(1);
+    expect(() =>
+      apply(
+        state,
+        { type: "assignPersonnel", assignments: { logistics: 100, research: 0, infirmary: 0 } },
+        REAL_CTX,
+      ),
+    ).toThrow(RuleError);
   });
 });

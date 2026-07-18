@@ -160,9 +160,9 @@ describe("canLaunchMission — UI guard", () => {
 
   it("false when the squad is the wrong size", () => {
     // m_survey accepts 1–3; a 4-hero squad exceeds the maximum.
-    expect(
-      canLaunchMission(stateWith(), CONTENT, "m_survey", ["h_mercer", "h_okafor", "h_x", "h_y"]),
-    ).toBe(false);
+    expect(canLaunchMission(stateWith(), CONTENT, "m_survey", ["h_mercer", "h_okafor", "h_x", "h_y"])).toBe(
+      false,
+    );
   });
 
   it("false when a squad member is exhausted", () => {

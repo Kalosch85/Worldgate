@@ -117,6 +117,26 @@ describe("App shell", () => {
     expect(container!.textContent).not.toContain("A mission is in progress");
   });
 
+  it("launches a solo survey (squad of one) and plays it to completion", () => {
+    render();
+    click("New Campaign");
+    click("Worldgate");
+    expect(container!.textContent).toContain("Survey: Address 04");
+    // m_survey min is 1: a single operative is a valid squad.
+    click("Mercer");
+    click("Launch mission");
+    // The event screen takes over — a solo squad still launches.
+    expect(container!.textContent).toContain("rival bloc's survey team is stranded");
+    // o_help is always eligible regardless of squad composition.
+    click("Offer them passage");
+    expect(container!.textContent).toContain("crossing is tense");
+    click("Return home");
+    expect(container!.textContent).toContain("Contact established");
+    click("Return to base");
+    expect(container!.textContent).toContain("Personnel");
+    expect(container!.textContent).not.toContain("A mission is in progress");
+  });
+
   it("persists the campaign to localStorage and restores it on reload", () => {
     render();
     click("New Campaign");

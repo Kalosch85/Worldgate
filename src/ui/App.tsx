@@ -15,13 +15,14 @@ import { loadContent } from "../data/loadContent.js";
 import type { GameStateT } from "../data/schemas.js";
 import { exportSave, importSave, loadFromStorage, saveToStorage } from "./persistence.js";
 import { BaseScreen } from "./screens/BaseScreen.js";
+import { EventScreen } from "./screens/EventScreen.js";
 import { MainMenu } from "./screens/MainMenu.js";
 import { RosterScreen } from "./screens/RosterScreen.js";
 import { TechScreen } from "./screens/TechScreen.js";
 import { WorldgateScreen } from "./screens/WorldgateScreen.js";
 import { buttonStyle, theme } from "./theme.js";
 
-type Screen = "menu" | "base" | "tech" | "roster" | "worldgate";
+type Screen = "menu" | "base" | "tech" | "roster" | "worldgate" | "event";
 
 /** A random 32-bit campaign seed. UI layer — free to use Math.random (§1). */
 function newSeed(): number {
@@ -61,6 +62,11 @@ export function App() {
       setState(next);
       saveToStorage(next);
       setMessage(null);
+      // A narrative mission just opened (launched, or a queued incident fired by
+      // endDay) — take over with the event screen until it resolves (spec §7).
+      if (prev.activeMission === null && next.activeMission?.kind === "narrative") {
+        setScreen("event");
+      }
     } catch (err) {
       if (err instanceof RuleError) setMessage(err.message);
       else throw err;
@@ -115,7 +121,15 @@ export function App() {
             content={content}
             dispatch={dispatch}
             onBack={() => setScreen("base")}
-            onLaunched={() => setScreen("base")}
+          />,
+        );
+      case "event":
+        return withBanner(
+          <EventScreen
+            state={state}
+            content={content}
+            dispatch={dispatch}
+            onDone={() => setScreen("base")}
           />,
         );
     }
@@ -126,7 +140,7 @@ export function App() {
       canContinue={state !== null}
       exportString={state ? exportSave(state) : null}
       onNewCampaign={startCampaign}
-      onContinue={() => setScreen("base")}
+      onContinue={() => setScreen(state?.activeMission?.kind === "narrative" ? "event" : "base")}
       onImport={handleImport}
     />
   );

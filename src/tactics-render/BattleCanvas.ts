@@ -2,10 +2,11 @@
  * PixiJS board renderer (task 4.3, tactics-engine spec §11). Draws a
  * `BattleView` — grid from the map tile legend, cover, consoles, units with hp
  * pips, and the move/target overlays — onto a WebGL canvas, and reports tile
- * taps back to the host. Terrain, cover, consoles, players, and the pips/overlays
- * are colored shapes; enemy units are drawn as the insect billboard sprite (from
- * `public/assets/units/`) when its texture has loaded, falling back to the colored
- * shape otherwise (spec §11, sprite note).
+ * taps back to the host. Tiles (floor/wall/cover) draw top-down textures from
+ * `public/assets/tiles/` and units draw billboards from `public/assets/units/`
+ * (the matching hero for players, the insect for enemies); each falls back to
+ * its colored shape until its texture loads. Consoles and the pips/overlays stay
+ * colored shapes (spec §11, art-pass note).
  *
  * This is the one place Pixi lives. It holds no game rules and no UI state: it
  * renders whatever `BattleView` (optionally with replay-overridden unit
@@ -60,10 +61,26 @@ const BASE_TILE = 64;
 /** How far a single pointer may drift and still count as a tap, not a drag. */
 const TAP_SLOP = 12;
 
-/** The insect billboard used for enemy units, served from `public/assets/`.
- * `BASE_URL` is the Vite base ("/Worldgate/" in production) so the request
- * resolves under the GitHub Pages sub-path. */
-const ENEMY_SPRITE_URL = `${import.meta.env.BASE_URL}assets/units/enemy-insect-warrior.png`;
+/** Board art served from `public/assets/`. `BASE_URL` is the Vite base
+ * ("/Worldgate/" in production) so requests resolve under the GitHub Pages
+ * sub-path. */
+const ASSETS = `${import.meta.env.BASE_URL}assets`;
+const ENEMY_SPRITE_URL = `${ASSETS}/units/enemy-insect-warrior.png`;
+/** Player-hero billboards keyed by hero id. A player unit whose hero has no
+ * entry (or whose texture hasn't loaded) falls back to the colored disc. */
+const HERO_SPRITE_URLS: Record<string, string> = {
+  h_mercer: `${ASSETS}/units/hero-mercer.png`,
+  h_okafor: `${ASSETS}/units/hero-okafor.png`,
+};
+/** Top-down tile textures, one per map-legend tile kind. Loaded async; each
+ * kind falls back to its flat colour until (and if) the texture arrives. */
+const TILE_URLS = {
+  floor: `${ASSETS}/tiles/floor.png`,
+  wall: `${ASSETS}/tiles/wall.png`,
+  lowCover: `${ASSETS}/tiles/cover-low.png`,
+  highCover: `${ASSETS}/tiles/cover-high.png`,
+} as const;
+type TileKind = keyof typeof TILE_URLS;
 
 export interface BattleCanvasOpts {
   onTap: (x: number, y: number) => void;
@@ -81,6 +98,7 @@ interface DrawUnit {
   selected: boolean;
   ap: number;
   canAct: boolean;
+  hero?: string;
 }
 
 export class BattleCanvas {
@@ -97,6 +115,11 @@ export class BattleCanvas {
   // The enemy billboard texture; null until it loads (or if loading fails, in
   // which case enemies fall back to the colored shape).
   private enemyTexture: Texture | null = null;
+  // Player-hero billboards by hero id; entries fill in as they load.
+  private heroTextures: Record<string, Texture> = {};
+  // Top-down tile textures by kind; entries are null until loaded, and each
+  // tile kind falls back to its flat colour meanwhile.
+  private tileTextures: Partial<Record<TileKind, Texture>> = {};
 
   // Pan/zoom state (spec §11): a viewport transform on `board`, driven by the
   // pure math in viewport.ts. Bounds are recomputed each render from the board
@@ -148,22 +171,47 @@ export class BattleCanvas {
       this.resizeObserver.observe(this.container);
     }
 
-    // Load the enemy billboard sprite in the background; when it arrives, redraw
-    // so enemies swap from the fallback shape to the sprite. A load failure just
-    // leaves `enemyTexture` null and keeps the colored shape.
-    void this.loadEnemyTexture();
+    // Load the board art in the background; each texture redraws as it arrives
+    // so tiles/enemies swap from their fallback fills to the art. Load failures
+    // just leave the texture null and keep the fallback.
+    void this.loadArt();
 
     if (this.lastView) this.render(this.lastView, this.lastOverride);
   }
 
-  private async loadEnemyTexture(): Promise<void> {
-    try {
-      const texture = await Assets.load<Texture>(ENEMY_SPRITE_URL);
-      if (this.disposed) return;
-      this.enemyTexture = texture;
-      if (this.lastView) this.render(this.lastView, this.lastOverride);
-    } catch {
-      // Keep the fallback colored shape.
+  private async loadArt(): Promise<void> {
+    const redraw = () => {
+      if (!this.disposed && this.lastView) this.render(this.lastView, this.lastOverride);
+    };
+    // Enemy billboard.
+    void Assets.load<Texture>(ENEMY_SPRITE_URL)
+      .then((texture) => {
+        if (this.disposed) return;
+        this.enemyTexture = texture;
+        redraw();
+      })
+      .catch(() => {});
+    // Hero billboards.
+    for (const [heroId, url] of Object.entries(HERO_SPRITE_URLS)) {
+      void Assets.load<Texture>(url)
+        .then((texture) => {
+          if (this.disposed) return;
+          this.heroTextures[heroId] = texture;
+          redraw();
+        })
+        .catch(() => {});
+    }
+    // Tile textures — nearest-neighbour so the pixel art stays crisp when the
+    // 32px source is drawn at the 64px logical tile size.
+    for (const kind of Object.keys(TILE_URLS) as TileKind[]) {
+      void Assets.load<Texture>(TILE_URLS[kind])
+        .then((texture) => {
+          if (this.disposed) return;
+          texture.source.scaleMode = "nearest";
+          this.tileTextures[kind] = texture;
+          redraw();
+        })
+        .catch(() => {});
     }
   }
 
@@ -293,20 +341,42 @@ export class BattleCanvas {
     this.board.removeChildren().forEach((c) => c.destroy());
     const t = this.tile;
 
-    // 1. Tiles from the map legend + a faint grid.
+    // 1. Tiles from the map legend. Each tile draws its texture when loaded and
+    // otherwise falls back to a flat fill; a faint grid overlay always sits on
+    // top so tile boundaries read on the seamless textures.
     const tiles = new Graphics();
+    const grid = new Graphics();
     for (let y = 0; y < view.height; y++) {
       const row = view.tiles[y] ?? "";
       for (let x = 0; x < view.width; x++) {
         const ch = row[x] ?? ".";
-        const checker = (x + y) % 2 === 0 ? COLORS.floor : COLORS.floorAlt;
-        const fill =
-          ch === "#" ? COLORS.wall : ch === "-" ? COLORS.lowCover : ch === "+" ? COLORS.highCover : checker;
-        tiles.rect(x * t, y * t, t, t).fill(fill);
-        tiles.rect(x * t, y * t, t, t).stroke({ width: 1, color: COLORS.gridLine, alignment: 0 });
+        const kind: TileKind =
+          ch === "#" ? "wall" : ch === "-" ? "lowCover" : ch === "+" ? "highCover" : "floor";
+        const texture = this.tileTextures[kind];
+        if (texture) {
+          const sprite = new Sprite(texture);
+          sprite.x = x * t;
+          sprite.y = y * t;
+          sprite.width = t;
+          sprite.height = t;
+          this.board.addChild(sprite);
+        } else {
+          const checker = (x + y) % 2 === 0 ? COLORS.floor : COLORS.floorAlt;
+          const fill =
+            kind === "wall"
+              ? COLORS.wall
+              : kind === "lowCover"
+                ? COLORS.lowCover
+                : kind === "highCover"
+                  ? COLORS.highCover
+                  : checker;
+          tiles.rect(x * t, y * t, t, t).fill(fill);
+        }
+        grid.rect(x * t, y * t, t, t).stroke({ width: 1, color: COLORS.gridLine, alignment: 0, alpha: 0.5 });
       }
     }
-    this.board.addChild(tiles);
+    this.board.addChildAt(tiles, 0);
+    this.board.addChild(grid);
 
     // 2. Move overlay (reachable tiles) under the units — a filled inset with a
     // brighter border so the destinations read clearly over the dark floor.
@@ -358,6 +428,7 @@ export class BattleCanvas {
         // "Can act" badge is a player-phase affordance; hide it while the enemy
         // phase replays (spec §11).
         canAct: u.canAct && !replaying,
+        hero: u.hero,
       };
     });
     for (const u of drawUnits) {
@@ -366,11 +437,16 @@ export class BattleCanvas {
       const cy = u.pos.y * t + t / 2;
       const r = t * 0.3;
       const base = !u.alive ? COLORS.downed : u.side === "player" ? COLORS.player : COLORS.enemy;
-      // Alive enemies render as the insect billboard once its texture is loaded;
-      // players, downed units, and the pre-load frames keep the colored shape.
-      const useSprite = u.side === "enemy" && u.alive && this.enemyTexture !== null;
+      // Alive units render as their billboard once the texture is loaded — the
+      // matching hero for players, the insect for enemies; downed units and the
+      // pre-load frames keep the colored shape.
+      const texture = !u.alive
+        ? null
+        : u.side === "enemy"
+          ? this.enemyTexture
+          : (u.hero && this.heroTextures[u.hero]) || null;
       if (u.selected && u.alive) g.circle(cx, cy, r + 4).stroke({ width: 3, color: COLORS.selection });
-      if (!useSprite) {
+      if (!texture) {
         g.circle(cx, cy, r).fill({ color: base, alpha: u.alive ? 1 : 0.5 });
         g.circle(cx, cy, r).stroke({ width: 2, color: 0x0b0f1a });
         if (!u.alive) {
@@ -383,7 +459,7 @@ export class BattleCanvas {
         }
       }
       this.board.addChild(g);
-      if (useSprite) this.board.addChild(this.enemySprite(cx, cy, r, t));
+      if (texture) this.board.addChild(this.unitSprite(texture, cx, cy, r, t));
 
       if (u.alive) this.board.addChild(this.hpPips(u, cx, cy - r - 7, t));
 
@@ -448,15 +524,19 @@ export class BattleCanvas {
     this.applyTransform();
   }
 
-  /** The enemy insect billboard, scaled to sit within its tile and anchored a
-   * little low so it "stands" on the tile centre rather than floating. */
-  private enemySprite(cx: number, cy: number, r: number, t: number): Sprite {
-    const sprite = new Sprite(this.enemyTexture!);
-    sprite.anchor.set(0.5, 0.6);
-    const maxDim = Math.max(sprite.texture.width, sprite.texture.height) || 1;
-    sprite.scale.set((t * 1.3) / maxDim);
+  /** A unit billboard (hero or enemy), scaled to sit within its tile and
+   * anchored near the feet so it "stands" on the tile rather than floating.
+   * Portrait sprites (taller than wide, e.g. the heroes) fit to a bit over the
+   * tile height; wide sprites fit to the tile width. */
+  private unitSprite(texture: Texture, cx: number, cy: number, r: number, t: number): Sprite {
+    const sprite = new Sprite(texture);
+    sprite.anchor.set(0.5, 0.82);
+    const tw = texture.width || 1;
+    const th = texture.height || 1;
+    const scale = th >= tw ? (t * 1.5) / th : (t * 1.3) / tw;
+    sprite.scale.set(scale);
     sprite.x = cx;
-    sprite.y = cy + r * 0.15;
+    sprite.y = cy + r * 0.55;
     return sprite;
   }
 

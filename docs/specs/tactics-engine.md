@@ -125,13 +125,20 @@ state; hp pips; turn/round banner; scrolling log; enemy phase replayed with
 ~300ms per action. Landscape-friendly, touch targets ≥ 44px.
 
 **Art pass (addendum).** The 4.3 renderer shipped with colored shapes only; an
-art pass since then wires the first sprites without changing any rules or layout:
-enemy units draw the insect billboard sprite (`public/assets/units/`, loaded
-async with a colored-shape fallback), and the ability bar shows per-ability
-icons (`public/assets/abilities/`) beside their labels. Terrain, cover,
-consoles, player units, and the hp/AP indicators stay colored shapes. Assets
-are sliced from the `art-src/` source sheets; sheets with no true alpha are
-keyed to transparency at slice time.
+art pass since then wires sprites/textures without changing any rules or layout:
+
+- Board tiles (floor / `#` wall / `-` low cover / `+` high cover) draw top-down
+  textures from `public/assets/tiles/` (nearest-neighbour), each with a
+  flat-colour fallback until its texture loads, and a faint grid overlay on top.
+- Units draw billboards (`public/assets/units/`): the matching hero sprite for
+  each player (by hero id), the insect for enemies — loaded async with a
+  colored-shape fallback.
+- The ability bar shows per-ability icons (`public/assets/abilities/`) beside
+  their labels.
+
+Consoles and the hp/AP indicators stay colored shapes. Assets are sliced from the `art-src/` source sheets by
+`scripts/slice-art.py`; sheets with no true alpha are keyed to transparency at
+slice time, while the top-down tile pack already carries real alpha.
 
 **Activation flow & unspent-AP confirmation (Fable addendum).**
 

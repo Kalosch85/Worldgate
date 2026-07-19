@@ -12,6 +12,18 @@
 import { Application, Container, Graphics, Text } from "pixi.js";
 import type { BattleView } from "./battleModel.js";
 import type { ReplayUnit } from "./replay.js";
+import {
+  clampViewport,
+  fitScale,
+  initialViewport,
+  pinchPan,
+  scaleBounds,
+  screenToTile,
+  zoomTo,
+  type GestureStart,
+  type Viewport,
+  type ViewportBounds,
+} from "./viewport.js";
 
 const COLORS = {
   bg: 0x0b0f1a,
@@ -37,10 +49,13 @@ const COLORS = {
   text: 0xffffff,
 } as const;
 
-/** Minimum on-screen tile size so every tap target clears ARCHITECTURE §10's
- * 44px minimum; the canvas grows past the container and scrolls if it must. */
-const MIN_TILE = 48;
-const MAX_TILE = 76;
+/** The board is drawn once at this fixed logical tile size; pinch-zoom scales
+ * the whole board container rather than re-tiling. At scale 1 a tile is 64px
+ * (well past ARCHITECTURE §10's 44px minimum); the initial fit lets you zoom
+ * out to the whole map and back in. */
+const BASE_TILE = 64;
+/** How far a single pointer may drift and still count as a tap, not a drag. */
+const TAP_SLOP = 12;
 
 export interface BattleCanvasOpts {
   onTap: (x: number, y: number) => void;
@@ -65,12 +80,25 @@ export class BattleCanvas {
   private readonly container: HTMLElement;
   private readonly onTap: (x: number, y: number) => void;
   private board = new Container();
-  private tile = MIN_TILE;
+  private readonly tile = BASE_TILE;
   private gridWidth = 0;
   private gridHeight = 0;
   private lastView: BattleView | null = null;
   private lastOverride: readonly ReplayUnit[] | null = null;
   private disposed = false;
+
+  // Pan/zoom state (spec §11): a viewport transform on `board`, driven by the
+  // pure math in viewport.ts. Bounds are recomputed each render from the board
+  // and canvas sizes.
+  private viewport: Viewport = { scale: 1, offsetX: 0, offsetY: 0 };
+  private bounds: ViewportBounds = { boardW: 0, boardH: 0, viewW: 0, viewH: 0, minScale: 1, maxScale: 1 };
+  private initialized = false;
+  // Live pointers by id (canvas-local px), the active two-finger gesture, and
+  // the pending single-finger tap.
+  private readonly pointers = new Map<number, { x: number; y: number }>();
+  private gesture: GestureStart | null = null;
+  private tapPointer: { id: number; x: number; y: number; moved: boolean } | null = null;
+  private resizeObserver: ResizeObserver | null = null;
 
   constructor(container: HTMLElement, opts: BattleCanvasOpts) {
     this.container = container;
@@ -88,17 +116,112 @@ export class BattleCanvas {
     }
     this.app = app;
     app.stage.addChild(this.board);
-    app.stage.eventMode = "static";
-    app.stage.hitArea = { contains: () => true } as { contains: (x: number, y: number) => boolean };
-    app.stage.on("pointertap", (e: { global: { x: number; y: number } }) => {
-      if (!this.lastView) return;
-      const tx = Math.floor(e.global.x / this.tile);
-      const ty = Math.floor(e.global.y / this.tile);
-      if (tx < 0 || ty < 0 || tx >= this.gridWidth || ty >= this.gridHeight) return;
-      this.onTap(tx, ty);
-    });
-    this.container.appendChild(app.canvas);
+
+    // Own the touch gestures ourselves (spec §11: pinch-zoom + two-finger pan);
+    // `touch-action: none` stops the browser from also panning/zooming the page.
+    const canvas = app.canvas;
+    canvas.style.touchAction = "none";
+    canvas.style.display = "block";
+    canvas.addEventListener("pointerdown", this.onPointerDown, { passive: false });
+    canvas.addEventListener("pointermove", this.onPointerMove, { passive: false });
+    canvas.addEventListener("pointerup", this.onPointerUp, { passive: false });
+    canvas.addEventListener("pointercancel", this.onPointerUp, { passive: false });
+    canvas.addEventListener("wheel", this.onWheel, { passive: false });
+    this.container.appendChild(canvas);
+
+    // Re-fit on container resize (orientation change, layout settle).
+    if (typeof ResizeObserver !== "undefined") {
+      this.resizeObserver = new ResizeObserver(() => {
+        if (this.lastView) this.render(this.lastView, this.lastOverride);
+      });
+      this.resizeObserver.observe(this.container);
+    }
+
     if (this.lastView) this.render(this.lastView, this.lastOverride);
+  }
+
+  private localPoint(e: PointerEvent | WheelEvent): { x: number; y: number } {
+    const canvas = this.app?.canvas;
+    const rect = canvas?.getBoundingClientRect();
+    return { x: e.clientX - (rect?.left ?? 0), y: e.clientY - (rect?.top ?? 0) };
+  }
+
+  private readonly onPointerDown = (e: PointerEvent): void => {
+    e.preventDefault();
+    const p = this.localPoint(e);
+    this.pointers.set(e.pointerId, p);
+    this.app?.canvas.setPointerCapture(e.pointerId);
+    if (this.pointers.size === 1) {
+      this.tapPointer = { id: e.pointerId, x: p.x, y: p.y, moved: false };
+    } else if (this.pointers.size === 2) {
+      this.tapPointer = null; // a second finger means this is a gesture, not a tap
+      this.beginGesture();
+    }
+  };
+
+  private readonly onPointerMove = (e: PointerEvent): void => {
+    const known = this.pointers.get(e.pointerId);
+    if (!known) return;
+    const p = this.localPoint(e);
+    this.pointers.set(e.pointerId, p);
+    if (this.pointers.size >= 2 && this.gesture) {
+      e.preventDefault();
+      const [a, b] = [...this.pointers.values()];
+      if (!a || !b) return;
+      const dist = Math.hypot(a.x - b.x, a.y - b.y) || 1;
+      const midX = (a.x + b.x) / 2;
+      const midY = (a.y + b.y) / 2;
+      this.viewport = pinchPan(this.gesture, this.bounds, dist, midX, midY);
+      this.applyTransform();
+    } else if (this.tapPointer && e.pointerId === this.tapPointer.id) {
+      if (Math.hypot(p.x - this.tapPointer.x, p.y - this.tapPointer.y) > TAP_SLOP) {
+        this.tapPointer.moved = true;
+      }
+    }
+  };
+
+  private readonly onPointerUp = (e: PointerEvent): void => {
+    const last = this.pointers.get(e.pointerId);
+    this.pointers.delete(e.pointerId);
+    if (this.pointers.size < 2) this.gesture = null;
+    if (this.tapPointer && e.pointerId === this.tapPointer.id) {
+      if (last && !this.tapPointer.moved) this.fireTap(last.x, last.y);
+      this.tapPointer = null;
+    }
+  };
+
+  private readonly onWheel = (e: WheelEvent): void => {
+    e.preventDefault();
+    const p = this.localPoint(e);
+    const factor = e.deltaY < 0 ? 1.1 : 1 / 1.1;
+    this.viewport = zoomTo(this.viewport, this.bounds, this.viewport.scale * factor, p.x, p.y);
+    this.applyTransform();
+  };
+
+  /** Snapshot the current two-finger span as the gesture origin (spec §11). */
+  private beginGesture(): void {
+    const [a, b] = [...this.pointers.values()];
+    if (!a || !b) return;
+    this.gesture = {
+      viewport: { ...this.viewport },
+      dist: Math.hypot(a.x - b.x, a.y - b.y) || 1,
+      midX: (a.x + b.x) / 2,
+      midY: (a.y + b.y) / 2,
+    };
+  }
+
+  /** Turn a completed tap into a tile coordinate through the live viewport. */
+  private fireTap(sx: number, sy: number): void {
+    if (!this.lastView) return;
+    const { x, y } = screenToTile(this.viewport, this.tile, sx, sy);
+    if (x < 0 || y < 0 || x >= this.gridWidth || y >= this.gridHeight) return;
+    this.onTap(x, y);
+  }
+
+  /** Push the current viewport onto the board container as a scale + offset. */
+  private applyTransform(): void {
+    this.board.scale.set(this.viewport.scale);
+    this.board.position.set(this.viewport.offsetX, this.viewport.offsetY);
   }
 
   /** The DOM node hosting the canvas (may be null before init). */
@@ -106,11 +229,18 @@ export class BattleCanvas {
     return this.app?.canvas ?? null;
   }
 
-  private computeTile(width: number, height: number): number {
-    const cw = this.container.clientWidth || width * MIN_TILE;
-    const ch = this.container.clientHeight || height * MIN_TILE;
-    const fit = Math.floor(Math.min(cw / width, ch / height));
-    return Math.max(MIN_TILE, Math.min(MAX_TILE, fit));
+  /** Fit the viewport to the current board and canvas size. On first render it
+   * starts at base scale, centered; afterward it re-clamps the live viewport so
+   * a resize can't strand the board off-screen. */
+  private fitViewport(view: BattleView, viewW: number, viewH: number): void {
+    const boardW = view.width * this.tile;
+    const boardH = view.height * this.tile;
+    const { minScale, maxScale } = scaleBounds(fitScale(boardW, boardH, viewW, viewH));
+    this.bounds = { boardW, boardH, viewW, viewH, minScale, maxScale };
+    this.viewport = this.initialized
+      ? clampViewport(this.viewport, this.bounds)
+      : initialViewport(this.bounds, 1);
+    this.initialized = true;
   }
 
   /**
@@ -126,10 +256,12 @@ export class BattleCanvas {
 
     this.gridWidth = view.width;
     this.gridHeight = view.height;
-    this.tile = this.computeTile(view.width, view.height);
-    const px = view.width * this.tile;
-    const py = view.height * this.tile;
-    app.renderer.resize(px, py);
+
+    // Canvas fills the container; the board is pan/zoomed within it.
+    const viewW = this.container.clientWidth || view.width * this.tile;
+    const viewH = this.container.clientHeight || view.height * this.tile;
+    app.renderer.resize(viewW, viewH);
+    this.fitViewport(view, viewW, viewH);
 
     this.board.removeChildren().forEach((c) => c.destroy());
     const t = this.tile;
@@ -278,6 +410,9 @@ export class BattleCanvas {
       this.board.addChild(bg);
       this.board.addChild(label);
     }
+
+    // Apply the current pan/zoom as a transform on the whole board.
+    this.applyTransform();
   }
 
   private hpPips(u: DrawUnit, cx: number, top: number, t: number): Graphics {
@@ -296,6 +431,11 @@ export class BattleCanvas {
 
   destroy(): void {
     this.disposed = true;
+    this.resizeObserver?.disconnect();
+    this.resizeObserver = null;
+    this.pointers.clear();
+    this.gesture = null;
+    this.tapPointer = null;
     if (this.app) {
       const canvas = this.app.canvas;
       this.app.destroy(true);

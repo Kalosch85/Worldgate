@@ -25,6 +25,8 @@ vi.mock("pixi.js", () => {
   }
   class Container {
     children: unknown[] = [];
+    scale = { set() {} };
+    position = { set() {} };
     addChild(c: unknown) {
       this.children.push(c);
       return c;

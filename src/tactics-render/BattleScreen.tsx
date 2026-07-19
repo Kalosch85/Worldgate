@@ -360,8 +360,12 @@ export function BattleScreen({
           flex: 1,
           minHeight: 0,
           display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
+          // `safe center` keeps a board that fits centered, but falls back to
+          // start-aligned (and thus fully scrollable) when the board is wider
+          // or taller than the viewport — otherwise flex centering clips the
+          // outer rows/columns and they can't be scrolled into view.
+          justifyContent: "safe center",
+          alignItems: "safe center",
           overflow: "auto",
           padding: "0.5rem",
           background: theme.bg,

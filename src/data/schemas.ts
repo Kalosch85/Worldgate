@@ -96,6 +96,11 @@ export const EffectSchema = z.union([
   // total, core reduces infirmary → research → logistics until valid
   // (facilities spec §1). Used by facility completion effects.
   z.object({ type: z.literal("personnel"), delta: z.number() }),
+  // Arc content (docs/story/arc-veyra.md §8). `addHero` pushes a fresh
+  // HeroState for a heroes.json hero not already on the roster; `addPersonnel`
+  // raises personnel.total (floor 0).
+  z.object({ type: z.literal("addHero"), hero: Id }),
+  z.object({ type: z.literal("addPersonnel"), amount: z.number().int() }),
   z.object({ type: z.literal("log"), text: z.string() }), // campaign journal / debrief line
 ]);
 export type Effect = z.infer<typeof EffectSchema>;

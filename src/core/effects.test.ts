@@ -168,4 +168,28 @@ describe("applyEffects", () => {
     applyEffects(state, [{ type: "resource", resource: "funds", delta: -100 }], ctx());
     expect(JSON.stringify(state)).toBe(before);
   });
+
+  it("addHero: pushes a fresh HeroState for a hero not on the roster", () => {
+    const s = applyEffects(baseState(), [{ type: "addHero", hero: "h_seryn" }], ctx());
+    const added = s.heroes.find((h) => h.hero === "h_seryn");
+    expect(added).toEqual({ hero: "h_seryn", xp: 0, level: 1, fatigue: 0, injuries: [], skillBonuses: {} });
+    expect(s.heroes).toHaveLength(3);
+  });
+
+  it("addHero: no-op when the hero is already on the roster", () => {
+    const s = applyEffects(baseState(), [{ type: "addHero", hero: "h_a" }], ctx());
+    expect(s.heroes).toHaveLength(2);
+    // the existing hero's state is left untouched (not reset to a fresh one)
+    expect(s.heroes.find((h) => h.hero === "h_a")!.fatigue).toBe(50);
+  });
+
+  it("addPersonnel: raises personnel.total by the amount", () => {
+    const s = applyEffects(baseState(), [{ type: "addPersonnel", amount: 4 }], ctx());
+    expect(s.personnel.total).toBe(9);
+  });
+
+  it("addPersonnel: floors total at 0 on a large negative amount", () => {
+    const s = applyEffects(baseState(), [{ type: "addPersonnel", amount: -100 }], ctx());
+    expect(s.personnel.total).toBe(0);
+  });
 });

@@ -35,6 +35,7 @@ const c: ContentBundleT = parsed.data!;
 
 // 2. Referential integrity
 const ids = {
+  heroes: new Set(c.heroes.map((h) => h.id)),
   techs: new Set(c.techs.map((t) => t.id)),
   abilities: new Set(c.abilities.map((a) => a.id)),
   maps: new Set(c.maps.map((m) => m.id)),
@@ -51,6 +52,7 @@ function checkEffects(where: string, effects: { type: string }[]) {
       errors.push(`${where}: unknown mission '${e.mission}'`);
     if (e.type === "injury" && !ids.injuries.has(e.injury))
       errors.push(`${where}: unknown injury '${e.injury}'`);
+    if (e.type === "addHero" && !ids.heroes.has(e.hero)) errors.push(`${where}: unknown hero '${e.hero}'`);
   }
 }
 function checkConditions(where: string, conds: any[]) {

@@ -134,10 +134,34 @@ describe("BattleScreen HUD", () => {
     expect(container.textContent).toContain("End Turn");
   });
 
-  it("dispatches battleEndTurn when End Turn is pressed", () => {
-    renderBattle(launched());
+  it("ends the turn immediately, with no confirmation, when all AP is spent", () => {
+    const s = launched();
+    if (s.activeMission?.kind !== "tactical") throw new Error("no battle");
+    for (const u of s.activeMission.battle.units) if (u.side === "player") u.ap = 0;
+    renderBattle(s);
     click("End Turn");
     expect(dispatched).toContainEqual({ type: "battleEndTurn" });
+    expect((container.textContent ?? "").toLowerCase()).not.toContain("end turn anyway");
+  });
+
+  it("confirms before ending the turn while units can still act, then resolves identically", () => {
+    renderBattle(launched()); // both heroes have 2 AP
+    click("End Turn");
+    // The button opens the confirmation instead of ending the turn outright.
+    expect(dispatched).not.toContainEqual({ type: "battleEndTurn" });
+    expect(container.textContent).toContain("can still act — end turn anyway?");
+    expect(container.textContent).toContain("2 units");
+    // Confirming dispatches the exact same action as the no-dialog path.
+    click("End turn anyway");
+    expect(dispatched).toContainEqual({ type: "battleEndTurn" });
+  });
+
+  it("cancels the end-turn confirmation without dispatching", () => {
+    renderBattle(launched());
+    click("End Turn");
+    click("Cancel");
+    expect(dispatched).not.toContainEqual({ type: "battleEndTurn" });
+    expect((container.textContent ?? "").toLowerCase()).not.toContain("end turn anyway");
   });
 
   it("toggles the scrolling log open", () => {

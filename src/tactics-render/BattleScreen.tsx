@@ -16,7 +16,7 @@ import type { Action } from "../core/reducer.js";
 import type { ContentBundleT, Effect, GameStateT, ResourceIdT } from "../data/schemas.js";
 import { buttonStyle, panelStyle, theme } from "../ui/theme.js";
 import { BattleCanvas } from "./BattleCanvas.js";
-import { buildBattleView, interpretTap, type Mode } from "./battleModel.js";
+import { actablePlayers, buildBattleView, interpretTap, type Mode } from "./battleModel.js";
 import { buildReplay, type ReplayFrame, type ReplayUnit } from "./replay.js";
 
 const RESOURCE_LABELS: Record<ResourceIdT, string> = {
@@ -79,6 +79,9 @@ export function BattleScreen({
   const [replay, setReplay] = useState<ReplayState | null>(null);
   const [summary, setSummary] = useState<Summary | null>(null);
   const [showLog, setShowLog] = useState(false);
+  // Non-null while the unspent-AP confirmation is open: the names of the units
+  // that can still act (spec §11).
+  const [confirmEnd, setConfirmEnd] = useState<string[] | null>(null);
 
   // Battle-end capture: the last live battle (pre-terminal action), the launched
   // squad, the mission id, and each hero's wound count at battle start — enough
@@ -109,16 +112,28 @@ export function BattleScreen({
     [state, content, selectedUnit, mode, replaying],
   );
 
-  // Auto-select the first actionable hero on entry and whenever the current
-  // selection is no longer a living player unit.
+  // Activation flow (spec §11): keep the current unit selected while it still
+  // has AP; the moment its activation ends (ability used → ap 0, or AP
+  // exhausted) auto-advance to the next player unit with AP in unit-id order
+  // (round-robin, wrapping). On entry this lands on the first actable unit.
+  // When nobody can act, keep a living player selected so the board still shows
+  // a unit.
   useEffect(() => {
     if (replaying || !view) return;
     const cur = view.units.find((u) => u.id === selectedUnit && u.side === "player" && u.alive);
-    if (cur) return;
-    const next =
-      view.units.find((u) => u.side === "player" && u.alive && u.ap > 0) ??
-      view.units.find((u) => u.side === "player" && u.alive);
-    setSelectedUnit(next ? next.id : null);
+    if (cur && cur.ap > 0) return;
+    const actable = actablePlayers(view);
+    const next = actable.find((u) => u.id > (selectedUnit ?? "")) ?? actable[0];
+    if (next) {
+      if (next.id !== selectedUnit) {
+        setSelectedUnit(next.id);
+        setMode({ kind: "move" });
+      }
+      return;
+    }
+    if (cur) return; // spent, but still a valid unit to display
+    const anyPlayer = view.units.find((u) => u.side === "player" && u.alive);
+    setSelectedUnit(anyPlayer ? anyPlayer.id : null);
     setMode({ kind: "move" });
   }, [view, selectedUnit, replaying]);
 
@@ -181,6 +196,24 @@ export function BattleScreen({
     }, frame.delayMs);
     return () => clearTimeout(id);
   }, [replay]);
+
+  /** End Turn is always enabled (spec §5: unspent AP is legal). If any living
+   * player unit still has AP, confirm first, listing them; otherwise end the
+   * turn immediately. The confirm path dispatches the identical action. */
+  const requestEndTurn = () => {
+    if (replaying || !view) return;
+    const canStillAct = actablePlayers(view);
+    if (canStillAct.length === 0) {
+      dispatchBattle({ type: "battleEndTurn" });
+      return;
+    }
+    setConfirmEnd(canStillAct.map((u) => u.name));
+  };
+
+  const confirmEndTurn = () => {
+    setConfirmEnd(null);
+    dispatchBattle({ type: "battleEndTurn" });
+  };
 
   /** Dispatch a battle action, arming enemy-phase replay for End Turn and the
    * §9 summary if the action ends the battle. */
@@ -416,12 +449,62 @@ export function BattleScreen({
           type="button"
           style={{ ...buttonStyle("primary"), marginLeft: "auto", opacity: replaying ? 0.5 : 1 }}
           disabled={replaying}
-          onClick={() => dispatchBattle({ type: "battleEndTurn" })}
+          onClick={requestEndTurn}
         >
           End Turn
         </button>
       </footer>
+
+      {confirmEnd && (
+        <EndTurnConfirm names={confirmEnd} onCancel={() => setConfirmEnd(null)} onConfirm={confirmEndTurn} />
+      )}
     </Shell>
+  );
+}
+
+/** Unspent-AP confirmation (spec §11). Lists the units that can still act and
+ * offers cancel / end-turn; confirming dispatches the same `battleEndTurn`. */
+function EndTurnConfirm({
+  names,
+  onCancel,
+  onConfirm,
+}: {
+  names: string[];
+  onCancel: () => void;
+  onConfirm: () => void;
+}) {
+  const count = names.length;
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      style={{
+        position: "fixed",
+        inset: 0,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "1rem",
+        background: "rgba(0,0,0,0.6)",
+        zIndex: 50,
+      }}
+      onClick={onCancel}
+    >
+      <section style={{ ...panelStyle, maxWidth: 360, width: "100%" }} onClick={(e) => e.stopPropagation()}>
+        <p style={{ margin: "0 0 0.6rem", fontWeight: 600 }}>
+          {count} unit{count === 1 ? "" : "s"} can still act — end turn anyway?
+        </p>
+        <p style={{ margin: "0 0 1rem", fontSize: "0.85rem", color: theme.textDim }}>{names.join(", ")}</p>
+        <div style={{ display: "flex", gap: "0.5rem" }}>
+          <button type="button" style={{ ...buttonStyle("ghost"), flex: 1 }} onClick={onCancel}>
+            Cancel
+          </button>
+          <button type="button" style={{ ...buttonStyle("primary"), flex: 1 }} onClick={onConfirm}>
+            End turn anyway
+          </button>
+        </div>
+      </section>
+    </div>
   );
 }
 

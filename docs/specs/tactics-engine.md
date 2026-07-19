@@ -51,6 +51,12 @@ resolution function; never two implementations.
   refresh, enemy cooldowns −1, AI runs §10, all deterministic given
   state + battle rng stream), then round += 1, surviveRounds progress += 1,
   back to player phase start. Renderer replays enemy actions from the log.
+- **Unspent AP is legal (Fable addendum).** Ending the player phase while
+  player units still have AP is an intentional, supported play — a future
+  reaction system depends on the player being able to hold AP through the
+  enemy phase. `battleEndTurn` must never hard-block on remaining AP; the
+  reducer resolves identically whether or not AP was spent. The renderer may
+  *warn* (§11 confirmation) but the core imposes no gate.
 
 ## 6. Movement & LOS
 
@@ -118,6 +124,26 @@ hit% from the shared function; tap-to-confirm; ability bar with AP/cooldown
 state; hp pips; turn/round banner; scrolling log; enemy phase replayed with
 ~300ms per action. Landscape-friendly, touch targets ≥ 44px. Colored shapes
 suffice — no sprite work in this phase.
+
+**Activation flow & unspent-AP confirmation (Fable addendum).**
+
+- **AP badge.** Every living player unit that still has AP shows a visible
+  "can act" badge on the board (marks its remaining AP). The badge is a pure
+  function of the unit's state (`side === "player"`, `hp > 0`, `ap > 0`);
+  suppress it during the enemy-phase replay.
+- **Auto-advance.** When a unit's activation ends — an ability was used (sets
+  ap 0, §5) or its AP is otherwise exhausted — the renderer auto-selects the
+  next living player unit that still has AP, in unit-id order (round-robin,
+  wrapping). On battle entry it selects the first such unit. When no player
+  unit has AP left, it keeps the current unit selected (nothing to advance to).
+- **End-Turn confirmation.** The End-Turn button is *always enabled* (§5:
+  unspent AP is legal). But if any living player unit (`hp > 0`) still has AP,
+  pressing it first shows a confirmation that lists those units — e.g.
+  "2 units can still act — end turn anyway?" — with cancel / confirm. When no
+  unit has AP the button ends the turn immediately with no dialog. The confirm
+  path dispatches the exact same `battleEndTurn` action as the no-dialog path;
+  the two resolve identically (test: no dialog when all AP spent; confirmed
+  end-turn === direct end-turn).
 
 ## 12. Non-goals v1 (do not implement, do not scaffold)
 

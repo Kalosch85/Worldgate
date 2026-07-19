@@ -86,7 +86,7 @@ ARCHITECTURE.md  DEVELOPMENT_PLAN.md
 
 ## Phase 6 — Content & story
 
-- **6.1 [F] Story bible.** Original setting: portal network premise, sponsoring institution, 2 factions, campaign arc skeleton; the going-public/election arc reserved as act 2 (post-prototype). Legal rule: genre premise yes, no borrowed names/characters/specific plotlines.
+- **6.1 [F] Story bible.** ✅ DONE. Delivered `docs/story/story-bible.md` (v1.0, Fable-authored): premise (Worldgate Command, the Vault, sponsor consortium), binding originality rules, deep canon (Stewards, Tenders, Raiders), 4 Earth-side factions, cast of 3 named heroes plus 2 planned recruits and generics, 3-act structure (Act 1 Establishment in scope, Act 2 Exposure and Act 3 The Network reserved post-prototype per Phase 7 gate), writing rules for all content sessions, vocabulary list, and a backlog (B-1..B-5) of content seeds for later tasks. Legal rule honored: genre premise only, no borrowed names/characters/plotlines.
 - **6.2 [F design, S entry] Content pass.** 4 heroes (distinct archetypes), ~10 techs, 2 tactical maps, 4 narrative events pool, 6–8 campaign missions. The Veyra arc (`docs/story/arc-veyra.md`) is the spine of this pass; its implementation tasks are tracked as **6.2-A1..A3** below (renumbered out of the arc doc's "§7 task N" space so nothing reads as plan Phase 7.x — Phase 7 is the playtest gate; per the Fable M4–M5 resolution E, the gate is never renumbered).
   - **6.2-A1 [S] Arc schema + effects.** ✅ DONE. `addHero` / `addPersonnel` effects (arc §8) + interpreter cases + validator refs (PR #20).
   - **6.2-A2 [S] Arc content M1–M3.** ✅ DONE. `h_seryn`, `ev_vy_pilgrim_roads` / `ev_vy_penitence` / `ev_vy_first_blade`, `m_vy_1..3`, `m_relay` arc-unlock (PR #21).

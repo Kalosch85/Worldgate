@@ -31,6 +31,21 @@ reproduced verbatim.
      labels + journal lines (the engine has no conditional-text concatenation).
    - ev_vy_dessik_word's queue is wired into M2's free-Ilo option (+5 days),
      the kept-promise symmetry §5 calls for.
+5. D-9 (early-campaign restructure, Fable session) supersedes parts of this
+   spec; the spec below is kept verbatim as history. What changed:
+   - "Second Expedition" is renamed **Recon One** everywhere (story-bible
+     §10): a four-member survey team, captured pre-campaign; the M3
+     addPersonnel +4 is canonically Recon One returning to duty.
+   - Amendment 2 (m_relay → m_vy_1 unlock) is REVERSED: m_vy_1 now unlocks
+     from m_vy_intercept's victoryEffects. m_relay is an optional side
+     tactical (tech-gated, no spine unlock). New spine before M1:
+     ev_intro (auto-launch at newCampaign) → m_vy_arrival → m_vy_ledger →
+     m_vy_intercept (tactical) → m_vy_1.
+   - M1's entry node is rewritten (the player has already crossed to Veyra
+     three times by then — arrival, ledger, intercept; more with intercept
+     retries) and routes on f_vy_transport (Karsu porter papers).
+   - ev_first_contact moved off the campaign spine to m_rival_stranded
+     ("Distress: Address 11"), unlocked by m_vy_intercept victory.
 -->
 
 # Arc: The Luminous One (Veyra) — Content Spec

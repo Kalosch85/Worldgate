@@ -38,15 +38,34 @@ describe("App shell", () => {
     act(() => btn.dispatchEvent(new MouseEvent("click", { bubbles: true })));
   };
 
+  /** D-9: a new campaign opens on the intro event — play it to the base screen. */
+  const startCampaign = () => {
+    click("New Campaign");
+    click("Go down.");
+    click("Start with the science");
+    click("Show me the dialing floor");
+    click("Assemble the team. We bring them home.");
+    click("Return to base");
+  };
+
   it("shows the main menu with a New Campaign action", () => {
     render();
     expect(container!.textContent).toContain("Worldgate");
     expect(container!.textContent).toContain("New Campaign");
   });
 
-  it("starts a campaign and lands on the base screen with resources", () => {
+  it("opens a new campaign on the intro event (D-9) and reaches base after it", () => {
     render();
     click("New Campaign");
+    // The intro incident takes over before any base screen.
+    expect(container!.textContent).toContain("I didn't know what to expect when I signed");
+    click("Go down.");
+    click("Start with the threats");
+    expect(container!.textContent).toContain("Recon One");
+    click("Show me the dialing floor");
+    click("Assemble the team — but at the first sign of trouble, they come back.");
+    expect(container!.textContent).toContain("Rescue crossing authorized");
+    click("Return to base");
     expect(container!.textContent).toContain("Funds");
     expect(container!.textContent).toContain("Personnel");
     expect(container!.textContent).toContain("Journal");
@@ -55,7 +74,7 @@ describe("App shell", () => {
 
   it("advances the day when End Day is pressed", () => {
     render();
-    click("New Campaign");
+    startCampaign();
     expect(container!.textContent).toContain("Day");
     // newCampaign starts on day 1; ending a day advances the counter.
     click("End Day");
@@ -66,7 +85,7 @@ describe("App shell", () => {
 
   it("reassigns personnel through the assignPersonnel action", () => {
     render();
-    click("New Campaign");
+    startCampaign();
     // logistics starts at 12; +1 should move an idle worker in.
     click("Add one to Logistics");
     // 12 + 6 + 2 = 20 assigned, 0 idle → chip reads "0 idle / 20".
@@ -75,7 +94,7 @@ describe("App shell", () => {
 
   it("opens the roster screen and shows a hero card with skills", () => {
     render();
-    click("New Campaign");
+    startCampaign();
     click("Roster");
     expect(container!.textContent).toContain("Mercer");
     expect(container!.textContent).toContain("Combat");
@@ -86,7 +105,7 @@ describe("App shell", () => {
 
   it("opens the research screen and starts research", () => {
     render();
-    click("New Campaign");
+    startCampaign();
     click("Research");
     expect(container!.textContent).toContain("Gate Stabilizer");
     click("Start research");
@@ -94,52 +113,51 @@ describe("App shell", () => {
     expect(container!.textContent).toContain("/ 20 RP");
   });
 
-  it("launches a narrative mission and plays it through to completion", () => {
+  it("launches the arrival mission and plays the quiet path to completion", () => {
     render();
-    click("New Campaign");
+    startCampaign();
     click("Worldgate");
-    expect(container!.textContent).toContain("Survey: Address 04");
-    // m_survey takes 1–3 operatives; select both heroes, then launch.
+    expect(container!.textContent).toContain("The Silent Valley");
+    // m_vy_arrival requires both heroes.
     click("Mercer");
     click("Okafor");
     click("Launch mission");
-    // The event screen takes over with the intro node's body text.
-    expect(container!.textContent).toContain("rival bloc's survey team is stranded");
-    // Choose the always-eligible help option, then return home to end.
-    click("Offer them passage");
-    expect(container!.textContent).toContain("crossing is tense");
-    click("Return home");
+    // The event screen takes over with the arrival node's body text.
+    expect(container!.textContent).toContain("Recon One's marker beacon");
+    click("Follow the road up-valley");
+    click("Trust them. Get off the road.");
+    expect(container!.textContent).toContain("Tenders");
+    click("Stay down until the last one is gone");
+    click("Go home with the lead");
     // Completion panel shows the outcome and a return control.
-    expect(container!.textContent).toContain("Contact established");
+    expect(container!.textContent).toContain("The taken go up the road");
     click("Return to base");
     // Back on the base screen; the mission is resolved.
     expect(container!.textContent).toContain("Personnel");
     expect(container!.textContent).not.toContain("A mission is in progress");
   });
 
-  it("launches a solo survey (squad of one) and plays it to completion", () => {
+  it("plays the arrival fight path to its own outcome", () => {
     render();
-    click("New Campaign");
+    startCampaign();
     click("Worldgate");
-    expect(container!.textContent).toContain("Survey: Address 04");
-    // m_survey min is 1: a single operative is a valid squad.
     click("Mercer");
+    click("Okafor");
     click("Launch mission");
-    // The event screen takes over — a solo squad still launches.
-    expect(container!.textContent).toContain("rival bloc's survey team is stranded");
-    // o_help is always eligible regardless of squad composition.
-    click("Offer them passage");
-    expect(container!.textContent).toContain("crossing is tense");
-    click("Return home");
-    expect(container!.textContent).toContain("Contact established");
+    expect(container!.textContent).toContain("Recon One's marker beacon");
+    click("Follow the road up-valley");
+    click("Break free");
+    click("Freeze.");
+    click("Pocket the cord");
+    click("Go home.");
+    expect(container!.textContent).toContain("A silence bought in blood");
     click("Return to base");
     expect(container!.textContent).toContain("Personnel");
-    expect(container!.textContent).not.toContain("A mission is in progress");
   });
 
   it("builds a facility from the base screen and shows the progress row", () => {
     render();
-    click("New Campaign");
+    startCampaign();
     expect(container!.textContent).toContain("Facilities");
     // The first buildable facility is Expanded Quarters (starting resources cover it).
     click("Build");
@@ -149,7 +167,7 @@ describe("App shell", () => {
 
   it("persists the campaign to localStorage and restores it on reload", () => {
     render();
-    click("New Campaign");
+    startCampaign();
     click("End Day"); // now on day 2, autosaved
 
     // Simulate a reload: fresh root over a fresh App reading localStorage.

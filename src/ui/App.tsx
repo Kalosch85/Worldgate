@@ -88,11 +88,12 @@ export function App() {
   };
 
   const startCampaign = () => {
-    const next = newCampaign(newSeed());
+    // D-9: a new campaign opens on the intro event — route straight to it.
+    const next = newCampaign(newSeed(), content);
     setState(next);
     saveToStorage(next);
     setMessage(null);
-    setScreen("base");
+    setScreen(missionScreen(next) ?? "base");
   };
 
   const handleImport = (text: string): string | null => {

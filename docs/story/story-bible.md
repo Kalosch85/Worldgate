@@ -50,9 +50,10 @@ moved through the network long ago, now scavenging dead sites (ut_raider).
   `support` variable and income. They want results without headlines.
 - **The Rival Bloc** — the state that lost the vote to host Command and
   runs its own clandestine gate program off a second, damaged gate.
-  Mechanically: `trust_rival`. Their stranded survey team (ev_first_contact)
-  is the thread; the queued re-fire at +30 days should become a proper
-  follow-up event (backlog item B-1).
+  Mechanically: `trust_rival`. Their stranded survey team (ev_first_contact,
+  at Address 11 — surfaced by the distress marker Okafor pulls from the
+  spire traffic, D-9) is the thread; the queued re-fire at +30 days should
+  become a proper follow-up event (backlog item B-1).
 - **The Public** — doesn't know. Yet. Act 2's entire engine.
 
 ## 5. Cast (V-3 target: 6 heroes by end of Act 1)
@@ -77,7 +78,8 @@ moved through the network long ago, now scavenging dead sites (ut_raider).
 ## 6. Act structure (branch-and-bottleneck at campaign scale)
 
 - **Act 1 — Establishment.** Surveys, raiders, first contact, and the
-  Veyra arc (episodes 1–5, m_vy_1 unlocked by securing the relay). Act
+  Veyra arc (episodes 1–5; m_vy_1 unlocked by intercepting the tribute
+  call, D-9 — see §10). Act
   bottleneck: what Seryn knows — Veyra's Steward kept a partial map of
   living gate sites. Doubt, trust_rival, and support carry forward.
 - **Act 2 — Exposure.** (The original pitch's politics, gated behind
@@ -106,12 +108,16 @@ the spine. Spine missions are the bottlenecks.
 6. The journal is the campaign's memory: every meaningful choice leaves a
    line a returning player can reconstruct the story from (V-1's compressed
    days read as "nothing to report" entries).
+7. First-person interior monologue (the Director's voice) appears **only**
+   in the campaign intro, act bottlenecks, and rare director's-log journal
+   entries; all other text stays operational. (D-9 amendment.)
 
 ## 8. Vocabulary
 
 worldgate · address (numbered) · the Vault (Earth site) · Command ·
 Steward · Tender · the First (Veyran title) · dial / crossing · "the
-program" (Earth-side euphemism).
+program" (Earth-side euphemism) · Recon One · the taken · tribute road
+(D-9 additions).
 
 ## 9. Backlog (content seeds, not commitments)
 
@@ -125,3 +131,39 @@ program" (Earth-side euphemism).
 - **B-4:** First Tender infestation tactical on Earth-side Vault — the
   wrong thing came back through (uses insect sprites; stakes: support).
 - **B-5:** Act 2 politics arc — full spec at Phase 7 gate per plan.
+- **B-6:** Cassy — the intro monologue names a loss ("Since Cassy passed").
+  Who Cassy was is deliberately undefined; any reveal is a Fable-tier
+  canon decision, and content sessions must not gender, date, or explain
+  the name.
+- **B-7:** The spare gate address (`vy_spare_address`, arrival fight path):
+  the dead villager's hide-cord address — its consequences and side
+  mission. Only the flag exists; author nothing against it without a
+  Fable outline.
+
+## 10. Early-campaign canon (D-9)
+
+- **Recon One** — Command's first crewed survey of Address 04: four
+  generic specialists sent through before the Director's appointment
+  cleared. Two textbook check-ins, then silence — nine days of it by
+  campaign Day 1. Captured on the valley road and held in the Penitence
+  precinct; located in the M2 cell block, freed by the end of M3 (the
+  arc's `addPersonnel +4` is Recon One returning to duty). Their check-in
+  files — Mercer knows them cold — are the canonical device for
+  recognizing Veyran faces. Members individually unnamed in v1.
+- **Address 04 — Veyra.** The gate stands in the **Silent Valley**; the
+  holy city and the Penitence crown the mountain a day up the **tribute
+  road**. The watermill village of **Karsu** straddles the road where the
+  valley narrows. **Odel**, Karsu's miller, fed Recon One (she appears in
+  their second check-in) and keeps the **ledger of the taken**: every
+  person the god has taken, written down so someone remembers.
+- **Tender processions.** Tenders carry tribute down the valley _to the
+  gate and through it_ — provisioning the Steward's other, dead sites on
+  the network: the maintenance contract made visible. A procession is the
+  game's first alien image — dread and scale, never combat — and the
+  villagers' fear during one is of being _seen_, not of the player. The
+  taken are marched the other way, up the road to the Penitence.
+- **Addresses.** 04 Veyra · 07 the dead relay site (m_relay) · 11 the
+  rival team's stranding (m_rival_stranded). Okafor's ledger numbers them.
+- **The tribute call.** Signal spires on the pass road call each tribute
+  train through to the temple; taking them (m_vy_intercept) puts Command's
+  hand on that call and is how the spire traffic yields Address 11.

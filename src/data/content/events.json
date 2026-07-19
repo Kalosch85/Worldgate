@@ -1,47 +1,228 @@
 [
   {
+    "id": "ev_intro",
+    "title": "First Day",
+    "entryNode": "n_in_sign",
+    "nodes": [
+      {
+        "id": "n_in_sign",
+        "text": "I didn't know what to expect when I signed. 'Classified posting. Accept or decline.' No briefing, no details — just a signature line and a car waiting outside. I certainly didn't expect to walk into the pages of a science-fiction comic. Interstellar travel through a glowing ring. Well. That's new. ... Since Cassy passed, I could use the work. Maybe the distance more.",
+        "options": [
+          {
+            "id": "o_in_down",
+            "text": "Go down.",
+            "next": {
+              "kind": "node",
+              "node": "n_in_ring"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_in_ring",
+        "text": "Four hundred meters down, the ring hangs in its cradle like a held breath. As of this morning it's mine — along with a budget that says the Consortium expects nothing. Dr. Okafor waits with an address ledger. Captain Mercer waits with a weapons manifest. Everyone down here is waiting on me. First day. No pressure.",
+        "options": [
+          {
+            "id": "o_in_science",
+            "text": "Start with the science. Okafor first.",
+            "next": {
+              "kind": "node",
+              "node": "n_in_okafor"
+            }
+          },
+          {
+            "id": "o_in_threats",
+            "text": "Start with the threats. Mercer first.",
+            "next": {
+              "kind": "node",
+              "node": "n_in_mercer"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_in_okafor",
+        "speaker": "Dr. A. Okafor",
+        "text": "Fifty-one addresses in the ledger, one dialed. Address 04 — Recon One went through eleven days ago, before your appointment cleared. Two check-ins: breathable air, terraced fields, a city. Then nothing. Nine days of nothing. The gate holds, the address holds — whatever stopped them, it isn't the physics. That's what frightens me, Director. The physics was supposed to be the hard part.",
+        "options": [
+          {
+            "id": "o_in_okafor_go",
+            "text": "Show me the dialing floor.",
+            "next": {
+              "kind": "node",
+              "node": "n_in_decide"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_in_mercer",
+        "speaker": "Cpt. D. Mercer",
+        "text": "Four people. Recon One went through to Address 04 before you got the chair — checked in twice, by the book, then went dark. Nine days now. My manifest says small arms and two crates of optimism, so I'll say what the reports won't: somebody stopped them checking in. Plan for that. Assume the worst and you get to be wrong in the good direction.",
+        "options": [
+          {
+            "id": "o_in_mercer_go",
+            "text": "Show me the dialing floor.",
+            "next": {
+              "kind": "node",
+              "node": "n_in_decide"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_in_decide",
+        "text": "We can dial within the hour. Whatever is on the other side has had Recon One for nine days.",
+        "options": [
+          {
+            "id": "o_in_commit",
+            "text": "Assemble the team. We bring them home.",
+            "next": {
+              "kind": "end",
+              "outcome": "out_in_go"
+            }
+          },
+          {
+            "id": "o_in_cautious",
+            "text": "Assemble the team — but at the first sign of trouble, they come back.",
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "intro_cautious",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "end",
+              "outcome": "out_in_go"
+            }
+          }
+        ]
+      }
+    ],
+    "outcomes": [
+      {
+        "id": "out_in_go",
+        "label": "Rescue crossing authorized",
+        "effects": [
+          {
+            "type": "unlockMission",
+            "mission": "m_vy_arrival"
+          },
+          {
+            "type": "log",
+            "text": "Day 1. Rescue crossing authorized. Address 04."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "ev_first_contact",
     "title": "The Stranded Survey Team",
     "entryNode": "n_intro",
     "nodes": [
       {
         "id": "n_intro",
-        "text": "A rival bloc's survey team is stranded at the relay, their return address burned out. Their leader lowers her weapon first.",
+        "text": "A rival bloc's survey team is stranded among the bones of a dead gate site, their return address burned out. Their leader lowers her weapon first.",
         "options": [
           {
             "id": "o_help",
             "text": "Offer them passage through our gate.",
             "effects": [
-              { "type": "resource", "resource": "materials", "delta": -5 },
-              { "type": "variable", "variable": "trust_rival", "delta": 2 },
-              { "type": "flag", "flag": "helped_rivals", "value": true },
-              { "type": "queueEvent", "event": "ev_first_contact", "delayDays": 30 }
+              {
+                "type": "resource",
+                "resource": "materials",
+                "delta": -5
+              },
+              {
+                "type": "variable",
+                "variable": "trust_rival",
+                "delta": 2
+              },
+              {
+                "type": "flag",
+                "flag": "helped_rivals",
+                "value": true
+              },
+              {
+                "type": "queueEvent",
+                "event": "ev_first_contact",
+                "delayDays": 30
+              }
             ],
-            "next": { "kind": "node", "node": "n_help" }
+            "next": {
+              "kind": "node",
+              "node": "n_help"
+            }
           },
           {
             "id": "o_interrogate",
             "text": "[Diplomat] Trade passage for what they know.",
-            "requirements": [{ "type": "squadHasArchetype", "tag": "diplomat" }],
-            "effects": [{ "type": "resource", "resource": "intel", "delta": 8 }],
-            "next": { "kind": "node", "node": "n_help" }
+            "requirements": [
+              {
+                "type": "squadHasArchetype",
+                "tag": "diplomat"
+              }
+            ],
+            "effects": [
+              {
+                "type": "resource",
+                "resource": "intel",
+                "delta": 8
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_help"
+            }
           },
           {
             "id": "o_data",
             "text": "[Science 5+] Decode their burned-out address instead.",
-            "requirements": [{ "type": "squadSkillAtLeast", "skill": "science", "min": 5 }],
-            "effects": [{ "type": "resource", "resource": "exotics", "delta": 2 }],
-            "next": { "kind": "node", "node": "n_help" }
+            "requirements": [
+              {
+                "type": "squadSkillAtLeast",
+                "skill": "science",
+                "min": 5
+              }
+            ],
+            "effects": [
+              {
+                "type": "resource",
+                "resource": "exotics",
+                "delta": 2
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_help"
+            }
           },
           {
             "id": "o_leave",
             "text": "Leave them. Not our problem.",
             "effects": [
-              { "type": "flag", "flag": "abandoned_rivals", "value": true },
-              { "type": "variable", "variable": "trust_rival", "delta": -3 },
-              { "type": "fatigue", "scope": "squad", "delta": 5 }
+              {
+                "type": "flag",
+                "flag": "abandoned_rivals",
+                "value": true
+              },
+              {
+                "type": "variable",
+                "variable": "trust_rival",
+                "delta": -3
+              },
+              {
+                "type": "fatigue",
+                "scope": "squad",
+                "delta": 5
+              }
             ],
-            "next": { "kind": "end", "outcome": "out_cold" }
+            "next": {
+              "kind": "end",
+              "outcome": "out_cold"
+            }
           }
         ]
       },
@@ -49,7 +230,14 @@
         "id": "n_help",
         "text": "The crossing is tense but quiet. Their leader memorizes every face on your team before stepping through.",
         "options": [
-          { "id": "o_return", "text": "Return home.", "next": { "kind": "end", "outcome": "out_contact" } }
+          {
+            "id": "o_return",
+            "text": "Return home.",
+            "next": {
+              "kind": "end",
+              "outcome": "out_contact"
+            }
+          }
         ]
       }
     ],
@@ -58,14 +246,445 @@
         "id": "out_contact",
         "label": "Contact established",
         "effects": [
-          { "type": "xp", "scope": "squad", "amount": 10 },
-          { "type": "log", "text": "Someone on the other side owes us. Or knows us." }
+          {
+            "type": "xp",
+            "scope": "squad",
+            "amount": 10
+          },
+          {
+            "type": "log",
+            "text": "Someone on the other side owes us. Or knows us."
+          }
         ]
       },
       {
         "id": "out_cold",
         "label": "Walked away",
-        "effects": [{ "type": "xp", "scope": "squad", "amount": 5 }]
+        "effects": [
+          {
+            "type": "xp",
+            "scope": "squad",
+            "amount": 5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ev_vy_arrival",
+    "title": "The Silent Valley",
+    "entryNode": "n_va_gate",
+    "nodes": [
+      {
+        "id": "n_va_gate",
+        "text": "The gate opens on a green valley under two suns — terraced fields, a road of packed white stone, cart ruts worn deep. Recon One's marker beacon lies ten meters out, snapped clean. No bodies. No shell casings. Up-valley, a bell rings once and stops, like a mistake.",
+        "options": [
+          {
+            "id": "o_va_road",
+            "text": "Follow the road up-valley.",
+            "next": {
+              "kind": "node",
+              "node": "n_va_villagers"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_va_villagers",
+        "text": "They come out of the field rows at a run — a dozen villagers, human as you are, sun-worn and urgent. Not one of them makes a sound. They pull at your arms and packs, herding you off the road toward the treeline, fingers pressed to lips. The oldest points down the road, then flattens his hand toward the earth: down. Hide. Now.",
+        "options": [
+          {
+            "id": "o_va_trust",
+            "text": "Trust them. Get off the road.",
+            "next": {
+              "kind": "node",
+              "node": "n_va_procession"
+            }
+          },
+          {
+            "id": "o_va_refuse",
+            "text": "Break free. You don't surrender the road to strangers.",
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "vy_villager_killed",
+                "value": true
+              },
+              {
+                "type": "fatigue",
+                "scope": "squad",
+                "delta": 10
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_va_fight"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_va_procession",
+        "text": "From the treeline you feel it before you see it: a tread that reaches you through the ground. Tenders. Insect-forms the size of freight cars, walking in single file, laden with grain, cloth, bound crates — tribute. They pass without one glance at the world around them, down the white road, to the gate. Through it. The villagers do not watch them. They watch you, willing you silent.",
+        "options": [
+          {
+            "id": "o_va_stay_down",
+            "text": "Stay down until the last one is gone.",
+            "next": {
+              "kind": "node",
+              "node": "n_va_lead"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_va_lead",
+        "text": "When the road is empty the old man draws in the dirt: the road, the valley, and high above it a ringed compound — a temple. He touches the crates' shapes, then his own wrists, crossed as if bound. Those the god takes go up the road. He looks at your gear, your offworld faces, and holds up four fingers. Four like you. Taken. Alive when they passed.",
+        "options": [
+          {
+            "id": "o_va_home",
+            "text": "Go home with the lead.",
+            "next": {
+              "kind": "end",
+              "outcome": "out_va_quiet"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_va_fight",
+        "text": "You shove clear and a quarterstaff cracks against Mercer's rifle — then it is a brawl in the treeline, silent and desperate, the villagers fighting like people who cannot afford to be heard. It ends wrong. A young villager is down, neck twisted against a root, not moving. That is when the ground begins to shake.",
+        "options": [
+          {
+            "id": "o_va_freeze",
+            "text": "Freeze.",
+            "next": {
+              "kind": "node",
+              "node": "n_va_procession_fight"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_va_procession_fight",
+        "text": "Every hand stops — theirs and yours. Tenders, insect-forms the size of freight cars, file down the white road under tribute loads, and every living thing in the valley holds still as stone until they pass — to the gate, and through it. Okafor checks the fallen villager for a pulse and finds none. Finds, instead, a hide cord at his neck, burned with gate glyphs. An address.",
+        "options": [
+          {
+            "id": "o_va_take_address",
+            "text": "Pocket the cord. Withdraw before the others regroup.",
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "vy_spare_address",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_va_fight_exit"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_va_fight_exit",
+        "text": "The villagers return for their dead in silence, and the silence is a verdict. Whatever the crates were, wherever the taken go, someone in this valley knows — and no one here will ever tell you now. The road runs up toward a ringed compound in the high pass. It is the only lead you are leaving with.",
+        "options": [
+          {
+            "id": "o_va_home_cold",
+            "text": "Go home.",
+            "next": {
+              "kind": "end",
+              "outcome": "out_va_fight"
+            }
+          }
+        ]
+      }
+    ],
+    "outcomes": [
+      {
+        "id": "out_va_quiet",
+        "label": "The taken go up the road",
+        "effects": [
+          {
+            "type": "unlockMission",
+            "mission": "m_vy_ledger"
+          },
+          {
+            "type": "xp",
+            "scope": "squad",
+            "amount": 10
+          },
+          {
+            "type": "log",
+            "text": "Address 04: villagers confirmed four offworlders taken alive to a temple compound. The valley pays tribute through the gate."
+          }
+        ]
+      },
+      {
+        "id": "out_va_fight",
+        "label": "A silence bought in blood",
+        "effects": [
+          {
+            "type": "unlockMission",
+            "mission": "m_vy_ledger"
+          },
+          {
+            "type": "xp",
+            "scope": "squad",
+            "amount": 5
+          },
+          {
+            "type": "log",
+            "text": "Address 04: a villager is dead by our hands. The taken are marched to a temple compound in the high pass. The valley will remember us."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ev_vy_ledger",
+    "title": "The Ledger of the Taken",
+    "entryNode": "n_vl_arrive",
+    "nodes": [
+      {
+        "id": "n_vl_arrive",
+        "text": "Karsu: a watermill village of stone and moss where the valley narrows, straddling the tribute road. Smoke from the chimneys. Eyes at the shutters. They knew you were coming before you crossed the bridge.",
+        "options": [
+          {
+            "id": "o_vl_open",
+            "text": "Approach the bridge.",
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "vy_villager_killed",
+                "value": false
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vl_recognized"
+            }
+          },
+          {
+            "id": "o_vl_closed",
+            "text": "Approach the bridge.",
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "vy_villager_killed",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vl_barred"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_vl_recognized",
+        "speaker": "Cpt. D. Mercer",
+        "text": "A miller woman meets you at the bridge — and Mercer stops dead. He has seen her before: Recon One's second check-in, one blurred frame, this same face passing bread across a fence. 'They fed them,' he says quietly. 'Before the god took them, this village fed my people.' The woman — Odel — nods once. The doors of Karsu open.",
+        "options": [
+          {
+            "id": "o_vl_enter",
+            "text": "Go in.",
+            "next": {
+              "kind": "node",
+              "node": "n_vl_story"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_vl_story",
+        "text": "By the mill fire they speak of the Luminous One the way farmers speak of weather: without doubt. He hears every prayer said on the tribute road — names spoken at dusk are answered by morning. He walks where he is worshipped. He has kept the valley from famine for nine generations, and the price is the tribute, and sometimes the price is people. They are not lying. You can tell.",
+        "options": [
+          {
+            "id": "o_vl_ask_taken",
+            "text": "Ask about the taken.",
+            "next": {
+              "kind": "node",
+              "node": "n_vl_ledger"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_vl_ledger",
+        "text": "The ledger is a mill-book, flour-dusted, older than any hand in the room: every soul the god has taken, written down so someone remembers. On the last page, four entries in fresh ink, marked with an offworlder glyph. Odel touches each name in turn — alive, alive, alive, alive. Held in the temple precinct, where the road becomes a prison. The Penitence.",
+        "options": [
+          {
+            "id": "o_vl_ask_road",
+            "text": "Ask how tribute reaches the temple.",
+            "next": {
+              "kind": "node",
+              "node": "n_vl_transport"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_vl_transport",
+        "speaker": "Odel",
+        "text": "Grain goes up the mountain twice a season: carts to the first shrine, then porters to the temple gate. Porters need papers, and papers can be arranged for those Karsu trusts. She looks at Mercer a long moment. 'They fed yours. Karsu pays its debts.' The carts leave soon — and a signal spire on the pass road calls each tribute train through.",
+        "options": [
+          {
+            "id": "o_vl_porters",
+            "text": "Take the porters' road. Leave Karsu your spare field medicine in thanks.",
+            "effects": [
+              {
+                "type": "resource",
+                "resource": "materials",
+                "delta": -5
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_transport",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "end",
+              "outcome": "out_vl_transport"
+            }
+          },
+          {
+            "id": "o_vl_own_terms",
+            "text": "Refuse the favor — go overland, on your own terms.",
+            "effects": [
+              {
+                "type": "fatigue",
+                "scope": "squad",
+                "delta": 10
+              }
+            ],
+            "next": {
+              "kind": "end",
+              "outcome": "out_vl_overland"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_vl_barred",
+        "text": "A cart bars the bridge. Behind it stands all of Karsu, silent the way the valley goes silent for the Tenders. They know what happened in the trees. An old miller woman comes forward alone and speaks across the barrier, because their law demands the taken be spoken for — even to you.",
+        "options": [
+          {
+            "id": "o_vl_listen",
+            "text": "Listen.",
+            "next": {
+              "kind": "node",
+              "node": "n_vl_barred_ledger"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_vl_barred_ledger",
+        "speaker": "Odel",
+        "text": "The Luminous One hears every prayer on this road. He keeps the valley fed; the price is tribute, and sometimes the price is people — written in the ledger, so someone remembers. Four offworlders, fresh ink, alive, held where the road becomes a prison: the Penitence. When the spire on the pass sings, the tribute carts go up. You will not be on them. The shutters close.",
+        "options": [
+          {
+            "id": "o_vl_high_country",
+            "text": "Take the high country alone.",
+            "effects": [
+              {
+                "type": "fatigue",
+                "scope": "squad",
+                "delta": 15
+              },
+              {
+                "type": "resource",
+                "resource": "materials",
+                "delta": -5
+              }
+            ],
+            "next": {
+              "kind": "end",
+              "outcome": "out_vl_overland"
+            }
+          }
+        ]
+      }
+    ],
+    "outcomes": [
+      {
+        "id": "out_vl_transport",
+        "label": "The porters' road",
+        "effects": [
+          {
+            "type": "unlockMission",
+            "mission": "m_vy_intercept"
+          },
+          {
+            "type": "xp",
+            "scope": "squad",
+            "amount": 10
+          },
+          {
+            "type": "log",
+            "text": "Recon One is alive in the Penitence. Karsu will pass us up the mountain as tribute porters — first, the signal spires that call the carts through."
+          }
+        ]
+      },
+      {
+        "id": "out_vl_overland",
+        "label": "The long way up",
+        "effects": [
+          {
+            "type": "unlockMission",
+            "mission": "m_vy_intercept"
+          },
+          {
+            "type": "xp",
+            "scope": "squad",
+            "amount": 10
+          },
+          {
+            "type": "log",
+            "text": "Recon One is alive in the Penitence. No help from Karsu — the climb to the pass spires goes overland, cold and heavy."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ev_vy_regroup",
+    "title": "Regroup at the Gate",
+    "entryNode": "n_vr_regroup",
+    "nodes": [
+      {
+        "id": "n_vr_regroup",
+        "text": "The team comes back through the gate ahead of the Tenders' reach, bruised and short of answers. The spires still sing on the pass road — the tribute call goes on with or without you. By morning Mercer has re-planned the approach.",
+        "options": [
+          {
+            "id": "o_vr_again",
+            "text": "Go again.",
+            "next": {
+              "kind": "end",
+              "outcome": "out_vr_again"
+            }
+          }
+        ]
+      }
+    ],
+    "outcomes": [
+      {
+        "id": "out_vr_again",
+        "label": "The spires still sing",
+        "effects": [
+          {
+            "type": "unlockMission",
+            "mission": "m_vy_intercept"
+          },
+          {
+            "type": "log",
+            "text": "The pass spires are still in temple hands. We go again."
+          }
+        ]
       }
     ]
   },
@@ -76,12 +695,37 @@
     "nodes": [
       {
         "id": "n_vy1_arrive",
-        "text": "The gate opens on a terraced holy city, white stone and bell-towers under two suns. The Second Expedition's last transmission is nine days stale. Pilgrim chatter in the market says heretics await 'the Penitence's mercy' — whatever that means, it isn't good.",
+        "text": "The holy city crowns the mountain: white stone terraces and bell-towers under two suns, and above them the ringed precinct of the Penitence, where four names in fresh ink are waiting. Pilgrim chatter in the processional market says heretics await 'the Penitence's mercy' — whatever that means, it isn't good.",
         "options": [
           {
-            "id": "o_vy1_move_in",
-            "text": "Move in.",
-            "next": { "kind": "node", "node": "n_vy1_gather" }
+            "id": "o_vy1_arrive_porters",
+            "text": "Come up with the grain — Karsu's porter papers hold to the first shrine, and feet do the rest.",
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_transport",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy1_gather"
+            }
+          },
+          {
+            "id": "o_vy1_arrive_foot",
+            "text": "Come up the pilgrim road on foot — two more dusty travelers among thousands.",
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_transport",
+                "value": false
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy1_gather"
+            }
           }
         ]
       },
@@ -95,40 +739,102 @@
             "requirements": [
               {
                 "type": "not",
-                "condition": { "type": "flag", "flag": "f_vy_intel_pilgrims", "value": true }
+                "condition": {
+                  "type": "flag",
+                  "flag": "f_vy_intel_pilgrims",
+                  "value": true
+                }
               },
-              { "type": "squadSkillAtLeast", "skill": "diplomacy", "min": 4 }
+              {
+                "type": "squadSkillAtLeast",
+                "skill": "diplomacy",
+                "min": 4
+              }
             ],
-            "effects": [{ "type": "flag", "flag": "f_vy_intel_pilgrims", "value": true }],
-            "next": { "kind": "node", "node": "n_vy1_pilgrims_detail" }
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_intel_pilgrims",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy1_pilgrims_detail"
+            }
           },
           {
             "id": "o_vy1_patrols",
             "text": "Shadow the temple patrols.",
             "requirements": [
-              { "type": "not", "condition": { "type": "flag", "flag": "f_vy_intel_patrols", "value": true } },
-              { "type": "squadSkillAtLeast", "skill": "combat", "min": 5 }
+              {
+                "type": "not",
+                "condition": {
+                  "type": "flag",
+                  "flag": "f_vy_intel_patrols",
+                  "value": true
+                }
+              },
+              {
+                "type": "squadSkillAtLeast",
+                "skill": "combat",
+                "min": 5
+              }
             ],
-            "effects": [{ "type": "flag", "flag": "f_vy_intel_patrols", "value": true }],
-            "next": { "kind": "node", "node": "n_vy1_patrols_detail" }
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_intel_patrols",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy1_patrols_detail"
+            }
           },
           {
             "id": "o_vy1_relay",
             "text": "Okafor: tap the temple relay traffic.",
             "requirements": [
-              { "type": "not", "condition": { "type": "flag", "flag": "f_vy_intel_comms", "value": true } },
-              { "type": "squadSkillAtLeast", "skill": "science", "min": 6 }
+              {
+                "type": "not",
+                "condition": {
+                  "type": "flag",
+                  "flag": "f_vy_intel_comms",
+                  "value": true
+                }
+              },
+              {
+                "type": "squadSkillAtLeast",
+                "skill": "science",
+                "min": 6
+              }
             ],
             "effects": [
-              { "type": "flag", "flag": "f_vy_intel_comms", "value": true },
-              { "type": "variable", "variable": "doubt", "delta": 1 }
+              {
+                "type": "flag",
+                "flag": "f_vy_intel_comms",
+                "value": true
+              },
+              {
+                "type": "variable",
+                "variable": "doubt",
+                "delta": 1
+              }
             ],
-            "next": { "kind": "node", "node": "n_vy1_relay_detail" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy1_relay_detail"
+            }
           },
           {
             "id": "o_vy1_move_on",
             "text": "We've learned enough. Move to the plan.",
-            "next": { "kind": "node", "node": "n_vy1_plan" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy1_plan"
+            }
           }
         ]
       },
@@ -139,7 +845,10 @@
           {
             "id": "o_vy1_pilgrims_continue",
             "text": "Continue.",
-            "next": { "kind": "node", "node": "n_vy1_gather" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy1_gather"
+            }
           }
         ]
       },
@@ -150,7 +859,10 @@
           {
             "id": "o_vy1_patrols_continue",
             "text": "Continue.",
-            "next": { "kind": "node", "node": "n_vy1_gather" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy1_gather"
+            }
           }
         ]
       },
@@ -162,7 +874,10 @@
           {
             "id": "o_vy1_relay_continue",
             "text": "Continue.",
-            "next": { "kind": "node", "node": "n_vy1_gather" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy1_gather"
+            }
           }
         ]
       },
@@ -173,23 +888,57 @@
           {
             "id": "o_vy1_uniform_choice",
             "text": "Guard uniforms — walk in as temple staff.",
-            "effects": [{ "type": "flag", "flag": "f_vy_approach_uniform", "value": true }],
-            "next": { "kind": "node", "node": "n_vy1_uniform" }
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_approach_uniform",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy1_uniform"
+            }
           },
           {
             "id": "o_vy1_worker_choice",
             "text": "Provision workers — go in with the grain carts.",
             "requirements": [
-              { "type": "not", "condition": { "type": "flag", "flag": "f_vy_dessik_refused", "value": true } }
+              {
+                "type": "not",
+                "condition": {
+                  "type": "flag",
+                  "flag": "f_vy_dessik_refused",
+                  "value": true
+                }
+              }
             ],
-            "effects": [{ "type": "flag", "flag": "f_vy_approach_worker", "value": true }],
-            "next": { "kind": "node", "node": "n_vy1_dessik" }
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_approach_worker",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy1_dessik"
+            }
           },
           {
             "id": "o_vy1_assault_choice",
             "text": "Open assault — go in loud.",
-            "effects": [{ "type": "flag", "flag": "f_vy_approach_assault", "value": true }],
-            "next": { "kind": "end", "outcome": "out_vy1_assault" }
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_approach_assault",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy1_assault"
+            }
           }
         ]
       },
@@ -200,15 +949,39 @@
           {
             "id": "o_vy1_knockout",
             "text": "Knock out a lone guard and take his colors.",
-            "requirements": [{ "type": "squadSkillAtLeast", "skill": "combat", "min": 5 }],
-            "effects": [{ "type": "flag", "flag": "f_vy_uniform_knockout", "value": true }],
-            "next": { "kind": "node", "node": "n_vy1_uniform_body" }
+            "requirements": [
+              {
+                "type": "squadSkillAtLeast",
+                "skill": "combat",
+                "min": 5
+              }
+            ],
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_uniform_knockout",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy1_uniform_body"
+            }
           },
           {
             "id": "o_vy1_bathhouse",
             "text": "Find another way: lift a set from the bath-house during vigil hour.",
-            "effects": [{ "type": "flag", "flag": "f_vy_uniform_stolen", "value": true }],
-            "next": { "kind": "end", "outcome": "out_vy1_uniform" }
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_uniform_stolen",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy1_uniform"
+            }
           }
         ]
       },
@@ -219,13 +992,25 @@
           {
             "id": "o_vy1_hide_body",
             "text": "Hide him in the cistern.",
-            "effects": [{ "type": "flag", "flag": "f_vy_body_hidden", "value": true }],
-            "next": { "kind": "end", "outcome": "out_vy1_uniform" }
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_body_hidden",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy1_uniform"
+            }
           },
           {
             "id": "o_vy1_leave_body",
             "text": "Leave him. Move fast.",
-            "next": { "kind": "end", "outcome": "out_vy1_uniform" }
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy1_uniform"
+            }
           }
         ]
       },
@@ -236,14 +1021,32 @@
           {
             "id": "o_vy1_dessik_accept",
             "text": "Swear it.",
-            "effects": [{ "type": "flag", "flag": "f_vy_owe_ilo", "value": true }],
-            "next": { "kind": "end", "outcome": "out_vy1_worker" }
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_owe_ilo",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy1_worker"
+            }
           },
           {
             "id": "o_vy1_dessik_refuse",
             "text": "Refuse. Find another way in.",
-            "effects": [{ "type": "flag", "flag": "f_vy_dessik_refused", "value": true }],
-            "next": { "kind": "node", "node": "n_vy1_plan" }
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_dessik_refused",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy1_plan"
+            }
           }
         ]
       }
@@ -252,17 +1055,32 @@
       {
         "id": "out_vy1_uniform",
         "label": "Infiltration prepared — guard colors",
-        "effects": [{ "type": "unlockMission", "mission": "m_vy_2" }]
+        "effects": [
+          {
+            "type": "unlockMission",
+            "mission": "m_vy_2"
+          }
+        ]
       },
       {
         "id": "out_vy1_worker",
         "label": "Infiltration prepared — provision carts",
-        "effects": [{ "type": "unlockMission", "mission": "m_vy_2" }]
+        "effects": [
+          {
+            "type": "unlockMission",
+            "mission": "m_vy_2"
+          }
+        ]
       },
       {
         "id": "out_vy1_assault",
         "label": "Plan: open assault",
-        "effects": [{ "type": "unlockMission", "mission": "m_vy_2" }]
+        "effects": [
+          {
+            "type": "unlockMission",
+            "mission": "m_vy_2"
+          }
+        ]
       }
     ]
   },
@@ -278,20 +1096,47 @@
           {
             "id": "o_vy2_route_uniform",
             "text": "Approach in guard colors.",
-            "requirements": [{ "type": "flag", "flag": "f_vy_approach_uniform", "value": true }],
-            "next": { "kind": "node", "node": "n_vy2_a_gate" }
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_approach_uniform",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy2_a_gate"
+            }
           },
           {
             "id": "o_vy2_route_worker",
             "text": "Approach with the grain carts.",
-            "requirements": [{ "type": "flag", "flag": "f_vy_approach_worker", "value": true }],
-            "next": { "kind": "node", "node": "n_vy2_b_kitchens" }
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_approach_worker",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy2_b_kitchens"
+            }
           },
           {
             "id": "o_vy2_route_assault",
             "text": "Hit the gate head-on.",
-            "requirements": [{ "type": "flag", "flag": "f_vy_approach_assault", "value": true }],
-            "next": { "kind": "node", "node": "n_vy2_c_assault_1" }
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_approach_assault",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy2_c_assault_1"
+            }
           }
         ]
       },
@@ -303,25 +1148,59 @@
             "id": "o_vy2_a_case_complication",
             "text": "Move for the checkpoint.",
             "requirements": [
-              { "type": "flag", "flag": "f_vy_uniform_knockout", "value": true },
-              { "type": "not", "condition": { "type": "flag", "flag": "f_vy_body_hidden", "value": true } }
+              {
+                "type": "flag",
+                "flag": "f_vy_uniform_knockout",
+                "value": true
+              },
+              {
+                "type": "not",
+                "condition": {
+                  "type": "flag",
+                  "flag": "f_vy_body_hidden",
+                  "value": true
+                }
+              }
             ],
-            "next": { "kind": "node", "node": "n_vy2_a_complication" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy2_a_complication"
+            }
           },
           {
             "id": "o_vy2_a_case_smooth",
             "text": "Move for the checkpoint.",
             "requirements": [
-              { "type": "flag", "flag": "f_vy_uniform_knockout", "value": true },
-              { "type": "flag", "flag": "f_vy_body_hidden", "value": true }
+              {
+                "type": "flag",
+                "flag": "f_vy_uniform_knockout",
+                "value": true
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_body_hidden",
+                "value": true
+              }
             ],
-            "next": { "kind": "node", "node": "n_vy2_a_cells" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy2_a_cells"
+            }
           },
           {
             "id": "o_vy2_a_case_seal",
             "text": "Move for the checkpoint.",
-            "requirements": [{ "type": "flag", "flag": "f_vy_uniform_stolen", "value": true }],
-            "next": { "kind": "node", "node": "n_vy2_a_seal" }
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_uniform_stolen",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy2_a_seal"
+            }
           }
         ]
       },
@@ -332,20 +1211,47 @@
           {
             "id": "o_vy2_a_talk",
             "text": "Talk him down.",
-            "requirements": [{ "type": "squadSkillAtLeast", "skill": "diplomacy", "min": 5 }],
-            "next": { "kind": "node", "node": "n_vy2_a_cells" }
+            "requirements": [
+              {
+                "type": "squadSkillAtLeast",
+                "skill": "diplomacy",
+                "min": 5
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy2_a_cells"
+            }
           },
           {
             "id": "o_vy2_a_overpower",
             "text": "Take the checkpoint quietly.",
-            "requirements": [{ "type": "squadSkillAtLeast", "skill": "combat", "min": 6 }],
-            "next": { "kind": "node", "node": "n_vy2_a_cells" }
+            "requirements": [
+              {
+                "type": "squadSkillAtLeast",
+                "skill": "combat",
+                "min": 6
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy2_a_cells"
+            }
           },
           {
             "id": "o_vy2_a_push",
             "text": "Push past before he thinks it through.",
-            "effects": [{ "type": "flag", "flag": "f_vy_alarm", "value": true }],
-            "next": { "kind": "node", "node": "n_vy2_a_cells" }
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_alarm",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy2_a_cells"
+            }
           }
         ]
       },
@@ -357,73 +1263,151 @@
             "id": "o_vy2_a_bluff_easy",
             "text": "Bluff as new transfers.",
             "requirements": [
-              { "type": "flag", "flag": "f_vy_intel_pilgrims", "value": true },
-              { "type": "squadSkillAtLeast", "skill": "diplomacy", "min": 4 }
+              {
+                "type": "flag",
+                "flag": "f_vy_intel_pilgrims",
+                "value": true
+              },
+              {
+                "type": "squadSkillAtLeast",
+                "skill": "diplomacy",
+                "min": 4
+              }
             ],
-            "next": { "kind": "node", "node": "n_vy2_a_cells" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy2_a_cells"
+            }
           },
           {
             "id": "o_vy2_a_bluff_hard",
             "text": "Bluff as new transfers.",
             "requirements": [
-              { "type": "flag", "flag": "f_vy_intel_pilgrims", "value": false },
-              { "type": "squadSkillAtLeast", "skill": "diplomacy", "min": 5 }
+              {
+                "type": "flag",
+                "flag": "f_vy_intel_pilgrims",
+                "value": false
+              },
+              {
+                "type": "squadSkillAtLeast",
+                "skill": "diplomacy",
+                "min": 5
+              }
             ],
-            "next": { "kind": "node", "node": "n_vy2_a_cells" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy2_a_cells"
+            }
           },
           {
             "id": "o_vy2_a_ossuary",
             "text": "Slip through the ossuary passage instead.",
-            "requirements": [{ "type": "flag", "flag": "f_vy_intel_patrols", "value": true }],
-            "next": { "kind": "node", "node": "n_vy2_a_cells" }
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_intel_patrols",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy2_a_cells"
+            }
           },
           {
             "id": "o_vy2_a_push2",
             "text": "Push past before they think it through.",
-            "effects": [{ "type": "flag", "flag": "f_vy_alarm", "value": true }],
-            "next": { "kind": "node", "node": "n_vy2_a_cells" }
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_alarm",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy2_a_cells"
+            }
           }
         ]
       },
       {
         "id": "n_vy2_a_cells",
-        "text": "Cell block. Rows of them, and behind one door, the Second Expedition.",
+        "text": "Cell block. Rows of doors, and behind one of them, Recon One — four faces Mercer knows from the check-in files, thinner now, alive.",
         "options": [
           {
             "id": "o_vy2_a_quiet",
             "text": "Quiet route out. Slow, but quiet.",
-            "next": { "kind": "node", "node": "n_vy2_bottleneck_ab" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy2_bottleneck_ab"
+            }
           },
           {
             "id": "o_vy2_a_bell",
             "text": "Bell-tower diversion. Fast, but loud.",
-            "effects": [{ "type": "flag", "flag": "f_vy_alarm", "value": true }],
-            "next": { "kind": "node", "node": "n_vy2_bottleneck_ab" }
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_alarm",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy2_bottleneck_ab"
+            }
           }
         ]
       },
       {
         "id": "n_vy2_b_kitchens",
-        "text": "Grain carts, meal rounds — the prison runs on ritual, predictable as a clock. You find the cell block. And you find Ilo, Dessik's son, three doors down from the expedition.",
+        "text": "Grain carts, meal rounds — the prison runs on ritual, predictable as a clock. You find the cell block, and Recon One behind one door: four of them, alive. And you find Ilo, Dessik's son, three doors down.",
         "options": [
           {
             "id": "o_vy2_b_free_ilo",
             "text": "Free Ilo too. A promise is a promise.",
             "effects": [
-              { "type": "flag", "flag": "f_vy_ilo_freed", "value": true },
-              { "type": "queueEvent", "event": "ev_vy_dessik_word", "delayDays": 5 }
+              {
+                "type": "flag",
+                "flag": "f_vy_ilo_freed",
+                "value": true
+              },
+              {
+                "type": "queueEvent",
+                "event": "ev_vy_dessik_word",
+                "delayDays": 5
+              }
             ],
-            "next": { "kind": "node", "node": "n_vy2_b_exfil" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy2_b_exfil"
+            }
           },
           {
             "id": "o_vy2_b_leave_ilo",
-            "text": "Leave him. The expedition comes first.",
+            "text": "Leave him. Recon One comes first.",
             "effects": [
-              { "type": "flag", "flag": "f_vy_ilo_abandoned", "value": true },
-              { "type": "flag", "flag": "f_vy_alarm", "value": true },
-              { "type": "injury", "scope": "randomSquadMember", "injury": "inj_shaken" }
+              {
+                "type": "flag",
+                "flag": "f_vy_ilo_abandoned",
+                "value": true
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_alarm",
+                "value": true
+              },
+              {
+                "type": "injury",
+                "scope": "randomSquadMember",
+                "injury": "inj_shaken"
+              }
             ],
-            "next": { "kind": "node", "node": "n_vy2_bottleneck_ab" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy2_bottleneck_ab"
+            }
           }
         ]
       },
@@ -434,14 +1418,32 @@
           {
             "id": "o_vy2_b_resolve",
             "text": "Hold the nerve, hold the pace.",
-            "requirements": [{ "type": "squadSkillAtLeast", "skill": "resolve", "min": 5 }],
-            "next": { "kind": "node", "node": "n_vy2_bottleneck_ab" }
+            "requirements": [
+              {
+                "type": "squadSkillAtLeast",
+                "skill": "resolve",
+                "min": 5
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy2_bottleneck_ab"
+            }
           },
           {
             "id": "o_vy2_b_alarm",
             "text": "Force it and take the noise.",
-            "effects": [{ "type": "flag", "flag": "f_vy_alarm", "value": true }],
-            "next": { "kind": "node", "node": "n_vy2_bottleneck_ab" }
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_alarm",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy2_bottleneck_ab"
+            }
           }
         ]
       },
@@ -452,7 +1454,10 @@
           {
             "id": "o_vy2_c_1",
             "text": "Keep moving.",
-            "next": { "kind": "node", "node": "n_vy2_c_assault_2" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy2_c_assault_2"
+            }
           }
         ]
       },
@@ -463,7 +1468,10 @@
           {
             "id": "o_vy2_c_2",
             "text": "Keep moving.",
-            "next": { "kind": "node", "node": "n_vy2_c_assault_3" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy2_c_assault_3"
+            }
           }
         ]
       },
@@ -475,16 +1483,36 @@
             "id": "o_vy2_c_press",
             "text": "Press the breach.",
             "effects": [
-              { "type": "injury", "scope": "randomSquadMember", "injury": "inj_wounded" },
-              { "type": "flag", "flag": "f_vy_captured", "value": true }
+              {
+                "type": "injury",
+                "scope": "randomSquadMember",
+                "injury": "inj_wounded"
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_captured",
+                "value": true
+              }
             ],
-            "next": { "kind": "node", "node": "n_vy2_bottleneck_c" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy2_bottleneck_c"
+            }
           },
           {
             "id": "o_vy2_c_fallback",
             "text": "Fall back to the gate.",
-            "effects": [{ "type": "flag", "flag": "f_vy_captured", "value": true }],
-            "next": { "kind": "node", "node": "n_vy2_bottleneck_c" }
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_captured",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy2_bottleneck_c"
+            }
           }
         ]
       },
@@ -495,14 +1523,32 @@
           {
             "id": "o_vy2_bn_alarm",
             "text": "Bells overhead — they moved fast to get ahead of you.",
-            "requirements": [{ "type": "flag", "flag": "f_vy_alarm", "value": true }],
-            "next": { "kind": "end", "outcome": "out_vy2_next" }
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_alarm",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy2_next"
+            }
           },
           {
             "id": "o_vy2_bn_quiet",
             "text": "No bells. Just a silence that means they already knew.",
-            "requirements": [{ "type": "flag", "flag": "f_vy_alarm", "value": false }],
-            "next": { "kind": "end", "outcome": "out_vy2_next" }
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_alarm",
+                "value": false
+              }
+            ],
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy2_next"
+            }
           }
         ]
       },
@@ -510,7 +1556,14 @@
         "id": "n_vy2_bottleneck_c",
         "text": "Gear confiscated, cells beside the very people you came for — the rescue, inverted. At dawn, the cell doors open on their own. The yard awaits.",
         "options": [
-          { "id": "o_vy2_c_move", "text": "Move.", "next": { "kind": "end", "outcome": "out_vy2_next" } }
+          {
+            "id": "o_vy2_c_move",
+            "text": "Move.",
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy2_next"
+            }
+          }
         ]
       }
     ],
@@ -518,7 +1571,12 @@
       {
         "id": "out_vy2_next",
         "label": "The First Blade closes in",
-        "effects": [{ "type": "unlockMission", "mission": "m_vy_3" }]
+        "effects": [
+          {
+            "type": "unlockMission",
+            "mission": "m_vy_3"
+          }
+        ]
       }
     ]
   },
@@ -534,14 +1592,32 @@
           {
             "id": "o_vy3_intro_ab",
             "text": "Seryn Vael and his honor guard corner you in the processional court, mid-escape.",
-            "requirements": [{ "type": "flag", "flag": "f_vy_captured", "value": false }],
-            "next": { "kind": "node", "node": "n_vy3_confront" }
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_captured",
+                "value": false
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy3_confront"
+            }
           },
           {
             "id": "o_vy3_intro_c",
             "text": "Execution yard, dawn. Seryn reads the sentence: 'All of you burn at dusk. Oru is merciful — dusk is hours away.'",
-            "requirements": [{ "type": "flag", "flag": "f_vy_captured", "value": true }],
-            "next": { "kind": "node", "node": "n_vy3_confront" }
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_captured",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy3_confront"
+            }
           }
         ]
       },
@@ -554,186 +1630,505 @@
             "id": "o_vy3_convince_b1_win",
             "text": "Convince him — a god who feeds on executions deserves no First Blade.",
             "requirements": [
-              { "type": "variable", "variable": "doubt", "op": "<", "value": 1 },
-              { "type": "flag", "flag": "f_vy_intel_pilgrims", "value": false },
-              { "type": "squadSkillAtLeast", "skill": "diplomacy", "min": 7 }
+              {
+                "type": "variable",
+                "variable": "doubt",
+                "op": "<",
+                "value": 1
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_intel_pilgrims",
+                "value": false
+              },
+              {
+                "type": "squadSkillAtLeast",
+                "skill": "diplomacy",
+                "min": 7
+              }
             ],
-            "effects": [{ "type": "flag", "flag": "f_vy_first_convinced", "value": true }],
-            "next": { "kind": "node", "node": "n_vy3_resolve_intro" }
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_first_convinced",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy3_resolve_intro"
+            }
           },
           {
             "id": "o_vy3_convince_b1_fail",
             "text": "Convince him — a god who feeds on executions deserves no First Blade.",
             "requirements": [
-              { "type": "variable", "variable": "doubt", "op": "<", "value": 1 },
-              { "type": "flag", "flag": "f_vy_intel_pilgrims", "value": false },
+              {
+                "type": "variable",
+                "variable": "doubt",
+                "op": "<",
+                "value": 1
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_intel_pilgrims",
+                "value": false
+              },
               {
                 "type": "not",
-                "condition": { "type": "squadSkillAtLeast", "skill": "diplomacy", "min": 7 }
+                "condition": {
+                  "type": "squadSkillAtLeast",
+                  "skill": "diplomacy",
+                  "min": 7
+                }
               }
             ],
-            "next": { "kind": "node", "node": "n_vy3_hardens" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy3_hardens"
+            }
           },
           {
             "id": "o_vy3_convince_b2_win",
             "text": "Convince him — quote his own scripture back: a god who feeds on executions deserves no First Blade.",
             "requirements": [
-              { "type": "variable", "variable": "doubt", "op": "<", "value": 1 },
-              { "type": "flag", "flag": "f_vy_intel_pilgrims", "value": true },
-              { "type": "squadSkillAtLeast", "skill": "diplomacy", "min": 6 }
+              {
+                "type": "variable",
+                "variable": "doubt",
+                "op": "<",
+                "value": 1
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_intel_pilgrims",
+                "value": true
+              },
+              {
+                "type": "squadSkillAtLeast",
+                "skill": "diplomacy",
+                "min": 6
+              }
             ],
-            "effects": [{ "type": "flag", "flag": "f_vy_first_convinced", "value": true }],
-            "next": { "kind": "node", "node": "n_vy3_resolve_intro" }
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_first_convinced",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy3_resolve_intro"
+            }
           },
           {
             "id": "o_vy3_convince_b2_fail",
             "text": "Convince him — quote his own scripture back: a god who feeds on executions deserves no First Blade.",
             "requirements": [
-              { "type": "variable", "variable": "doubt", "op": "<", "value": 1 },
-              { "type": "flag", "flag": "f_vy_intel_pilgrims", "value": true },
+              {
+                "type": "variable",
+                "variable": "doubt",
+                "op": "<",
+                "value": 1
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_intel_pilgrims",
+                "value": true
+              },
               {
                 "type": "not",
-                "condition": { "type": "squadSkillAtLeast", "skill": "diplomacy", "min": 6 }
+                "condition": {
+                  "type": "squadSkillAtLeast",
+                  "skill": "diplomacy",
+                  "min": 6
+                }
               }
             ],
-            "next": { "kind": "node", "node": "n_vy3_hardens" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy3_hardens"
+            }
           },
           {
             "id": "o_vy3_convince_b3_win",
             "text": "Convince him — a god who feeds on executions deserves no First Blade.",
             "requirements": [
-              { "type": "variable", "variable": "doubt", "op": ">=", "value": 1 },
-              { "type": "flag", "flag": "f_vy_intel_pilgrims", "value": false },
-              { "type": "squadSkillAtLeast", "skill": "diplomacy", "min": 6 }
+              {
+                "type": "variable",
+                "variable": "doubt",
+                "op": ">=",
+                "value": 1
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_intel_pilgrims",
+                "value": false
+              },
+              {
+                "type": "squadSkillAtLeast",
+                "skill": "diplomacy",
+                "min": 6
+              }
             ],
-            "effects": [{ "type": "flag", "flag": "f_vy_first_convinced", "value": true }],
-            "next": { "kind": "node", "node": "n_vy3_resolve_intro" }
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_first_convinced",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy3_resolve_intro"
+            }
           },
           {
             "id": "o_vy3_convince_b3_fail",
             "text": "Convince him — a god who feeds on executions deserves no First Blade.",
             "requirements": [
-              { "type": "variable", "variable": "doubt", "op": ">=", "value": 1 },
-              { "type": "flag", "flag": "f_vy_intel_pilgrims", "value": false },
+              {
+                "type": "variable",
+                "variable": "doubt",
+                "op": ">=",
+                "value": 1
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_intel_pilgrims",
+                "value": false
+              },
               {
                 "type": "not",
-                "condition": { "type": "squadSkillAtLeast", "skill": "diplomacy", "min": 6 }
+                "condition": {
+                  "type": "squadSkillAtLeast",
+                  "skill": "diplomacy",
+                  "min": 6
+                }
               }
             ],
-            "next": { "kind": "node", "node": "n_vy3_hardens" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy3_hardens"
+            }
           },
           {
             "id": "o_vy3_convince_b4_win",
             "text": "Convince him — quote his own scripture back: a god who feeds on executions deserves no First Blade.",
             "requirements": [
-              { "type": "variable", "variable": "doubt", "op": ">=", "value": 1 },
-              { "type": "flag", "flag": "f_vy_intel_pilgrims", "value": true },
-              { "type": "squadSkillAtLeast", "skill": "diplomacy", "min": 5 }
+              {
+                "type": "variable",
+                "variable": "doubt",
+                "op": ">=",
+                "value": 1
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_intel_pilgrims",
+                "value": true
+              },
+              {
+                "type": "squadSkillAtLeast",
+                "skill": "diplomacy",
+                "min": 5
+              }
             ],
-            "effects": [{ "type": "flag", "flag": "f_vy_first_convinced", "value": true }],
-            "next": { "kind": "node", "node": "n_vy3_resolve_intro" }
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_first_convinced",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy3_resolve_intro"
+            }
           },
           {
             "id": "o_vy3_convince_b4_fail",
             "text": "Convince him — quote his own scripture back: a god who feeds on executions deserves no First Blade.",
             "requirements": [
-              { "type": "variable", "variable": "doubt", "op": ">=", "value": 1 },
-              { "type": "flag", "flag": "f_vy_intel_pilgrims", "value": true },
+              {
+                "type": "variable",
+                "variable": "doubt",
+                "op": ">=",
+                "value": 1
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_intel_pilgrims",
+                "value": true
+              },
               {
                 "type": "not",
-                "condition": { "type": "squadSkillAtLeast", "skill": "diplomacy", "min": 5 }
+                "condition": {
+                  "type": "squadSkillAtLeast",
+                  "skill": "diplomacy",
+                  "min": 5
+                }
               }
             ],
-            "next": { "kind": "node", "node": "n_vy3_hardens" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy3_hardens"
+            }
           },
           {
             "id": "o_vy3_explain_b1_win",
             "text": "Explain — there is no god. Just power signatures and projection artifacts.",
             "requirements": [
-              { "type": "variable", "variable": "doubt", "op": "<", "value": 1 },
-              { "type": "flag", "flag": "f_vy_intel_comms", "value": false },
-              { "type": "squadSkillAtLeast", "skill": "science", "min": 7 }
+              {
+                "type": "variable",
+                "variable": "doubt",
+                "op": "<",
+                "value": 1
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_intel_comms",
+                "value": false
+              },
+              {
+                "type": "squadSkillAtLeast",
+                "skill": "science",
+                "min": 7
+              }
             ],
-            "effects": [{ "type": "flag", "flag": "f_vy_first_doubt", "value": true }],
-            "next": { "kind": "node", "node": "n_vy3_resolve_intro" }
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_first_doubt",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy3_resolve_intro"
+            }
           },
           {
             "id": "o_vy3_explain_b1_fail",
             "text": "Explain — there is no god. Just power signatures and projection artifacts.",
             "requirements": [
-              { "type": "variable", "variable": "doubt", "op": "<", "value": 1 },
-              { "type": "flag", "flag": "f_vy_intel_comms", "value": false },
-              { "type": "not", "condition": { "type": "squadSkillAtLeast", "skill": "science", "min": 7 } }
+              {
+                "type": "variable",
+                "variable": "doubt",
+                "op": "<",
+                "value": 1
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_intel_comms",
+                "value": false
+              },
+              {
+                "type": "not",
+                "condition": {
+                  "type": "squadSkillAtLeast",
+                  "skill": "science",
+                  "min": 7
+                }
+              }
             ],
-            "next": { "kind": "node", "node": "n_vy3_hardens" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy3_hardens"
+            }
           },
           {
             "id": "o_vy3_explain_b2_win",
             "text": "Explain — there is no god, and Okafor has the recordings to prove it.",
             "requirements": [
-              { "type": "variable", "variable": "doubt", "op": "<", "value": 1 },
-              { "type": "flag", "flag": "f_vy_intel_comms", "value": true },
-              { "type": "squadSkillAtLeast", "skill": "science", "min": 5 }
+              {
+                "type": "variable",
+                "variable": "doubt",
+                "op": "<",
+                "value": 1
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_intel_comms",
+                "value": true
+              },
+              {
+                "type": "squadSkillAtLeast",
+                "skill": "science",
+                "min": 5
+              }
             ],
-            "effects": [{ "type": "flag", "flag": "f_vy_first_doubt", "value": true }],
-            "next": { "kind": "node", "node": "n_vy3_resolve_intro" }
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_first_doubt",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy3_resolve_intro"
+            }
           },
           {
             "id": "o_vy3_explain_b2_fail",
             "text": "Explain — there is no god, and Okafor has the recordings to prove it.",
             "requirements": [
-              { "type": "variable", "variable": "doubt", "op": "<", "value": 1 },
-              { "type": "flag", "flag": "f_vy_intel_comms", "value": true },
-              { "type": "not", "condition": { "type": "squadSkillAtLeast", "skill": "science", "min": 5 } }
+              {
+                "type": "variable",
+                "variable": "doubt",
+                "op": "<",
+                "value": 1
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_intel_comms",
+                "value": true
+              },
+              {
+                "type": "not",
+                "condition": {
+                  "type": "squadSkillAtLeast",
+                  "skill": "science",
+                  "min": 5
+                }
+              }
             ],
-            "next": { "kind": "node", "node": "n_vy3_hardens" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy3_hardens"
+            }
           },
           {
             "id": "o_vy3_explain_b3_win",
             "text": "Explain — there is no god. Just power signatures and projection artifacts.",
             "requirements": [
-              { "type": "variable", "variable": "doubt", "op": ">=", "value": 1 },
-              { "type": "flag", "flag": "f_vy_intel_comms", "value": false },
-              { "type": "squadSkillAtLeast", "skill": "science", "min": 6 }
+              {
+                "type": "variable",
+                "variable": "doubt",
+                "op": ">=",
+                "value": 1
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_intel_comms",
+                "value": false
+              },
+              {
+                "type": "squadSkillAtLeast",
+                "skill": "science",
+                "min": 6
+              }
             ],
-            "effects": [{ "type": "flag", "flag": "f_vy_first_doubt", "value": true }],
-            "next": { "kind": "node", "node": "n_vy3_resolve_intro" }
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_first_doubt",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy3_resolve_intro"
+            }
           },
           {
             "id": "o_vy3_explain_b3_fail",
             "text": "Explain — there is no god. Just power signatures and projection artifacts.",
             "requirements": [
-              { "type": "variable", "variable": "doubt", "op": ">=", "value": 1 },
-              { "type": "flag", "flag": "f_vy_intel_comms", "value": false },
-              { "type": "not", "condition": { "type": "squadSkillAtLeast", "skill": "science", "min": 6 } }
+              {
+                "type": "variable",
+                "variable": "doubt",
+                "op": ">=",
+                "value": 1
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_intel_comms",
+                "value": false
+              },
+              {
+                "type": "not",
+                "condition": {
+                  "type": "squadSkillAtLeast",
+                  "skill": "science",
+                  "min": 6
+                }
+              }
             ],
-            "next": { "kind": "node", "node": "n_vy3_hardens" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy3_hardens"
+            }
           },
           {
             "id": "o_vy3_explain_b4_win",
             "text": "Explain — there is no god, and Okafor has the recordings to prove it.",
             "requirements": [
-              { "type": "variable", "variable": "doubt", "op": ">=", "value": 1 },
-              { "type": "flag", "flag": "f_vy_intel_comms", "value": true },
-              { "type": "squadSkillAtLeast", "skill": "science", "min": 4 }
+              {
+                "type": "variable",
+                "variable": "doubt",
+                "op": ">=",
+                "value": 1
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_intel_comms",
+                "value": true
+              },
+              {
+                "type": "squadSkillAtLeast",
+                "skill": "science",
+                "min": 4
+              }
             ],
-            "effects": [{ "type": "flag", "flag": "f_vy_first_doubt", "value": true }],
-            "next": { "kind": "node", "node": "n_vy3_resolve_intro" }
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_first_doubt",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy3_resolve_intro"
+            }
           },
           {
             "id": "o_vy3_explain_b4_fail",
             "text": "Explain — there is no god, and Okafor has the recordings to prove it.",
             "requirements": [
-              { "type": "variable", "variable": "doubt", "op": ">=", "value": 1 },
-              { "type": "flag", "flag": "f_vy_intel_comms", "value": true },
-              { "type": "not", "condition": { "type": "squadSkillAtLeast", "skill": "science", "min": 4 } }
+              {
+                "type": "variable",
+                "variable": "doubt",
+                "op": ">=",
+                "value": 1
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_intel_comms",
+                "value": true
+              },
+              {
+                "type": "not",
+                "condition": {
+                  "type": "squadSkillAtLeast",
+                  "skill": "science",
+                  "min": 4
+                }
+              }
             ],
-            "next": { "kind": "node", "node": "n_vy3_hardens" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy3_hardens"
+            }
           },
           {
             "id": "o_vy3_fight",
             "text": "Fight him.",
-            "next": { "kind": "node", "node": "n_vy3_duel" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy3_duel"
+            }
           }
         ]
       },
@@ -745,50 +2140,104 @@
           {
             "id": "o_vy3_hardens_continue",
             "text": "Draw.",
-            "next": { "kind": "node", "node": "n_vy3_duel" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy3_duel"
+            }
           }
         ]
       },
       {
         "id": "n_vy3_duel",
-        "text": "Three exchanges, blade to blade. He is good — trained since childhood for exactly this — but he is one man against a team, with a freed expedition at your back.",
+        "text": "Three exchanges, blade to blade. He is good — trained since childhood for exactly this — but he is one man against a team, with the freed Recon One at your back.",
         "options": [
           {
             "id": "o_vy3_duel_clean",
             "text": "Press the advantage.",
-            "requirements": [{ "type": "squadSkillAtLeast", "skill": "combat", "min": 7 }],
-            "effects": [{ "type": "flag", "flag": "f_vy_first_defeated", "value": true }],
-            "next": { "kind": "node", "node": "n_vy3_resolve_intro" }
+            "requirements": [
+              {
+                "type": "squadSkillAtLeast",
+                "skill": "combat",
+                "min": 7
+              }
+            ],
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_first_defeated",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy3_resolve_intro"
+            }
           },
           {
             "id": "o_vy3_duel_costly",
             "text": "Press the advantage.",
             "requirements": [
-              { "type": "not", "condition": { "type": "squadSkillAtLeast", "skill": "combat", "min": 7 } }
+              {
+                "type": "not",
+                "condition": {
+                  "type": "squadSkillAtLeast",
+                  "skill": "combat",
+                  "min": 7
+                }
+              }
             ],
             "effects": [
-              { "type": "flag", "flag": "f_vy_first_defeated", "value": true },
-              { "type": "injury", "scope": "randomSquadMember", "injury": "inj_wounded" }
+              {
+                "type": "flag",
+                "flag": "f_vy_first_defeated",
+                "value": true
+              },
+              {
+                "type": "injury",
+                "scope": "randomSquadMember",
+                "injury": "inj_wounded"
+              }
             ],
-            "next": { "kind": "node", "node": "n_vy3_resolve_intro" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy3_resolve_intro"
+            }
           }
         ]
       },
       {
         "id": "n_vy3_resolve_intro",
-        "text": "The gates behind you, the expedition freed, the city already talking about what it saw.",
+        "text": "The gates behind you, Recon One freed, the city already talking about what it saw.",
         "options": [
           {
             "id": "o_vy3_ri_vestry",
             "text": "Grab what's left in the vestry on the way out.",
-            "requirements": [{ "type": "flag", "flag": "f_vy_captured", "value": true }],
-            "next": { "kind": "node", "node": "n_vy3_resolve" }
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_captured",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy3_resolve"
+            }
           },
           {
             "id": "o_vy3_ri_plain",
             "text": "Keep moving.",
-            "requirements": [{ "type": "flag", "flag": "f_vy_captured", "value": false }],
-            "next": { "kind": "node", "node": "n_vy3_resolve" }
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_captured",
+                "value": false
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy3_resolve"
+            }
           }
         ]
       },
@@ -799,44 +2248,145 @@
           {
             "id": "o_vy3_resolve_convinced",
             "text": "Seryn orders the honor guard to stand down. He walks out with you.",
-            "requirements": [{ "type": "flag", "flag": "f_vy_first_convinced", "value": true }],
-            "effects": [
-              { "type": "addHero", "hero": "h_seryn" },
-              { "type": "flag", "flag": "f_vy_seryn_recruited", "value": true },
-              { "type": "flag", "flag": "f_vy_expedition_freed", "value": true },
-              { "type": "addPersonnel", "amount": 4 }
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_first_convinced",
+                "value": true
+              }
             ],
-            "next": { "kind": "end", "outcome": "out_vy3_convinced" }
+            "effects": [
+              {
+                "type": "addHero",
+                "hero": "h_seryn"
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_seryn_recruited",
+                "value": true
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_expedition_freed",
+                "value": true
+              },
+              {
+                "type": "addPersonnel",
+                "amount": 4
+              }
+            ],
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy3_convinced"
+            }
           },
           {
             "id": "o_vy3_resolve_doubt",
             "text": "Seryn lets you pass — and follows, to see the proof with his own eyes.",
-            "requirements": [{ "type": "flag", "flag": "f_vy_first_doubt", "value": true }],
-            "effects": [
-              { "type": "addHero", "hero": "h_seryn" },
-              { "type": "flag", "flag": "f_vy_seryn_recruited", "value": true },
-              { "type": "flag", "flag": "f_vy_expedition_freed", "value": true },
-              { "type": "addPersonnel", "amount": 4 }
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_first_doubt",
+                "value": true
+              }
             ],
-            "next": { "kind": "end", "outcome": "out_vy3_doubt" }
+            "effects": [
+              {
+                "type": "addHero",
+                "hero": "h_seryn"
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_seryn_recruited",
+                "value": true
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_expedition_freed",
+                "value": true
+              },
+              {
+                "type": "addPersonnel",
+                "amount": 4
+              }
+            ],
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy3_doubt"
+            }
           },
           {
             "id": "o_vy3_resolve_defeated",
             "text": "You carry the First Blade out on a grain cart. He does not thank you.",
-            "requirements": [{ "type": "flag", "flag": "f_vy_first_defeated", "value": true }],
-            "effects": [
-              { "type": "flag", "flag": "f_vy_expedition_freed", "value": true },
-              { "type": "addPersonnel", "amount": 4 }
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_first_defeated",
+                "value": true
+              }
             ],
-            "next": { "kind": "end", "outcome": "out_vy3_defeated" }
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_expedition_freed",
+                "value": true
+              },
+              {
+                "type": "addPersonnel",
+                "amount": 4
+              }
+            ],
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy3_defeated"
+            }
           }
         ]
       }
     ],
     "outcomes": [
-      { "id": "out_vy3_convinced", "label": "The First Blade defects", "effects": [] },
-      { "id": "out_vy3_doubt", "label": "The First Blade, doubting", "effects": [] },
-      { "id": "out_vy3_defeated", "label": "The First Blade, defeated", "effects": [] }
+      {
+        "id": "out_vy3_convinced",
+        "label": "The First Blade defects",
+        "effects": [
+          {
+            "type": "unlockMission",
+            "mission": "m_vy_4"
+          },
+          {
+            "type": "log",
+            "text": "Recon One is coming home — all four, long overdue, walking out the front gate."
+          }
+        ]
+      },
+      {
+        "id": "out_vy3_doubt",
+        "label": "The First Blade, doubting",
+        "effects": [
+          {
+            "type": "unlockMission",
+            "mission": "m_vy_4"
+          },
+          {
+            "type": "log",
+            "text": "Recon One is coming home — all four, long overdue, walking out the front gate."
+          }
+        ]
+      },
+      {
+        "id": "out_vy3_defeated",
+        "label": "The First Blade, defeated",
+        "effects": [
+          {
+            "type": "unlockMission",
+            "mission": "m_vy_4"
+          },
+          {
+            "type": "log",
+            "text": "Recon One is coming home — all four, long overdue, walking out the front gate."
+          }
+        ]
+      }
     ]
   },
   {
@@ -851,15 +2401,39 @@
           {
             "id": "o_vy4_alerted",
             "text": "The colonnades are doubled — Dessik sold you the moment you left him. Go loud, go fast.",
-            "requirements": [{ "type": "flag", "flag": "f_vy_ilo_abandoned", "value": true }],
-            "effects": [{ "type": "fatigue", "scope": "squad", "delta": 10 }],
-            "next": { "kind": "node", "node": "n_vy4_wards" }
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_ilo_abandoned",
+                "value": true
+              }
+            ],
+            "effects": [
+              {
+                "type": "fatigue",
+                "scope": "squad",
+                "delta": 10
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy4_wards"
+            }
           },
           {
             "id": "o_vy4_quiet",
-            "text": "The night shift is thin. Move on the wards.",
-            "requirements": [{ "type": "flag", "flag": "f_vy_ilo_abandoned", "value": false }],
-            "next": { "kind": "node", "node": "n_vy4_wards" }
+            "text": "Recon One's debrief mapped the night rounds — the shift is thin. Move on the wards.",
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_ilo_abandoned",
+                "value": false
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy4_wards"
+            }
           }
         ]
       },
@@ -870,8 +2444,17 @@
           {
             "id": "o_vy4_seryn",
             "text": "Seryn knows the rites — he stills one pillar with a word and a gesture. The team takes the other.",
-            "requirements": [{ "type": "flag", "flag": "f_vy_seryn_recruited", "value": true }],
-            "next": { "kind": "node", "node": "n_vy4_core" }
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_seryn_recruited",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy4_core"
+            }
           },
           {
             "id": "o_vy4_science",
@@ -880,31 +2463,65 @@
               {
                 "type": "any",
                 "conditions": [
-                  { "type": "squadHasArchetype", "tag": "scientist" },
-                  { "type": "squadSkillAtLeast", "skill": "science", "min": 6 }
+                  {
+                    "type": "squadHasArchetype",
+                    "tag": "scientist"
+                  },
+                  {
+                    "type": "squadSkillAtLeast",
+                    "skill": "science",
+                    "min": 6
+                  }
                 ]
               }
             ],
-            "next": { "kind": "node", "node": "n_vy4_core" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy4_core"
+            }
           },
           {
             "id": "o_vy4_force",
             "text": "Smash the pillar conduits — crude, but they go dark.",
-            "requirements": [{ "type": "squadSkillAtLeast", "skill": "combat", "min": 5 }],
-            "effects": [{ "type": "fatigue", "scope": "squad", "delta": 5 }],
-            "next": { "kind": "node", "node": "n_vy4_core" }
+            "requirements": [
+              {
+                "type": "squadSkillAtLeast",
+                "skill": "combat",
+                "min": 5
+              }
+            ],
+            "effects": [
+              {
+                "type": "fatigue",
+                "scope": "squad",
+                "delta": 5
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy4_core"
+            }
           },
           {
             "id": "o_vy4_slow",
             "text": "No shortcut. Work them by hand, one at a time, and hope the guards stay slow.",
-            "effects": [{ "type": "fatigue", "scope": "squad", "delta": 15 }],
-            "next": { "kind": "node", "node": "n_vy4_core" }
+            "effects": [
+              {
+                "type": "fatigue",
+                "scope": "squad",
+                "delta": 15
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy4_core"
+            }
           }
         ]
       },
       {
         "id": "n_vy4_core",
-        "text": "The vault door grinds open. Inside, cradled in a nest of projector housings, sits the core — a power cell dense enough to feed a cathedral of light. Getting it clear takes a steady hand while the guards close from the hall.",
+        "text": "The vault door grinds open. Inside, cradled in a nest of projector housings, sits the core — a power cell dense enough to feed a cathedral of light. Along the walls, tribute crates stamped with gate glyphs: outbound. Getting the core clear takes a steady hand while the guards close from the hall.",
         "options": [
           {
             "id": "o_vy4_extract",
@@ -913,18 +2530,37 @@
               {
                 "type": "any",
                 "conditions": [
-                  { "type": "squadHasArchetype", "tag": "scientist" },
-                  { "type": "squadSkillAtLeast", "skill": "science", "min": 6 }
+                  {
+                    "type": "squadHasArchetype",
+                    "tag": "scientist"
+                  },
+                  {
+                    "type": "squadSkillAtLeast",
+                    "skill": "science",
+                    "min": 6
+                  }
                 ]
               }
             ],
-            "next": { "kind": "node", "node": "n_vy4_exfil" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy4_exfil"
+            }
           },
           {
             "id": "o_vy4_yank",
             "text": "No time for finesse. Pull it and run.",
-            "effects": [{ "type": "injury", "scope": "randomSquadMember", "injury": "inj_shaken" }],
-            "next": { "kind": "node", "node": "n_vy4_exfil" }
+            "effects": [
+              {
+                "type": "injury",
+                "scope": "randomSquadMember",
+                "injury": "inj_shaken"
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy4_exfil"
+            }
           }
         ]
       },
@@ -935,15 +2571,39 @@
           {
             "id": "o_vy4_exfil_alarm",
             "text": "The bells are already ringing — fight through to the gate.",
-            "requirements": [{ "type": "flag", "flag": "f_vy_alarm", "value": true }],
-            "effects": [{ "type": "fatigue", "scope": "squad", "delta": 5 }],
-            "next": { "kind": "end", "outcome": "out_vy4_secured" }
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_alarm",
+                "value": true
+              }
+            ],
+            "effects": [
+              {
+                "type": "fatigue",
+                "scope": "squad",
+                "delta": 5
+              }
+            ],
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy4_secured"
+            }
           },
           {
             "id": "o_vy4_exfil_quiet",
             "text": "Slip out the way you came.",
-            "requirements": [{ "type": "flag", "flag": "f_vy_alarm", "value": false }],
-            "next": { "kind": "end", "outcome": "out_vy4_secured" }
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_alarm",
+                "value": false
+              }
+            ],
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy4_secured"
+            }
           }
         ]
       }
@@ -953,10 +2613,24 @@
         "id": "out_vy4_secured",
         "label": "Vault secured — the god has a body",
         "effects": [
-          { "type": "flag", "flag": "f_vy_godtech", "value": true },
-          { "type": "resource", "resource": "exotics", "delta": 3 },
-          { "type": "unlockMission", "mission": "m_vy_5" },
-          { "type": "log", "text": "The vault core is aboard. It hums like something praying." }
+          {
+            "type": "flag",
+            "flag": "f_vy_godtech",
+            "value": true
+          },
+          {
+            "type": "resource",
+            "resource": "exotics",
+            "delta": 3
+          },
+          {
+            "type": "unlockMission",
+            "mission": "m_vy_5"
+          },
+          {
+            "type": "log",
+            "text": "The vault core is aboard. It hums like something praying."
+          }
         ]
       }
     ]
@@ -977,21 +2651,43 @@
               {
                 "type": "any",
                 "conditions": [
-                  { "type": "flag", "flag": "f_vy_seryn_recruited", "value": true },
-                  { "type": "flag", "flag": "f_vy_first_defeated", "value": true }
+                  {
+                    "type": "flag",
+                    "flag": "f_vy_seryn_recruited",
+                    "value": true
+                  },
+                  {
+                    "type": "flag",
+                    "flag": "f_vy_first_defeated",
+                    "value": true
+                  }
                 ]
               }
             ],
-            "next": { "kind": "node", "node": "n_vy5_seryn_watch" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy5_seryn_watch"
+            }
           },
           {
             "id": "o_vy5_no_seryn",
             "text": "Move closer.",
             "requirements": [
-              { "type": "flag", "flag": "f_vy_seryn_recruited", "value": false },
-              { "type": "flag", "flag": "f_vy_first_defeated", "value": false }
+              {
+                "type": "flag",
+                "flag": "f_vy_seryn_recruited",
+                "value": false
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_first_defeated",
+                "value": false
+              }
             ],
-            "next": { "kind": "node", "node": "n_vy5_decide" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy5_decide"
+            }
           }
         ]
       },
@@ -1003,7 +2699,10 @@
           {
             "id": "o_vy5_seryn_continue",
             "text": "Say nothing. Move closer.",
-            "next": { "kind": "node", "node": "n_vy5_decide" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy5_decide"
+            }
           }
         ]
       },
@@ -1015,22 +2714,56 @@
             "id": "o_vy5_watch",
             "text": "Watch. Record everything. Let it finish and go.",
             "effects": [
-              { "type": "flag", "flag": "f_vy_watched_god", "value": true },
-              { "type": "resource", "resource": "intel", "delta": 20 }
+              {
+                "type": "flag",
+                "flag": "f_vy_watched_god",
+                "value": true
+              },
+              {
+                "type": "resource",
+                "resource": "intel",
+                "delta": 20
+              }
             ],
-            "next": { "kind": "node", "node": "n_vy5_watch_seryn" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy5_watch_seryn"
+            }
           },
           {
             "id": "o_vy5_attack",
             "text": "End it. Bring the god down now.",
             "effects": [
-              { "type": "flag", "flag": "f_vy_fought_god", "value": true },
-              { "type": "flag", "flag": "f_vy_anchor_destroyed", "value": true },
-              { "type": "variable", "variable": "support", "delta": 2 },
-              { "type": "injury", "scope": "randomSquadMember", "injury": "inj_shaken" },
-              { "type": "queueEvent", "event": "ev_vy_gratitude", "delayDays": 3 }
+              {
+                "type": "flag",
+                "flag": "f_vy_fought_god",
+                "value": true
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_anchor_destroyed",
+                "value": true
+              },
+              {
+                "type": "variable",
+                "variable": "support",
+                "delta": 2
+              },
+              {
+                "type": "injury",
+                "scope": "randomSquadMember",
+                "injury": "inj_shaken"
+              },
+              {
+                "type": "queueEvent",
+                "event": "ev_vy_gratitude",
+                "delayDays": 3
+              }
             ],
-            "next": { "kind": "node", "node": "n_vy5_attack_seryn" }
+            "next": {
+              "kind": "node",
+              "node": "n_vy5_attack_seryn"
+            }
           }
         ]
       },
@@ -1041,27 +2774,64 @@
           {
             "id": "o_vy5_watch_defeated",
             "text": "On the ridge behind you, the captive First Blade asks to speak.",
-            "requirements": [{ "type": "flag", "flag": "f_vy_first_defeated", "value": true }],
-            "effects": [{ "type": "queueEvent", "event": "ev_vy_seryn_oath", "delayDays": 2 }],
-            "next": { "kind": "end", "outcome": "out_vy5_watch_defeated" }
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_first_defeated",
+                "value": true
+              }
+            ],
+            "effects": [
+              {
+                "type": "queueEvent",
+                "event": "ev_vy_seryn_oath",
+                "delayDays": 2
+              }
+            ],
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy5_watch_defeated"
+            }
           },
           {
             "id": "o_vy5_watch_doubt",
             "text": "Seryn watches the last light go out, and lets it.",
             "requirements": [
-              { "type": "flag", "flag": "f_vy_first_defeated", "value": false },
-              { "type": "flag", "flag": "f_vy_first_doubt", "value": true }
+              {
+                "type": "flag",
+                "flag": "f_vy_first_defeated",
+                "value": false
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_first_doubt",
+                "value": true
+              }
             ],
-            "next": { "kind": "end", "outcome": "out_vy5_watch_doubt" }
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy5_watch_doubt"
+            }
           },
           {
             "id": "o_vy5_watch_other",
             "text": "Pack the sensors. Whatever it was, it is gone now.",
             "requirements": [
-              { "type": "flag", "flag": "f_vy_first_defeated", "value": false },
-              { "type": "flag", "flag": "f_vy_first_doubt", "value": false }
+              {
+                "type": "flag",
+                "flag": "f_vy_first_defeated",
+                "value": false
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_first_doubt",
+                "value": false
+              }
             ],
-            "next": { "kind": "end", "outcome": "out_vy5_watch_other" }
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy5_watch_other"
+            }
           }
         ]
       },
@@ -1072,14 +2842,32 @@
           {
             "id": "o_vy5_attack_defeated",
             "text": "In the chaos, the captive First Blade tears loose.",
-            "requirements": [{ "type": "flag", "flag": "f_vy_first_defeated", "value": true }],
-            "next": { "kind": "end", "outcome": "out_vy5_fought_seryn_lost" }
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_first_defeated",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy5_fought_seryn_lost"
+            }
           },
           {
             "id": "o_vy5_attack_other",
             "text": "Walk out into a silence no bell will ever fill again.",
-            "requirements": [{ "type": "flag", "flag": "f_vy_first_defeated", "value": false }],
-            "next": { "kind": "end", "outcome": "out_vy5_fought" }
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_first_defeated",
+                "value": false
+              }
+            ],
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy5_fought"
+            }
           }
         ]
       }
@@ -1108,7 +2896,12 @@
       {
         "id": "out_vy5_watch_other",
         "label": "Witnessed — everything on record",
-        "effects": [{ "type": "log", "text": "The Luminous One is on record, whole and explicable." }]
+        "effects": [
+          {
+            "type": "log",
+            "text": "The Luminous One is on record, whole and explicable."
+          }
+        ]
       },
       {
         "id": "out_vy5_fought_seryn_lost",
@@ -1123,7 +2916,12 @@
       {
         "id": "out_vy5_fought",
         "label": "The anchor shattered",
-        "effects": [{ "type": "log", "text": "Veyra is free of its god. The caldera is dark." }]
+        "effects": [
+          {
+            "type": "log",
+            "text": "Veyra is free of its god. The caldera is dark."
+          }
+        ]
       }
     ]
   },
@@ -1141,10 +2939,20 @@
             "id": "o_vy_oath_accept",
             "text": "Give the First Blade a place.",
             "effects": [
-              { "type": "addHero", "hero": "h_seryn" },
-              { "type": "flag", "flag": "f_vy_seryn_recruited", "value": true }
+              {
+                "type": "addHero",
+                "hero": "h_seryn"
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_seryn_recruited",
+                "value": true
+              }
             ],
-            "next": { "kind": "end", "outcome": "out_vy_oath" }
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy_oath"
+            }
           }
         ]
       }
@@ -1153,7 +2961,12 @@
       {
         "id": "out_vy_oath",
         "label": "The First Blade takes the oath",
-        "effects": [{ "type": "log", "text": "Seryn Vael joins Worldgate." }]
+        "effects": [
+          {
+            "type": "log",
+            "text": "Seryn Vael joins Worldgate."
+          }
+        ]
       }
     ]
   },
@@ -1170,15 +2983,31 @@
             "id": "o_vy_gratitude_accept",
             "text": "Accept the tribute.",
             "effects": [
-              { "type": "resource", "resource": "funds", "delta": 40 },
-              { "type": "log", "text": "Veyra's provisional council sends tribute: funds +40." }
+              {
+                "type": "resource",
+                "resource": "funds",
+                "delta": 40
+              },
+              {
+                "type": "log",
+                "text": "Veyra's provisional council sends tribute: funds +40."
+              }
             ],
-            "next": { "kind": "end", "outcome": "out_vy_gratitude" }
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy_gratitude"
+            }
           }
         ]
       }
     ],
-    "outcomes": [{ "id": "out_vy_gratitude", "label": "A world says thank you", "effects": [] }]
+    "outcomes": [
+      {
+        "id": "out_vy_gratitude",
+        "label": "A world says thank you",
+        "effects": []
+      }
+    ]
   },
   {
     "id": "ev_vy_dessik_word",
@@ -1194,14 +3023,30 @@
             "id": "o_vy_dessik_take",
             "text": "Take what he sends.",
             "effects": [
-              { "type": "resource", "resource": "intel", "delta": 10 },
-              { "type": "log", "text": "Dessik's network repays a kept promise: intel +10." }
+              {
+                "type": "resource",
+                "resource": "intel",
+                "delta": 10
+              },
+              {
+                "type": "log",
+                "text": "Dessik's network repays a kept promise: intel +10."
+              }
             ],
-            "next": { "kind": "end", "outcome": "out_vy_dessik" }
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy_dessik"
+            }
           }
         ]
       }
     ],
-    "outcomes": [{ "id": "out_vy_dessik", "label": "A debt repaid", "effects": [] }]
+    "outcomes": [
+      {
+        "id": "out_vy_dessik",
+        "label": "A debt repaid",
+        "effects": []
+      }
+    ]
   }
 ]

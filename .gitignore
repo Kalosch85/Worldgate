@@ -10,3 +10,7 @@ coverage/
 
 # Logs
 npm-debug.log*
+
+# Python bytecode from art tooling
+__pycache__/
+*.pyc

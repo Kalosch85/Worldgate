@@ -2,14 +2,17 @@
  * PixiJS board renderer (task 4.3, tactics-engine spec §11). Draws a
  * `BattleView` — grid from the map tile legend, cover, consoles, units with hp
  * pips, and the move/target overlays — onto a WebGL canvas, and reports tile
- * taps back to the host. Colored shapes only (spec §11: no sprite work).
+ * taps back to the host. Terrain, cover, consoles, players, and the pips/overlays
+ * are colored shapes; enemy units are drawn as the insect billboard sprite (from
+ * `public/assets/units/`) when its texture has loaded, falling back to the colored
+ * shape otherwise (spec §11, sprite note).
  *
  * This is the one place Pixi lives. It holds no game rules and no UI state: it
  * renders whatever `BattleView` (optionally with replay-overridden unit
  * positions) it is handed and calls `onTap(x, y)` with the tile a pointer hit.
  * The React host (BattleScreen) owns selection, mode, and dispatch.
  */
-import { Application, Container, Graphics, Text } from "pixi.js";
+import { Application, Assets, Container, Graphics, Sprite, Text, type Texture } from "pixi.js";
 import type { BattleView } from "./battleModel.js";
 import type { ReplayUnit } from "./replay.js";
 import {
@@ -57,6 +60,11 @@ const BASE_TILE = 64;
 /** How far a single pointer may drift and still count as a tap, not a drag. */
 const TAP_SLOP = 12;
 
+/** The insect billboard used for enemy units, served from `public/assets/`.
+ * `BASE_URL` is the Vite base ("/Worldgate/" in production) so the request
+ * resolves under the GitHub Pages sub-path. */
+const ENEMY_SPRITE_URL = `${import.meta.env.BASE_URL}assets/units/enemy-insect-warrior.png`;
+
 export interface BattleCanvasOpts {
   onTap: (x: number, y: number) => void;
 }
@@ -86,6 +94,9 @@ export class BattleCanvas {
   private lastView: BattleView | null = null;
   private lastOverride: readonly ReplayUnit[] | null = null;
   private disposed = false;
+  // The enemy billboard texture; null until it loads (or if loading fails, in
+  // which case enemies fall back to the colored shape).
+  private enemyTexture: Texture | null = null;
 
   // Pan/zoom state (spec §11): a viewport transform on `board`, driven by the
   // pure math in viewport.ts. Bounds are recomputed each render from the board
@@ -137,7 +148,23 @@ export class BattleCanvas {
       this.resizeObserver.observe(this.container);
     }
 
+    // Load the enemy billboard sprite in the background; when it arrives, redraw
+    // so enemies swap from the fallback shape to the sprite. A load failure just
+    // leaves `enemyTexture` null and keeps the colored shape.
+    void this.loadEnemyTexture();
+
     if (this.lastView) this.render(this.lastView, this.lastOverride);
+  }
+
+  private async loadEnemyTexture(): Promise<void> {
+    try {
+      const texture = await Assets.load<Texture>(ENEMY_SPRITE_URL);
+      if (this.disposed) return;
+      this.enemyTexture = texture;
+      if (this.lastView) this.render(this.lastView, this.lastOverride);
+    } catch {
+      // Keep the fallback colored shape.
+    }
   }
 
   private localPoint(e: PointerEvent | WheelEvent): { x: number; y: number } {
@@ -339,18 +366,24 @@ export class BattleCanvas {
       const cy = u.pos.y * t + t / 2;
       const r = t * 0.3;
       const base = !u.alive ? COLORS.downed : u.side === "player" ? COLORS.player : COLORS.enemy;
+      // Alive enemies render as the insect billboard once its texture is loaded;
+      // players, downed units, and the pre-load frames keep the colored shape.
+      const useSprite = u.side === "enemy" && u.alive && this.enemyTexture !== null;
       if (u.selected && u.alive) g.circle(cx, cy, r + 4).stroke({ width: 3, color: COLORS.selection });
-      g.circle(cx, cy, r).fill({ color: base, alpha: u.alive ? 1 : 0.5 });
-      g.circle(cx, cy, r).stroke({ width: 2, color: 0x0b0f1a });
-      if (!u.alive) {
-        const d = r * 0.5;
-        g.moveTo(cx - d, cy - d)
-          .lineTo(cx + d, cy + d)
-          .moveTo(cx + d, cy - d)
-          .lineTo(cx - d, cy + d)
-          .stroke({ width: 2, color: COLORS.bg });
+      if (!useSprite) {
+        g.circle(cx, cy, r).fill({ color: base, alpha: u.alive ? 1 : 0.5 });
+        g.circle(cx, cy, r).stroke({ width: 2, color: 0x0b0f1a });
+        if (!u.alive) {
+          const d = r * 0.5;
+          g.moveTo(cx - d, cy - d)
+            .lineTo(cx + d, cy + d)
+            .moveTo(cx + d, cy - d)
+            .lineTo(cx - d, cy + d)
+            .stroke({ width: 2, color: COLORS.bg });
+        }
       }
       this.board.addChild(g);
+      if (useSprite) this.board.addChild(this.enemySprite(cx, cy, r, t));
 
       if (u.alive) this.board.addChild(this.hpPips(u, cx, cy - r - 7, t));
 
@@ -413,6 +446,18 @@ export class BattleCanvas {
 
     // Apply the current pan/zoom as a transform on the whole board.
     this.applyTransform();
+  }
+
+  /** The enemy insect billboard, scaled to sit within its tile and anchored a
+   * little low so it "stands" on the tile centre rather than floating. */
+  private enemySprite(cx: number, cy: number, r: number, t: number): Sprite {
+    const sprite = new Sprite(this.enemyTexture!);
+    sprite.anchor.set(0.5, 0.6);
+    const maxDim = Math.max(sprite.texture.width, sprite.texture.height) || 1;
+    sprite.scale.set((t * 1.3) / maxDim);
+    sprite.x = cx;
+    sprite.y = cy + r * 0.15;
+    return sprite;
   }
 
   private hpPips(u: DrawUnit, cx: number, top: number, t: number): Graphics {

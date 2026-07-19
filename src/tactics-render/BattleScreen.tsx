@@ -26,6 +26,14 @@ const RESOURCE_LABELS: Record<ResourceIdT, string> = {
   exotics: "Exotics",
 };
 
+/** Ability-bar icons, keyed by ability id and served from `public/assets/`
+ * under the Vite base ("/Worldgate/" in production). Abilities without an entry
+ * (or whose icon fails to load) simply show the text label. */
+const ABILITY_ICONS: Record<string, string> = {
+  ab_shot: `${import.meta.env.BASE_URL}assets/abilities/ab-shot.png`,
+  ab_patch: `${import.meta.env.BASE_URL}assets/abilities/ab-patch.png`,
+};
+
 interface HeroResult {
   name: string;
   hp: number;
@@ -407,6 +415,7 @@ export function BattleScreen({
           <BarButton
             key={ab.id}
             label={ab.name}
+            icon={ABILITY_ICONS[ab.id]}
             hint={ab.cooldown > 0 ? `CD ${ab.cooldown}` : `${ab.apCost} AP`}
             active={ab.active}
             disabled={replaying || !ab.ready}
@@ -522,12 +531,14 @@ function BarButton({
   active,
   disabled,
   onClick,
+  icon,
 }: {
   label: string;
   hint: string;
   active: boolean;
   disabled: boolean;
   onClick: () => void;
+  icon?: string;
 }) {
   return (
     <button
@@ -545,6 +556,16 @@ function BarButton({
         opacity: disabled ? 0.4 : 1,
       }}
     >
+      {icon && (
+        <img
+          src={icon}
+          alt=""
+          aria-hidden="true"
+          width={22}
+          height={22}
+          style={{ imageRendering: "pixelated", marginBottom: 1 }}
+        />
+      )}
       <span style={{ fontWeight: 600, fontSize: "0.9rem" }}>{label}</span>
       {hint && <span style={{ fontSize: "0.62rem", opacity: 0.8 }}>{hint}</span>}
     </button>

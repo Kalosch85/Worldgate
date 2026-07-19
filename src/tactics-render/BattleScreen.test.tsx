@@ -73,7 +73,24 @@ vi.mock("pixi.js", () => {
     y = 0;
     destroy() {}
   }
-  return { Application, Container, Graphics, Text };
+  class Sprite {
+    anchor = { set() {} };
+    scale = { set() {} };
+    texture = { width: 64, height: 64 };
+    x = 0;
+    y = 0;
+    constructor(texture?: unknown) {
+      if (texture) this.texture = texture as { width: number; height: number };
+    }
+    destroy() {}
+  }
+  const Assets = {
+    async load() {
+      return { width: 64, height: 64 };
+    },
+  };
+  const Texture = class {};
+  return { Application, Assets, Container, Graphics, Sprite, Text, Texture };
 });
 
 const CONTENT = loadTestContent();

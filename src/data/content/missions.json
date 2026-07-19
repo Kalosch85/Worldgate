@@ -9,7 +9,8 @@
     "victoryEffects": [
       { "type": "resource", "resource": "intel", "delta": 5 },
       { "type": "xp", "scope": "squad", "amount": 15 },
-      { "type": "fatigue", "scope": "squad", "delta": 20 }
+      { "type": "fatigue", "scope": "squad", "delta": 20 },
+      { "type": "unlockMission", "mission": "m_vy_1" }
     ],
     "defeatEffects": [{ "type": "variable", "variable": "support", "delta": -1 }]
   },
@@ -20,5 +21,29 @@
     "availability": [],
     "squad": { "min": 1, "max": 3 },
     "payload": { "kind": "narrative", "eventScript": "ev_first_contact" }
+  },
+  {
+    "id": "m_vy_1",
+    "name": "Pilgrim Roads",
+    "description": "Veyra's holy city awaits. Find a way into the Penitence before the Second Expedition's trail goes cold.",
+    "availability": [],
+    "squad": { "min": 2, "max": 2 },
+    "payload": { "kind": "narrative", "eventScript": "ev_vy_pilgrim_roads" }
+  },
+  {
+    "id": "m_vy_2",
+    "name": "The Penitence",
+    "description": "The plan is set. Get inside the basilica-prison and find the Second Expedition.",
+    "availability": [],
+    "squad": { "min": 2, "max": 2 },
+    "payload": { "kind": "narrative", "eventScript": "ev_vy_penitence" }
+  },
+  {
+    "id": "m_vy_3",
+    "name": "The First Blade",
+    "description": "Seryn Vael, the Luminous One's champion, stands between you and the way out.",
+    "availability": [],
+    "squad": { "min": 2, "max": 2 },
+    "payload": { "kind": "narrative", "eventScript": "ev_vy_first_blade" }
   }
 ]

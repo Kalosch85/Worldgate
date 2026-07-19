@@ -338,7 +338,7 @@ describe("interact order & objectives (§8)", () => {
 
     expect(next.activeMission).toBeNull(); // battle resolved
     expect(next.missions.completed).toContainEqual({ mission: "m_relay", outcome: "victory", day: 1 });
-    expect(next.missions.available).toEqual(["m_survey"]); // m_relay removed
+    expect(next.missions.available).toEqual(["m_survey", "m_vy_1"]); // m_relay removed, m_vy_1 unlocked
     // victoryEffects: intel +5, xp +15 (squad), fatigue +20 (squad).
     expect(next.resources.intel).toBe(5);
     const merc = next.heroes.find((h) => h.hero === "h_mercer")!;

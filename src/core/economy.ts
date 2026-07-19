@@ -10,7 +10,7 @@ import { advanceConstruction } from "./construction.js";
 import { applyEffects } from "./effects.js";
 import { RuleError } from "./errors.js";
 import { getModifier } from "./modifiers.js";
-import { fireDueIncident } from "./narrative.js";
+import { evalCondition, fireDueIncident } from "./narrative.js";
 
 /** §7: materials cost of a tactical mission launch. Narrative missions are free.
  * The constant only — `launchMission` itself lands in a later phase. */
@@ -28,10 +28,26 @@ function clamp(min: number, max: number, v: number): number {
 
 // -------------------------------------------------------------------- guards
 
+/**
+ * Whether a tech is listed in the research UI (arc-veyra.md §2.2). A tech shows
+ * when every `visibleIf` condition passes — evaluated with empty squad context,
+ * so squad-scoped conditions read false — or when it is already completed
+ * (completed techs always display). Empty `visibleIf` ⇒ always visible.
+ */
+export function techVisible(state: GameStateT, content: ContentBundleT, tech: string): boolean {
+  const def = content.techs.find((t) => t.id === tech);
+  if (!def) return false;
+  if (state.research.completed.includes(tech)) return true;
+  const gates = def.visibleIf ?? [];
+  return gates.every((c) => evalCondition(state, content, [], c));
+}
+
 export function canStartResearch(state: GameStateT, content: ContentBundleT, tech: string): boolean {
   const def = content.techs.find((t) => t.id === tech);
   if (!def) return false;
   if (state.research.completed.includes(tech)) return false;
+  // Hidden techs cannot be started until their visibility gate opens (§2.2).
+  if (!techVisible(state, content, tech)) return false;
   return def.prerequisites.every((p) => state.research.completed.includes(p));
 }
 

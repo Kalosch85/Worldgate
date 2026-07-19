@@ -14,6 +14,23 @@ reproduced verbatim.
    be gated on the doubt variable reaching a threshold so the defection is
    earned by the player's arguments, not granted by victory; if the spec
    already does this, keep it.
+4. M4–M5 session (plan task 6.2-A3; Fable resolutions B–E) applied:
+   - B: TechDef gained `visibleIf: Condition[]` (the only sanctioned schema
+     edit). t_radiance_cell gated on f_vy_godtech, t_projection_theory on
+     f_vy_watched_god. Setting the arc flags is what makes the techs visible —
+     no separate unlockTech effect exists or is needed.
+   - M4 shipped as the ARC-D3 **narrative fallback**, not tactical: the
+     tactical design needs reinforcement waves + flag-conditional battle init
+     (alerted start on f_vy_ilo_abandoned, deploy-back on f_vy_alarm,
+     Seryn's pre-deactivated pillar) the tactics engine does not express;
+     adding them is a tactics-engine change, out of this content session's
+     scope. The narrative version honors every flag beat and sets identical
+     flags (f_vy_godtech, exotics +3, unlock m_vy_5).
+   - C: §6 full-arc golden tests deferred to post-balance (kept out here).
+   - The M5 epilogue's 4-axis variation is folded into per-ending outcome
+     labels + journal lines (the engine has no conditional-text concatenation).
+   - ev_vy_dessik_word's queue is wired into M2's free-Ilo option (+5 days),
+     the kept-promise symmetry §5 calls for.
 -->
 
 # Arc: The Luminous One (Veyra) — Content Spec

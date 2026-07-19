@@ -17,5 +17,23 @@
     "cost": 15,
     "prerequisites": ["t_gate_stabilizer"],
     "effects": [{ "type": "modifier", "key": "healRate", "mode": "add", "value": 1 }]
+  },
+  {
+    "id": "t_radiance_cell",
+    "name": "Radiance Cell",
+    "description": "Reverse-engineered temple power core. Dense, stable, and not remotely holy.",
+    "cost": 30,
+    "prerequisites": [],
+    "effects": [{ "type": "log", "text": "The 'holy fire' is a power cell. A very good one." }],
+    "visibleIf": [{ "type": "flag", "flag": "f_vy_godtech", "value": true }]
+  },
+  {
+    "id": "t_projection_theory",
+    "name": "Projection Theory",
+    "description": "Field recordings of the Luminous One reveal how a being can appear anywhere it is worshipped.",
+    "cost": 45,
+    "prerequisites": ["t_radiance_cell"],
+    "effects": [{ "type": "log", "text": "Not omnipresence. Emitters." }],
+    "visibleIf": [{ "type": "flag", "flag": "f_vy_watched_god", "value": true }]
   }
 ]

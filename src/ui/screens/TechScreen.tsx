@@ -5,7 +5,7 @@
  * than throwing. Switching techs is allowed and discards current progress — the
  * UI warns before it does. Portrait-friendly, touch targets ≥ 44px.
  */
-import { canStartResearch } from "../../core/economy.js";
+import { canStartResearch, techVisible } from "../../core/economy.js";
 import type { ContentBundleT, GameStateT } from "../../data/schemas.js";
 import type { Action } from "../../core/reducer.js";
 import { ScreenHeader } from "../components/ScreenHeader.js";
@@ -91,59 +91,63 @@ export function TechScreen({
           )}
         </section>
 
-        {content.techs.map((tech) => {
-          const status = statusOf(state, tech, content);
-          const meta = STATUS_META[status];
-          const canStart = status === "available";
-          // Starting a new tech while another is in progress discards the old
-          // progress (economy §3) — warn so the choice is informed.
-          const willDiscard = canStart && current !== null && current.tech !== tech.id;
-          return (
-            <section key={tech.id} style={panelStyle} aria-label={tech.name}>
-              <header style={{ display: "flex", alignItems: "baseline", gap: "0.5rem", flexWrap: "wrap" }}>
-                <h3 style={{ margin: 0, fontSize: "1.05rem", flex: 1, minWidth: 0 }}>{tech.name}</h3>
-                <span style={{ fontSize: "0.75rem", fontWeight: 700, color: meta.color }}>{meta.label}</span>
-              </header>
-              <p style={{ margin: "0.35rem 0", fontSize: "0.85rem", color: theme.textDim }}>
-                {tech.description}
-              </p>
-              <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", alignItems: "center" }}>
-                <span style={{ fontSize: "0.8rem", color: theme.textDim }}>{tech.cost} RP</span>
-                {tech.prerequisites.length > 0 && (
-                  <span style={{ fontSize: "0.8rem", color: theme.textDim }}>
-                    · Requires:{" "}
-                    {tech.prerequisites
-                      .map((p) => {
-                        const pdef = content.techs.find((t) => t.id === p);
-                        const met = state.research.completed.includes(p);
-                        return `${pdef?.name ?? p}${met ? " ✓" : " ✗"}`;
-                      })
-                      .join(", ")}
+        {content.techs
+          .filter((tech) => techVisible(state, content, tech.id))
+          .map((tech) => {
+            const status = statusOf(state, tech, content);
+            const meta = STATUS_META[status];
+            const canStart = status === "available";
+            // Starting a new tech while another is in progress discards the old
+            // progress (economy §3) — warn so the choice is informed.
+            const willDiscard = canStart && current !== null && current.tech !== tech.id;
+            return (
+              <section key={tech.id} style={panelStyle} aria-label={tech.name}>
+                <header style={{ display: "flex", alignItems: "baseline", gap: "0.5rem", flexWrap: "wrap" }}>
+                  <h3 style={{ margin: 0, fontSize: "1.05rem", flex: 1, minWidth: 0 }}>{tech.name}</h3>
+                  <span style={{ fontSize: "0.75rem", fontWeight: 700, color: meta.color }}>
+                    {meta.label}
                   </span>
+                </header>
+                <p style={{ margin: "0.35rem 0", fontSize: "0.85rem", color: theme.textDim }}>
+                  {tech.description}
+                </p>
+                <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", alignItems: "center" }}>
+                  <span style={{ fontSize: "0.8rem", color: theme.textDim }}>{tech.cost} RP</span>
+                  {tech.prerequisites.length > 0 && (
+                    <span style={{ fontSize: "0.8rem", color: theme.textDim }}>
+                      · Requires:{" "}
+                      {tech.prerequisites
+                        .map((p) => {
+                          const pdef = content.techs.find((t) => t.id === p);
+                          const met = state.research.completed.includes(p);
+                          return `${pdef?.name ?? p}${met ? " ✓" : " ✗"}`;
+                        })
+                        .join(", ")}
+                    </span>
+                  )}
+                </div>
+                {status !== "completed" && (
+                  <button
+                    type="button"
+                    style={{
+                      ...buttonStyle(canStart ? "primary" : "ghost"),
+                      width: "100%",
+                      marginTop: "0.6rem",
+                      opacity: canStart ? 1 : 0.4,
+                    }}
+                    disabled={!canStart}
+                    onClick={() => dispatch({ type: "startResearch", tech: tech.id })}
+                  >
+                    {status === "inProgress"
+                      ? "Researching…"
+                      : willDiscard
+                        ? "Switch research (discards progress)"
+                        : "Start research"}
+                  </button>
                 )}
-              </div>
-              {status !== "completed" && (
-                <button
-                  type="button"
-                  style={{
-                    ...buttonStyle(canStart ? "primary" : "ghost"),
-                    width: "100%",
-                    marginTop: "0.6rem",
-                    opacity: canStart ? 1 : 0.4,
-                  }}
-                  disabled={!canStart}
-                  onClick={() => dispatch({ type: "startResearch", tech: tech.id })}
-                >
-                  {status === "inProgress"
-                    ? "Researching…"
-                    : willDiscard
-                      ? "Switch research (discards progress)"
-                      : "Start research"}
-                </button>
-              )}
-            </section>
-          );
-        })}
+              </section>
+            );
+          })}
       </main>
     </div>
   );

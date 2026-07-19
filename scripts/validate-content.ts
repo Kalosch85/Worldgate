@@ -22,6 +22,7 @@ const parsed = ContentBundle.safeParse({
   maps: load("maps.json"),
   events: load("events.json"),
   missions: load("missions.json"),
+  facilities: load("facilities.json"),
 });
 
 if (!parsed.success) {
@@ -128,6 +129,13 @@ for (const m of c.missions) {
   checkEffects(`mission ${m.id}`, [...m.victoryEffects, ...m.defeatEffects]);
 }
 
+// facilities (facilities spec §5): prerequisite + effect refs checked with the
+// same shared helpers as techs/events/missions.
+for (const f of c.facilities) {
+  checkConditions(`facility ${f.id}`, f.prerequisites);
+  checkEffects(`facility ${f.id}`, f.effects);
+}
+
 function fail(): never {
   console.error(`Content validation FAILED (${errors.length} error${errors.length === 1 ? "" : "s"}):`);
   for (const e of errors) console.error("  - " + e);
@@ -137,5 +145,6 @@ function fail(): never {
 if (errors.length > 0) fail();
 console.log(
   `Content OK: ${c.heroes.length} heroes, ${c.techs.length} techs, ${c.abilities.length} abilities, ` +
-    `${c.unitTypes.length} unit types, ${c.maps.length} maps, ${c.events.length} events, ${c.missions.length} missions.`,
+    `${c.unitTypes.length} unit types, ${c.maps.length} maps, ${c.events.length} events, ` +
+    `${c.missions.length} missions, ${c.facilities.length} facilities.`,
 );

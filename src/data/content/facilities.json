@@ -1,0 +1,38 @@
+[
+  {
+    "id": "fac_quarters",
+    "name": "Expanded Quarters",
+    "description": "More bunks and life support let the base support a larger crew.",
+    "cost": { "funds": 40, "materials": 15 },
+    "buildDays": 4,
+    "prerequisites": [],
+    "effects": [{ "type": "personnel", "delta": 5 }]
+  },
+  {
+    "id": "fac_medbay",
+    "name": "Medical Bay",
+    "description": "A dedicated infirmary speeds recovery for returning teams.",
+    "cost": { "funds": 35, "materials": 10 },
+    "buildDays": 3,
+    "prerequisites": [],
+    "effects": [{ "type": "modifier", "key": "healRate", "mode": "add", "value": 1 }]
+  },
+  {
+    "id": "fac_workshop",
+    "name": "Workshop",
+    "description": "On-site fabrication yields a steady trickle of materials each day.",
+    "cost": { "funds": 50, "materials": 20 },
+    "buildDays": 5,
+    "prerequisites": [],
+    "effects": [{ "type": "modifier", "key": "materialsPerDay", "mode": "add", "value": 2 }]
+  },
+  {
+    "id": "fac_gate_lab",
+    "name": "Gate Annex",
+    "description": "A research annex built onto the stabilized gate accelerates study.",
+    "cost": { "funds": 60, "materials": 25 },
+    "buildDays": 6,
+    "prerequisites": [{ "type": "techResearched", "tech": "t_gate_stabilizer" }],
+    "effects": [{ "type": "modifier", "key": "researchBonus", "mode": "add", "value": 2 }]
+  }
+]

@@ -258,6 +258,7 @@ function newHeroState(): GameStateT {
     ],
     personnel: { total: 20, assignments: { logistics: 12, research: 6, infirmary: 2 } },
     research: { current: null, completed: [] },
+    construction: { current: null, built: [] },
     missions: { available: [], completed: [], queuedEvents: [] },
     activeMission: null,
   };

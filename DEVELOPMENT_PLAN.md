@@ -6,7 +6,7 @@ Status: v0.2 — stack confirmed (TypeScript web). Task 0.2 delivered: `ARCHITEC
 
 The loop _mission (tactical or narrative) → rewards (XP, fatigue, resources, flags) → base/tech progression → next mission_ is fun. Everything not testing this is cut from the prototype but gets an architectural hook.
 
-**Cut from prototype:** politics system, elections, public opinion, mixed-style missions, roguelite, permadeath, base construction (facilities are fixed; personnel assignment only).
+**Cut from prototype:** politics system, elections, public opinion, mixed-style missions, roguelite, permadeath. (Base construction was cut here but restored by user veto — see D-8.)
 **Kept:** heroes (stats, archetypes, XP, fatigue), small tech tree, two separate mission types, support meter stub (single number gating income).
 
 ## Tech stack
@@ -106,3 +106,4 @@ Play 2–3 full campaigns on phone. Evaluate hypothesis. Then decide, in order: 
 - **D-3 default:** Injuries persist across missions; no permadeath in prototype.
 - **D-4 default:** Squad size 4; grid ~10×12; tactics landscape orientation.
 - **D-5 default:** RNG in combat (seeded), deterministic narrative.
+- **D-8 RESOLVED (user veto):** Base construction restored to prototype scope, reversing the earlier cut (see "Cut from prototype"). Facilities are content (`FacilityDef` + `facilities.json`) reusing the universal Effect/Condition vocabulary; one build at a time, costs paid on the `build` action, effects applied on completion during the endDay construction step (between Research and Recovery); no upkeep in v1 (revisit in 6.3). Spec: `docs/specs/facilities.md`.

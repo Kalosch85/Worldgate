@@ -6,6 +6,7 @@
  */
 import type { ContentBundleT, GameStateT } from "../data/schemas.js";
 import type { ReducerCtx } from "./reducer.js";
+import { advanceConstruction } from "./construction.js";
 import { applyEffects } from "./effects.js";
 import { RuleError } from "./errors.js";
 import { getModifier } from "./modifiers.js";
@@ -88,6 +89,8 @@ export function endDay(state: GameStateT, ctx: ReducerCtx): GameStateT {
   const incomeMult = getModifier(draft.modifiers, "incomeMult");
   const income = Math.floor(draft.personnel.assignments.logistics * 3 * supportMult * incomeMult);
   draft.resources.funds += income;
+  // Workshop and other facilities add materials each day (facilities spec §3).
+  draft.resources.materials += Math.floor(getModifier(draft.modifiers, "materialsPerDay"));
 
   // 2. Upkeep.
   const upkeep = draft.personnel.total * 1 + draft.heroes.length * 2;
@@ -117,6 +120,10 @@ export function endDay(state: GameStateT, ctx: ReducerCtx): GameStateT {
       draft.research.current.progress = progress;
     }
   }
+
+  // 3b. Construction (facilities spec §3): between Research and Recovery.
+  // A facility completing here has already benefited from this tick's research.
+  draft = advanceConstruction(draft, ctx);
 
   // 4. Recovery.
   const infirmary = draft.personnel.assignments.infirmary;

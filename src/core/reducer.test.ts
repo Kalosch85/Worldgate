@@ -16,6 +16,7 @@ const EMPTY_CONTENT: ContentBundleT = ContentBundle.parse({
   maps: [],
   events: [],
   missions: [],
+  facilities: [],
 });
 
 const CTX: ReducerCtx = { content: EMPTY_CONTENT, rng: mulberry32(1) };
@@ -33,6 +34,7 @@ function baseState(): GameStateT {
     heroes: [],
     personnel: { total: 3, assignments: { logistics: 1, research: 1, infirmary: 1 } },
     research: { current: null, completed: [] },
+    construction: { current: null, built: [] },
     missions: { available: [], completed: [], queuedEvents: [] },
     activeMission: null,
   };

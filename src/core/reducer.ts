@@ -7,6 +7,7 @@
  *   apply(state, action, ctx): GameState
  */
 import type { ContentBundleT, GameStateT } from "../data/schemas.js";
+import { build } from "./construction.js";
 import { assignPersonnel, endDay, startResearch, type PersonnelAssignments } from "./economy.js";
 import { launchMission } from "./missions.js";
 import { chooseEventOption } from "./narrative.js";
@@ -36,6 +37,7 @@ export type Action =
   | { type: "endDay" }
   | { type: "startResearch"; tech: string }
   | { type: "assignPersonnel"; assignments: PersonnelAssignments }
+  | { type: "build"; facility: string }
   | { type: "launchMission"; mission: string; squad: string[] }
   | { type: "chooseEventOption"; option: string }
   | BattleAction;
@@ -56,6 +58,8 @@ export function apply(state: GameStateT, action: Action, ctx: ReducerCtx): GameS
       return startResearch(state, ctx.content, action.tech);
     case "assignPersonnel":
       return assignPersonnel(state, action.assignments);
+    case "build":
+      return build(state, ctx.content, action.facility);
     case "launchMission":
       return launchMission(state, ctx.content, action.mission, action.squad);
     case "chooseEventOption":

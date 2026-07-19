@@ -13,6 +13,7 @@ const CONTENT: ContentBundleT = ContentBundle.parse({
   maps: [],
   events: [],
   missions: [],
+  facilities: [],
 });
 
 function ctx(seed = 1): ReducerCtx {
@@ -35,6 +36,7 @@ function baseState(): GameStateT {
     ],
     personnel: { total: 5, assignments: { logistics: 1, research: 1, infirmary: 1 } },
     research: { current: null, completed: [] },
+    construction: { current: null, built: [] },
     missions: { available: ["m_existing"], completed: [], queuedEvents: [] },
     activeMission: null,
   };

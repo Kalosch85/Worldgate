@@ -137,6 +137,16 @@ describe("App shell", () => {
     expect(container!.textContent).not.toContain("A mission is in progress");
   });
 
+  it("builds a facility from the base screen and shows the progress row", () => {
+    render();
+    click("New Campaign");
+    expect(container!.textContent).toContain("Facilities");
+    // The first buildable facility is Expanded Quarters (starting resources cover it).
+    click("Build");
+    expect(container!.textContent).toContain("Building: Expanded Quarters");
+    expect(container!.textContent).toContain("days left");
+  });
+
   it("persists the campaign to localStorage and restores it on reload", () => {
     render();
     click("New Campaign");

@@ -92,6 +92,10 @@ export const EffectSchema = z.union([
   }),
   z.object({ type: z.literal("queueEvent"), event: Id, delayDays: z.number().int().min(0) }),
   z.object({ type: z.literal("unlockMission"), mission: Id }),
+  // Adjusts personnel.total (floor 0). If assignments then exceed the new
+  // total, core reduces infirmary → research → logistics until valid
+  // (facilities spec §1). Used by facility completion effects.
+  z.object({ type: z.literal("personnel"), delta: z.number() }),
   z.object({ type: z.literal("log"), text: z.string() }), // campaign journal / debrief line
 ]);
 export type Effect = z.infer<typeof EffectSchema>;
@@ -224,6 +228,22 @@ export const MissionDef = z.object({
   defeatEffects: z.array(EffectSchema).default([]),
 });
 
+// ------------------------------------------------------------- facilities
+// Base construction (facilities spec §1). A facility costs funds+materials,
+// takes buildDays to complete, may gate on Conditions (prerequisites), and
+// applies its Effect[] once on completion — the same universal vocabulary as
+// techs. One build at a time; no upkeep in v1.
+export const FacilityDef = z.object({
+  id: Id,
+  name: z.string(),
+  description: z.string(),
+  cost: z.object({ funds: z.number().int().min(0), materials: z.number().int().min(0) }),
+  buildDays: z.number().int().min(1),
+  prerequisites: z.array(ConditionSchema).default([]),
+  effects: z.array(EffectSchema).default([]),
+});
+export type FacilityDefT = z.infer<typeof FacilityDef>;
+
 // The full content directory, validated as one bundle in CI.
 export const ContentBundle = z.object({
   heroes: z.array(HeroDef),
@@ -234,6 +254,7 @@ export const ContentBundle = z.object({
   maps: z.array(TacticalMapDef),
   events: z.array(EventScriptDef),
   missions: z.array(MissionDef),
+  facilities: z.array(FacilityDef),
 });
 export type ContentBundleT = z.infer<typeof ContentBundle>;
 
@@ -291,6 +312,12 @@ export const GameState = z.object({
   research: z.object({
     current: z.object({ tech: Id, progress: z.number().min(0) }).nullable(),
     completed: z.array(Id),
+  }),
+  // Base construction (facilities spec §1). One facility builds at a time;
+  // `built` accumulates completed facility ids. Initial: { current: null, built: [] }.
+  construction: z.object({
+    current: z.object({ facility: Id, daysRemaining: z.number().int().min(0) }).nullable(),
+    built: z.array(Id),
   }),
   missions: z.object({
     available: z.array(Id),

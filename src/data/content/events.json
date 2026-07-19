@@ -93,7 +93,10 @@
             "id": "o_vy1_pilgrims",
             "text": "Listen among the pilgrims.",
             "requirements": [
-              { "type": "not", "condition": { "type": "flag", "flag": "f_vy_intel_pilgrims", "value": true } },
+              {
+                "type": "not",
+                "condition": { "type": "flag", "flag": "f_vy_intel_pilgrims", "value": true }
+              },
               { "type": "squadSkillAtLeast", "skill": "diplomacy", "min": 4 }
             ],
             "effects": [{ "type": "flag", "flag": "f_vy_intel_pilgrims", "value": true }],
@@ -133,14 +136,22 @@
         "id": "n_vy1_pilgrims_detail",
         "text": "Words drift between processions: 'Oru walks where he is worshipped.' Doctrine, not proof — but it's the first crack in how they explain him.",
         "options": [
-          { "id": "o_vy1_pilgrims_continue", "text": "Continue.", "next": { "kind": "node", "node": "n_vy1_gather" } }
+          {
+            "id": "o_vy1_pilgrims_continue",
+            "text": "Continue.",
+            "next": { "kind": "node", "node": "n_vy1_gather" }
+          }
         ]
       },
       {
         "id": "n_vy1_patrols_detail",
         "text": "Guard rotations are looser than they look — predictable, if you watch long enough.",
         "options": [
-          { "id": "o_vy1_patrols_continue", "text": "Continue.", "next": { "kind": "node", "node": "n_vy1_gather" } }
+          {
+            "id": "o_vy1_patrols_continue",
+            "text": "Continue.",
+            "next": { "kind": "node", "node": "n_vy1_gather" }
+          }
         ]
       },
       {
@@ -148,7 +159,11 @@
         "speaker": "Dr. A. Okafor",
         "text": "Okafor taps the relay traffic and goes quiet for a long moment. 'That's encrypted,' she finally says. 'Gods don't need encryption.'",
         "options": [
-          { "id": "o_vy1_relay_continue", "text": "Continue.", "next": { "kind": "node", "node": "n_vy1_gather" } }
+          {
+            "id": "o_vy1_relay_continue",
+            "text": "Continue.",
+            "next": { "kind": "node", "node": "n_vy1_gather" }
+          }
         ]
       },
       {
@@ -431,14 +446,22 @@
         "id": "n_vy2_c_assault_1",
         "text": "The wall guns track before you're in range. Precursor-tech, someone says — the light doesn't look like any weapon you've drilled against.",
         "options": [
-          { "id": "o_vy2_c_1", "text": "Keep moving.", "next": { "kind": "node", "node": "n_vy2_c_assault_2" } }
+          {
+            "id": "o_vy2_c_1",
+            "text": "Keep moving.",
+            "next": { "kind": "node", "node": "n_vy2_c_assault_2" }
+          }
         ]
       },
       {
         "id": "n_vy2_c_assault_2",
         "text": "Small arms fire washes off a shield you can't see the edge of. This was never going to be a fair fight.",
         "options": [
-          { "id": "o_vy2_c_2", "text": "Keep moving.", "next": { "kind": "node", "node": "n_vy2_c_assault_3" } }
+          {
+            "id": "o_vy2_c_2",
+            "text": "Keep moving.",
+            "next": { "kind": "node", "node": "n_vy2_c_assault_3" }
+          }
         ]
       },
       {
@@ -716,7 +739,11 @@
         "speaker": "Seryn Vael",
         "text": "Something in his face closes. 'You had your chance to speak,' he says, and the honor guard fans out behind him.",
         "options": [
-          { "id": "o_vy3_hardens_continue", "text": "Draw.", "next": { "kind": "node", "node": "n_vy3_duel" } }
+          {
+            "id": "o_vy3_hardens_continue",
+            "text": "Draw.",
+            "next": { "kind": "node", "node": "n_vy3_duel" }
+          }
         ]
       },
       {

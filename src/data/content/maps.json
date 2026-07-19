@@ -26,5 +26,33 @@
       { "id": "con_b", "pos": { "x": 7, "y": 4 }, "kind": "console" }
     ],
     "objectives": [{ "id": "obj_consoles", "kind": "interactSequence", "interactables": ["con_a", "con_b"] }]
+  },
+  {
+    "id": "map_vy_intercept",
+    "name": "Pass Road Spires",
+    "width": 8,
+    "height": 6,
+    "tiles": ["........", ".-...#..", "...+.#..", ".#...-..", ".#......", "........"],
+    "squadSpawns": [
+      { "x": 0, "y": 0 },
+      { "x": 1, "y": 0 },
+      { "x": 0, "y": 1 },
+      { "x": 2, "y": 0 }
+    ],
+    "enemyGroups": [
+      {
+        "id": "eg_tenders",
+        "unitType": "ut_tender",
+        "positions": [
+          { "x": 6, "y": 4 },
+          { "x": 7, "y": 5 }
+        ]
+      }
+    ],
+    "interactables": [
+      { "id": "spr_a", "pos": { "x": 7, "y": 0 }, "kind": "console" },
+      { "id": "spr_b", "pos": { "x": 7, "y": 4 }, "kind": "console" }
+    ],
+    "objectives": [{ "id": "obj_spires", "kind": "interactSequence", "interactables": ["spr_a", "spr_b"] }]
   }
 ]

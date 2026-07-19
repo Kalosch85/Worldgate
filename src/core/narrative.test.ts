@@ -17,10 +17,12 @@ import type { ReducerCtx } from "./reducer.js";
 const CONTENT: ContentBundleT = loadTestContent();
 const ctx = (seed = 1): ReducerCtx => ({ content: CONTENT, rng: mulberry32(seed) });
 
-/** Launch ev_first_contact via m_survey and sit on n_intro. */
+/** Launch ev_first_contact via m_rival_stranded and sit on n_intro. */
 function launched(squad: string[], overrides?: Partial<GameStateT>): GameStateT {
   const base = { ...newCampaign(1), ...overrides };
-  return launchMission(base, CONTENT, "m_survey", squad);
+  // D-9: the side mission is unlocked mid-campaign, not at newCampaign.
+  base.missions = { ...base.missions, available: [...base.missions.available, "m_rival_stranded"] };
+  return launchMission(base, CONTENT, "m_rival_stranded", squad);
 }
 
 describe("evalCondition (§4)", () => {
@@ -142,8 +144,10 @@ describe("chooseEventOption — golden paths (§5, §6)", () => {
     // out_contact outcome: +10 xp squad (still level 1) + the log line.
     expect(done.heroes.find((h) => h.hero === "h_mercer")!.xp).toBe(10);
     expect(done.heroes.find((h) => h.hero === "h_okafor")!.xp).toBe(10);
-    expect(done.missions.available).not.toContain("m_survey");
-    expect(done.missions.completed).toEqual([{ mission: "m_survey", outcome: "out_contact", day: 1 }]);
+    expect(done.missions.available).not.toContain("m_rival_stranded");
+    expect(done.missions.completed).toEqual([
+      { mission: "m_rival_stranded", outcome: "out_contact", day: 1 },
+    ]);
     const journal = done.journal.map((j) => j.text);
     expect(journal).toContain("Someone on the other side owes us. Or knows us.");
     expect(journal).toContain("The Stranded Survey Team: Contact established");
@@ -168,7 +172,7 @@ describe("chooseEventOption — golden paths (§5, §6)", () => {
     // fatigue +5 to squad, then out_cold +5 xp.
     expect(done.heroes.find((h) => h.hero === "h_mercer")!.fatigue).toBe(5);
     expect(done.heroes.find((h) => h.hero === "h_okafor")!.xp).toBe(5);
-    expect(done.missions.completed).toEqual([{ mission: "m_survey", outcome: "out_cold", day: 1 }]);
+    expect(done.missions.completed).toEqual([{ mission: "m_rival_stranded", outcome: "out_cold", day: 1 }]);
     expect(done.journal.map((j) => j.text)).toContain("The Stranded Survey Team: Walked away");
     // No queued follow-up on the leave route.
     expect(done.missions.queuedEvents).toEqual([]);

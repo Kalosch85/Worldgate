@@ -230,6 +230,12 @@ export const MissionDef = z.object({
   description: z.string(),
   availability: z.array(ConditionSchema).default([]),
   squad: z.object({ min: z.number().int().min(1), max: z.number().int().min(1) }),
+  // D-9 (Fable-sanctioned): per-mission override of the tactical launch cost
+  // (TACTICAL_LAUNCH_COST when absent). 0 = Command underwrites the crossing —
+  // required for a mandatory spine tactical, where a materials cost could
+  // otherwise soft-lock the campaign (materials have no unconditional income).
+  // Ignored for narrative payloads (always free).
+  launchCost: z.number().int().min(0).optional(),
   payload: z.union([
     z.object({ kind: z.literal("tactical"), map: Id }),
     z.object({ kind: z.literal("narrative"), eventScript: Id }),
@@ -303,7 +309,10 @@ export const BattleState = z.object({
 });
 
 export const GameState = z.object({
-  version: z.literal(1), // save-format version; prototype policy: bump = new campaign
+  // Save-format version; prototype policy: bump = new campaign. Bumped 1 → 2
+  // by D-9: the early-campaign restructure retires m_survey and re-anchors the
+  // arc unlock chain, so pre-D-9 saves could no longer progress the spine.
+  version: z.literal(2),
   campaign: z.object({ day: z.number().int().min(1), seed: z.number().int() }),
   settings: z.object({ showLockedOptions: z.boolean() }), // D-1: default false
   resources: ResourceAmounts,

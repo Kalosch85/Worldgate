@@ -218,8 +218,7 @@ export function buildBattleView(state: GameStateT, content: ContentBundleT, ui: 
   const nextIds = new Set(safe(() => nextInteractables(state, content), []));
   const consoles: ConsoleView[] = map.interactables.map((it) => {
     const isNext = nextIds.has(it.id);
-    const onOrAdjacent =
-      selectablePlayer !== undefined && manhattan(selectablePlayer.pos, it.pos) <= 1;
+    const onOrAdjacent = selectablePlayer !== undefined && manhattan(selectablePlayer.pos, it.pos) <= 1;
     const reachableNext = isNext && selectablePlayer !== undefined && selectablePlayer.ap > 0 && onOrAdjacent;
 
     let blockedReason: string | null = null;
@@ -383,7 +382,10 @@ export function interpretTap(view: BattleView, x: number, y: number): TapResult 
 export function interactButtonTap(view: BattleView): TapResult {
   const eligible = view.consoles.find((c) => c.reachableNext);
   if (eligible && view.selectedUnit) {
-    return { kind: "action", action: { type: "battleInteract", unit: view.selectedUnit, interactable: eligible.id } };
+    return {
+      kind: "action",
+      action: { type: "battleInteract", unit: view.selectedUnit, interactable: eligible.id },
+    };
   }
   const next = view.consoles.find((c) => c.isNext) ?? view.consoles.find((c) => c.blockedReason);
   if (next?.blockedReason) return { kind: "message", text: next.blockedReason };

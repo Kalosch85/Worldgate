@@ -321,9 +321,13 @@ describe("interact order & objectives (§8)", () => {
     // Regression: consoles on map_relay couldn't be interacted with — a hero that
     // moves onto con_a's own tile (7,0) is at manhattan 0, which the old `=== 1`
     // adjacency guard rejected, stranding the unit on top with no way to use it.
-    const s = game([player("u_h_mercer", "h_mercer", 7, 0, { ap: 1 })], { obj_consoles: 0 }, {
-      squad: ["h_mercer"],
-    });
+    const s = game(
+      [player("u_h_mercer", "h_mercer", 7, 0, { ap: 1 })],
+      { obj_consoles: 0 },
+      {
+        squad: ["h_mercer"],
+      },
+    );
     const next = apply(s, { type: "battleInteract", unit: "u_h_mercer", interactable: "con_a" }, ctx);
     expect(battleOf(next)!.objectiveProgress.obj_consoles).toBe(1);
     expect(unit(next, "u_h_mercer").ap).toBe(0); // 1 − 1
@@ -332,9 +336,13 @@ describe("interact order & objectives (§8)", () => {
   it("a unit that spent all AP getting there cannot activate (no_ap)", () => {
     // Arrived on the console tile but two moves left 0 AP — the reason is no AP,
     // surfaced to the UI as the no-AP feedback (§11).
-    const s = game([player("u_h_mercer", "h_mercer", 7, 0, { ap: 0 })], { obj_consoles: 0 }, {
-      squad: ["h_mercer"],
-    });
+    const s = game(
+      [player("u_h_mercer", "h_mercer", 7, 0, { ap: 0 })],
+      { obj_consoles: 0 },
+      {
+        squad: ["h_mercer"],
+      },
+    );
     expect(() =>
       apply(s, { type: "battleInteract", unit: "u_h_mercer", interactable: "con_a" }, ctx),
     ).toThrow(/no AP|no_ap/i);
@@ -355,13 +363,14 @@ describe("interact order & objectives (§8)", () => {
     const s = game(
       [player("u_h_mercer", "h_mercer", 7, 3), player("u_h_okafor", "h_okafor", 0, 0, { hp: 0, ap: 0 })],
       { obj_consoles: 1 }, // con_a already done
-      { squad: ["h_mercer", "h_okafor"], available: ["m_survey", "m_relay"] },
+      { squad: ["h_mercer", "h_okafor"], available: ["m_vy_arrival", "m_relay"] },
     );
     const next = apply(s, { type: "battleInteract", unit: "u_h_mercer", interactable: "con_b" }, ctx);
 
     expect(next.activeMission).toBeNull(); // battle resolved
     expect(next.missions.completed).toContainEqual({ mission: "m_relay", outcome: "victory", day: 1 });
-    expect(next.missions.available).toEqual(["m_survey", "m_vy_1"]); // m_relay removed, m_vy_1 unlocked
+    // D-9: m_relay is an optional side op — victory unlocks nothing.
+    expect(next.missions.available).toEqual(["m_vy_arrival"]); // m_relay removed
     // victoryEffects: intel +5, xp +15 (squad), fatigue +20 (squad).
     expect(next.resources.intel).toBe(5);
     const merc = next.heroes.find((h) => h.hero === "h_mercer")!;

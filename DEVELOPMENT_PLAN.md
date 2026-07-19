@@ -91,6 +91,25 @@ ARCHITECTURE.md  DEVELOPMENT_PLAN.md
   - **6.2-A1 [S] Arc schema + effects.** ✅ DONE. `addHero` / `addPersonnel` effects (arc §8) + interpreter cases + validator refs (PR #20).
   - **6.2-A2 [S] Arc content M1–M3.** ✅ DONE. `h_seryn`, `ev_vy_pilgrim_roads` / `ev_vy_penitence` / `ev_vy_first_blade`, `m_vy_1..3`, `m_relay` arc-unlock (PR #21).
   - **6.2-A3 [S] Arc content M4–M5 + follow-ups.** ✅ DONE. Sanctioned schema change (resolution B): `TechDef.visibleIf: Condition[]` — techs list only when every gate passes (empty squad ctx); `canStartResearch` additionally requires visibility; completed techs always show; wired into `techVisible` selector, `TechScreen`, and `validate-content`. Content: `t_radiance_cell` (gate `f_vy_godtech`) + `t_projection_theory` (prereq radiance, gate `f_vy_watched_god`); `m_vy_4` "Relic Vault" + `m_vy_5` "The Luminous One" (both narrative — ARC-D3 fallback, see arc-veyra §M4 note); follow-ups `ev_vy_seryn_oath`, `ev_vy_gratitude`, `ev_vy_dessik_word` (kept-promise queue wired into M2 free-Ilo). M4/M5 text follows story-bible §3 Steward framing and §7 rules (≤80 words, tragic reveal). §6 full-arc golden tests deferred (resolution C — after balance tuning); visibility gating unit-tested in `economy.test.ts`. Verified: format, typecheck, lint, 223 tests, validate-content, build, and a scripted end-to-end run of every M4/M5 branch through the real reducers.
+  - **6.2-A4 [F] Early-campaign restructure (D-9).** ✅ DONE. New spine:
+    `ev_intro` auto-launches at newCampaign (incident form, core change in
+    `campaign.ts` — `newCampaign(seed, content?)`) → `m_vy_arrival` "The
+    Silent Valley" → `m_vy_ledger` "The Ledger of the Taken" →
+    `m_vy_intercept` "The Tribute Call" (first tactical: `map_vy_intercept`
+    reusing map_relay geometry, new `ut_tender`; `launchCost: 0` and defeat
+    queues `ev_vy_regroup` +1d which re-unlocks it — both are required for
+    the no-softlock guarantee, since materials have no unconditional income)
+    → `m_vy_1..5` (the missing M3 → m_vy_4 unlock mandated by arc-veyra §M3
+    is wired in here). "Second Expedition" → **Recon One** arc-wide;
+    `m_relay` repositioned as an optional tech-gated side op;
+    `ev_first_contact` moved to `m_rival_stranded` "Distress: Address 11"
+    (unlocked on intercept victory; trust_rival flow and the +30d B-1 queue
+    preserved). Winnability hand-verified through the real reducer: fresh
+    2-hero squad 23/25 seeds, tired (fatigue 55) 19/25. Save version bumped
+    1 → 2 (pre-D-9 saves cannot progress the new spine; policy: bump = new
+    campaign). Bible §10 + §7.7 + B-6/B-7 added. Verified green (format,
+    typecheck, lint, tests, validate-content, build) plus an adversarial
+    4-lens review workflow over the final diff.
 - **6.3 [O] Balance pass.** Headless simulated campaign runs; tune income, XP curve, fatigue rates. **Carry-in:** M1–M3 unreachable-diplomacy dead content (confirmed real, resolution D) is deferred here, not fixed in 6.2-A3.
 - **6.4 [S] Squad-composition tutorial.** Contextual, first narrative mission: show how archetypes/skills open paths (uses a one-off scripted reveal, not the global display flag). Includes the post-mission debrief hint hook.
 
@@ -109,4 +128,23 @@ Play 2–3 full campaigns on phone. Evaluate hypothesis. Then decide, in order: 
 - **D-3 default:** Injuries persist across missions; no permadeath in prototype.
 - **D-4 default:** Squad size 4; grid ~10×12; tactics landscape orientation.
 - **D-5 default:** RNG in combat (seeded), deterministic narrative.
+- **D-9 (Fable): Early-campaign restructure ("Recon One").** The campaign
+  opens in media res: `newCampaign` launches `ev_intro` as the active
+  narrative incident (player-approved fixed text; `intro_cautious` flag),
+  and the pre-arc spine is intro → arrival → ledger → intercept → m_vy_1.
+  The captured **Recon One** team (renamed from "Second Expedition") is the
+  arc through-line: reported missing in the intro, confirmed alive in the
+  ledger mission, found in M2's cells, freed by end of M3. The Tender
+  procession in `m_vy_arrival` is the game's first alien image (no combat).
+  `m_relay` demoted to optional side content; its old `m_vy_1` unlock is
+  superseded. `ev_first_contact` repositioned to optional `m_rival_stranded`
+  at Address 11. Sanctioned core/schema changes: `newCampaign(seed,
+content?)` (the intro reuses the existing incident shape);
+  `MissionDef.launchCost` (optional int ≥ 0 overriding TACTICAL_LAUNCH_COST
+  — `m_vy_intercept` sets 0 so the mandatory first battle can never be
+  priced out of reach); save `version` 1 → 2 (stale pre-D-9 saves are
+  rejected loudly per the bump-=-new-campaign policy, instead of loading
+  into a spine that can no longer progress). Interactable kind stays
+  `"console"` for the spires (renaming the enum is schema churn; flavored
+  via mission/journal text instead). New canon in story-bible §10.
 - **D-8 RESOLVED (user veto):** Base construction restored to prototype scope, reversing the earlier cut (see "Cut from prototype"). Facilities are content (`FacilityDef` + `facilities.json`) reusing the universal Effect/Condition vocabulary; one build at a time, costs paid on the `build` action, effects applied on completion during the endDay construction step (between Research and Recovery); no upkeep in v1 (revisit in 6.3). Spec: `docs/specs/facilities.md`.

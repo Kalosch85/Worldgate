@@ -22,7 +22,7 @@ function ctx(seed = 1): ReducerCtx {
 
 function baseState(): GameStateT {
   return {
-    version: 1,
+    version: 2,
     campaign: { day: 3, seed: 1 },
     settings: { showLockedOptions: false },
     resources: { funds: 10, materials: 10, intel: 0, exotics: 0 },

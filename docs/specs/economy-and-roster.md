@@ -25,8 +25,15 @@ variables `{ support: 5, trust_rival: 0 }` · flags `{}` · modifiers `{}` ·
 journal `[]` · personnel total 20, assignments `{ logistics: 12, research: 6,
 infirmary: 2 }` · heroes: `h_mercer`, `h_okafor` (xp 0, level 1, fatigue 0,
 no injuries, empty skillBonuses) · research `{ current: null, completed: [] }` ·
-missions `{ available: ["m_survey"], completed: [], queuedEvents: [] }` ·
-activeMission null · settings `{ showLockedOptions: false }`.
+missions `{ available: [], completed: [], queuedEvents: [] }` ·
+settings `{ showLockedOptions: false }`.
+
+**D-9 amendment (Fable):** `newCampaign(seed, content?)` — when the content
+bundle is passed (the app shell always passes it), `activeMission` opens on
+the intro event `ev_intro` in incident form (`mission: undefined`, squad =
+every starting hero, entry node from content). Without `content` (bare core
+tests) `activeMission` is null. `m_survey` no longer exists; the campaign
+spine unlocks from the intro's outcome (see DEVELOPMENT_PLAN D-9).
 
 ## 3. Actions added in Phase 1
 
@@ -105,6 +112,11 @@ journal; `unlockMission` appends to `missions.available` if absent;
 - **Tactical launch cost** (constant, enforced when `launchMission` lands in
   a later phase): `TACTICAL_LAUNCH_COST = 5` materials; narrative missions
   free. Define the constant now, do not implement the action.
+  **D-9 amendment (Fable):** `MissionDef.launchCost` (optional, int ≥ 0)
+  overrides the constant per mission. A *mandatory* spine tactical must set
+  `launchCost: 0` — materials have no unconditional income, so a required
+  cost is a reachable permanent soft-lock (`m_vy_intercept` is the first
+  such mission).
 
 ## 8. Golden scenarios — required tests, exact values
 

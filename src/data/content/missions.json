@@ -1,23 +1,63 @@
 [
   {
+    "id": "m_vy_arrival",
+    "name": "The Silent Valley",
+    "description": "Address 04. Recon One's last known position, nine days silent. Cross, find the trail, bring back anything that says where they went.",
+    "availability": [],
+    "squad": { "min": 2, "max": 2 },
+    "payload": { "kind": "narrative", "eventScript": "ev_vy_arrival" }
+  },
+  {
+    "id": "m_vy_ledger",
+    "name": "The Ledger of the Taken",
+    "description": "Return to the valley. Its people know where the taken are brought — and whether four offworlders are still alive to follow.",
+    "availability": [],
+    "squad": { "min": 2, "max": 2 },
+    "payload": { "kind": "narrative", "eventScript": "ev_vy_ledger" }
+  },
+  {
+    "id": "m_vy_intercept",
+    "name": "The Tribute Call",
+    "description": "Signal spires on the pass road call each tribute train through to the temple. Take the spires in sequence and put Command's hand on the call the Penitence is listening for.",
+    "availability": [],
+    "squad": { "min": 2, "max": 3 },
+    "launchCost": 0,
+    "payload": { "kind": "tactical", "map": "map_vy_intercept" },
+    "victoryEffects": [
+      { "type": "resource", "resource": "intel", "delta": 5 },
+      { "type": "xp", "scope": "squad", "amount": 15 },
+      { "type": "fatigue", "scope": "squad", "delta": 20 },
+      { "type": "flag", "flag": "f_vy_call_intercepted", "value": true },
+      { "type": "unlockMission", "mission": "m_vy_1" },
+      { "type": "unlockMission", "mission": "m_rival_stranded" },
+      {
+        "type": "log",
+        "text": "The tribute call is ours — the temple hears what we send. In the spire traffic, Okafor found a rival-bloc distress marker: Address 11."
+      }
+    ],
+    "defeatEffects": [
+      { "type": "variable", "variable": "support", "delta": -1 },
+      { "type": "queueEvent", "event": "ev_vy_regroup", "delayDays": 1 }
+    ]
+  },
+  {
     "id": "m_relay",
     "name": "Secure the Relay",
-    "description": "Raiders hold a working relay station. Take the consoles intact.",
+    "description": "Raiders hold a working relay station at a dead address. Take the consoles intact and Command owns a listening post on the network.",
     "availability": [{ "type": "techResearched", "tech": "t_gate_stabilizer" }],
     "squad": { "min": 2, "max": 4 },
     "payload": { "kind": "tactical", "map": "map_relay" },
     "victoryEffects": [
       { "type": "resource", "resource": "intel", "delta": 5 },
       { "type": "xp", "scope": "squad", "amount": 15 },
-      { "type": "fatigue", "scope": "squad", "delta": 20 },
-      { "type": "unlockMission", "mission": "m_vy_1" }
+      { "type": "fatigue", "scope": "squad", "delta": 20 }
     ],
     "defeatEffects": [{ "type": "variable", "variable": "support", "delta": -1 }]
   },
   {
-    "id": "m_survey",
-    "name": "Survey: Address 04",
-    "description": "First crewed survey of a new address.",
+    "id": "m_rival_stranded",
+    "name": "Distress: Address 11",
+    "description": "A rival-bloc marker pulled from the spire traffic: their survey team is stranded at a dead site, return address burned out. Nobody's program wants to be the first to ask for help.",
     "availability": [],
     "squad": { "min": 1, "max": 3 },
     "payload": { "kind": "narrative", "eventScript": "ev_first_contact" }
@@ -25,7 +65,7 @@
   {
     "id": "m_vy_1",
     "name": "Pilgrim Roads",
-    "description": "Veyra's holy city awaits. Find a way into the Penitence before the Second Expedition's trail goes cold.",
+    "description": "The holy city crowns the mountain above Karsu's valley. Find a way into the Penitence before Recon One's trail goes cold.",
     "availability": [],
     "squad": { "min": 2, "max": 2 },
     "payload": { "kind": "narrative", "eventScript": "ev_vy_pilgrim_roads" }
@@ -33,7 +73,7 @@
   {
     "id": "m_vy_2",
     "name": "The Penitence",
-    "description": "The plan is set. Get inside the basilica-prison and find the Second Expedition.",
+    "description": "The plan is set. Get inside the basilica-prison and find Recon One.",
     "availability": [],
     "squad": { "min": 2, "max": 2 },
     "payload": { "kind": "narrative", "eventScript": "ev_vy_penitence" }

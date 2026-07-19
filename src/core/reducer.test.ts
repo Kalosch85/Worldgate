@@ -23,7 +23,7 @@ const CTX: ReducerCtx = { content: EMPTY_CONTENT, rng: mulberry32(1) };
 
 function baseState(): GameStateT {
   return {
-    version: 1,
+    version: 2,
     campaign: { day: 1, seed: 42 },
     settings: { showLockedOptions: false },
     resources: { funds: 100, materials: 50, intel: 0, exotics: 0 },

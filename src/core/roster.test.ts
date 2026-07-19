@@ -244,7 +244,7 @@ describe("xp effect drives level-up through applyEffects (§6 + §7)", () => {
 function newHeroState(): GameStateT {
   // Minimal state carrying just the two seeded heroes for xp-effect tests.
   return {
-    version: 1,
+    version: 2,
     campaign: { day: 1, seed: 1 },
     settings: { showLockedOptions: false },
     resources: { funds: 0, materials: 0, intel: 0, exotics: 0 },

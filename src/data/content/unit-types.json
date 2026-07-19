@@ -7,5 +7,14 @@
     "mobility": 4,
     "damage": { "min": 1, "max": 2 },
     "abilities": ["ab_shot"]
+  },
+  {
+    "id": "ut_tender",
+    "name": "Tender",
+    "maxHp": 5,
+    "aim": 60,
+    "mobility": 3,
+    "damage": { "min": 1, "max": 2 },
+    "abilities": ["ab_shot"]
   }
 ]

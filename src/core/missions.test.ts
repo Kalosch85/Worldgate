@@ -12,9 +12,17 @@ import { loadTestContent } from "../test/content.js";
  */
 const CONTENT: ContentBundleT = loadTestContent();
 
-/** A campaign where h_okafor is exhausted and h_mercer is injured but fit. */
+/** A fresh campaign with the ev_first_contact side mission unlocked (D-9: it
+ * is unlocked mid-campaign, so tests add it to `available` explicitly). */
 function stateWith(overrides?: Partial<GameStateT>): GameStateT {
-  return { ...newCampaign(1), ...overrides };
+  const state = { ...newCampaign(1), ...overrides };
+  if (!state.missions.available.includes("m_rival_stranded")) {
+    state.missions = {
+      ...state.missions,
+      available: [...state.missions.available, "m_rival_stranded"],
+    };
+  }
+  return state;
 }
 
 /** Run `launchMission` and return the thrown RuleError (or fail). */
@@ -31,10 +39,10 @@ function launchError(state: GameStateT, mission: string, squad: string[]): RuleE
 describe("launchMission — narrative hand-off", () => {
   it("opens the narrative mission at the event script's entry node", () => {
     const state = stateWith();
-    const next = launchMission(state, CONTENT, "m_survey", ["h_mercer", "h_okafor"]);
+    const next = launchMission(state, CONTENT, "m_rival_stranded", ["h_mercer", "h_okafor"]);
     expect(next.activeMission).toEqual({
       kind: "narrative",
-      mission: "m_survey",
+      mission: "m_rival_stranded",
       script: "ev_first_contact",
       node: "n_intro", // ev_first_contact.entryNode
       squad: ["h_mercer", "h_okafor"],
@@ -45,7 +53,7 @@ describe("launchMission — narrative hand-off", () => {
   it("does not mutate the input state", () => {
     const state = stateWith();
     const before = JSON.stringify(state);
-    launchMission(state, CONTENT, "m_survey", ["h_mercer", "h_okafor"]);
+    launchMission(state, CONTENT, "m_rival_stranded", ["h_mercer", "h_okafor"]);
     expect(JSON.stringify(state)).toBe(before);
   });
 
@@ -54,7 +62,7 @@ describe("launchMission — narrative hand-off", () => {
     const mercer = state.heroes.find((h) => h.hero === "h_mercer")!;
     mercer.injuries = [{ injury: "inj_wounded", daysRemaining: 3 }];
     mercer.fatigue = 79; // injured and tired, but below the 80 exhausted line
-    const next = launchMission(state, CONTENT, "m_survey", ["h_mercer", "h_okafor"]);
+    const next = launchMission(state, CONTENT, "m_rival_stranded", ["h_mercer", "h_okafor"]);
     expect(next.activeMission?.kind).toBe("narrative");
   });
 });
@@ -71,43 +79,43 @@ describe("launchMission — RuleError guards (§3)", () => {
     const state = stateWith({
       activeMission: {
         kind: "narrative",
-        mission: "m_survey",
+        mission: "m_rival_stranded",
         script: "ev_first_contact",
         node: "n_intro",
         squad: ["h_mercer", "h_okafor"],
         gatedSeen: false,
       },
     });
-    expect(launchError(state, "m_survey", ["h_mercer", "h_okafor"]).code).toBe(
+    expect(launchError(state, "m_rival_stranded", ["h_mercer", "h_okafor"]).code).toBe(
       "launchMission/mission_active",
     );
   });
 
   it("rejects a squad smaller than the mission minimum", () => {
-    // m_survey min is 1; an empty squad is the only size below it.
-    expect(launchError(stateWith(), "m_survey", []).code).toBe("launchMission/squad_size");
+    // m_rival_stranded min is 1; an empty squad is the only size below it.
+    expect(launchError(stateWith(), "m_rival_stranded", []).code).toBe("launchMission/squad_size");
   });
 
-  it("allows a solo squad (m_survey min is 1)", () => {
-    const next = launchMission(stateWith(), CONTENT, "m_survey", ["h_mercer"]);
+  it("allows a solo squad (m_rival_stranded min is 1)", () => {
+    const next = launchMission(stateWith(), CONTENT, "m_rival_stranded", ["h_mercer"]);
     expect(next.activeMission?.squad).toEqual(["h_mercer"]);
   });
 
   it("rejects a squad larger than the mission maximum", () => {
-    // m_survey max is 3; feed four ids (size guard runs before hero lookup).
-    expect(launchError(stateWith(), "m_survey", ["h_mercer", "h_okafor", "h_x", "h_y"]).code).toBe(
+    // m_rival_stranded max is 3; feed four ids (size guard runs before hero lookup).
+    expect(launchError(stateWith(), "m_rival_stranded", ["h_mercer", "h_okafor", "h_x", "h_y"]).code).toBe(
       "launchMission/squad_size",
     );
   });
 
   it("rejects an unknown hero id", () => {
-    expect(launchError(stateWith(), "m_survey", ["h_mercer", "h_ghost"]).code).toBe(
+    expect(launchError(stateWith(), "m_rival_stranded", ["h_mercer", "h_ghost"]).code).toBe(
       "launchMission/squad_unknown_hero",
     );
   });
 
   it("rejects a duplicate hero id", () => {
-    expect(launchError(stateWith(), "m_survey", ["h_mercer", "h_mercer"]).code).toBe(
+    expect(launchError(stateWith(), "m_rival_stranded", ["h_mercer", "h_mercer"]).code).toBe(
       "launchMission/squad_duplicate",
     );
   });
@@ -115,7 +123,7 @@ describe("launchMission — RuleError guards (§3)", () => {
   it("rejects an exhausted hero (fatigue ≥ 80)", () => {
     const state = stateWith();
     state.heroes.find((h) => h.hero === "h_okafor")!.fatigue = 80;
-    expect(launchError(state, "m_survey", ["h_mercer", "h_okafor"]).code).toBe(
+    expect(launchError(state, "m_rival_stranded", ["h_mercer", "h_okafor"]).code).toBe(
       "launchMission/squad_exhausted",
     );
   });
@@ -190,11 +198,29 @@ describe("launchMission — tactical launch (§3)", () => {
     expect(() => launchMission(state, CONTENT, "m_relay", ["h_mercer", "h_okafor"])).toThrow(RuleError);
     expect(state.activeMission).toBeNull();
   });
+
+  it("honors MissionDef.launchCost 0 — the spine battle launches at 0 materials (D-9)", () => {
+    // m_vy_intercept is mandatory; a materials price on it would be a
+    // reachable permanent soft-lock (materials have no unconditional income).
+    const state = stateWith();
+    state.missions.available.push("m_vy_intercept");
+    state.resources.materials = 0;
+    expect(canLaunchMission(state, CONTENT, "m_vy_intercept", ["h_mercer", "h_okafor"])).toBe(true);
+    const next = launchMission(state, CONTENT, "m_vy_intercept", ["h_mercer", "h_okafor"]);
+    expect(next.resources.materials).toBe(0); // nothing debited
+    expect(next.activeMission?.kind).toBe("tactical");
+    const battle = next.activeMission?.kind === "tactical" ? next.activeMission.battle : null;
+    expect(battle?.map).toBe("map_vy_intercept");
+    expect(battle?.units.filter((u) => u.side === "enemy").map((u) => u.unitType)).toEqual([
+      "ut_tender",
+      "ut_tender",
+    ]);
+  });
 });
 
 describe("canLaunchMission — UI guard", () => {
   it("true for a valid narrative launch", () => {
-    expect(canLaunchMission(stateWith(), CONTENT, "m_survey", ["h_mercer", "h_okafor"])).toBe(true);
+    expect(canLaunchMission(stateWith(), CONTENT, "m_rival_stranded", ["h_mercer", "h_okafor"])).toBe(true);
   });
 
   it("false for an unavailable mission", () => {
@@ -202,16 +228,16 @@ describe("canLaunchMission — UI guard", () => {
   });
 
   it("false when the squad is the wrong size", () => {
-    // m_survey accepts 1–3; a 4-hero squad exceeds the maximum.
-    expect(canLaunchMission(stateWith(), CONTENT, "m_survey", ["h_mercer", "h_okafor", "h_x", "h_y"])).toBe(
-      false,
-    );
+    // m_rival_stranded accepts 1–3; a 4-hero squad exceeds the maximum.
+    expect(
+      canLaunchMission(stateWith(), CONTENT, "m_rival_stranded", ["h_mercer", "h_okafor", "h_x", "h_y"]),
+    ).toBe(false);
   });
 
   it("false when a squad member is exhausted", () => {
     const state = stateWith();
     state.heroes.find((h) => h.hero === "h_okafor")!.fatigue = 90;
-    expect(canLaunchMission(state, CONTENT, "m_survey", ["h_mercer", "h_okafor"])).toBe(false);
+    expect(canLaunchMission(state, CONTENT, "m_rival_stranded", ["h_mercer", "h_okafor"])).toBe(false);
   });
 
   it("tracks the tactical materials cost", () => {

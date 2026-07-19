@@ -81,7 +81,7 @@ export function canLaunchMission(
   const result = validateLaunch(state, content, mission, squad);
   if (!result.ok) return false;
   if (result.def.payload.kind === "tactical") {
-    return state.resources.materials >= TACTICAL_LAUNCH_COST;
+    return state.resources.materials >= (result.def.launchCost ?? TACTICAL_LAUNCH_COST);
   }
   return true;
 }
@@ -107,14 +107,16 @@ export function launchMission(
   const def = result.def;
 
   if (def.payload.kind === "tactical") {
-    if (state.resources.materials < TACTICAL_LAUNCH_COST) {
+    // D-9: a MissionDef may override the default cost (0 = free spine battle).
+    const launchCost = def.launchCost ?? TACTICAL_LAUNCH_COST;
+    if (state.resources.materials < launchCost) {
       throw new RuleError(
         "launchMission/insufficient_materials",
-        `${def.name} needs ${TACTICAL_LAUNCH_COST} materials to deploy.`,
+        `${def.name} needs ${launchCost} materials to deploy.`,
       );
     }
     const draft = structuredClone(state);
-    draft.resources.materials -= TACTICAL_LAUNCH_COST;
+    draft.resources.materials -= launchCost;
     const battle = createBattleState(draft, content, def, squad);
     draft.activeMission = { kind: "tactical", mission, squad: [...squad], battle };
     return draft;

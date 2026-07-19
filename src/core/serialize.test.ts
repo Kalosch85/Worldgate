@@ -34,7 +34,9 @@ describe("GameState serialize/deserialize round-trip", () => {
   });
 
   it("rejects a structurally invalid save (wrong version)", () => {
-    const bad = { ...genGameState(mulberry32(1)), version: 2 };
+    // Version 1 is the pre-D-9 format — stale saves must be rejected loudly
+    // (bump = new campaign).
+    const bad = { ...genGameState(mulberry32(1)), version: 1 };
     expect(() => deserialize(JSON.stringify(bad))).toThrow();
   });
 });
@@ -46,7 +48,7 @@ type ActiveKind = "none" | "narrative" | "tactical";
 function genGameState(rng: Rng, activeKind?: ActiveKind): GameStateT {
   const kind = activeKind ?? pick(rng, ["none", "narrative", "tactical"] as const);
   const state: GameStateT = {
-    version: 1,
+    version: 2,
     campaign: { day: rng.int(1, 5000), seed: rng.int(-2_000_000, 2_000_000) },
     settings: { showLockedOptions: bool(rng) },
     resources: {

@@ -9,6 +9,7 @@ import {
   endDay,
   startResearch,
   TACTICAL_LAUNCH_COST,
+  techVisible,
 } from "./economy.js";
 import { RuleError } from "./errors.js";
 import type { ReducerCtx } from "./reducer.js";
@@ -118,9 +119,25 @@ describe("startResearch", () => {
 describe("prerequisite chains (task 1.3)", () => {
   // A -> B -> C is a three-deep chain; D requires BOTH A and B (multi-prereq).
   const CHAIN_TECHS: ContentBundleT["techs"] = [
-    { id: "t_a", name: "A", description: "root", cost: 10, prerequisites: [], effects: [] },
-    { id: "t_b", name: "B", description: "needs A", cost: 10, prerequisites: ["t_a"], effects: [] },
-    { id: "t_c", name: "C", description: "needs B", cost: 10, prerequisites: ["t_b"], effects: [] },
+    { id: "t_a", name: "A", description: "root", cost: 10, prerequisites: [], effects: [], visibleIf: [] },
+    {
+      id: "t_b",
+      name: "B",
+      description: "needs A",
+      cost: 10,
+      prerequisites: ["t_a"],
+      effects: [],
+      visibleIf: [],
+    },
+    {
+      id: "t_c",
+      name: "C",
+      description: "needs B",
+      cost: 10,
+      prerequisites: ["t_b"],
+      effects: [],
+      visibleIf: [],
+    },
     {
       id: "t_d",
       name: "D",
@@ -128,6 +145,7 @@ describe("prerequisite chains (task 1.3)", () => {
       cost: 10,
       prerequisites: ["t_a", "t_b"],
       effects: [],
+      visibleIf: [],
     },
   ];
   const chain: ContentBundleT = { ...CONTENT, techs: CHAIN_TECHS };
@@ -283,5 +301,48 @@ describe("endDay does not mutate the input state", () => {
 describe("TACTICAL_LAUNCH_COST", () => {
   it("is 5 materials (§7); no launchMission action exists yet", () => {
     expect(TACTICAL_LAUNCH_COST).toBe(5);
+  });
+});
+
+describe("tech visibility gating (arc-veyra.md §2.2)", () => {
+  const withFlags = (flags: Record<string, boolean>, completed: string[] = []): GameStateT => {
+    const state = newCampaign(1);
+    return { ...state, flags: { ...state.flags, ...flags }, research: { ...state.research, completed } };
+  };
+
+  it("base techs (empty visibleIf) are always visible", () => {
+    const fresh = newCampaign(1);
+    expect(techVisible(fresh, CONTENT, "t_gate_stabilizer")).toBe(true);
+    expect(techVisible(fresh, CONTENT, "t_field_medicine")).toBe(true);
+  });
+
+  it("hides an arc tech until its flag gate opens", () => {
+    const fresh = newCampaign(1);
+    expect(techVisible(fresh, CONTENT, "t_radiance_cell")).toBe(false);
+    expect(techVisible(withFlags({ f_vy_godtech: true }), CONTENT, "t_radiance_cell")).toBe(true);
+    expect(techVisible(fresh, CONTENT, "t_projection_theory")).toBe(false);
+    expect(techVisible(withFlags({ f_vy_watched_god: true }), CONTENT, "t_projection_theory")).toBe(true);
+  });
+
+  it("canStartResearch requires visibility, then prerequisites", () => {
+    const fresh = newCampaign(1);
+    // Hidden ⇒ cannot start even though t_radiance_cell has no prerequisites.
+    expect(canStartResearch(fresh, CONTENT, "t_radiance_cell")).toBe(false);
+    const godtech = withFlags({ f_vy_godtech: true });
+    expect(canStartResearch(godtech, CONTENT, "t_radiance_cell")).toBe(true);
+    // Visible but prerequisite (t_radiance_cell) unmet ⇒ still not startable.
+    const watched = withFlags({ f_vy_watched_god: true });
+    expect(techVisible(watched, CONTENT, "t_projection_theory")).toBe(true);
+    expect(canStartResearch(watched, CONTENT, "t_projection_theory")).toBe(false);
+    // Visible and prerequisite complete ⇒ startable.
+    const ready = withFlags({ f_vy_watched_god: true }, ["t_radiance_cell"]);
+    expect(canStartResearch(ready, CONTENT, "t_projection_theory")).toBe(true);
+  });
+
+  it("a completed tech always displays, even if its gate would hide it", () => {
+    // completed ⇒ visible regardless of flags (research history stays legible).
+    const done = withFlags({}, ["t_radiance_cell"]);
+    expect(done.flags.f_vy_godtech).toBeUndefined();
+    expect(techVisible(done, CONTENT, "t_radiance_cell")).toBe(true);
   });
 });

@@ -133,6 +133,12 @@ export const TechDef = z.object({
   cost: z.number().int().min(1), // research points
   prerequisites: z.array(Id).default([]),
   effects: z.array(EffectSchema).default([]), // applied once on completion
+  // Arc content (docs/story/arc-veyra.md §2.2, Fable-sanctioned). A tech is
+  // listed in the research UI only when every `visibleIf` condition passes
+  // (evaluated with empty squad context); `canStartResearch` additionally
+  // requires visibility. Already-completed techs always display. Empty = always
+  // visible (the default for the base tech tree).
+  visibleIf: z.array(ConditionSchema).default([]),
 });
 
 export const AbilityDef = z.object({

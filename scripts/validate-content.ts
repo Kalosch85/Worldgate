@@ -68,6 +68,8 @@ for (const t of c.techs) {
   for (const p of t.prerequisites)
     if (!ids.techs.has(p)) errors.push(`tech ${t.id}: unknown prerequisite '${p}'`);
   checkEffects(`tech ${t.id}`, t.effects);
+  // Visibility gates use the universal Condition vocabulary (arc-veyra.md §2.2).
+  checkConditions(`tech ${t.id} visibleIf`, t.visibleIf);
 }
 for (const u of c.unitTypes)
   for (const a of u.abilities)

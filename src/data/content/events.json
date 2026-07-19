@@ -409,7 +409,10 @@
           {
             "id": "o_vy2_b_free_ilo",
             "text": "Free Ilo too. A promise is a promise.",
-            "effects": [{ "type": "flag", "flag": "f_vy_ilo_freed", "value": true }],
+            "effects": [
+              { "type": "flag", "flag": "f_vy_ilo_freed", "value": true },
+              { "type": "queueEvent", "event": "ev_vy_dessik_word", "delayDays": 5 }
+            ],
             "next": { "kind": "node", "node": "n_vy2_b_exfil" }
           },
           {
@@ -835,5 +838,370 @@
       { "id": "out_vy3_doubt", "label": "The First Blade, doubting", "effects": [] },
       { "id": "out_vy3_defeated", "label": "The First Blade, defeated", "effects": [] }
     ]
+  },
+  {
+    "id": "ev_vy_relic_vault",
+    "title": "Relic Vault",
+    "entryNode": "n_vy4_approach",
+    "nodes": [
+      {
+        "id": "n_vy4_approach",
+        "text": "The temple armory is buried behind the sanctuary — two ward-pillars seal the vault door, and precursor relics wait beyond. Somewhere past them is the machine that lets a man be a god. Guards line every colonnade.",
+        "options": [
+          {
+            "id": "o_vy4_alerted",
+            "text": "The colonnades are doubled — Dessik sold you the moment you left him. Go loud, go fast.",
+            "requirements": [{ "type": "flag", "flag": "f_vy_ilo_abandoned", "value": true }],
+            "effects": [{ "type": "fatigue", "scope": "squad", "delta": 10 }],
+            "next": { "kind": "node", "node": "n_vy4_wards" }
+          },
+          {
+            "id": "o_vy4_quiet",
+            "text": "The night shift is thin. Move on the wards.",
+            "requirements": [{ "type": "flag", "flag": "f_vy_ilo_abandoned", "value": false }],
+            "next": { "kind": "node", "node": "n_vy4_wards" }
+          }
+        ]
+      },
+      {
+        "id": "n_vy4_wards",
+        "text": "Two ward-pillars flank the vault door, each humming with the same white light the pilgrims kneel to. Both have to go dark before the door will open.",
+        "options": [
+          {
+            "id": "o_vy4_seryn",
+            "text": "Seryn knows the rites — he stills one pillar with a word and a gesture. The team takes the other.",
+            "requirements": [{ "type": "flag", "flag": "f_vy_seryn_recruited", "value": true }],
+            "next": { "kind": "node", "node": "n_vy4_core" }
+          },
+          {
+            "id": "o_vy4_science",
+            "text": "Okafor reads the resonance and phases both pillars down clean.",
+            "requirements": [
+              {
+                "type": "any",
+                "conditions": [
+                  { "type": "squadHasArchetype", "tag": "scientist" },
+                  { "type": "squadSkillAtLeast", "skill": "science", "min": 6 }
+                ]
+              }
+            ],
+            "next": { "kind": "node", "node": "n_vy4_core" }
+          },
+          {
+            "id": "o_vy4_force",
+            "text": "Smash the pillar conduits — crude, but they go dark.",
+            "requirements": [{ "type": "squadSkillAtLeast", "skill": "combat", "min": 5 }],
+            "effects": [{ "type": "fatigue", "scope": "squad", "delta": 5 }],
+            "next": { "kind": "node", "node": "n_vy4_core" }
+          },
+          {
+            "id": "o_vy4_slow",
+            "text": "No shortcut. Work them by hand, one at a time, and hope the guards stay slow.",
+            "effects": [{ "type": "fatigue", "scope": "squad", "delta": 15 }],
+            "next": { "kind": "node", "node": "n_vy4_core" }
+          }
+        ]
+      },
+      {
+        "id": "n_vy4_core",
+        "text": "The vault door grinds open. Inside, cradled in a nest of projector housings, sits the core — a power cell dense enough to feed a cathedral of light. Getting it clear takes a steady hand while the guards close from the hall.",
+        "options": [
+          {
+            "id": "o_vy4_extract",
+            "text": "Okafor eases it out of the housing intact.",
+            "requirements": [
+              {
+                "type": "any",
+                "conditions": [
+                  { "type": "squadHasArchetype", "tag": "scientist" },
+                  { "type": "squadSkillAtLeast", "skill": "science", "min": 6 }
+                ]
+              }
+            ],
+            "next": { "kind": "node", "node": "n_vy4_exfil" }
+          },
+          {
+            "id": "o_vy4_yank",
+            "text": "No time for finesse. Pull it and run.",
+            "effects": [{ "type": "injury", "scope": "randomSquadMember", "injury": "inj_shaken" }],
+            "next": { "kind": "node", "node": "n_vy4_exfil" }
+          }
+        ]
+      },
+      {
+        "id": "n_vy4_exfil",
+        "text": "Core in hand, the way out is the only thing left between you and the gate.",
+        "options": [
+          {
+            "id": "o_vy4_exfil_alarm",
+            "text": "The bells are already ringing — fight through to the gate.",
+            "requirements": [{ "type": "flag", "flag": "f_vy_alarm", "value": true }],
+            "effects": [{ "type": "fatigue", "scope": "squad", "delta": 5 }],
+            "next": { "kind": "end", "outcome": "out_vy4_secured" }
+          },
+          {
+            "id": "o_vy4_exfil_quiet",
+            "text": "Slip out the way you came.",
+            "requirements": [{ "type": "flag", "flag": "f_vy_alarm", "value": false }],
+            "next": { "kind": "end", "outcome": "out_vy4_secured" }
+          }
+        ]
+      }
+    ],
+    "outcomes": [
+      {
+        "id": "out_vy4_secured",
+        "label": "Vault secured — the god has a body",
+        "effects": [
+          { "type": "flag", "flag": "f_vy_godtech", "value": true },
+          { "type": "resource", "resource": "exotics", "delta": 3 },
+          { "type": "unlockMission", "mission": "m_vy_5" },
+          { "type": "log", "text": "The vault core is aboard. It hums like something praying." }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ev_vy_luminous_one",
+    "title": "The Luminous One",
+    "entryNode": "n_vy5_witness",
+    "nodes": [
+      {
+        "id": "n_vy5_witness",
+        "text": "The core led you here: a sanctum in the dead caldera, and the Luminous One standing in it. A tall figure of light — and around it, half-sunk in the rock, the machinery no scripture names. Emitters. Housings. The builders of the worldgates are long gone; this was left to tend their works, and told no one when to stop. It has kept the lamp lit a very long time, and it has kept it lit alone.",
+        "options": [
+          {
+            "id": "o_vy5_seryn_present",
+            "text": "Beside you, Seryn cannot look away.",
+            "requirements": [
+              {
+                "type": "any",
+                "conditions": [
+                  { "type": "flag", "flag": "f_vy_seryn_recruited", "value": true },
+                  { "type": "flag", "flag": "f_vy_first_defeated", "value": true }
+                ]
+              }
+            ],
+            "next": { "kind": "node", "node": "n_vy5_seryn_watch" }
+          },
+          {
+            "id": "o_vy5_no_seryn",
+            "text": "Move closer.",
+            "requirements": [
+              { "type": "flag", "flag": "f_vy_seryn_recruited", "value": false },
+              { "type": "flag", "flag": "f_vy_first_defeated", "value": false }
+            ],
+            "next": { "kind": "node", "node": "n_vy5_decide" }
+          }
+        ]
+      },
+      {
+        "id": "n_vy5_seryn_watch",
+        "speaker": "Seryn Vael",
+        "text": "Seryn watches the light he gave his whole life to, and the tired machines that make it. He does not rage. He does not weep. 'It was never lying to us,' he says at last, very quietly. 'It was just… keeping the lamp lit. So it wouldn't be alone in the dark.' The First Blade of the Luminous One lowers his eyes from his god for the last time.",
+        "options": [
+          {
+            "id": "o_vy5_seryn_continue",
+            "text": "Say nothing. Move closer.",
+            "next": { "kind": "node", "node": "n_vy5_decide" }
+          }
+        ]
+      },
+      {
+        "id": "n_vy5_decide",
+        "text": "It has not seen you yet. Whatever it is — a caretaker, a relic, a mind that outlived its makers — it is within reach. And so is everything the sanctum could tell you.",
+        "options": [
+          {
+            "id": "o_vy5_watch",
+            "text": "Watch. Record everything. Let it finish and go.",
+            "effects": [
+              { "type": "flag", "flag": "f_vy_watched_god", "value": true },
+              { "type": "resource", "resource": "intel", "delta": 20 }
+            ],
+            "next": { "kind": "node", "node": "n_vy5_watch_seryn" }
+          },
+          {
+            "id": "o_vy5_attack",
+            "text": "End it. Bring the god down now.",
+            "effects": [
+              { "type": "flag", "flag": "f_vy_fought_god", "value": true },
+              { "type": "flag", "flag": "f_vy_anchor_destroyed", "value": true },
+              { "type": "variable", "variable": "support", "delta": 2 },
+              { "type": "injury", "scope": "randomSquadMember", "injury": "inj_shaken" },
+              { "type": "queueEvent", "event": "ev_vy_gratitude", "delayDays": 3 }
+            ],
+            "next": { "kind": "node", "node": "n_vy5_attack_seryn" }
+          }
+        ]
+      },
+      {
+        "id": "n_vy5_watch_seryn",
+        "text": "The being finishes its rite — a slow folding of light back into the emitters — and is simply gone, the way a projection is gone. It never knew you were there. But you were, and the sensors were, and now you have all of it: how a machine left to mind a dead gate made itself a god, so the long watch would never be alone.",
+        "options": [
+          {
+            "id": "o_vy5_watch_defeated",
+            "text": "On the ridge behind you, the captive First Blade asks to speak.",
+            "requirements": [{ "type": "flag", "flag": "f_vy_first_defeated", "value": true }],
+            "effects": [{ "type": "queueEvent", "event": "ev_vy_seryn_oath", "delayDays": 2 }],
+            "next": { "kind": "end", "outcome": "out_vy5_watch_defeated" }
+          },
+          {
+            "id": "o_vy5_watch_doubt",
+            "text": "Seryn watches the last light go out, and lets it.",
+            "requirements": [
+              { "type": "flag", "flag": "f_vy_first_defeated", "value": false },
+              { "type": "flag", "flag": "f_vy_first_doubt", "value": true }
+            ],
+            "next": { "kind": "end", "outcome": "out_vy5_watch_doubt" }
+          },
+          {
+            "id": "o_vy5_watch_other",
+            "text": "Pack the sensors. Whatever it was, it is gone now.",
+            "requirements": [
+              { "type": "flag", "flag": "f_vy_first_defeated", "value": false },
+              { "type": "flag", "flag": "f_vy_first_doubt", "value": false }
+            ],
+            "next": { "kind": "end", "outcome": "out_vy5_watch_other" }
+          }
+        ]
+      },
+      {
+        "id": "n_vy5_attack_seryn",
+        "text": "You open fire. It throws up a wall of light small arms wash off, then rises, folds, and gates out between one breath and the next. It was always going to escape — it has outrun worse than you. But the sanctum anchor cracks in the backwash, the emitters gutter dark, and the caldera falls silent and empty for the first time in an age.",
+        "options": [
+          {
+            "id": "o_vy5_attack_defeated",
+            "text": "In the chaos, the captive First Blade tears loose.",
+            "requirements": [{ "type": "flag", "flag": "f_vy_first_defeated", "value": true }],
+            "next": { "kind": "end", "outcome": "out_vy5_fought_seryn_lost" }
+          },
+          {
+            "id": "o_vy5_attack_other",
+            "text": "Walk out into a silence no bell will ever fill again.",
+            "requirements": [{ "type": "flag", "flag": "f_vy_first_defeated", "value": false }],
+            "next": { "kind": "end", "outcome": "out_vy5_fought" }
+          }
+        ]
+      }
+    ],
+    "outcomes": [
+      {
+        "id": "out_vy5_watch_defeated",
+        "label": "Witnessed — the First Blade will follow",
+        "effects": [
+          {
+            "type": "log",
+            "text": "The Luminous One is on record, whole and explicable. Seryn Vael wants to talk."
+          }
+        ]
+      },
+      {
+        "id": "out_vy5_watch_doubt",
+        "label": "Witnessed — the convert stays",
+        "effects": [
+          {
+            "type": "log",
+            "text": "The Luminous One is on record. Seryn saw the proof and did not look away."
+          }
+        ]
+      },
+      {
+        "id": "out_vy5_watch_other",
+        "label": "Witnessed — everything on record",
+        "effects": [{ "type": "log", "text": "The Luminous One is on record, whole and explicable." }]
+      },
+      {
+        "id": "out_vy5_fought_seryn_lost",
+        "label": "The anchor shattered — the First Blade lost",
+        "effects": [
+          {
+            "type": "log",
+            "text": "Veyra is free of its god. Seryn Vael threw himself into the light to shield it, and is gone — he owed it a death, if nothing else."
+          }
+        ]
+      },
+      {
+        "id": "out_vy5_fought",
+        "label": "The anchor shattered",
+        "effects": [{ "type": "log", "text": "Veyra is free of its god. The caldera is dark." }]
+      }
+    ]
+  },
+  {
+    "id": "ev_vy_seryn_oath",
+    "title": "The First Blade's Oath",
+    "entryNode": "n_vy_oath",
+    "nodes": [
+      {
+        "id": "n_vy_oath",
+        "speaker": "Seryn Vael",
+        "text": "Seryn finds you two days later, unarmed, the temple colors stripped from his coat. 'I served a lamp in the dark because I thought it was the sun,' he says. 'You showed me the difference and did not gloat. That is more than the god ever gave me.' He offers the hilt of his blade, grip first. 'I have one loyalty left to spend. Let it be to something true.'",
+        "options": [
+          {
+            "id": "o_vy_oath_accept",
+            "text": "Give the First Blade a place.",
+            "effects": [
+              { "type": "addHero", "hero": "h_seryn" },
+              { "type": "flag", "flag": "f_vy_seryn_recruited", "value": true }
+            ],
+            "next": { "kind": "end", "outcome": "out_vy_oath" }
+          }
+        ]
+      }
+    ],
+    "outcomes": [
+      {
+        "id": "out_vy_oath",
+        "label": "The First Blade takes the oath",
+        "effects": [{ "type": "log", "text": "Seryn Vael joins Worldgate." }]
+      }
+    ]
+  },
+  {
+    "id": "ev_vy_gratitude",
+    "title": "A World's Gratitude",
+    "entryNode": "n_vy_gratitude",
+    "nodes": [
+      {
+        "id": "n_vy_gratitude",
+        "text": "A delegation comes through the gate under no flag anyone recognizes — Veyra has not had to invent one until now. A provisional council, formed in the quiet after the light went out, sends what a freed world can spare, and its thanks for a sky that is finally only a sky.",
+        "options": [
+          {
+            "id": "o_vy_gratitude_accept",
+            "text": "Accept the tribute.",
+            "effects": [
+              { "type": "resource", "resource": "funds", "delta": 40 },
+              { "type": "log", "text": "Veyra's provisional council sends tribute: funds +40." }
+            ],
+            "next": { "kind": "end", "outcome": "out_vy_gratitude" }
+          }
+        ]
+      }
+    ],
+    "outcomes": [{ "id": "out_vy_gratitude", "label": "A world says thank you", "effects": [] }]
+  },
+  {
+    "id": "ev_vy_dessik_word",
+    "title": "Dessik's Word",
+    "entryNode": "n_vy_dessik",
+    "nodes": [
+      {
+        "id": "n_vy_dessik",
+        "speaker": "Broker Dessik",
+        "text": "Word arrives through three cut-outs and a bribed dialer: Dessik, and his son Ilo, alive and out. 'A smuggler pays his debts or he stops being trusted,' the message runs. 'My routes are your routes now. Here is the first of it.' Attached is a fat bundle of intercepts no one at a temple ever meant to share.",
+        "options": [
+          {
+            "id": "o_vy_dessik_take",
+            "text": "Take what he sends.",
+            "effects": [
+              { "type": "resource", "resource": "intel", "delta": 10 },
+              { "type": "log", "text": "Dessik's network repays a kept promise: intel +10." }
+            ],
+            "next": { "kind": "end", "outcome": "out_vy_dessik" }
+          }
+        ]
+      }
+    ],
+    "outcomes": [{ "id": "out_vy_dessik", "label": "A debt repaid", "effects": [] }]
   }
 ]

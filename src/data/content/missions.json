@@ -45,5 +45,21 @@
     "availability": [],
     "squad": { "min": 2, "max": 2 },
     "payload": { "kind": "narrative", "eventScript": "ev_vy_first_blade" }
+  },
+  {
+    "id": "m_vy_4",
+    "name": "Relic Vault",
+    "description": "Seize the precursor artifacts from the temple armory: arm the research, and find the god's sanctum.",
+    "availability": [],
+    "squad": { "min": 2, "max": 4 },
+    "payload": { "kind": "narrative", "eventScript": "ev_vy_relic_vault" }
+  },
+  {
+    "id": "m_vy_5",
+    "name": "The Luminous One",
+    "description": "The vault core resonates with a sanctum in the caldera. Track it, and meet the god face to face.",
+    "availability": [],
+    "squad": { "min": 2, "max": 4 },
+    "payload": { "kind": "narrative", "eventScript": "ev_vy_luminous_one" }
   }
 ]

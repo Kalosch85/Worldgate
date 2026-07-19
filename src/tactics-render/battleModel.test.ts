@@ -6,7 +6,7 @@ import { mulberry32 } from "../core/rng.js";
 import { hitChance, reachableTiles } from "../core/tactics.js";
 import { loadTestContent } from "../test/content.js";
 import type { GameStateT } from "../data/schemas.js";
-import { buildBattleView, interpretTap } from "./battleModel.js";
+import { actablePlayers, buildBattleView, interpretTap } from "./battleModel.js";
 
 /**
  * Pure view-model tests (task 4.3). `buildBattleView` must surface exactly the
@@ -62,6 +62,29 @@ describe("buildBattleView (§11)", () => {
     expect(target!.hitPct).toBe(hitChance(s, CONTENT, "u_h_mercer", "u_eg_guards_0"));
     // Move overlay is suppressed in ability mode.
     expect(view.reachable).toHaveLength(0);
+  });
+
+  it("flags every living player unit with AP as canAct (the §11 badge)", () => {
+    const s = launched();
+    const view = buildBattleView(s, CONTENT, { selectedUnit: null, mode: { kind: "move" } })!;
+    const players = view.units.filter((u) => u.side === "player");
+    expect(players.every((u) => u.canAct)).toBe(true); // both fresh, ap 2
+    expect(view.units.filter((u) => u.side === "enemy").every((u) => !u.canAct)).toBe(true);
+  });
+
+  it("drops a unit from canAct / actablePlayers once its AP is spent", () => {
+    const s = launched();
+    battle(s).units.find((u) => u.id === "u_h_mercer")!.ap = 0;
+    const view = buildBattleView(s, CONTENT, { selectedUnit: null, mode: { kind: "move" } })!;
+    expect(view.units.find((u) => u.id === "u_h_mercer")!.canAct).toBe(false);
+    // Only Okafor can still act, and the helper returns it in unit-id order.
+    expect(actablePlayers(view).map((u) => u.id)).toEqual(["u_h_okafor"]);
+  });
+
+  it("actablePlayers returns living player units with AP in unit-id order", () => {
+    const s = launched();
+    const view = buildBattleView(s, CONTENT, { selectedUnit: null, mode: { kind: "move" } })!;
+    expect(actablePlayers(view).map((u) => u.id)).toEqual(["u_h_mercer", "u_h_okafor"]);
   });
 
   it("exposes the next console and interact-readiness when adjacent", () => {

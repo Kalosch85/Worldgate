@@ -32,6 +32,8 @@ const COLORS = {
   hpEnemy: 0xff9d6b,
   hpEmpty: 0x2a3450,
   selection: 0xffffff,
+  apBadge: 0xffcf5c,
+  apBadgeText: 0x0b0f1a,
   text: 0xffffff,
 } as const;
 
@@ -54,6 +56,8 @@ interface DrawUnit {
   maxHp: number;
   alive: boolean;
   selected: boolean;
+  ap: number;
+  canAct: boolean;
 }
 
 export class BattleCanvas {
@@ -178,11 +182,24 @@ export class BattleCanvas {
     }
 
     // 4. Units: colored circles, selection ring, hp pips, downed dimmed.
+    const replaying = override != null;
     const drawUnits: DrawUnit[] = view.units.map((u) => {
       const o = override?.find((r) => r.id === u.id);
       const pos = o ? o.pos : u.pos;
       const hp = o ? o.hp : u.hp;
-      return { id: u.id, side: u.side, pos, hp, maxHp: u.maxHp, alive: hp > 0, selected: u.selected };
+      return {
+        id: u.id,
+        side: u.side,
+        pos,
+        hp,
+        maxHp: u.maxHp,
+        alive: hp > 0,
+        selected: u.selected,
+        ap: u.ap,
+        // "Can act" badge is a player-phase affordance; hide it while the enemy
+        // phase replays (spec §11).
+        canAct: u.canAct && !replaying,
+      };
     });
     for (const u of drawUnits) {
       const g = new Graphics();
@@ -204,6 +221,31 @@ export class BattleCanvas {
       this.board.addChild(g);
 
       if (u.alive) this.board.addChild(this.hpPips(u, cx, cy - r - 7, t));
+
+      // "Can act" badge: an amber disc at the top-right showing remaining AP,
+      // marking every player unit that still has an activation (spec §11).
+      if (u.canAct) {
+        const br = Math.max(9, r * 0.4);
+        const bx = cx + r * 0.72;
+        const by = cy - r * 0.72;
+        const badge = new Graphics();
+        badge.circle(bx, by, br).fill(COLORS.apBadge);
+        badge.circle(bx, by, br).stroke({ width: 2, color: COLORS.bg });
+        this.board.addChild(badge);
+        const label = new Text({
+          text: `${u.ap}`,
+          style: {
+            fill: COLORS.apBadgeText,
+            fontSize: Math.round(br * 1.3),
+            fontFamily: "system-ui",
+            fontWeight: "700",
+          },
+        });
+        label.anchor.set(0.5);
+        label.x = bx;
+        label.y = by;
+        this.board.addChild(label);
+      }
     }
 
     // 5. Target markers with the exact shared hit% (spec §11).

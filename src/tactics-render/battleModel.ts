@@ -36,6 +36,9 @@ export interface UnitView {
   name: string;
   alive: boolean;
   selected: boolean;
+  /** Living player unit that still has AP — drives the §11 "can act" badge,
+   * the auto-advance order, and the End-Turn confirmation list. */
+  canAct: boolean;
 }
 
 /** A legal target with the exact shared hit% (spec §11 labels targets with it). */
@@ -154,6 +157,7 @@ export function buildBattleView(state: GameStateT, content: ContentBundleT, ui: 
     name: unitName(content, u),
     alive: u.hp > 0,
     selected: u.id === selectedId,
+    canAct: u.side === "player" && u.hp > 0 && u.ap > 0,
   }));
 
   // Move overlay: only in move mode, for a living player unit that still has AP.
@@ -263,6 +267,15 @@ function describeObjective(map: MapDefT, battle: BattleStateT, enemiesLeft: numb
     }
   }
   return parts.join(" · ");
+}
+
+/**
+ * Living player units that still have AP, in unit-id order (spec §11). These are
+ * the units the "can act" badge marks, the round-robin the renderer auto-advances
+ * through, and the list the End-Turn confirmation shows. Pure — no rules.
+ */
+export function actablePlayers(view: BattleView): UnitView[] {
+  return view.units.filter((u) => u.canAct).sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
 }
 
 /**

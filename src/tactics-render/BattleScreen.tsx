@@ -354,20 +354,11 @@ export function BattleScreen({
         <span style={{ marginLeft: "auto", fontSize: "0.8rem", color: theme.textDim }}>{view.objective}</span>
       </header>
 
-      {/* Board */}
-      <div
-        style={{
-          flex: 1,
-          minHeight: 0,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          overflow: "auto",
-          padding: "0.5rem",
-          background: theme.bg,
-        }}
-      >
-        <div ref={hostRef} style={{ lineHeight: 0, touchAction: "manipulation" }} />
+      {/* Board — the Pixi canvas fills this area; it centers the map and owns
+          pinch-zoom + two-finger pan internally (spec §11), so no DOM scroll or
+          flex centering here (that clipped the outer rows/columns). */}
+      <div style={{ flex: 1, minHeight: 0, background: theme.bg }}>
+        <div ref={hostRef} style={{ width: "100%", height: "100%", touchAction: "none", lineHeight: 0 }} />
       </div>
 
       {/* Scrolling log (toggle) */}

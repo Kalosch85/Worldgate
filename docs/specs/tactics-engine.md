@@ -136,6 +136,16 @@ suffice — no sprite work in this phase.
   next living player unit that still has AP, in unit-id order (round-robin,
   wrapping). On battle entry it selects the first such unit. When no player
   unit has AP left, it keeps the current unit selected (nothing to advance to).
+- **Board pan & zoom.** The Pixi canvas fills the board area and owns its own
+  camera: the map is centered when it fits, and the player can **pinch-zoom**
+  (two-finger spread/pinch) and **two-finger pan** to move around a board
+  larger than the viewport. Zoom-out is bounded to the whole-map fit and
+  zoom-in to a fixed cap; panning is edge-clamped so the board can't drift
+  off-screen (this replaces the old DOM scroll, which clipped the outer
+  rows/columns). A single-finger tap still selects/acts; the tap→tile mapping
+  runs through the live camera transform so it stays correct at any zoom/pan.
+  The camera math is pure and unit-tested (`viewport.ts`); the Pixi layer only
+  wires pointer events to it.
 - **End-Turn confirmation.** The End-Turn button is *always enabled* (§5:
   unspent AP is legal). But if any living player unit (`hp > 0`) still has AP,
   pressing it first shows a confirmation that lists those units — e.g.

@@ -106,6 +106,30 @@ function applyOne(
       }
       return state;
     }
+    case "addHero": {
+      // Push a fresh HeroState (spec §8). No-op with a warning if the hero is
+      // already on the roster — e.g. a recruit effect that two arc paths can
+      // both reach.
+      if (state.heroes.some((h) => h.hero === effect.hero)) {
+        console.warn(`applyEffects: addHero '${effect.hero}' already on roster; no-op`);
+        return state;
+      }
+      state.heroes.push({
+        hero: effect.hero,
+        xp: 0,
+        level: 1,
+        fatigue: 0,
+        injuries: [],
+        skillBonuses: {},
+      });
+      return state;
+    }
+    case "addPersonnel": {
+      // Raise headcount (spec §8). Floors total at 0 (schema invariant); since
+      // it only grows, assignments can never exceed the new total.
+      state.personnel.total = Math.max(0, Math.floor(state.personnel.total + effect.amount));
+      return state;
+    }
     case "log": {
       state.journal.push({ day: state.campaign.day, text: effect.text });
       return state;

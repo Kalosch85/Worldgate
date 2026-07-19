@@ -86,7 +86,7 @@ ARCHITECTURE.md  DEVELOPMENT_PLAN.md
 
 ## Phase 6 — Content & story
 
-- **6.1 [F] Story bible.** Original setting: portal network premise, sponsoring institution, 2 factions, campaign arc skeleton; the going-public/election arc reserved as act 2 (post-prototype). Legal rule: genre premise yes, no borrowed names/characters/specific plotlines.
+- **6.1 [F] Story bible.** ✅ DONE. Delivered `docs/story/story-bible.md` (v1.0, Fable-authored): premise (Worldgate Command, the Vault, sponsor consortium), binding originality rules, deep canon (Stewards, Tenders, Raiders), 4 Earth-side factions, cast of 3 named heroes plus 2 planned recruits and generics, 3-act structure (Act 1 Establishment in scope, Act 2 Exposure and Act 3 The Network reserved post-prototype per Phase 7 gate), writing rules for all content sessions, vocabulary list, and a backlog (B-1..B-5) of content seeds for later tasks. Legal rule honored: genre premise only, no borrowed names/characters/plotlines.
 - **6.2 [F design, S entry] Content pass.** 4 heroes (distinct archetypes), ~10 techs, 2 tactical maps, 4 narrative events pool, 6–8 campaign missions.
 - **6.3 [O] Balance pass.** Headless simulated campaign runs; tune income, XP curve, fatigue rates.
 - **6.4 [S] Squad-composition tutorial.** Contextual, first narrative mission: show how archetypes/skills open paths (uses a one-off scripted reveal, not the global display flag). Includes the post-mission debrief hint hook.

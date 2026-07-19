@@ -110,7 +110,7 @@ export function WorldgateScreen({
         ) : (
           missions.map((mission) => {
             const isTactical = mission.payload.kind === "tactical";
-            const canLaunch = !isTactical && canLaunchMission(state, content, mission.id, squad);
+            const canLaunch = canLaunchMission(state, content, mission.id, squad);
             return (
               <section key={mission.id} style={panelStyle} aria-label={mission.name}>
                 <header style={{ display: "flex", alignItems: "baseline", gap: "0.5rem", flexWrap: "wrap" }}>
@@ -135,39 +135,25 @@ export function WorldgateScreen({
                   {mission.squad.max !== mission.squad.min ? `–${mission.squad.max}` : ""} operatives
                 </div>
 
-                {isTactical ? (
-                  <p
-                    style={{
-                      margin: "0.6rem 0 0",
-                      padding: "0.5rem 0.6rem",
-                      borderRadius: 8,
-                      background: theme.surfaceAlt,
-                      border: `1px solid ${theme.border}`,
-                      color: theme.textDim,
-                      fontSize: "0.85rem",
-                    }}
-                  >
-                    Requires field systems (coming).
-                  </p>
-                ) : (
-                  <button
-                    type="button"
-                    style={{
-                      ...buttonStyle(canLaunch ? "primary" : "ghost"),
-                      width: "100%",
-                      marginTop: "0.6rem",
-                      opacity: canLaunch ? 1 : 0.4,
-                    }}
-                    disabled={!canLaunch}
-                    onClick={() => launch(mission.id)}
-                  >
-                    {canLaunch
-                      ? "Launch mission"
-                      : `Select ${mission.squad.min}${
-                          mission.squad.max !== mission.squad.min ? `–${mission.squad.max}` : ""
-                        } fit operatives`}
-                  </button>
-                )}
+                <button
+                  type="button"
+                  style={{
+                    ...buttonStyle(canLaunch ? "primary" : "ghost"),
+                    width: "100%",
+                    marginTop: "0.6rem",
+                    opacity: canLaunch ? 1 : 0.4,
+                  }}
+                  disabled={!canLaunch}
+                  onClick={() => launch(mission.id)}
+                >
+                  {canLaunch
+                    ? isTactical
+                      ? "Deploy squad"
+                      : "Launch mission"
+                    : `Select ${mission.squad.min}${
+                        mission.squad.max !== mission.squad.min ? `–${mission.squad.max}` : ""
+                      } fit operatives`}
+                </button>
               </section>
             );
           })

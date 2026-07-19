@@ -69,10 +69,8 @@ function validateLaunch(
 /**
  * UI pre-validation guard (§3). True when {@link launchMission} would accept
  * this mission and squad. For a tactical mission it additionally checks the
- * materials cost — but note the reducer still refuses tactical launches with
- * RuleError("tactical_not_implemented") until the Phase 4 battle spec lands, so
- * the worldgate UI presents tactical missions as "coming" rather than launching
- * them.
+ * materials cost; the reducer then builds a real BattleState (tactics-engine
+ * §3) and the worldgate UI deploys the squad to the battle screen (task 4.3).
  */
 export function canLaunchMission(
   state: GameStateT,

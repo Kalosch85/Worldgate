@@ -2,10 +2,11 @@
  * PixiJS board renderer (task 4.3, tactics-engine spec §11). Draws a
  * `BattleView` — grid from the map tile legend, cover, consoles, units with hp
  * pips, and the move/target overlays — onto a WebGL canvas, and reports tile
- * taps back to the host. Terrain, cover, consoles, players, and the pips/overlays
- * are colored shapes; enemy units are drawn as the insect billboard sprite (from
- * `public/assets/units/`) when its texture has loaded, falling back to the colored
- * shape otherwise (spec §11, sprite note).
+ * taps back to the host. Tiles (floor/wall/cover) draw top-down textures from
+ * `public/assets/tiles/` and enemy units draw the insect billboard sprite from
+ * `public/assets/units/`; each falls back to its colored shape until its texture
+ * loads. Consoles, player units, and the pips/overlays stay colored shapes
+ * (spec §11, art-pass note).
  *
  * This is the one place Pixi lives. It holds no game rules and no UI state: it
  * renders whatever `BattleView` (optionally with replay-overridden unit
@@ -60,10 +61,20 @@ const BASE_TILE = 64;
 /** How far a single pointer may drift and still count as a tap, not a drag. */
 const TAP_SLOP = 12;
 
-/** The insect billboard used for enemy units, served from `public/assets/`.
- * `BASE_URL` is the Vite base ("/Worldgate/" in production) so the request
- * resolves under the GitHub Pages sub-path. */
-const ENEMY_SPRITE_URL = `${import.meta.env.BASE_URL}assets/units/enemy-insect-warrior.png`;
+/** Board art served from `public/assets/`. `BASE_URL` is the Vite base
+ * ("/Worldgate/" in production) so requests resolve under the GitHub Pages
+ * sub-path. */
+const ASSETS = `${import.meta.env.BASE_URL}assets`;
+const ENEMY_SPRITE_URL = `${ASSETS}/units/enemy-insect-warrior.png`;
+/** Top-down tile textures, one per map-legend tile kind. Loaded async; each
+ * kind falls back to its flat colour until (and if) the texture arrives. */
+const TILE_URLS = {
+  floor: `${ASSETS}/tiles/floor.png`,
+  wall: `${ASSETS}/tiles/wall.png`,
+  lowCover: `${ASSETS}/tiles/cover-low.png`,
+  highCover: `${ASSETS}/tiles/cover-high.png`,
+} as const;
+type TileKind = keyof typeof TILE_URLS;
 
 export interface BattleCanvasOpts {
   onTap: (x: number, y: number) => void;
@@ -97,6 +108,9 @@ export class BattleCanvas {
   // The enemy billboard texture; null until it loads (or if loading fails, in
   // which case enemies fall back to the colored shape).
   private enemyTexture: Texture | null = null;
+  // Top-down tile textures by kind; entries are null until loaded, and each
+  // tile kind falls back to its flat colour meanwhile.
+  private tileTextures: Partial<Record<TileKind, Texture>> = {};
 
   // Pan/zoom state (spec §11): a viewport transform on `board`, driven by the
   // pure math in viewport.ts. Bounds are recomputed each render from the board
@@ -148,22 +162,37 @@ export class BattleCanvas {
       this.resizeObserver.observe(this.container);
     }
 
-    // Load the enemy billboard sprite in the background; when it arrives, redraw
-    // so enemies swap from the fallback shape to the sprite. A load failure just
-    // leaves `enemyTexture` null and keeps the colored shape.
-    void this.loadEnemyTexture();
+    // Load the board art in the background; each texture redraws as it arrives
+    // so tiles/enemies swap from their fallback fills to the art. Load failures
+    // just leave the texture null and keep the fallback.
+    void this.loadArt();
 
     if (this.lastView) this.render(this.lastView, this.lastOverride);
   }
 
-  private async loadEnemyTexture(): Promise<void> {
-    try {
-      const texture = await Assets.load<Texture>(ENEMY_SPRITE_URL);
-      if (this.disposed) return;
-      this.enemyTexture = texture;
-      if (this.lastView) this.render(this.lastView, this.lastOverride);
-    } catch {
-      // Keep the fallback colored shape.
+  private async loadArt(): Promise<void> {
+    const redraw = () => {
+      if (!this.disposed && this.lastView) this.render(this.lastView, this.lastOverride);
+    };
+    // Enemy billboard.
+    void Assets.load<Texture>(ENEMY_SPRITE_URL)
+      .then((texture) => {
+        if (this.disposed) return;
+        this.enemyTexture = texture;
+        redraw();
+      })
+      .catch(() => {});
+    // Tile textures — nearest-neighbour so the pixel art stays crisp when the
+    // 32px source is drawn at the 64px logical tile size.
+    for (const kind of Object.keys(TILE_URLS) as TileKind[]) {
+      void Assets.load<Texture>(TILE_URLS[kind])
+        .then((texture) => {
+          if (this.disposed) return;
+          texture.source.scaleMode = "nearest";
+          this.tileTextures[kind] = texture;
+          redraw();
+        })
+        .catch(() => {});
     }
   }
 
@@ -293,20 +322,42 @@ export class BattleCanvas {
     this.board.removeChildren().forEach((c) => c.destroy());
     const t = this.tile;
 
-    // 1. Tiles from the map legend + a faint grid.
+    // 1. Tiles from the map legend. Each tile draws its texture when loaded and
+    // otherwise falls back to a flat fill; a faint grid overlay always sits on
+    // top so tile boundaries read on the seamless textures.
     const tiles = new Graphics();
+    const grid = new Graphics();
     for (let y = 0; y < view.height; y++) {
       const row = view.tiles[y] ?? "";
       for (let x = 0; x < view.width; x++) {
         const ch = row[x] ?? ".";
-        const checker = (x + y) % 2 === 0 ? COLORS.floor : COLORS.floorAlt;
-        const fill =
-          ch === "#" ? COLORS.wall : ch === "-" ? COLORS.lowCover : ch === "+" ? COLORS.highCover : checker;
-        tiles.rect(x * t, y * t, t, t).fill(fill);
-        tiles.rect(x * t, y * t, t, t).stroke({ width: 1, color: COLORS.gridLine, alignment: 0 });
+        const kind: TileKind =
+          ch === "#" ? "wall" : ch === "-" ? "lowCover" : ch === "+" ? "highCover" : "floor";
+        const texture = this.tileTextures[kind];
+        if (texture) {
+          const sprite = new Sprite(texture);
+          sprite.x = x * t;
+          sprite.y = y * t;
+          sprite.width = t;
+          sprite.height = t;
+          this.board.addChild(sprite);
+        } else {
+          const checker = (x + y) % 2 === 0 ? COLORS.floor : COLORS.floorAlt;
+          const fill =
+            kind === "wall"
+              ? COLORS.wall
+              : kind === "lowCover"
+                ? COLORS.lowCover
+                : kind === "highCover"
+                  ? COLORS.highCover
+                  : checker;
+          tiles.rect(x * t, y * t, t, t).fill(fill);
+        }
+        grid.rect(x * t, y * t, t, t).stroke({ width: 1, color: COLORS.gridLine, alignment: 0, alpha: 0.5 });
       }
     }
-    this.board.addChild(tiles);
+    this.board.addChildAt(tiles, 0);
+    this.board.addChild(grid);
 
     // 2. Move overlay (reachable tiles) under the units — a filled inset with a
     // brighter border so the destinations read clearly over the dark floor.

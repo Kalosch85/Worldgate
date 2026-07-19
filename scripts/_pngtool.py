@@ -85,6 +85,16 @@ def encode(path, w, h, rgba):
         f.write(chunk(b'IDAT', comp))
         f.write(chunk(b'IEND', b''))
 
+def crop(w, h, rgba, x0, y0, cw, ch):
+    """Copy an (x0,y0,cw,ch) sub-rectangle out of an RGBA buffer, preserving the
+    existing alpha channel (no keying)."""
+    out = bytearray(cw * ch * 4)
+    for yy in range(ch):
+        srow = ((y0 + yy) * w + x0) * 4
+        out[yy * cw * 4 : (yy + 1) * cw * 4] = rgba[srow : srow + cw * 4]
+    return out
+
+
 def bg_mask(w, h, rgba, tol):
     """Flood-fill from all borders; a neighbor joins background if within `tol`
     (per-channel max) of any border-sampled reference color. Returns bytearray

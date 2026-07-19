@@ -31,6 +31,10 @@ vi.mock("pixi.js", () => {
       this.children.push(c);
       return c;
     }
+    addChildAt(c: unknown, i: number) {
+      this.children.splice(i, 0, c);
+      return c;
+    }
     removeChildren() {
       const c = this.children;
       this.children = [];
@@ -79,6 +83,8 @@ vi.mock("pixi.js", () => {
     texture = { width: 64, height: 64 };
     x = 0;
     y = 0;
+    width = 0;
+    height = 0;
     constructor(texture?: unknown) {
       if (texture) this.texture = texture as { width: number; height: number };
     }
@@ -86,7 +92,7 @@ vi.mock("pixi.js", () => {
   }
   const Assets = {
     async load() {
-      return { width: 64, height: 64 };
+      return { width: 64, height: 64, source: { scaleMode: "" } };
     },
   };
   const Texture = class {};

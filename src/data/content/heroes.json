@@ -14,5 +14,13 @@
     "skills": { "combat": 2, "science": 7, "engineering": 4, "diplomacy": 3, "resolve": 3 },
     "abilities": ["ab_shot", "ab_patch"],
     "bio": "Astrophysicist. Decoded the gate's address notation."
+  },
+  {
+    "id": "h_seryn",
+    "name": "Seryn Vael",
+    "archetypes": ["soldier"],
+    "skills": { "combat": 7, "science": 1, "engineering": 1, "diplomacy": 4, "resolve": 6 },
+    "abilities": ["ab_shot"],
+    "bio": "First Blade of the Luminous One. Faith broken or bent — but the sword arm never wavered."
   }
 ]

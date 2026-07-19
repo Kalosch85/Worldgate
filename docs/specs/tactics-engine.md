@@ -85,11 +85,17 @@ Cooldown: after use, `cooldowns[ability] = cooldown`; usable at 0/absent.
 
 ## 8. Interactables & objectives
 
-Interact requires orthogonal adjacency and 1 AP. interactSequence must follow
-the listed order; out-of-order attempts are RuleError (guard exposes which is
-next). Objective completion checked after every state change: **victory**
-when all map objectives complete; **defeat** when all player units are at
-0 hp.
+Interact requires 1 AP and **position eligibility (Fable amendment): the acting
+unit is standing on the interactable's own tile OR orthogonally adjacent to it**
+(Manhattan distance ≤ 1). Interactables sit on walkable floor, so a unit may
+move onto the console tile and activate it from there — the old "adjacent only"
+guard left a unit stranded on top of a console with no way to use it. The guard
+(`battleInteract` and the `reachableNext` preview it shares with the UI) accepts
+distance 0 or 1 and rejects distance ≥ 2 with `battle/too_far` ("move closer").
+interactSequence must follow the listed order; out-of-order attempts are
+RuleError (guard exposes which is next). Objective completion checked after
+every state change: **victory** when all map objectives complete; **defeat**
+when all player units are at 0 hp.
 
 ## 9. Battle end → strategic resolution
 
@@ -169,6 +175,25 @@ slice time, while the top-down tile pack already carries real alpha.
   path dispatches the exact same `battleEndTurn` action as the no-dialog path;
   the two resolve identically (test: no dialog when all AP spent; confirmed
   end-turn === direct end-turn).
+
+**Interactable feedback (Fable amendment).** Tapping an interactable on the
+board *always* produces feedback — it is never a silent no-op. When the selected
+unit is eligible (§8 position + AP + correct order) the tap dispatches
+`battleInteract`. When it is ineligible, the renderer shows a brief message
+stating the single blocking reason, in this precedence:
+
+- **wrong order** — the console is part of a sequence but is not the next one:
+  "Activate <next console> first" (e.g. "Activate Console A first").
+- **no AP** — it is the next console but the unit has no AP: "No AP left".
+- **too far** — it is the next console and the unit has AP but is at distance
+  ≥ 2: "Move closer".
+- **no selection** — nothing is selected: "Select a unit first".
+
+Consoles are named for players by their position in the sequence — the first is
+"Console A", the second "Console B", and so on. The Interact button obeys the
+same rule: it is a feedback affordance, so pressing it with no eligible console
+surfaces the same reason rather than sitting silently disabled. The tap→tile
+target stays ≥ 44px (§10) through the board's minimum zoom-in cap.
 
 ## 12. Non-goals v1 (do not implement, do not scaffold)
 

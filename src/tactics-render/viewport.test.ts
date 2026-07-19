@@ -49,6 +49,22 @@ describe("fit & scale bounds", () => {
     const b = bounds({ viewW: 900, viewH: 700 }); // fits at scale 1
     expect(b.minScale).toBe(1);
   });
+
+  // §10 + tactics-engine §11 (Fable amendment): a console tap target must be
+  // reachable at >= 44px. A tap always resolves to a tile regardless of pixel
+  // size, but the zoom-in cap guarantees the player can bring a 64px base tile
+  // to at least the 44px touch minimum on any viewport — including tiny ones.
+  it("the zoom-in cap always lets a board tile reach the 44px touch minimum", () => {
+    const TOUCH = 44;
+    for (const [viewW, viewH] of [
+      [200, 160],
+      [400, 320],
+      [1024, 768],
+    ] as const) {
+      const b = bounds({ viewW, viewH });
+      expect(BASE * b.maxScale).toBeGreaterThanOrEqual(TOUCH);
+    }
+  });
 });
 
 describe("clampOffset (replaces the old scroll-clipping)", () => {

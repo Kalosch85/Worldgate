@@ -317,6 +317,29 @@ describe("interact order & objectives (§8)", () => {
     ).toThrow(/next console|sequence/);
   });
 
+  it("a unit standing ON the console tile with 1 AP can activate it (Fable §8)", () => {
+    // Regression: consoles on map_relay couldn't be interacted with — a hero that
+    // moves onto con_a's own tile (7,0) is at manhattan 0, which the old `=== 1`
+    // adjacency guard rejected, stranding the unit on top with no way to use it.
+    const s = game([player("u_h_mercer", "h_mercer", 7, 0, { ap: 1 })], { obj_consoles: 0 }, {
+      squad: ["h_mercer"],
+    });
+    const next = apply(s, { type: "battleInteract", unit: "u_h_mercer", interactable: "con_a" }, ctx);
+    expect(battleOf(next)!.objectiveProgress.obj_consoles).toBe(1);
+    expect(unit(next, "u_h_mercer").ap).toBe(0); // 1 − 1
+  });
+
+  it("a unit that spent all AP getting there cannot activate (no_ap)", () => {
+    // Arrived on the console tile but two moves left 0 AP — the reason is no AP,
+    // surfaced to the UI as the no-AP feedback (§11).
+    const s = game([player("u_h_mercer", "h_mercer", 7, 0, { ap: 0 })], { obj_consoles: 0 }, {
+      squad: ["h_mercer"],
+    });
+    expect(() =>
+      apply(s, { type: "battleInteract", unit: "u_h_mercer", interactable: "con_a" }, ctx),
+    ).toThrow(/no AP|no_ap/i);
+  });
+
   it("advances the sequence after the correct console and requires adjacency", () => {
     const s = game([player("u_h_mercer", "h_mercer", 6, 0)], { obj_consoles: 0 }, { squad: ["h_mercer"] });
     // Not adjacent to con_b — rejected.

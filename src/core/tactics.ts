@@ -500,8 +500,10 @@ function doInteract(
   const it = map.interactables.find((i) => i.id === action.interactable);
   if (!it)
     throw new RuleError("battle/unknown_interactable", `Unknown interactable '${action.interactable}'.`);
-  if (manhattan(u.pos, it.pos) !== 1) {
-    throw new RuleError("battle/not_adjacent", `'${u.id}' is not adjacent to '${it.id}'.`);
+  // §8 (Fable amendment): eligible when standing on the interactable's own tile
+  // OR orthogonally adjacent to it (Manhattan ≤ 1).
+  if (manhattan(u.pos, it.pos) > 1) {
+    throw new RuleError("battle/too_far", `'${u.id}' is too far from '${it.id}'.`);
   }
 
   // §8: an interact only lands if it is the next in a sequence's order.

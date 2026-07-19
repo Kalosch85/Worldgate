@@ -3,10 +3,10 @@
  * `BattleView` — grid from the map tile legend, cover, consoles, units with hp
  * pips, and the move/target overlays — onto a WebGL canvas, and reports tile
  * taps back to the host. Tiles (floor/wall/cover) draw top-down textures from
- * `public/assets/tiles/` and enemy units draw the insect billboard sprite from
- * `public/assets/units/`; each falls back to its colored shape until its texture
- * loads. Consoles, player units, and the pips/overlays stay colored shapes
- * (spec §11, art-pass note).
+ * `public/assets/tiles/` and units draw billboards from `public/assets/units/`
+ * (the matching hero for players, the insect for enemies); each falls back to
+ * its colored shape until its texture loads. Consoles and the pips/overlays stay
+ * colored shapes (spec §11, art-pass note).
  *
  * This is the one place Pixi lives. It holds no game rules and no UI state: it
  * renders whatever `BattleView` (optionally with replay-overridden unit
@@ -66,6 +66,12 @@ const TAP_SLOP = 12;
  * sub-path. */
 const ASSETS = `${import.meta.env.BASE_URL}assets`;
 const ENEMY_SPRITE_URL = `${ASSETS}/units/enemy-insect-warrior.png`;
+/** Player-hero billboards keyed by hero id. A player unit whose hero has no
+ * entry (or whose texture hasn't loaded) falls back to the colored disc. */
+const HERO_SPRITE_URLS: Record<string, string> = {
+  h_mercer: `${ASSETS}/units/hero-mercer.png`,
+  h_okafor: `${ASSETS}/units/hero-okafor.png`,
+};
 /** Top-down tile textures, one per map-legend tile kind. Loaded async; each
  * kind falls back to its flat colour until (and if) the texture arrives. */
 const TILE_URLS = {
@@ -92,6 +98,7 @@ interface DrawUnit {
   selected: boolean;
   ap: number;
   canAct: boolean;
+  hero?: string;
 }
 
 export class BattleCanvas {
@@ -108,6 +115,8 @@ export class BattleCanvas {
   // The enemy billboard texture; null until it loads (or if loading fails, in
   // which case enemies fall back to the colored shape).
   private enemyTexture: Texture | null = null;
+  // Player-hero billboards by hero id; entries fill in as they load.
+  private heroTextures: Record<string, Texture> = {};
   // Top-down tile textures by kind; entries are null until loaded, and each
   // tile kind falls back to its flat colour meanwhile.
   private tileTextures: Partial<Record<TileKind, Texture>> = {};
@@ -182,6 +191,16 @@ export class BattleCanvas {
         redraw();
       })
       .catch(() => {});
+    // Hero billboards.
+    for (const [heroId, url] of Object.entries(HERO_SPRITE_URLS)) {
+      void Assets.load<Texture>(url)
+        .then((texture) => {
+          if (this.disposed) return;
+          this.heroTextures[heroId] = texture;
+          redraw();
+        })
+        .catch(() => {});
+    }
     // Tile textures — nearest-neighbour so the pixel art stays crisp when the
     // 32px source is drawn at the 64px logical tile size.
     for (const kind of Object.keys(TILE_URLS) as TileKind[]) {
@@ -409,6 +428,7 @@ export class BattleCanvas {
         // "Can act" badge is a player-phase affordance; hide it while the enemy
         // phase replays (spec §11).
         canAct: u.canAct && !replaying,
+        hero: u.hero,
       };
     });
     for (const u of drawUnits) {
@@ -417,11 +437,16 @@ export class BattleCanvas {
       const cy = u.pos.y * t + t / 2;
       const r = t * 0.3;
       const base = !u.alive ? COLORS.downed : u.side === "player" ? COLORS.player : COLORS.enemy;
-      // Alive enemies render as the insect billboard once its texture is loaded;
-      // players, downed units, and the pre-load frames keep the colored shape.
-      const useSprite = u.side === "enemy" && u.alive && this.enemyTexture !== null;
+      // Alive units render as their billboard once the texture is loaded — the
+      // matching hero for players, the insect for enemies; downed units and the
+      // pre-load frames keep the colored shape.
+      const texture = !u.alive
+        ? null
+        : u.side === "enemy"
+          ? this.enemyTexture
+          : (u.hero && this.heroTextures[u.hero]) || null;
       if (u.selected && u.alive) g.circle(cx, cy, r + 4).stroke({ width: 3, color: COLORS.selection });
-      if (!useSprite) {
+      if (!texture) {
         g.circle(cx, cy, r).fill({ color: base, alpha: u.alive ? 1 : 0.5 });
         g.circle(cx, cy, r).stroke({ width: 2, color: 0x0b0f1a });
         if (!u.alive) {
@@ -434,7 +459,7 @@ export class BattleCanvas {
         }
       }
       this.board.addChild(g);
-      if (useSprite) this.board.addChild(this.enemySprite(cx, cy, r, t));
+      if (texture) this.board.addChild(this.unitSprite(texture, cx, cy, r, t));
 
       if (u.alive) this.board.addChild(this.hpPips(u, cx, cy - r - 7, t));
 
@@ -499,15 +524,19 @@ export class BattleCanvas {
     this.applyTransform();
   }
 
-  /** The enemy insect billboard, scaled to sit within its tile and anchored a
-   * little low so it "stands" on the tile centre rather than floating. */
-  private enemySprite(cx: number, cy: number, r: number, t: number): Sprite {
-    const sprite = new Sprite(this.enemyTexture!);
-    sprite.anchor.set(0.5, 0.6);
-    const maxDim = Math.max(sprite.texture.width, sprite.texture.height) || 1;
-    sprite.scale.set((t * 1.3) / maxDim);
+  /** A unit billboard (hero or enemy), scaled to sit within its tile and
+   * anchored near the feet so it "stands" on the tile rather than floating.
+   * Portrait sprites (taller than wide, e.g. the heroes) fit to a bit over the
+   * tile height; wide sprites fit to the tile width. */
+  private unitSprite(texture: Texture, cx: number, cy: number, r: number, t: number): Sprite {
+    const sprite = new Sprite(texture);
+    sprite.anchor.set(0.5, 0.82);
+    const tw = texture.width || 1;
+    const th = texture.height || 1;
+    const scale = th >= tw ? (t * 1.5) / th : (t * 1.3) / tw;
+    sprite.scale.set(scale);
     sprite.x = cx;
-    sprite.y = cy + r * 0.15;
+    sprite.y = cy + r * 0.55;
     return sprite;
   }
 

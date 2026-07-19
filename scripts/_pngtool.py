@@ -95,10 +95,15 @@ def crop(w, h, rgba, x0, y0, cw, ch):
     return out
 
 
-def bg_mask(w, h, rgba, tol):
+def bg_mask(w, h, rgba, tol, sat_max=None):
     """Flood-fill from all borders; a neighbor joins background if within `tol`
     (per-channel max) of any border-sampled reference color. Returns bytearray
-    mask, 1=background."""
+    mask, 1=background.
+
+    `sat_max` (optional) additionally requires a pixel to be near-neutral
+    (max channel spread <= sat_max) to count as background. Use it when the
+    background is a neutral grey but the subject contains desaturated tones the
+    plain colour key would otherwise eat (e.g. tan camo on a grey checker)."""
     refs = []
     seen = set()
     def sample(x, y):
@@ -113,6 +118,8 @@ def bg_mask(w, h, rgba, tol):
         sample(0, y); sample(w-1, y)
     def is_bg(p):
         r, g, b = rgba[p], rgba[p+1], rgba[p+2]
+        if sat_max is not None and (max(r, g, b) - min(r, g, b)) > sat_max:
+            return False
         for cr, cg, cb in refs:
             if abs(r-cr) <= tol and abs(g-cg) <= tol and abs(b-cb) <= tol:
                 return True

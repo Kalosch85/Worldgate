@@ -10,6 +10,7 @@ sheets in [`art-src/`](../../art-src/). Regenerate with
 | ---------------------------------------------------------------- | ------------------------------------------ | ---------------------------------------------------------------------- |
 | `units/enemy-insect-warrior.png`                                 | `1784443852254.png`                        | enemy unit billboard (battle board)                                    |
 | `units/enemy-insect-drone-a/-b.png`                              | `1784443852254.png`                        | delivered; not yet wired                                               |
+| `units/hero-mercer.png`, `hero-okafor.png`                       | `1784478796872.png`                        | player-hero billboards (`h_mercer`, `h_okafor`)                        |
 | `abilities/ab-shot.png`, `ab-patch.png`                          | `1784443966825.png`                        | ability bar (Shot, Field Patch)                                        |
 | `abilities/ab-stasis.png`                                        | `1784443966825.png`                        | delivered; no matching ability yet                                     |
 | `facilities/*.png`                                               | `1784443899071.png`                        | delivered; not yet wired (base UI)                                     |

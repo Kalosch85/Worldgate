@@ -44,6 +44,22 @@ def slice_sheet(fname, tol, min_area, take, assign):
         print(f"  {rel}  {cw}x{ch}")
 
 
+def slice_heroes():
+    """Cut the two player-hero billboards from their sheet. Grey checker
+    background with tan-camo subjects, so key with a neutrality (sat_max) guard
+    so the desaturated camo isn't mistaken for background. Left = Mercer
+    (rifleman), right = Okafor (medic)."""
+    w, h, rgba = decode(os.path.join(SRC, "1784478796872.png"))
+    mask = bg_mask(w, h, rgba, 26, sat_max=18)
+    comps = components(w, h, mask, 8000)[:2]
+    left_right = sorted(comps, key=lambda c: (c[1] + c[3]) // 2)
+    print("heroes:")
+    for rel, comp in zip(("units/hero-mercer.png", "units/hero-okafor.png"), left_right):
+        cw, ch, cr = extract(w, h, rgba, mask, comp, pad=8)
+        encode(out(rel), cw, ch, cr)
+        print(f"  {rel}  {cw}x{ch}")
+
+
 def slice_tiles():
     """Cut individual board tiles from the top-down seamless tileset (real RGBA,
     so a plain crop — no keying). Cells are 32x32, indexed (col, row)."""
@@ -100,6 +116,7 @@ def main():
         ],
     )
 
+    slice_heroes()
     slice_tiles()
 
 

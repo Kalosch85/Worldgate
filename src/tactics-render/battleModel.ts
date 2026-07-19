@@ -36,6 +36,9 @@ export interface UnitView {
   name: string;
   alive: boolean;
   selected: boolean;
+  /** Hero id for player units (undefined for enemies) — lets the renderer pick
+   * the matching hero billboard. */
+  hero?: string;
   /** Living player unit that still has AP — drives the §11 "can act" badge,
    * the auto-advance order, and the End-Turn confirmation list. */
   canAct: boolean;
@@ -157,6 +160,7 @@ export function buildBattleView(state: GameStateT, content: ContentBundleT, ui: 
     name: unitName(content, u),
     alive: u.hp > 0,
     selected: u.id === selectedId,
+    hero: u.hero,
     canAct: u.side === "player" && u.hp > 0 && u.ap > 0,
   }));
 

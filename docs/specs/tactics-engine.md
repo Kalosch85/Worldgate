@@ -130,13 +130,13 @@ art pass since then wires sprites/textures without changing any rules or layout:
 - Board tiles (floor / `#` wall / `-` low cover / `+` high cover) draw top-down
   textures from `public/assets/tiles/` (nearest-neighbour), each with a
   flat-colour fallback until its texture loads, and a faint grid overlay on top.
-- Enemy units draw the insect billboard sprite (`public/assets/units/`), loaded
-  async with a colored-shape fallback.
+- Units draw billboards (`public/assets/units/`): the matching hero sprite for
+  each player (by hero id), the insect for enemies — loaded async with a
+  colored-shape fallback.
 - The ability bar shows per-ability icons (`public/assets/abilities/`) beside
   their labels.
 
-Consoles, player units (pending hero art), and the hp/AP indicators stay colored
-shapes. Assets are sliced from the `art-src/` source sheets by
+Consoles and the hp/AP indicators stay colored shapes. Assets are sliced from the `art-src/` source sheets by
 `scripts/slice-art.py`; sheets with no true alpha are keyed to transparency at
 slice time, while the top-down tile pack already carries real alpha.
 

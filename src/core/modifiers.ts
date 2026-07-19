@@ -9,6 +9,8 @@ export const MODIFIER_DEFAULTS = {
   incomeMult: 1,
   researchBonus: 0,
   healRate: 0,
+  // Bonus materials added to income each endDay (facilities spec §3). Default 0.
+  materialsPerDay: 0,
 } as const;
 
 export type ModifierKey = keyof typeof MODIFIER_DEFAULTS;

@@ -93,6 +93,19 @@ function applyOne(
       }
       return state;
     }
+    case "personnel": {
+      // Adjust headcount (floor 0). If assignments now exceed the new total,
+      // shed workers infirmary → research → logistics until valid (spec §1).
+      const total = Math.max(0, Math.floor(state.personnel.total + effect.delta));
+      state.personnel.total = total;
+      const a = state.personnel.assignments;
+      for (const track of ["infirmary", "research", "logistics"] as const) {
+        const over = a.logistics + a.research + a.infirmary - total;
+        if (over <= 0) break;
+        a[track] = Math.max(0, a[track] - over);
+      }
+      return state;
+    }
     case "log": {
       state.journal.push({ day: state.campaign.day, text: effect.text });
       return state;

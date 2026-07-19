@@ -6,6 +6,7 @@
  */
 import abilities from "./content/abilities.json";
 import events from "./content/events.json";
+import facilities from "./content/facilities.json";
 import heroes from "./content/heroes.json";
 import injuries from "./content/injuries.json";
 import maps from "./content/maps.json";
@@ -28,6 +29,7 @@ export function loadContent(): ContentBundleT {
     maps,
     events,
     missions,
+    facilities,
   });
   return cached;
 }

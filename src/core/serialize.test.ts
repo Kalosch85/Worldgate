@@ -72,6 +72,10 @@ function genGameState(rng: Rng, activeKind?: ActiveKind): GameStateT {
       current: bool(rng) ? { tech: id(rng, "t"), progress: nonNeg(rng) } : null,
       completed: list(rng, 0, 4, () => id(rng, "t")),
     },
+    construction: {
+      current: bool(rng) ? { facility: id(rng, "fac"), daysRemaining: rng.int(0, 10) } : null,
+      built: list(rng, 0, 4, () => id(rng, "fac")),
+    },
     missions: {
       available: list(rng, 0, 4, () => id(rng, "m")),
       completed: list(rng, 0, 3, () => {

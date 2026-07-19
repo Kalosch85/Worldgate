@@ -117,6 +117,7 @@ export function App() {
         return withBanner(
           <BaseScreen
             state={state}
+            content={content}
             dispatch={dispatch}
             onOpenMenu={() => setScreen("menu")}
             onNavigate={setScreen}

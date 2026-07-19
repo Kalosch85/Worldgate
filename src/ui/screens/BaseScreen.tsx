@@ -4,19 +4,22 @@
  * Portrait-friendly, touch targets ≥ 44px (ARCHITECTURE §10).
  */
 import type { Action } from "../../core/reducer.js";
-import type { GameStateT } from "../../data/schemas.js";
+import type { ContentBundleT, GameStateT } from "../../data/schemas.js";
 import { ResourceBar } from "../components/ResourceBar.js";
 import { PersonnelPanel } from "../components/PersonnelPanel.js";
+import { FacilitiesPanel } from "../components/FacilitiesPanel.js";
 import { Journal } from "../components/Journal.js";
 import { buttonStyle, theme } from "../theme.js";
 
 export function BaseScreen({
   state,
+  content,
   dispatch,
   onOpenMenu,
   onNavigate,
 }: {
   state: GameStateT;
+  content: ContentBundleT;
   dispatch: (action: Action) => void;
   onOpenMenu: () => void;
   onNavigate: (screen: "tech" | "roster" | "worldgate") => void;
@@ -81,6 +84,7 @@ export function BaseScreen({
         </nav>
 
         <PersonnelPanel state={state} dispatch={dispatch} />
+        <FacilitiesPanel state={state} content={content} dispatch={dispatch} />
         <Journal state={state} />
       </main>
     </div>

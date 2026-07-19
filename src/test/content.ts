@@ -19,5 +19,6 @@ export function loadTestContent(): ContentBundleT {
     maps: load("maps.json"),
     events: load("events.json"),
     missions: load("missions.json"),
+    facilities: load("facilities.json"),
   });
 }

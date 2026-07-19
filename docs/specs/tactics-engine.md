@@ -122,8 +122,16 @@ seed twice ⇒ identical action sequence.
 PixiJS canvas: tap unit → reachable-tile overlay + targets labeled with exact
 hit% from the shared function; tap-to-confirm; ability bar with AP/cooldown
 state; hp pips; turn/round banner; scrolling log; enemy phase replayed with
-~300ms per action. Landscape-friendly, touch targets ≥ 44px. Colored shapes
-suffice — no sprite work in this phase.
+~300ms per action. Landscape-friendly, touch targets ≥ 44px.
+
+**Art pass (addendum).** The 4.3 renderer shipped with colored shapes only; an
+art pass since then wires the first sprites without changing any rules or layout:
+enemy units draw the insect billboard sprite (`public/assets/units/`, loaded
+async with a colored-shape fallback), and the ability bar shows per-ability
+icons (`public/assets/abilities/`) beside their labels. Terrain, cover,
+consoles, player units, and the hp/AP indicators stay colored shapes. Assets
+are sliced from the `art-src/` source sheets; sheets with no true alpha are
+keyed to transparency at slice time.
 
 **Activation flow & unspent-AP confirmation (Fable addendum).**
 

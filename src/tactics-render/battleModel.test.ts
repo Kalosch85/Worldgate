@@ -6,7 +6,7 @@ import { mulberry32 } from "../core/rng.js";
 import { hitChance, reachableTiles } from "../core/tactics.js";
 import { loadTestContent } from "../test/content.js";
 import type { GameStateT } from "../data/schemas.js";
-import { actablePlayers, buildBattleView, interpretTap } from "./battleModel.js";
+import { actablePlayers, buildBattleView, interactButtonTap, interpretTap } from "./battleModel.js";
 
 /**
  * Pure view-model tests (task 4.3). `buildBattleView` must surface exactly the
@@ -142,10 +142,59 @@ describe("interpretTap (§11)", () => {
     });
   });
 
+  it("activates from ON the console tile (Fable §8: on-tile or adjacent)", () => {
+    const s = launched();
+    // Mercer standing directly on console A's tile (7,0), 1 AP left.
+    const m = battle(s).units.find((u) => u.id === "u_h_mercer")!;
+    m.pos = { x: 7, y: 0 };
+    m.ap = 1;
+    const view = buildBattleView(s, CONTENT, { selectedUnit: "u_h_mercer", mode: { kind: "move" } })!;
+    expect(view.consoles.find((c) => c.id === "con_a")!.reachableNext).toBe(true);
+    expect(interpretTap(view, 7, 0)).toEqual({
+      kind: "action",
+      action: { type: "battleInteract", unit: "u_h_mercer", interactable: "con_a" },
+    });
+  });
+
   it("ignores a tap on empty floor with nothing selectable", () => {
     const s = launched();
     const view = buildBattleView(s, CONTENT, { selectedUnit: "u_h_mercer", mode: { kind: "move" } })!;
     // (7,2) is floor, out of Mercer's reach, no unit — nothing happens.
     expect(interpretTap(view, 7, 2)).toEqual({ kind: "none" });
+  });
+});
+
+// §11 (Fable amendment): tapping an interactable is never a silent no-op — an
+// ineligible tap returns the single blocking reason.
+describe("interactable feedback (§11)", () => {
+  it("a unit that arrived on the console with no AP sees the no-AP reason", () => {
+    const s = launched();
+    // Mercer reached console A's tile (7,0) but two moves spent all his AP.
+    const m = battle(s).units.find((u) => u.id === "u_h_mercer")!;
+    m.pos = { x: 7, y: 0 };
+    m.ap = 0;
+    const view = buildBattleView(s, CONTENT, { selectedUnit: "u_h_mercer", mode: { kind: "move" } })!;
+    expect(view.consoles.find((c) => c.id === "con_a")!.reachableNext).toBe(false);
+    expect(interpretTap(view, 7, 0)).toEqual({ kind: "message", text: "No AP left" });
+    // The button reports the same reason instead of sitting silently disabled.
+    expect(interactButtonTap(view)).toEqual({ kind: "message", text: "No AP left" });
+  });
+
+  it("tapping the wrong console (out of order) names the one to activate first", () => {
+    const s = launched();
+    // Mercer adjacent to console B (7,4) with AP, but the sequence expects A.
+    const m = battle(s).units.find((u) => u.id === "u_h_mercer")!;
+    m.pos = { x: 6, y: 4 };
+    const view = buildBattleView(s, CONTENT, { selectedUnit: "u_h_mercer", mode: { kind: "move" } })!;
+    expect(view.consoles.find((c) => c.id === "con_b")!.reachableNext).toBe(false);
+    expect(interpretTap(view, 7, 4)).toEqual({ kind: "message", text: "Activate Console A first" });
+  });
+
+  it("tapping the next console from a distance says to move closer", () => {
+    const s = launched();
+    const m = battle(s).units.find((u) => u.id === "u_h_mercer")!;
+    m.pos = { x: 3, y: 0 }; // has AP, far from console A (7,0)
+    const view = buildBattleView(s, CONTENT, { selectedUnit: "u_h_mercer", mode: { kind: "move" } })!;
+    expect(interpretTap(view, 7, 0)).toEqual({ kind: "message", text: "Move closer" });
   });
 });

@@ -53,9 +53,14 @@ export interface TargetView {
 
 export interface ConsoleView {
   id: string;
+  /** Player-facing name by sequence position: first is "Console A", etc. */
+  name: string;
   pos: PosT;
   isNext: boolean; // the next console the interactSequence expects
-  reachableNext: boolean; // isNext AND the selected unit is adjacent with AP
+  reachableNext: boolean; // isNext AND the selected unit is on/adjacent with AP
+  /** Why the selected unit can't activate this console right now (§11 feedback),
+   * or null when it is eligible / there is nothing to report. */
+  blockedReason: string | null;
 }
 
 export interface AbilityBarItem {
@@ -90,9 +95,13 @@ export interface BattleView {
   canEndTurn: boolean;
 }
 
-/** The tap outcome the renderer acts on: change selection, dispatch, or ignore. */
+/** The tap outcome the renderer acts on: change selection, dispatch, surface a
+ * feedback message (§11 — a console tap is never a silent no-op), or ignore. */
 export type TapResult =
-  { kind: "select"; unit: string } | { kind: "action"; action: BattleAction } | { kind: "none" };
+  | { kind: "select"; unit: string }
+  | { kind: "action"; action: BattleAction }
+  | { kind: "message"; text: string }
+  | { kind: "none" };
 
 export interface BattleUi {
   selectedUnit: string | null;
@@ -188,17 +197,54 @@ export function buildBattleView(state: GameStateT, content: ContentBundleT, ui: 
     }
   }
 
+  // Player-facing console names by sequence position ("Console A", "Console B",
+  // …) and the id each sequence expects next — both drive §11 tap feedback.
+  const nameById = new Map<string, string>();
+  const nextIdInSeqOf = new Map<string, string | undefined>(); // console id → its sequence's next id
+  for (const o of map.objectives) {
+    if (o.kind !== "interactSequence") continue;
+    const prog = Number(battle.objectiveProgress[o.id] ?? 0);
+    const nextId = o.interactables[prog];
+    o.interactables.forEach((id, i) => {
+      nameById.set(id, `Console ${String.fromCharCode(65 + i)}`);
+      nextIdInSeqOf.set(id, nextId);
+    });
+  }
+  const consoleName = (id: string): string => nameById.get(id) ?? id;
+
   // The next console each interactSequence expects, and whether the selected
-  // unit could activate it right now (adjacent + has AP).
+  // unit could activate it right now (on the tile or adjacent + has AP). When it
+  // can't, `blockedReason` states the single reason (§11 feedback).
   const nextIds = new Set(safe(() => nextInteractables(state, content), []));
   const consoles: ConsoleView[] = map.interactables.map((it) => {
     const isNext = nextIds.has(it.id);
-    const reachableNext =
-      isNext &&
-      selectablePlayer !== undefined &&
-      selectablePlayer.ap > 0 &&
-      manhattan(selectablePlayer.pos, it.pos) === 1;
-    return { id: it.id, pos: { x: it.pos.x, y: it.pos.y }, isNext, reachableNext };
+    const onOrAdjacent =
+      selectablePlayer !== undefined && manhattan(selectablePlayer.pos, it.pos) <= 1;
+    const reachableNext = isNext && selectablePlayer !== undefined && selectablePlayer.ap > 0 && onOrAdjacent;
+
+    let blockedReason: string | null = null;
+    if (!reachableNext) {
+      if (!selectablePlayer) {
+        blockedReason = "Select a unit first";
+      } else if (!isNext) {
+        // Part of a sequence but not the one it expects next → wrong order.
+        const nextId = nextIdInSeqOf.get(it.id);
+        blockedReason = nextId ? `Activate ${consoleName(nextId)} first` : null;
+      } else if (selectablePlayer.ap === 0) {
+        blockedReason = "No AP left";
+      } else {
+        blockedReason = "Move closer";
+      }
+    }
+
+    return {
+      id: it.id,
+      name: consoleName(it.id),
+      pos: { x: it.pos.x, y: it.pos.y },
+      isNext,
+      reachableNext,
+      blockedReason,
+    };
   });
   const canInteract = consoles.some((c) => c.reachableNext);
 
@@ -291,31 +337,55 @@ export function actablePlayers(view: BattleView): UnitView[] {
 export function interpretTap(view: BattleView, x: number, y: number): TapResult {
   const selected = view.selectedUnit;
 
-  if (selected) {
-    if (view.mode.kind === "ability") {
-      const target = view.targets.find((t) => t.pos.x === x && t.pos.y === y);
-      if (target) {
-        return {
-          kind: "action",
-          action: { type: "battleAbility", unit: selected, ability: view.mode.ability, target: target.unit },
-        };
-      }
-    } else if (view.mode.kind === "move") {
-      if (view.reachable.some((p) => p.x === x && p.y === y)) {
-        return { kind: "action", action: { type: "battleMove", unit: selected, to: { x, y } } };
-      }
-    } else if (view.mode.kind === "interact") {
-      const console = view.consoles.find((c) => c.reachableNext && c.pos.x === x && c.pos.y === y);
-      if (console) {
-        return {
-          kind: "action",
-          action: { type: "battleInteract", unit: selected, interactable: console.id },
-        };
-      }
+  // An active ability target commits the shot before anything else.
+  if (selected && view.mode.kind === "ability") {
+    const target = view.targets.find((t) => t.pos.x === x && t.pos.y === y);
+    if (target) {
+      return {
+        kind: "action",
+        action: { type: "battleAbility", unit: selected, ability: view.mode.ability, target: target.unit },
+      };
     }
   }
 
+  // A tap on a console: activate if eligible, otherwise ALWAYS say why (§11 —
+  // never a silent no-op). An eligible interact wins even over reselecting the
+  // unit standing on the console tile.
+  const console = view.consoles.find((c) => c.pos.x === x && c.pos.y === y);
+  if (console && console.reachableNext && selected) {
+    return { kind: "action", action: { type: "battleInteract", unit: selected, interactable: console.id } };
+  }
+
+  // Selecting a *different* living player unit takes priority over console
+  // feedback (a unit may be standing on the console tile).
   const player = view.units.find((u) => u.side === "player" && u.alive && u.pos.x === x && u.pos.y === y);
+  if (player && player.id !== selected) return { kind: "select", unit: player.id };
+
+  if (console) {
+    return { kind: "message", text: console.blockedReason ?? `${console.name} is already active` };
+  }
+
+  if (selected && view.mode.kind === "move") {
+    if (view.reachable.some((p) => p.x === x && p.y === y)) {
+      return { kind: "action", action: { type: "battleMove", unit: selected, to: { x, y } } };
+    }
+  }
+
   if (player) return { kind: "select", unit: player.id };
   return { kind: "none" };
+}
+
+/**
+ * Feedback for pressing the Interact button (§11): activate the eligible next
+ * console, else return the single reason the next console can't be used — so the
+ * button is a feedback affordance, never a silent disabled no-op.
+ */
+export function interactButtonTap(view: BattleView): TapResult {
+  const eligible = view.consoles.find((c) => c.reachableNext);
+  if (eligible && view.selectedUnit) {
+    return { kind: "action", action: { type: "battleInteract", unit: view.selectedUnit, interactable: eligible.id } };
+  }
+  const next = view.consoles.find((c) => c.isNext) ?? view.consoles.find((c) => c.blockedReason);
+  if (next?.blockedReason) return { kind: "message", text: next.blockedReason };
+  return { kind: "message", text: "No console to activate" };
 }

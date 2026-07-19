@@ -16,7 +16,14 @@ import type { Action } from "../core/reducer.js";
 import type { ContentBundleT, Effect, GameStateT, ResourceIdT } from "../data/schemas.js";
 import { buttonStyle, panelStyle, theme } from "../ui/theme.js";
 import { BattleCanvas } from "./BattleCanvas.js";
-import { actablePlayers, buildBattleView, interpretTap, type Mode } from "./battleModel.js";
+import {
+  actablePlayers,
+  buildBattleView,
+  interactButtonTap,
+  interpretTap,
+  type Mode,
+  type TapResult,
+} from "./battleModel.js";
 import { buildReplay, type ReplayFrame, type ReplayUnit } from "./replay.js";
 
 const RESOURCE_LABELS: Record<ResourceIdT, string> = {
@@ -90,6 +97,11 @@ export function BattleScreen({
   // Non-null while the unspent-AP confirmation is open: the names of the units
   // that can still act (spec §11).
   const [confirmEnd, setConfirmEnd] = useState<string[] | null>(null);
+  // Transient feedback for an interactable tap that couldn't act (§11): the
+  // reason text, shown as a brief toast. A counter keys each show so repeated
+  // identical messages still re-trigger the auto-dismiss.
+  const [toast, setToast] = useState<{ text: string; key: number } | null>(null);
+  const toastSeq = useRef(0);
 
   // Battle-end capture: the last live battle (pre-terminal action), the launched
   // squad, the mission id, and each hero's wound count at battle start — enough
@@ -147,17 +159,34 @@ export function BattleScreen({
 
   // Latest tap handler in a ref so the stable canvas callback always sees fresh
   // view/mode without re-instantiating Pixi.
-  const tapRef = useRef<(x: number, y: number) => void>(() => {});
-  tapRef.current = (x, y) => {
-    if (replaying || summary || !view) return;
-    const result = interpretTap(view, x, y);
+  const showToast = (text: string) => {
+    toastSeq.current += 1;
+    setToast({ text, key: toastSeq.current });
+  };
+
+  const applyTap = (result: TapResult) => {
     if (result.kind === "select") {
       setSelectedUnit(result.unit);
       setMode({ kind: "move" });
     } else if (result.kind === "action") {
       dispatchBattle(result.action);
+    } else if (result.kind === "message") {
+      showToast(result.text);
     }
   };
+
+  const tapRef = useRef<(x: number, y: number) => void>(() => {});
+  tapRef.current = (x, y) => {
+    if (replaying || summary || !view) return;
+    applyTap(interpretTap(view, x, y));
+  };
+
+  // Auto-dismiss the feedback toast shortly after it appears.
+  useEffect(() => {
+    if (!toast) return;
+    const id = setTimeout(() => setToast(null), 1800);
+    return () => clearTimeout(id);
+  }, [toast]);
 
   // Mount Pixi once; tear it down on unmount.
   const hostRef = useRef<HTMLDivElement>(null);
@@ -426,16 +455,10 @@ export function BattleScreen({
           label="Interact"
           hint={interactConsole ? "1 AP" : "—"}
           active={mode.kind === "interact"}
-          disabled={replaying || !view.canInteract}
-          onClick={() => {
-            if (interactConsole && view.selectedUnit) {
-              dispatchBattle({
-                type: "battleInteract",
-                unit: view.selectedUnit,
-                interactable: interactConsole.id,
-              });
-            }
-          }}
+          // §11: a feedback affordance, not a silent disabled no-op. Enabled
+          // whenever a console still needs activating; press surfaces the reason.
+          disabled={replaying || !view.consoles.some((c) => c.isNext)}
+          onClick={() => applyTap(interactButtonTap(view))}
         />
         <button
           type="button"
@@ -458,7 +481,37 @@ export function BattleScreen({
       {confirmEnd && (
         <EndTurnConfirm names={confirmEnd} onCancel={() => setConfirmEnd(null)} onConfirm={confirmEndTurn} />
       )}
+
+      {toast && <Toast key={toast.key} text={toast.text} />}
     </Shell>
+  );
+}
+
+/** Brief, non-blocking feedback for an interact tap that couldn't act (§11). */
+function Toast({ text }: { text: string }) {
+  return (
+    <div
+      role="status"
+      style={{
+        position: "fixed",
+        left: "50%",
+        bottom: "5.5rem",
+        transform: "translateX(-50%)",
+        maxWidth: "90%",
+        padding: "0.5rem 0.9rem",
+        borderRadius: 8,
+        background: "rgba(0,0,0,0.82)",
+        color: theme.text,
+        border: `1px solid ${theme.border}`,
+        fontSize: "0.85rem",
+        fontWeight: 600,
+        textAlign: "center",
+        pointerEvents: "none",
+        zIndex: 60,
+      }}
+    >
+      {text}
+    </div>
   );
 }
 

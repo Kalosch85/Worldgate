@@ -213,6 +213,9 @@ export const EventOutcome = z.object({
   id: Id,
   label: z.string(),
   effects: z.array(EffectSchema).default([]),
+  // Optional authored recap line shown on the post-mission summary screen when
+  // present (post-mission summary feature). Flavor only — carries no effects.
+  debrief: z.string().optional(),
 });
 
 export const EventScriptDef = z.object({
@@ -243,6 +246,11 @@ export const MissionDef = z.object({
   // Tactical only; narrative outcomes carry their own effects.
   victoryEffects: z.array(EffectSchema).default([]),
   defeatEffects: z.array(EffectSchema).default([]),
+  // Optional authored recap line for a tactical mission, shown on the victory
+  // summary when present (post-mission summary feature). One line per mission =
+  // the success debrief; a defeat is conveyed by the outcome banner + effects.
+  // Narrative missions instead carry an outcome-specific `EventOutcome.debrief`.
+  debrief: z.string().optional(),
 });
 
 // ------------------------------------------------------------- facilities

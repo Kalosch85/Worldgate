@@ -132,6 +132,7 @@ describe("BattleScreen HUD", () => {
           state={state}
           content={CONTENT}
           dispatch={(a) => dispatched.push(a)}
+          newlyUnlocked={[]}
           onExit={() => {}}
         />,
       );

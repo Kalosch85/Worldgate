@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import type { ContentBundleT, GameStateT } from "../data/schemas.js";
 import { newCampaign } from "./campaign.js";
 import { RuleError } from "./errors.js";
-import { canLaunchMission, launchMission } from "./missions.js";
+import { canLaunchMission, launchMission, newlyUnlockedMissions } from "./missions.js";
 import { loadTestContent } from "../test/content.js";
 
 /**
@@ -243,5 +243,46 @@ describe("canLaunchMission — UI guard", () => {
     expect(canLaunchMission(rich, CONTENT, "m_relay", ["h_mercer", "h_okafor"])).toBe(true);
     rich.resources.materials = 4;
     expect(canLaunchMission(rich, CONTENT, "m_relay", ["h_mercer", "h_okafor"])).toBe(false);
+  });
+});
+
+/** Powers the post-mission summary's "Next:" section. Pure set-difference of
+ * the available lists (after − before), order following `after`. */
+describe("newlyUnlockedMissions", () => {
+  const withAvailable = (ids: string[]): GameStateT => {
+    const base = newCampaign(1);
+    return { ...base, missions: { ...base.missions, available: ids } };
+  };
+
+  it("returns the ids present in after but not before", () => {
+    const before = withAvailable(["m_vy_arrival"]);
+    const after = withAvailable(["m_vy_arrival", "m_vy_ledger"]);
+    expect(newlyUnlockedMissions(before, after)).toEqual(["m_vy_ledger"]);
+  });
+
+  it("returns multiple unlocks in after's order", () => {
+    const before = withAvailable([]);
+    const after = withAvailable(["m_vy_1", "m_relay"]);
+    expect(newlyUnlockedMissions(before, after)).toEqual(["m_vy_1", "m_relay"]);
+  });
+
+  it("ignores the just-completed mission (a removal, not an addition)", () => {
+    // The typical completion shape: the resolved mission leaves `available` and
+    // a follow-up joins it. Only the follow-up is "newly unlocked".
+    const before = withAvailable(["m_vy_arrival"]);
+    const after = withAvailable(["m_vy_ledger"]);
+    expect(newlyUnlockedMissions(before, after)).toEqual(["m_vy_ledger"]);
+  });
+
+  it("returns [] when nothing new became available", () => {
+    const before = withAvailable(["m_vy_arrival", "m_relay"]);
+    const after = withAvailable(["m_relay"]);
+    expect(newlyUnlockedMissions(before, after)).toEqual([]);
+  });
+
+  it("does not re-report a mission that was already available", () => {
+    const before = withAvailable(["m_vy_1"]);
+    const after = withAvailable(["m_vy_1", "m_vy_1"]);
+    expect(newlyUnlockedMissions(before, after)).toEqual([]);
   });
 });

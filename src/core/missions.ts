@@ -16,6 +16,19 @@ import { createBattleState } from "./tactics.js";
 type MissionDefT = ContentBundleT["missions"][number];
 
 /**
+ * The mission ids newly present in `after`'s available list that were absent
+ * from `before`'s — i.e. the missions a just-resolved action (a mission
+ * completion, a research unlock, a queued event) opened up. Pure; the returned
+ * order follows `after.missions.available`. The just-completed mission is a
+ * removal, not an addition, so it never appears here. Powers the post-mission
+ * summary's auto-derived "Next:" section.
+ */
+export function newlyUnlockedMissions(before: GameStateT, after: GameStateT): string[] {
+  const had = new Set(before.missions.available);
+  return after.missions.available.filter((id) => !had.has(id));
+}
+
+/**
  * Shared validation for the guards that apply to EVERY mission, regardless of
  * payload kind (§3): the mission is available, no mission is active, the squad
  * size fits the MissionDef, and every squad id is a known, non-duplicate,

@@ -8,7 +8,9 @@
  */
 import { useMemo, useRef, useState, type ReactNode } from "react";
 import { newCampaign } from "../core/campaign.js";
+import { canStartResearch } from "../core/economy.js";
 import { RuleError } from "../core/errors.js";
+import { newlyUnlockedMissions } from "../core/missions.js";
 import { apply, type Action } from "../core/reducer.js";
 import { mulberry32, type Rng } from "../core/rng.js";
 import { loadContent } from "../data/loadContent.js";
@@ -47,6 +49,20 @@ export function App() {
   const [screen, setScreen] = useState<Screen>("menu");
   const [message, setMessage] = useState<string | null>(null);
 
+  // The missions the most recent resolution unlocked — feeds the post-mission
+  // summary's "Next:" section (computed by the newlyUnlockedMissions selector).
+  const [lastUnlocks, setLastUnlocks] = useState<string[]>([]);
+
+  // Mission ids the player has already seen on the worldgate screen. UI-only,
+  // never persisted (ARCHITECTURE §3): a mission that becomes available while
+  // it's not in this set pulses the worldgate nav until the player looks. Seeded
+  // from whatever was already available (a fresh campaign has none, so the first
+  // unlock still draws attention; a loaded save doesn't re-flag old missions).
+  const initialState = useRef(state);
+  const [seenMissions, setSeenMissions] = useState<ReadonlySet<string>>(
+    () => new Set(initialState.current?.missions.available ?? []),
+  );
+
   // Kept in sync with `state` so dispatch reads the latest value synchronously.
   const stateRef = useRef(state);
   const setState = (next: GameStateT) => {
@@ -81,6 +97,11 @@ export function App() {
         const target = missionScreen(next);
         if (target) setScreen(target);
       }
+      // A mission just resolved — capture what it unlocked for the summary's
+      // "Next:" section.
+      if (prev.activeMission !== null && next.activeMission === null) {
+        setLastUnlocks(newlyUnlockedMissions(prev, next));
+      }
     } catch (err) {
       if (err instanceof RuleError) setMessage(err.message);
       else throw err;
@@ -92,6 +113,8 @@ export function App() {
     const next = newCampaign(newSeed(), content);
     setState(next);
     saveToStorage(next);
+    setSeenMissions(new Set(next.missions.available));
+    setLastUnlocks([]);
     setMessage(null);
     setScreen(missionScreen(next) ?? "base");
   };
@@ -101,9 +124,20 @@ export function App() {
     if (!result.ok) return result.error;
     setState(result.state);
     saveToStorage(result.state);
+    setSeenMissions(new Set(result.state.missions.available));
+    setLastUnlocks([]);
     setMessage(null);
     setScreen("base");
     return null;
+  };
+
+  // Navigate, and — when opening the worldgate — mark everything currently
+  // available as seen so its nav pulse clears (attention affordance).
+  const navigate = (target: Screen) => {
+    if (target === "worldgate" && stateRef.current) {
+      setSeenMissions(new Set(stateRef.current.missions.available));
+    }
+    setScreen(target);
   };
 
   if (state && screen !== "menu") {
@@ -113,6 +147,12 @@ export function App() {
         {message && <Banner text={message} onDismiss={() => setMessage(null)} />}
       </>
     );
+    // Attention affordances: pulse the research nav when nothing is being
+    // researched (and something can be), and the worldgate nav when a mission
+    // became available that the player hasn't looked at yet.
+    const researchAttention =
+      state.research.current === null && content.techs.some((t) => canStartResearch(state, content, t.id));
+    const worldgateAttention = state.missions.available.some((id) => !seenMissions.has(id));
     switch (screen) {
       case "base":
         return withBanner(
@@ -121,7 +161,9 @@ export function App() {
             content={content}
             dispatch={dispatch}
             onOpenMenu={() => setScreen("menu")}
-            onNavigate={setScreen}
+            onNavigate={navigate}
+            researchAttention={researchAttention}
+            worldgateAttention={worldgateAttention}
           />,
         );
       case "tech":
@@ -145,6 +187,7 @@ export function App() {
             state={state}
             content={content}
             dispatch={dispatch}
+            newlyUnlocked={lastUnlocks}
             onDone={() => setScreen("base")}
           />,
         );
@@ -154,6 +197,7 @@ export function App() {
             state={state}
             content={content}
             dispatch={dispatch}
+            newlyUnlocked={lastUnlocks}
             onExit={() => setScreen("base")}
           />,
         );

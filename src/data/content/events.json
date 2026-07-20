@@ -387,7 +387,8 @@
             "type": "log",
             "text": "Address 04: we hid with the villagers and they gave us the address where the taken are brought — Veyra. Four offworlders went through the gate alive. The valley trusts us with its dead."
           }
-        ]
+        ],
+        "debrief": "You went to ground with the field families and let the Tender procession pass unmarked. In thanks they gave you what Command crossed for: Veyra, the address the taken are brought to — and the word that four offworlders went through the gate alive."
       },
       {
         "id": "out_va_run",
@@ -406,7 +407,8 @@
             "type": "log",
             "text": "Address 04: two Tenders dead and the shots heard valley-wide. The field families fled through the gate to their god — Okafor holds the address they dialed. The taken went the same way."
           }
-        ]
+        ],
+        "debrief": "Cover broke and two Tenders fell — proof they can. The field families ran for their god's own door and dialed the gate in front of you; Okafor read the address off the dial. The taken went the same way, and now so can we."
       },
       {
         "id": "out_va_fight",
@@ -425,7 +427,8 @@
             "type": "log",
             "text": "Address 04: a villager is dead by our hands. His cord carries gate glyphs — the address where this valley's taken and dead are brought. The valley will remember us."
           }
-        ]
+        ],
+        "debrief": "A villager is dead by your hand, and the cord he carried held the glyphs Command needed — the address the valley's taken and dead are dialed to. You have your bearing to Veyra. The valley will not forget how you took it."
       }
     ]
   },

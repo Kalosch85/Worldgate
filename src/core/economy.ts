@@ -63,7 +63,7 @@ export function startResearch(state: GameStateT, content: ContentBundleT, tech: 
   if (!canStartResearch(state, content, tech)) {
     throw new RuleError(
       "startResearch/invalid",
-      `Cannot start research on '${tech}': unknown tech, already completed, or prerequisites unmet.`,
+      `Forschung an '${tech}' nicht möglich: unbekannte Technologie, bereits abgeschlossen oder Voraussetzungen nicht erfüllt.`,
     );
   }
   const def = content.techs.find((t) => t.id === tech)!;
@@ -71,7 +71,7 @@ export function startResearch(state: GameStateT, content: ContentBundleT, tech: 
   if (draft.research.current) {
     draft.journal.push({
       day: draft.campaign.day,
-      text: `Research on '${draft.research.current.tech}' discarded to start '${def.name}'.`,
+      text: `Forschung an '${draft.research.current.tech}' verworfen, um '${def.name}' zu beginnen.`,
     });
   }
   draft.research.current = { tech, progress: 0 };
@@ -82,7 +82,7 @@ export function assignPersonnel(state: GameStateT, assignments: PersonnelAssignm
   if (!canAssignPersonnel(state, assignments)) {
     throw new RuleError(
       "assignPersonnel/invalid",
-      "Assignment values must each be >= 0 and sum to at most personnel.total.",
+      "Zuteilungswerte müssen jeweils ≥ 0 sein und dürfen in Summe personnel.total nicht überschreiten.",
     );
   }
   const draft = structuredClone(state);
@@ -95,7 +95,7 @@ export function endDay(state: GameStateT, ctx: ReducerCtx): GameStateT {
   // A launched mission must be resolved before time advances
   // (narrative-engine spec §3).
   if (state.activeMission !== null) {
-    throw new RuleError("mission_active", "Resolve the active mission before ending the day.");
+    throw new RuleError("mission_active", "Schließe die aktive Mission ab, bevor der Tag beendet wird.");
   }
 
   let draft = structuredClone(state);
@@ -114,7 +114,7 @@ export function endDay(state: GameStateT, ctx: ReducerCtx): GameStateT {
   if (afterUpkeep < 0) {
     draft.resources.funds = 0;
     draft.variables.support = (draft.variables.support ?? 0) - 1;
-    draft.journal.push({ day: draft.campaign.day, text: "Payroll missed." });
+    draft.journal.push({ day: draft.campaign.day, text: "Zahltag verpasst." });
   } else {
     draft.resources.funds = afterUpkeep;
   }
@@ -130,7 +130,7 @@ export function endDay(state: GameStateT, ctx: ReducerCtx): GameStateT {
     if (progress >= def.cost) {
       draft.research.completed.push(techId);
       draft.research.current = null;
-      draft.journal.push({ day: draft.campaign.day, text: `Research complete: ${def.name}.` });
+      draft.journal.push({ day: draft.campaign.day, text: `Forschung abgeschlossen: ${def.name}.` });
       draft = applyEffects(draft, def.effects, ctx);
     } else {
       draft.research.current.progress = progress;
@@ -155,7 +155,7 @@ export function endDay(state: GameStateT, ctx: ReducerCtx): GameStateT {
         const injuryDef = ctx.content.injuries.find((i) => i.id === injury.injury);
         draft.journal.push({
           day: draft.campaign.day,
-          text: `${heroDef?.name ?? hero.hero} recovered from ${injuryDef?.name ?? injury.injury}.`,
+          text: `${heroDef?.name ?? hero.hero} hat sich von ${injuryDef?.name ?? injury.injury} erholt.`,
         });
       } else {
         remaining.push({ injury: injury.injury, daysRemaining });

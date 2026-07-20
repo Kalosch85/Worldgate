@@ -6,6 +6,7 @@
  * and renders the error on screen instead of leaving a white page.
  */
 import { Component, type ErrorInfo, type ReactNode } from "react";
+import { strings } from "./strings.js";
 import { theme } from "./theme.js";
 
 interface Props {
@@ -40,11 +41,8 @@ export class ErrorBoundary extends Component<Props, State> {
           fontFamily: theme.fontFamily,
         }}
       >
-        <h1 style={{ color: theme.danger, marginTop: 0 }}>Worldgate failed to start</h1>
-        <p style={{ color: theme.textDim }}>
-          Something threw during startup instead of rendering the app. Reloading may help; if not, this is a
-          bug worth reporting with the details below.
-        </p>
+        <h1 style={{ color: theme.danger, marginTop: 0 }}>{strings.errorBoundary.title}</h1>
+        <p style={{ color: theme.textDim }}>{strings.errorBoundary.body}</p>
         <pre
           style={{
             whiteSpace: "pre-wrap",

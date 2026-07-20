@@ -722,7 +722,7 @@ function resolveBattle(draft: GameStateT, ctx: ReducerCtx, outcome: "victory" | 
     if (!hs) continue;
     hs.injuries.push({ injury: woundDef.id, daysRemaining: woundDef.daysToHeal });
     const hd = ctx.content.heroes.find((h) => h.id === u.hero);
-    draft.journal.push({ day, text: `${hd?.name ?? u.hero} was wounded in action.` });
+    draft.journal.push({ day, text: `${hd?.name ?? u.hero} wurde im Einsatz verwundet.` });
   }
 
   const effects = outcome === "victory" ? def.victoryEffects : def.defeatEffects;
@@ -730,7 +730,10 @@ function resolveBattle(draft: GameStateT, ctx: ReducerCtx, outcome: "victory" | 
 
   next.missions.available = next.missions.available.filter((id) => id !== missionId);
   next.missions.completed.push({ mission: missionId, outcome, day });
-  next.journal.push({ day, text: `${def.name}: ${outcome}` });
+  // The stored `outcome` stays an English identifier ("victory"/"defeat", read
+  // by save/load and tests); only the player-visible journal line is localized.
+  const outcomeLabel = outcome === "victory" ? "Sieg" : "Niederlage";
+  next.journal.push({ day, text: `${def.name}: ${outcomeLabel}` });
   next.activeMission = null;
   return next;
 }

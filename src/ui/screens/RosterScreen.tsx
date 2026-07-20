@@ -4,7 +4,7 @@
  * (roster.ts), never recomputed here (ARCHITECTURE §1, §2). Portrait-friendly.
  */
 import type { CSSProperties } from "react";
-import { SkillId, type ContentBundleT, type GameStateT, type SkillIdT } from "../../data/schemas.js";
+import { SkillId, type ContentBundleT, type GameStateT } from "../../data/schemas.js";
 import {
   FATIGUE_EXHAUSTED,
   FATIGUE_TIRED,
@@ -15,23 +15,16 @@ import {
   isTired,
 } from "../../core/roster.js";
 import { ScreenHeader } from "../components/ScreenHeader.js";
+import { SKILL_LABELS, archetypeLabel, strings } from "../strings.js";
 import { panelStyle, theme } from "../theme.js";
 
 type HeroStateT = GameStateT["heroes"][number];
 
-const SKILL_LABELS: Record<SkillIdT, string> = {
-  combat: "Combat",
-  science: "Science",
-  engineering: "Engineering",
-  diplomacy: "Diplomacy",
-  resolve: "Resolve",
-};
-
 /** Fatigue label + color: Fit / Tired (≥50) / Exhausted (≥80). */
 function fatigueStatus(hero: HeroStateT): { label: string; color: string } {
-  if (isExhausted(hero)) return { label: "Exhausted", color: theme.danger };
-  if (isTired(hero)) return { label: "Tired", color: "#f0b45e" };
-  return { label: "Fit", color: theme.good };
+  if (isExhausted(hero)) return { label: strings.roster.fatigueState.exhausted, color: theme.danger };
+  if (isTired(hero)) return { label: strings.roster.fatigueState.tired, color: "#f0b45e" };
+  return { label: strings.roster.fatigueState.fit, color: theme.good };
 }
 
 /** Progress toward the next level: current/needed XP and a 0..1 fraction. */
@@ -57,7 +50,7 @@ export function RosterScreen({
     <div
       style={{ minHeight: "100dvh", background: theme.bg, color: theme.text, fontFamily: theme.fontFamily }}
     >
-      <ScreenHeader title="Roster" onBack={onBack} />
+      <ScreenHeader title={strings.roster.title} onBack={onBack} />
       <main
         style={{
           display: "flex",
@@ -69,7 +62,7 @@ export function RosterScreen({
         }}
       >
         {state.heroes.length === 0 ? (
-          <p style={{ color: theme.textDim }}>No heroes on the roster.</p>
+          <p style={{ color: theme.textDim }}>{strings.roster.empty}</p>
         ) : (
           state.heroes.map((hero) => {
             const def = content.heroes.find((h) => h.id === hero.hero);
@@ -92,13 +85,13 @@ export function RosterScreen({
                       color: theme.accent,
                     }}
                   >
-                    Lv {hero.level}
-                    {progress.atCap ? " · MAX" : ""}
+                    {strings.common.level(hero.level)}
+                    {progress.atCap ? strings.roster.max : ""}
                   </span>
                 </header>
 
                 <div style={{ marginTop: "0.35rem", fontSize: "0.8rem", color: theme.textDim }}>
-                  {def.archetypes.join(" · ")}
+                  {def.archetypes.map(archetypeLabel).join(" · ")}
                 </div>
 
                 {/* XP toward next level */}
@@ -112,9 +105,11 @@ export function RosterScreen({
                       marginBottom: 3,
                     }}
                   >
-                    <span>XP</span>
+                    <span>{strings.roster.xp}</span>
                     <span>
-                      {progress.atCap ? `${hero.xp} (max level)` : `${progress.into} / ${progress.span}`}
+                      {progress.atCap
+                        ? strings.roster.xpMaxLevel(hero.xp)
+                        : `${progress.into} / ${progress.span}`}
                     </span>
                   </div>
                   <Meter frac={progress.frac} color={theme.accent} />
@@ -131,14 +126,14 @@ export function RosterScreen({
                       marginBottom: 3,
                     }}
                   >
-                    <span>Fatigue</span>
+                    <span>{strings.roster.fatigue}</span>
                     <span style={{ color: fatigue.color, fontWeight: 600 }}>
                       {Math.round(hero.fatigue)} · {fatigue.label}
                     </span>
                   </div>
                   <Meter frac={Math.min(1, hero.fatigue / 100)} color={fatigue.color} />
                   <div style={{ fontSize: "0.7rem", color: theme.textDim, marginTop: 3 }}>
-                    Tired ≥ {FATIGUE_TIRED} (−1 all skills) · Exhausted ≥ {FATIGUE_EXHAUSTED} (benched)
+                    {strings.roster.fatigueLegend(FATIGUE_TIRED, FATIGUE_EXHAUSTED)}
                   </div>
                 </div>
 
@@ -201,7 +196,7 @@ export function RosterScreen({
                             color: theme.danger,
                           }}
                         >
-                          {idef?.name ?? inj.injury} · {inj.daysRemaining}d
+                          {strings.roster.injuryChip(idef?.name ?? inj.injury, inj.daysRemaining)}
                         </span>
                       );
                     })}

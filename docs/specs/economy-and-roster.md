@@ -75,7 +75,7 @@ Unknown keys are stored but inert.
    (support 5 ⇒ ×1.0; support 0 ⇒ ×0.75.)
 2. **Upkeep.** `cost = personnel.total × 1 + heroCount × 2`. Subtract from
    funds. If funds would go below 0: set funds to 0, `variables.support -= 1`,
-   journal entry "Payroll missed."
+   journal entry "Zahltag verpasst." (D-12: player-visible strings are German).
 3. **Research.** If `research.current`: `progress += research assignment × 1
    + researchBonus`. If `progress ≥ cost`: move tech to completed, set current
    null, apply the tech's `effects` in array order, journal entry. Excess
@@ -128,7 +128,7 @@ journal; `unlockMission` appends to `missions.available` if absent;
 - **C. Low support:** state with support 0, one endDay ⇒ income
   floor(36 × 0.75) = 27, funds +3 net.
 - **D. Insolvency:** funds 0, support −5 (mult clamps at 0.5): one endDay ⇒
-  income 18, upkeep 24, funds 0, support −6, journal has "Payroll missed."
+  income 18, upkeep 24, funds 0, support −6, journal has "Zahltag verpasst."
 
 Plus: effects-interpreter unit tests per effect kind, and RuleError tests for
 each invalid action path.

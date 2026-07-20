@@ -10,6 +10,7 @@
 import { facilityStatuses } from "../../core/construction.js";
 import type { Action } from "../../core/reducer.js";
 import type { ContentBundleT, GameStateT } from "../../data/schemas.js";
+import { strings } from "../strings.js";
 import { buttonStyle, panelStyle, theme } from "../theme.js";
 
 export function FacilitiesPanel({
@@ -29,9 +30,9 @@ export function FacilitiesPanel({
   const currentStatus = statuses.find((s) => s.building);
 
   return (
-    <section style={panelStyle} aria-label="Facilities">
+    <section style={panelStyle} aria-label={strings.facilities.title}>
       <header style={{ marginBottom: "0.75rem" }}>
-        <h2 style={{ margin: 0, fontSize: "1.05rem" }}>Facilities</h2>
+        <h2 style={{ margin: 0, fontSize: "1.05rem" }}>{strings.facilities.title}</h2>
       </header>
 
       {current && currentStatus && (
@@ -48,16 +49,18 @@ export function FacilitiesPanel({
             border: `1px solid ${theme.accent}`,
           }}
         >
-          <span style={{ fontWeight: 600 }}>Building: {currentStatus.def.name}</span>
+          <span style={{ fontWeight: 600 }}>{strings.facilities.building(currentStatus.def.name)}</span>
           <span style={{ color: theme.textDim, fontSize: "0.85rem" }}>
-            {current.daysRemaining} day{current.daysRemaining === 1 ? "" : "s"} left
+            {strings.facilities.daysLeft(current.daysRemaining)}
           </span>
         </div>
       )}
 
       {built.length > 0 && (
         <div style={{ marginBottom: "0.75rem" }}>
-          <div style={{ fontSize: "0.75rem", color: theme.textDim, marginBottom: "0.35rem" }}>Built</div>
+          <div style={{ fontSize: "0.75rem", color: theme.textDim, marginBottom: "0.35rem" }}>
+            {strings.facilities.built}
+          </div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
             {built.map((s) => (
               <span
@@ -93,7 +96,7 @@ export function FacilitiesPanel({
               <div style={{ fontWeight: 600 }}>{s.def.name}</div>
               <div style={{ fontSize: "0.75rem", color: theme.textDim }}>
                 {s.def.cost.funds}⨎ · {s.def.cost.materials}▪ · {s.def.buildDays}d
-                {!s.prereqMet && " · locked"}
+                {!s.prereqMet && ` ${strings.facilities.locked}`}
               </div>
             </div>
             <button
@@ -102,7 +105,7 @@ export function FacilitiesPanel({
               disabled={!s.buildable}
               onClick={() => dispatch({ type: "build", facility: s.def.id })}
             >
-              Build
+              {strings.facilities.build}
             </button>
           </div>
         ))}

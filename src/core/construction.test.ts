@@ -127,7 +127,7 @@ describe("golden: fac_quarters completes during the 4th endDay (§6)", () => {
     expect(done.construction.built).toContain("fac_quarters");
     expect(done.construction.current).toBeNull();
     expect(done.personnel.total).toBe(25);
-    expect(done.journal.some((j) => j.text === "Expanded Quarters completed.")).toBe(true);
+    expect(done.journal.some((j) => j.text === "Erweiterte Quartiere fertiggestellt.")).toBe(true);
   });
 });
 
@@ -190,8 +190,10 @@ describe("endDay step order: construction completes after research in the same t
     expect(getModifier(next.modifiers, "healRate")).toBe(1);
 
     // Journal order proves the ordering: research entry precedes construction entry.
-    const researchIdx = next.journal.findIndex((j) => j.text === "Research complete: Gate Stabilizer.");
-    const constructionIdx = next.journal.findIndex((j) => j.text === "Medical Bay completed.");
+    const researchIdx = next.journal.findIndex(
+      (j) => j.text === "Forschung abgeschlossen: Tor-Stabilisator.",
+    );
+    const constructionIdx = next.journal.findIndex((j) => j.text === "Krankenstation fertiggestellt.");
     expect(researchIdx).toBeGreaterThanOrEqual(0);
     expect(constructionIdx).toBeGreaterThan(researchIdx);
   });

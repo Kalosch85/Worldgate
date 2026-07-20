@@ -35,8 +35,8 @@ describe("app boot", () => {
 
     const root = document.getElementById("root");
     expect(root).not.toBeNull();
-    expect(root!.textContent).not.toContain("Worldgate failed to start");
-    expect(root!.textContent).toContain("New Campaign");
+    expect(root!.textContent).not.toContain("Worldgate konnte nicht starten");
+    expect(root!.textContent).toContain("Neue Kampagne");
 
     const crashLogs = consoleErrorSpy.mock.calls.filter((call: unknown[]) => {
       const first = call[0];

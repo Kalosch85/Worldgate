@@ -10,6 +10,7 @@ import { ResourceBar } from "../components/ResourceBar.js";
 import { PersonnelPanel } from "../components/PersonnelPanel.js";
 import { FacilitiesPanel } from "../components/FacilitiesPanel.js";
 import { Journal } from "../components/Journal.js";
+import { strings } from "../strings.js";
 import { buttonStyle, theme } from "../theme.js";
 
 export function BaseScreen({
@@ -47,7 +48,7 @@ export function BaseScreen({
           }}
         >
           <button type="button" style={buttonStyle("ghost")} onClick={onOpenMenu}>
-            ☰ Menu
+            {strings.base.menu}
           </button>
           <button
             type="button"
@@ -55,7 +56,7 @@ export function BaseScreen({
             disabled={missionActive}
             onClick={() => dispatch({ type: "endDay" })}
           >
-            End Day →
+            {strings.base.endDay}
           </button>
         </div>
       </div>
@@ -70,11 +71,7 @@ export function BaseScreen({
           margin: "0 auto",
         }}
       >
-        {missionActive && (
-          <p style={{ margin: 0, color: theme.danger }}>
-            A mission is in progress. Resolve it before advancing the day.
-          </p>
-        )}
+        {missionActive && <p style={{ margin: 0, color: theme.danger }}>{strings.base.missionInProgress}</p>}
 
         <nav style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.5rem" }}>
           <button
@@ -82,19 +79,19 @@ export function BaseScreen({
             style={{ ...buttonStyle("ghost"), position: "relative" }}
             onClick={() => onNavigate("worldgate")}
           >
-            🌐 Worldgate
-            {worldgateAttention && <AttentionDot label="New mission available" />}
+            {strings.base.worldgate}
+            {worldgateAttention && <AttentionDot label={strings.base.newMissionAvailable} />}
           </button>
           <button type="button" style={buttonStyle("ghost")} onClick={() => onNavigate("roster")}>
-            👥 Roster
+            {strings.base.roster}
           </button>
           <button
             type="button"
             style={{ ...buttonStyle("ghost"), position: "relative" }}
             onClick={() => onNavigate("tech")}
           >
-            🔬 Research
-            {researchAttention && <AttentionDot label="No research in progress" />}
+            {strings.base.research}
+            {researchAttention && <AttentionDot label={strings.base.noResearchInProgress} />}
           </button>
         </nav>
 

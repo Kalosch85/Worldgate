@@ -1,50 +1,54 @@
-# Opening — reverse-engineered design (v1)
+# Eröffnung — reverse-engineertes Design (v1)
 
-**Scope.** The entire current opening as it actually ships in
-`src/data/content/` — intro → Andara valley → the Veyra arc, everything
-merged. This document is _descriptive_: it reads back the content that exists
-today, not the intended specs. Where the shipped content and the specs
-(`docs/story/`, `docs/specs/`, `docs/story/arc-veyra.md`) disagree, this
-document follows the **content**, and the disagreement is logged under
-[§4 Inconsistencies found](#4-inconsistencies-found).
+**Umfang.** Die gesamte aktuelle Eröffnung, so wie sie tatsächlich in
+`src/data/content/` ausgeliefert wird — Intro → Andara-Tal → der Veyra-Bogen,
+alles zusammengeführt. Dieses Dokument ist _deskriptiv_: Es liest den Inhalt
+zurück, der heute existiert, nicht die beabsichtigten Specs. Wo der
+ausgelieferte Inhalt und die Specs (`docs/story/`, `docs/specs/`,
+`docs/story/arc-veyra.md`) sich widersprechen, folgt dieses Dokument dem
+**Inhalt**, und der Widerspruch wird unter
+[§4 Gefundene Inkonsistenzen](#4-inconsistencies-found) protokolliert.
 
-**Sources read:** `events.json`, `missions.json`, `techs.json`, `heroes.json`,
-`src/core/campaign.ts` (initial state), `src/data/schemas.ts`,
+**Gelesene Quellen:** `events.json`, `missions.json`, `techs.json`, `heroes.json`,
+`src/core/campaign.ts` (Anfangszustand), `src/data/schemas.ts`,
 `docs/specs/narrative-engine.md`, `docs/specs/economy-and-roster.md`.
 
-**No content was changed to produce this document.**
+**Zur Erstellung dieses Dokuments wurde kein Inhalt verändert.**
 
 ---
 
-## 0. The spine at a glance
+## 0. Das Rückgrat auf einen Blick
 
 ```
 ev_intro ──unlock──▶ m_vy_arrival ──▶ m_vy_ledger ──▶ m_vy_intercept ──▶ m_vy_1 ──▶ m_vy_2 ──▶ m_vy_3 ──▶ m_vy_4 ──▶ m_vy_5
-(auto-launch,        (narrative,      (narrative,     (TACTICAL,         (narr.)   (narr.)   (narr.)   (narr.)   (narr.)
- Day 1)              Andara)          Andara/Karsu)   Andara/spires)     Veyra ────────────────────────────────────────▶
+(Auto-Start,         (narrativ,       (narrativ,      (TAKTISCH,         (narr.)   (narr.)   (narr.)   (narr.)   (narr.)
+ Tag 1)              Andara)          Andara/Karsu)   Andara/Türme)      Veyra ────────────────────────────────────────▶
 ```
 
-- `ev_intro` auto-launches at `newCampaign` (incident form, no MissionDef, squad
-  = all starting heroes; `src/core/campaign.ts`). Its outcome unlocks
-  `m_vy_arrival`.
-- Each spine mission unlocks the next via `unlockMission` (in narrative
-  outcomes, or `m_vy_intercept`'s tactical `victoryEffects`).
-- **Andara (Address 04):** arrival, ledger, intercept. **Veyra (Address 09):**
-  m_vy_1…5. The first crossing to Veyra is `m_vy_1`.
-- **Off-spine:** `m_relay` (Address 07, tactical) unlocks from researching
-  `t_gate_stabilizer`; it is not part of the opening spine and unlocks nothing.
-- **Queued follow-ups (fire on later days):** `ev_vy_regroup` (+1d, on intercept
-  defeat), `ev_vy_dessik_word` (+5d), `ev_vy_seryn_oath` (+2d), `ev_vy_gratitude`
-  (+3d).
+- `ev_intro` startet automatisch bei `newCampaign` (Vorfall-Formular, kein
+  MissionDef, Trupp = alle Start-Helden; `src/core/campaign.ts`). Sein Ergebnis
+  schaltet `m_vy_arrival` frei.
+- Jede Rückgrat-Mission schaltet die nächste über `unlockMission` frei (in
+  narrativen Ergebnissen oder in den taktischen `victoryEffects` von
+  `m_vy_intercept`).
+- **Andara (Adresse 04):** Ankunft, Verzeichnis, Abfangen. **Veyra (Adresse 09):**
+  m_vy_1…5. Der erste Übergang nach Veyra ist `m_vy_1`.
+- **Abseits des Rückgrats:** `m_relay` (Adresse 07, taktisch) wird durch die
+  Erforschung von `t_gate_stabilizer` freigeschaltet; es ist nicht Teil des
+  Eröffnungs-Rückgrats und schaltet nichts frei.
+- **Eingereihte Folge-Ereignisse (feuern an späteren Tagen):** `ev_vy_regroup`
+  (+1T, bei Niederlage im Abfangen), `ev_vy_dessik_word` (+5T), `ev_vy_seryn_oath`
+  (+2T), `ev_vy_gratitude` (+3T).
 
 ---
 
-## 1. Full flowchart (missions · events · nodes · options)
+## 1. Vollständiges Flussdiagramm (Missionen · Ereignisse · Knoten · Optionen)
 
-Edge labels carry the option's gating (`req:`) and the key side effects
-(`⇒`). Skill/variable gates are the engine's `squadSkillAtLeast` /
-`variable` conditions. **Dashed red edges are mechanically unreachable** with
-the shipped roster/flag logic — see §4.
+Kantenbeschriftungen tragen die Freischaltbedingung der Option (`req:`) und die
+wichtigsten Nebenwirkungen (`⇒`). Fertigkeits-/Variablen-Schranken sind die
+`squadSkillAtLeast`- / `variable`-Bedingungen der Engine. **Gestrichelte rote
+Kanten sind mechanisch nicht erreichbar** mit der ausgelieferten Trupp-/Flag-Logik
+— siehe §4.
 
 ```mermaid
 flowchart TD
@@ -53,14 +57,14 @@ flowchart TD
   classDef tac fill:#dfe7fd,stroke:#3b5bdb;
 
   %% ============================ INTRO ============================
-  subgraph INTRO["ev_intro — First Day (Day 1)"]
-    in_sign["n_in_sign<br/>signed the posting; 'Since Cassy passed'"]
-    in_ring["n_in_ring<br/>the ring; Okafor + Mercer wait"]
+  subgraph INTRO["ev_intro — Erster Tag (Tag 1)"]
+    in_sign["n_in_sign<br/>die Stelle angenommen; ‚Seit Cassy von uns ging'"]
+    in_ring["n_in_ring<br/>der Ring; Okafor + Mercer warten"]
     in_ok["n_in_okafor ⇒ intel+4"]
     in_me["n_in_mercer ⇒ materials+4"]
     in_ok2["n_in_okafor_2"]
     in_me2["n_in_mercer_2"]
-    in_dec["n_in_decide<br/>dial within the hour"]
+    in_dec["n_in_decide<br/>binnen einer Stunde wählen"]
     in_sign -->|o_in_down| in_ring
     in_ring -->|"o_in_science ⇒ intel+4"| in_ok
     in_ring -->|"o_in_threats ⇒ materials+4"| in_me
@@ -71,24 +75,24 @@ flowchart TD
     in_dec -->|o_in_commit| OUT_IN
     in_dec -->|"o_in_cautious ⇒ flag intro_cautious"| OUT_IN
   end
-  OUT_IN(["out_in_go<br/>⇒ unlock m_vy_arrival · log 'Day 1'"])
+  OUT_IN(["out_in_go<br/>⇒ unlock m_vy_arrival · log ‚Tag 1'"])
   OUT_IN ==> M_ARR
 
   %% ============================ ARRIVAL ============================
-  M_ARR{{"m_vy_arrival — The Silent Valley<br/>squad 2/2 · Mercer+Okafor"}}
+  M_ARR{{"m_vy_arrival — Das stille Tal<br/>Trupp 2/2 · Mercer+Okafor"}}
   M_ARR --> va_gate
-  subgraph ARR["ev_vy_arrival (Andara / Silent Valley)"]
-    va_gate["n_va_gate<br/>green valley, two suns, snapped beacon"]
-    va_vill["n_va_villagers<br/>silent villagers herd you off the road"]
-    va_proc["n_va_procession<br/>porter Tenders pass to the gate"]
-    va_esc["n_va_escape<br/>the boy falls; two flankers turn back"]
+  subgraph ARR["ev_vy_arrival (Andara / Stilles Tal)"]
+    va_gate["n_va_gate<br/>grünes Tal, zwei Sonnen, geknicktes Signalfeuer"]
+    va_vill["n_va_villagers<br/>stumme Dorfbewohner treiben euch von der Straße"]
+    va_proc["n_va_procession<br/>Träger-Drohnen ziehen zum Tor"]
+    va_esc["n_va_escape<br/>der Junge stürzt; zwei Flankierer kehren um"]
     va_hide["n_va_hide"]
-    va_told["n_va_told<br/>elder draws the address; 'Veyra'"]
-    va_run["n_va_run<br/>Mercer+Okafor kill two Tenders"]
-    va_rungate["n_va_run_gate<br/>families dial out; Okafor reads it"]
-    va_fight["n_va_fight<br/>brawl; a villager dies"]
-    va_procf["n_va_procession_fight<br/>hide-cord address on the dead"]
-    va_fexit["n_va_fight_exit<br/>silence is a verdict"]
+    va_told["n_va_told<br/>der Alte zeichnet die Adresse; ‚Veyra'"]
+    va_run["n_va_run<br/>Mercer+Okafor töten zwei Drohnen"]
+    va_rungate["n_va_run_gate<br/>Familien wählen sich hinaus; Okafor liest sie ab"]
+    va_fight["n_va_fight<br/>Handgemenge; ein Dorfbewohner stirbt"]
+    va_procf["n_va_procession_fight<br/>Adresse an der Hautschnur der Toten"]
+    va_fexit["n_va_fight_exit<br/>Stille ist ein Urteil"]
     va_gate -->|o_va_road| va_vill
     va_vill -->|o_va_trust| va_proc
     va_vill -->|"o_va_refuse ⇒ flag vy_villager_killed · trust_andara−3 · fatigue+10"| va_fight
@@ -103,23 +107,23 @@ flowchart TD
     va_rungate -->|o_va_run_home| OUT_VA_RUN
     va_fexit -->|o_va_home_cold| OUT_VA_FIGHT
   end
-  OUT_VA_HIDE(["out_va_hide 'address freely given'<br/>⇒ unlock m_vy_ledger · xp+10"])
-  OUT_VA_RUN(["out_va_run 'read off the dial'<br/>⇒ unlock m_vy_ledger · xp+10"])
-  OUT_VA_FIGHT(["out_va_fight 'silence bought in blood'<br/>⇒ unlock m_vy_ledger · xp+5"])
+  OUT_VA_HIDE(["out_va_hide ‚Adresse freiwillig gegeben'<br/>⇒ unlock m_vy_ledger · xp+10"])
+  OUT_VA_RUN(["out_va_run ‚vom Wählwerk abgelesen'<br/>⇒ unlock m_vy_ledger · xp+10"])
+  OUT_VA_FIGHT(["out_va_fight ‚mit Blut erkaufte Stille'<br/>⇒ unlock m_vy_ledger · xp+5"])
   OUT_VA_HIDE ==> M_LED
   OUT_VA_RUN ==> M_LED
   OUT_VA_FIGHT ==> M_LED
 
   %% ============================ LEDGER ============================
-  M_LED{{"m_vy_ledger — The Ledger of the Taken<br/>squad 2/2 · Karsu"}}
+  M_LED{{"m_vy_ledger — Das Verzeichnis der Genommenen<br/>Trupp 2/2 · Karsu"}}
   M_LED --> vl_arrive
   subgraph LED["ev_vy_ledger (Andara / Karsu)"]
-    vl_arrive["n_vl_arrive<br/>reception routes on trust_andara"]
+    vl_arrive["n_vl_arrive<br/>Empfang verzweigt nach trust_andara"]
     vl_welcome["n_vl_welcome (trust≥2)"]
-    vl_story["n_vl_story<br/>the Luminous One, nine generations"]
-    vl_ledger["n_vl_ledger<br/>four in fresh ink, pent below the Penitence"]
-    vl_first["n_vl_first (Odel)<br/>Seryn Vael; the Portion at the road shrine"]
-    vl_trans["n_vl_transport (Odel)<br/>grain-tithe, papers, pass spire"]
+    vl_story["n_vl_story<br/>der Leuchtende, neun Generationen"]
+    vl_ledger["n_vl_ledger<br/>vier in frischer Tinte, eingesperrt unter der Penitenz"]
+    vl_first["n_vl_first (Odel)<br/>Seryn Vael; die Portion am Straßenschrein"]
+    vl_trans["n_vl_transport (Odel)<br/>Getreidezehnt, Papiere, Turm passieren"]
     vl_wary["n_vl_wary (0≤trust<2)"]
     vl_waryled["n_vl_wary_ledger (Odel)"]
     vl_barred["n_vl_barred (trust<0)"]
@@ -136,35 +140,35 @@ flowchart TD
     vl_barred -->|o_vl_listen| vl_barledg
     vl_barledg -->|"o_vl_high_country ⇒ fatigue+15 · materials−5"| OUT_VL_P
   end
-  OUT_VL_T(["out_vl_transport 'porters' road'<br/>⇒ unlock m_vy_intercept · xp+10"])
-  OUT_VL_P(["out_vl_pilgrims 'as pilgrims'<br/>⇒ unlock m_vy_intercept · xp+10"])
+  OUT_VL_T(["out_vl_transport ‚Weg der Träger'<br/>⇒ unlock m_vy_intercept · xp+10"])
+  OUT_VL_P(["out_vl_pilgrims ‚als Pilger'<br/>⇒ unlock m_vy_intercept · xp+10"])
   OUT_VL_T ==> M_INT
   OUT_VL_P ==> M_INT
 
   %% ============================ INTERCEPT (tactical) ============================
-  M_INT{{"m_vy_intercept — The Tribute Call<br/>TACTICAL · map_vy_intercept · squad 2/3 · launchCost 0"}}:::tac
-  M_INT -->|"VICTORY ⇒ intel+5 · xp+15 · fatigue+20 · flag f_vy_call_intercepted · unlock m_vy_1"| M_1
-  M_INT -->|"DEFEAT ⇒ support−1 · queue ev_vy_regroup +1d"| REGROUP
-  subgraph RG["ev_vy_regroup (queued +1d)"]
-    vr["n_vr_regroup"] -->|o_vr_again| OUT_VR(["out_vr_again ⇒ re-unlock m_vy_intercept"])
+  M_INT{{"m_vy_intercept — Der Tributruf<br/>TAKTISCH · map_vy_intercept · Trupp 2/3 · launchCost 0"}}:::tac
+  M_INT -->|"SIEG ⇒ intel+5 · xp+15 · fatigue+20 · flag f_vy_call_intercepted · unlock m_vy_1"| M_1
+  M_INT -->|"NIEDERLAGE ⇒ support−1 · queue ev_vy_regroup +1d"| REGROUP
+  subgraph RG["ev_vy_regroup (eingereiht +1T)"]
+    vr["n_vr_regroup"] -->|o_vr_again| OUT_VR(["out_vr_again ⇒ m_vy_intercept erneut freischalten"])
   end
   REGROUP -.-> RG
-  OUT_VR -.re-run.-> M_INT
+  OUT_VR -.erneut.-> M_INT
 
   %% ============================ PILGRIM ROADS (M1) ============================
-  M_1{{"m_vy_1 — Pilgrim Roads<br/>squad 2/2 · FIRST crossing to Veyra"}}
+  M_1{{"m_vy_1 — Pilgerstraßen<br/>Trupp 2/2 · ERSTER Übergang nach Veyra"}}
   M_1 --> vy1_arrive
-  subgraph P1["ev_vy_pilgrim_roads (Veyra terrace)"]
-    vy1_arrive["n_vy1_arrive<br/>the Door opens one way in"]
-    vy1_faces["n_vy1_faces<br/>faces on the terrace"]
-    vy1_gather["n_vy1_gather (revisitable hub)"]
+  subgraph P1["ev_vy_pilgrim_roads (Veyra-Terrasse)"]
+    vy1_arrive["n_vy1_arrive<br/>die Tür öffnet nur in eine Richtung hinein"]
+    vy1_faces["n_vy1_faces<br/>Gesichter auf der Terrasse"]
+    vy1_gather["n_vy1_gather (wiederbesuchbarer Knoten)"]
     vy1_pil["n_vy1_pilgrims_detail"]
     vy1_pat["n_vy1_patrols_detail"]
-    vy1_rel["n_vy1_relay_detail (Okafor)<br/>'gods don't need encryption'"]
-    vy1_plan["n_vy1_plan<br/>three ways in"]
+    vy1_rel["n_vy1_relay_detail (Okafor)<br/>‚Götter brauchen keine Verschlüsselung'"]
+    vy1_plan["n_vy1_plan<br/>drei Wege hinein"]
     vy1_uni["n_vy1_uniform"]
     vy1_body["n_vy1_uniform_body"]
-    vy1_des["n_vy1_dessik<br/>swear to free his son Ilo"]
+    vy1_des["n_vy1_dessik<br/>schwören, seinen Sohn Ilo zu befreien"]
     vy1_arrive -->|"o_..porters req f_vy_transport=T"| vy1_faces
     vy1_arrive -->|"o_..foot req f_vy_transport=F"| vy1_faces
     vy1_faces -->|"req f_vy_boy_hidden"| vy1_gather
@@ -195,22 +199,22 @@ flowchart TD
   OUT_P1_A ==> M_2
 
   %% ============================ PENITENCE (M2) ============================
-  M_2{{"m_vy_2 — The Penitence<br/>squad 2/2"}}
+  M_2{{"m_vy_2 — Die Penitenz<br/>Trupp 2/2"}}
   M_2 --> vy2_router
   subgraph P2["ev_vy_penitence (Veyra)"]
-    vy2_router["n_vy2_router<br/>route on approach flag"]
-    vy2_agate["n_vy2_a_gate (uniform)"]
-    vy2_acomp["n_vy2_a_complication<br/>sergeant notices the watch"]
-    vy2_aseal["n_vy2_a_seal<br/>inner gate wants a rank-seal"]
+    vy2_router["n_vy2_router<br/>verzweigt nach Annäherungs-Flag"]
+    vy2_agate["n_vy2_a_gate (Uniform)"]
+    vy2_acomp["n_vy2_a_complication<br/>der Sergeant bemerkt die Uhr"]
+    vy2_aseal["n_vy2_a_seal<br/>das innere Tor verlangt ein Rang-Siegel"]
     vy2_acells["n_vy2_a_cells<br/>Recon One: Ehlan/Barros/Kade/Imura"]
-    vy2_arep["n_vy2_a_report (Ehlan)<br/>'the Door opens in, never out'"]
-    vy2_bkit["n_vy2_b_kitchens (worker)<br/>Ilo three doors down"]
+    vy2_arep["n_vy2_a_report (Ehlan)<br/>‚die Tür öffnet nach innen, niemals nach außen'"]
+    vy2_bkit["n_vy2_b_kitchens (Arbeiter)<br/>Ilo drei Türen weiter"]
     vy2_bexf["n_vy2_b_exfil"]
-    vy2_c1["n_vy2_c_assault_1<br/>wall guns, precursor-tech"]
-    vy2_c2["n_vy2_c_assault_2<br/>shields ignore small arms"]
-    vy2_c3["n_vy2_c_assault_3<br/>no path, only how it ends"]
+    vy2_c1["n_vy2_c_assault_1<br/>Wandgeschütze, Vorläufer-Technik"]
+    vy2_c2["n_vy2_c_assault_2<br/>Schilde ignorieren Handfeuerwaffen"]
+    vy2_c3["n_vy2_c_assault_3<br/>kein Weg, nur wie es endet"]
     vy2_bnab["n_vy2_bottleneck_ab"]
-    vy2_bnc["n_vy2_bottleneck_c<br/>cells beside Recon One; yard at dawn"]
+    vy2_bnc["n_vy2_bottleneck_c<br/>Zellen neben Recon One; Hof im Morgengrauen"]
     vy2_router -->|"req f_vy_approach_uniform"| vy2_agate
     vy2_router -->|"req f_vy_approach_worker"| vy2_bkit
     vy2_router -->|"req f_vy_approach_assault"| vy2_c1
@@ -242,21 +246,21 @@ flowchart TD
   OUT_P2 ==> M_3
 
   %% ============================ FIRST BLADE (M3) ============================
-  M_3{{"m_vy_3 — The First Blade<br/>squad 2/2"}}
+  M_3{{"m_vy_3 — Die Erste Klinge<br/>Trupp 2/2"}}
   M_3 --> vy3_intro
   subgraph P3["ev_vy_first_blade (Veyra)"]
-    vy3_intro["n_vy3_intro<br/>route on f_vy_captured"]
-    vy3_conf["n_vy3_confront (Seryn)<br/>16 gated convince/explain options + fight"]
-    vy3_hard["n_vy3_hardens<br/>talk failed → draw"]
+    vy3_intro["n_vy3_intro<br/>verzweigt nach f_vy_captured"]
+    vy3_conf["n_vy3_confront (Seryn)<br/>16 gesperrte Überzeugen/Erklären-Optionen + Kampf"]
+    vy3_hard["n_vy3_hardens<br/>Reden gescheitert → Waffe ziehen"]
     vy3_duel["n_vy3_duel"]
     vy3_ri["n_vy3_resolve_intro"]
-    vy3_res["n_vy3_resolve<br/>route on convinced/doubt/defeated"]
-    vy3_intro -->|"o_ab req f_vy_captured=F (processional court)"| vy3_conf
-    vy3_intro -->|"o_c req f_vy_captured=T (execution yard)"| vy3_conf
-    vy3_conf -->|"❌DEAD CONVINCE ·win· req dip 5–7 (max 3) ⇒ f_vy_first_convinced"| vy3_ri
-    vy3_conf -->|"CONVINCE ·fail· dip too low (always)"| vy3_hard
-    vy3_conf -->|"EXPLAIN ·win· req sci 4–7 (by doubt/comms) ⇒ f_vy_first_doubt"| vy3_ri
-    vy3_conf -->|"EXPLAIN ·fail· sci too low"| vy3_hard
+    vy3_res["n_vy3_resolve<br/>verzweigt nach überzeugt/Zweifel/besiegt"]
+    vy3_intro -->|"o_ab req f_vy_captured=F (Prozessionshof)"| vy3_conf
+    vy3_intro -->|"o_c req f_vy_captured=T (Hinrichtungshof)"| vy3_conf
+    vy3_conf -->|"❌DEAD ÜBERZEUGEN ·Erfolg· req dip 5–7 (max 3) ⇒ f_vy_first_convinced"| vy3_ri
+    vy3_conf -->|"ÜBERZEUGEN ·Fehlschlag· dip zu niedrig (immer)"| vy3_hard
+    vy3_conf -->|"ERKLÄREN ·Erfolg· req sci 4–7 (nach doubt/comms) ⇒ f_vy_first_doubt"| vy3_ri
+    vy3_conf -->|"ERKLÄREN ·Fehlschlag· sci zu niedrig"| vy3_hard
     vy3_conf -->|o_vy3_fight| vy3_duel
     vy3_hard -->|o_hardens_continue| vy3_duel
     vy3_duel -->|"o_clean req combat≥7 ⇒ f_vy_first_defeated"| vy3_ri
@@ -276,16 +280,16 @@ flowchart TD
   OUT_P3_DF ==> M_4
 
   %% ============================ RELIC VAULT (M4) ============================
-  M_4{{"m_vy_4 — Relic Vault<br/>squad 2/4 (narrative fallback)"}}
+  M_4{{"m_vy_4 — Reliquiengewölbe<br/>Trupp 2/4 (narrativer Rückfall)"}}
   M_4 --> vy4_app
   subgraph P4["ev_vy_relic_vault (Veyra)"]
     vy4_app["n_vy4_approach"]
-    vy4_wards["n_vy4_wards<br/>two ward-pillars"]
-    vy4_core["n_vy4_core<br/>power cell; outbound tribute crates"]
+    vy4_wards["n_vy4_wards<br/>zwei Bann-Pfeiler"]
+    vy4_core["n_vy4_core<br/>Energiezelle; ausgehende Tribut-Kisten"]
     vy4_exf["n_vy4_exfil"]
     vy4_app -->|"o_alerted req f_vy_ilo_abandoned ⇒ fatigue+10"| vy4_wards
     vy4_app -->|"o_quiet req NOT f_vy_ilo_abandoned"| vy4_wards
-    vy4_wards -->|"o_seryn req f_vy_seryn_recruited (flag, not squad)"| vy4_core
+    vy4_wards -->|"o_seryn req f_vy_seryn_recruited (Flag, nicht Trupp)"| vy4_core
     vy4_wards -->|"o_science req scientist OR sci≥6"| vy4_core
     vy4_wards -->|"o_force req combat≥5 ⇒ fatigue+5"| vy4_core
     vy4_wards -->|"o_slow ⇒ fatigue+15"| vy4_core
@@ -294,19 +298,19 @@ flowchart TD
     vy4_exf -->|"o_exfil_alarm req f_vy_alarm ⇒ fatigue+5"| OUT_P4
     vy4_exf -->|"o_exfil_quiet req NOT f_vy_alarm"| OUT_P4
   end
-  OUT_P4(["out_vy4_secured ⇒ f_vy_godtech · exotics+3 · unlock m_vy_5<br/>(makes t_radiance_cell visible)"])
+  OUT_P4(["out_vy4_secured ⇒ f_vy_godtech · exotics+3 · unlock m_vy_5<br/>(macht t_radiance_cell sichtbar)"])
   OUT_P4 ==> M_5
 
   %% ============================ LUMINOUS ONE (M5) ============================
-  M_5{{"m_vy_5 — The Luminous One<br/>squad 2/4"}}
+  M_5{{"m_vy_5 — Der Leuchtende<br/>Trupp 2/4"}}
   M_5 --> vy5_wit
-  subgraph P5["ev_vy_luminous_one (Veyra / caldera)"]
-    vy5_wit["n_vy5_witness<br/>the god is a Steward tending a dead gate"]
-    vy5_sw["n_vy5_seryn_watch (Seryn)<br/>'keeping the lamp lit'"]
+  subgraph P5["ev_vy_luminous_one (Veyra / Caldera)"]
+    vy5_wit["n_vy5_witness<br/>der Gott ist ein Verwalter, der ein totes Tor pflegt"]
+    vy5_sw["n_vy5_seryn_watch (Seryn)<br/>‚die Lampe am Brennen halten'"]
     vy5_dec["n_vy5_decide"]
     vy5_ws["n_vy5_watch_seryn"]
-    vy5_as["n_vy5_attack_seryn<br/>god gates out; anchor cracks"]
-    vy5_wit -->|"o_seryn_present req recruited OR defeated (always)"| vy5_sw
+    vy5_as["n_vy5_attack_seryn<br/>der Gott wählt sich hinaus; der Anker bricht"]
+    vy5_wit -->|"o_seryn_present req recruited OR defeated (immer)"| vy5_sw
     vy5_wit -->|"❌DEAD o_no_seryn req NOT recruited ∧ NOT defeated"| vy5_dec
     vy5_sw --> vy5_dec
     vy5_dec -->|"o_watch ⇒ f_vy_watched_god · intel+20"| vy5_ws
@@ -317,286 +321,309 @@ flowchart TD
     vy5_as -->|"o_attack_defeated req defeated"| OUT_P5_FL
     vy5_as -->|"o_attack_other req NOT defeated"| OUT_P5_F
   end
-  OUT_P5_WD(["out_vy5_watch_defeated — Seryn will follow"])
-  OUT_P5_WB(["out_vy5_watch_doubt — convert stays"])
+  OUT_P5_WD(["out_vy5_watch_defeated — Seryn wird folgen"])
+  OUT_P5_WB(["out_vy5_watch_doubt — der Bekehrte bleibt"])
   OUT_P5_WO(["out_vy5_watch_other"])
-  OUT_P5_FL(["out_vy5_fought_seryn_lost — Seryn dies"])
-  OUT_P5_F(["out_vy5_fought — anchor shattered"])
+  OUT_P5_FL(["out_vy5_fought_seryn_lost — Seryn stirbt"])
+  OUT_P5_F(["out_vy5_fought — Anker zerschmettert"])
 
   %% ============================ QUEUED FOLLOW-UPS ============================
-  OUT_P5_WD -.queued +2d.-> OATH
-  vy2_bkit -.queued +5d.-> DESSIK
-  vy5_as -.queued +3d.-> GRAT
-  subgraph OATH["ev_vy_seryn_oath (+2d)"]
-    oath_n["n_vy_oath (Seryn)<br/>'the grace is leaving me'"] -->|"o_accept ⇒ addHero Seryn · f_vy_seryn_recruited"| OUT_OATH(["out_vy_oath"])
+  OUT_P5_WD -.eingereiht +2T.-> OATH
+  vy2_bkit -.eingereiht +5T.-> DESSIK
+  vy5_as -.eingereiht +3T.-> GRAT
+  subgraph OATH["ev_vy_seryn_oath (+2T)"]
+    oath_n["n_vy_oath (Seryn)<br/>‚die Gnade verlässt mich'"] -->|"o_accept ⇒ addHero Seryn · f_vy_seryn_recruited"| OUT_OATH(["out_vy_oath"])
   end
-  subgraph DESSIK["ev_vy_dessik_word (+5d)"]
+  subgraph DESSIK["ev_vy_dessik_word (+5T)"]
     des_n["n_vy_dessik (Dessik)"] -->|"o_take ⇒ intel+10"| OUT_DES(["out_vy_dessik"])
   end
-  subgraph GRAT["ev_vy_gratitude (+3d)"]
-    grat_n["n_vy_gratitude<br/>provisional council"] -->|"o_accept ⇒ funds+40"| OUT_GRAT(["out_vy_gratitude"])
+  subgraph GRAT["ev_vy_gratitude (+3T)"]
+    grat_n["n_vy_gratitude<br/>vorläufiger Rat"] -->|"o_accept ⇒ funds+40"| OUT_GRAT(["out_vy_gratitude"])
   end
 
   %% ============================ OFF-SPINE ============================
-  subgraph SIDE["Off-spine"]
-    ttech["research t_gate_stabilizer<br/>⇒ unlock m_relay"] --> M_RELAY{{"m_relay — Secure the Relay<br/>TACTICAL · Address 07 · unlocks nothing"}}:::tac
+  subgraph SIDE["Abseits des Rückgrats"]
+    ttech["t_gate_stabilizer erforschen<br/>⇒ unlock m_relay"] --> M_RELAY{{"m_relay — Das Relais sichern<br/>TAKTISCH · Adresse 07 · schaltet nichts frei"}}:::tac
   end
 ```
 
-Legend: `{{…}}` mission · `[…]` event node · `([…])` outcome · blue = tactical ·
-dashed-red = unreachable (see §4) · thick `==>` = cross-mission `unlockMission`
-spine · dotted = queued/deferred.
+Legende: `{{…}}` Mission · `[…]` Ereignis-Knoten · `([…])` Ergebnis · blau =
+taktisch · gestrichelt-rot = nicht erreichbar (siehe §4) · dick `==>` =
+missionsübergreifendes `unlockMission`-Rückgrat · gepunktet = eingereiht/verzögert.
 
 ---
 
-## 2. Flags & variables — write / read / payoff
+## 2. Flags & Variablen — Schreiben / Lesen / Auszahlung
 
-Every flag and variable in the shipped opening, where it is **set** (W),
-where it is **read** (R), and its **payoff**. "Orphan" = set but never read by
-any condition (in events, mission `availability`, or tech `visibleIf`).
+Jedes Flag und jede Variable in der ausgelieferten Eröffnung, wo es **gesetzt**
+wird (W), wo es **gelesen** wird (R) und seine **Auszahlung**. „Orphan" =
+gesetzt, aber von keiner Bedingung gelesen (in Ereignissen, in der
+`availability` einer Mission oder im `visibleIf` einer Tech).
 
-### Variables
+### Variablen
 
-| Variable       | Init       | Written                                                | Read (payoff)                                                                    | Notes                                                                               |
-| -------------- | ---------- | ------------------------------------------------------ | -------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `support`      | 5          | intercept DEFEAT −1 · m_relay DEFEAT −1 · M5 attack +2 | Not read by any _content_ condition; consumed by `endDay` income (`supportMult`) | Act 2 currency; live but no narrative gate reads it yet                             |
-| `trust_andara` | 0          | arrival: hide **+2**, fight **−3**, run **±0**         | ledger `n_vl_arrive` (≥2 welcome / 0–2 wary / <0 barred)                         | Clean 3-way payoff; dormant after ledger (persists for future)                      |
-| `doubt`        | 0 (uninit) | M1 relay tap **+1** (only source)                      | M3 confront thresholds (`<1` vs `≥1`)                                            | Schema/spec imply 0–3; only ever 0 or 1 (§4-G). Welded to `f_vy_intel_comms` (§4-B) |
+| Variable       | Init        | Geschrieben (W)                                                | Gelesen (Auszahlung)                                                                      | Anmerkungen                                                                                               |
+| -------------- | ----------- | -------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `support`      | 5           | Abfangen NIEDERLAGE −1 · m_relay NIEDERLAGE −1 · M5-Angriff +2 | Von keiner _Inhalts_-Bedingung gelesen; verbraucht vom `endDay`-Einkommen (`supportMult`) | Akt-2-Währung; aktiv, aber noch keine narrative Schranke liest sie                                        |
+| `trust_andara` | 0           | Ankunft: verstecken **+2**, kämpfen **−3**, rennen **±0**      | Verzeichnis `n_vl_arrive` (≥2 Willkommen / 0–2 wachsam / <0 abgewiesen)                   | Saubere Dreifach-Auszahlung; nach dem Verzeichnis ruhend (bleibt für später erhalten)                     |
+| `doubt`        | 0 (uninit.) | M1 Relais-Anzapfung **+1** (einzige Quelle)                    | M3-Konfrontationsschwellen (`<1` vs. `≥1`)                                                | Schema/Spec implizieren 0–3; tatsächlich nur 0 oder 1 (§4-G). Fest an `f_vy_intel_comms` gekoppelt (§4-B) |
 
 ### Flags
 
-| Flag                    | Written (W)                    | Read (R)                                   | Payoff / status                                                    |
-| ----------------------- | ------------------------------ | ------------------------------------------ | ------------------------------------------------------------------ |
-| `intro_cautious`        | intro `o_in_cautious`          | —                                          | **Orphan (by design)** — reserved seed (bible §10, B-6)            |
-| `vy_villager_killed`    | arrival `o_va_refuse`          | M1 `n_vy1_faces` (killed variant)          | The dead boy's father on the terrace                               |
-| `f_vy_boy_hidden`       | arrival `o_va_hide`            | M1 `n_vy1_faces` (hidden variant)          | Boy + father give thanks on Veyra                                  |
-| `f_vy_boy_run`          | arrival `o_va_run`             | M1 `n_vy1_faces` (run variant)             | Field families as penitents                                        |
-| `f_vy_transport`        | ledger porters options         | M1 `n_vy1_arrive` (porters vs foot)        | Cross with the tithe train                                         |
-| `f_vy_intel_pilgrims`   | M1 pilgrims (dip≥4)            | M2 `a_seal` bluff_easy · M3 convince b2/b4 | **Effectively orphaned** — writer gate unreachable (§4-A)          |
-| `f_vy_intel_patrols`    | M1 patrols (combat≥5)          | M2 `a_seal` ossuary                        | Alternate inner-gate route                                         |
-| `f_vy_intel_comms`      | M1 relay (sci≥6)               | M3 explain branches                        | Also sets `doubt+1` (coupling, §4-B)                               |
-| `f_vy_approach_uniform` | M1 plan                        | M2 router                                  | Routes M2 branch A                                                 |
-| `f_vy_approach_worker`  | M1 plan                        | M2 router                                  | **Never cleared on Dessik-refuse (§4-D)**                          |
-| `f_vy_approach_assault` | M1 plan                        | M2 router                                  | Routes M2 branch C                                                 |
-| `f_vy_dessik_refused`   | M1 dessik refuse               | M1 plan (worker gate)                      | Disables the worker re-entry                                       |
-| `f_vy_uniform_knockout` | M1 uniform                     | M2 `a_gate`                                | Complication vs smooth                                             |
-| `f_vy_body_hidden`      | M1 uniform_body                | M2 `a_gate`                                | Removes the complication                                           |
-| `f_vy_uniform_stolen`   | M1 bathhouse                   | M2 `a_gate`/`a_seal`                       | Missing rank-seal challenge                                        |
-| `f_vy_owe_ilo`          | M1 dessik accept               | —                                          | **Orphan (bug)** — meant to gate the M2 Ilo beat (§4-E)            |
-| `f_vy_captured`         | M2 assault                     | M3 intro & resolve_intro                   | Execution-yard variant + vestry                                    |
-| `f_vy_ilo_freed`        | M2 free Ilo                    | —                                          | **Near-orphan** — payoff rides the sibling `queueEvent`            |
-| `f_vy_ilo_abandoned`    | M2 leave Ilo                   | M4 `n_vy4_approach` (alerted)              | Delayed betrayal → doubled guard                                   |
-| `f_vy_alarm`            | M2 (push/bell/leave-Ilo/force) | M4 `n_vy4_exfil`                           | Loud vs quiet exfil                                                |
-| `f_vy_first_convinced`  | M3 convince WIN                | M3 resolve                                 | **Unreachable (§4-A)** → `out_vy3_convinced` dead                  |
-| `f_vy_first_doubt`      | M3 explain WIN                 | M3 resolve · M5 `watch_seryn`              | Seryn follows "to see the proof"                                   |
-| `f_vy_first_defeated`   | M3 duel                        | M3 resolve · M5 (witness/watch/attack)     | Captive Seryn; can die at M5 attack                                |
-| `f_vy_seryn_recruited`  | M3 convince/doubt · oath       | M4 wards · M5 witness                      | Seryn on roster                                                    |
-| `f_vy_expedition_freed` | M3 all three resolves          | —                                          | **Orphan** — the arc's success flag has no reader (§4-I)           |
-| `f_vy_sacrament_dose`   | M3 all three outcomes          | tech `t_radiance_cell.visibleIf`           | Makes Radiance Cell researchable                                   |
-| `f_vy_godtech`          | M4 outcome                     | tech `t_radiance_cell.visibleIf`           | Alt unlock for Radiance Cell                                       |
-| `f_vy_watched_god`      | M5 watch                       | tech `t_projection_theory.visibleIf`       | Unlocks Projection Theory                                          |
-| `f_vy_fought_god`       | M5 attack                      | —                                          | **Orphan** — payoff rides sibling effects                          |
-| `f_vy_anchor_destroyed` | M5 attack                      | —                                          | **Orphan** — flavor/log only                                       |
-| `f_vy_call_intercepted` | intercept VICTORY              | —                                          | **Orphan (by design)** — reserved deployment-lock hook (bible §10) |
+| Flag                    | Geschrieben (W)                       | Gelesen (R)                                  | Auszahlung / Status                                                  |
+| ----------------------- | ------------------------------------- | -------------------------------------------- | -------------------------------------------------------------------- |
+| `intro_cautious`        | Intro `o_in_cautious`                 | —                                            | **Orphan (bewusst)** — reservierter Keim (Bibel §10, B-6)            |
+| `vy_villager_killed`    | Ankunft `o_va_refuse`                 | M1 `n_vy1_faces` (Getötet-Variante)          | Der Vater des toten Jungen auf der Terrasse                          |
+| `f_vy_boy_hidden`       | Ankunft `o_va_hide`                   | M1 `n_vy1_faces` (Versteckt-Variante)        | Junge + Vater danken auf Veyra                                       |
+| `f_vy_boy_run`          | Ankunft `o_va_run`                    | M1 `n_vy1_faces` (Renn-Variante)             | Feldfamilien als Büßer                                               |
+| `f_vy_transport`        | Verzeichnis Träger-Optionen           | M1 `n_vy1_arrive` (Träger vs. zu Fuß)        | Mit dem Zehntzug übersetzen                                          |
+| `f_vy_intel_pilgrims`   | M1 Pilger (dip≥4)                     | M2 `a_seal` bluff_easy · M3 Überzeugen b2/b4 | **Effektiv verwaist** — Schreiber-Schranke nicht erreichbar (§4-A)   |
+| `f_vy_intel_patrols`    | M1 Patrouillen (combat≥5)             | M2 `a_seal` ossuary                          | Alternative Route durchs innere Tor                                  |
+| `f_vy_intel_comms`      | M1 Relais (sci≥6)                     | M3 Erklären-Zweige                           | Setzt auch `doubt+1` (Kopplung, §4-B)                                |
+| `f_vy_approach_uniform` | M1 Plan                               | M2-Router                                    | Leitet in M2-Zweig A                                                 |
+| `f_vy_approach_worker`  | M1 Plan                               | M2-Router                                    | **Wird bei Dessik-Ablehnung nie gelöscht (§4-D)**                    |
+| `f_vy_approach_assault` | M1 Plan                               | M2-Router                                    | Leitet in M2-Zweig C                                                 |
+| `f_vy_dessik_refused`   | M1 Dessik-Ablehnung                   | M1 Plan (Arbeiter-Schranke)                  | Deaktiviert den Wiedereinstieg als Arbeiter                          |
+| `f_vy_uniform_knockout` | M1 Uniform                            | M2 `a_gate`                                  | Komplikation vs. reibungslos                                         |
+| `f_vy_body_hidden`      | M1 uniform_body                       | M2 `a_gate`                                  | Beseitigt die Komplikation                                           |
+| `f_vy_uniform_stolen`   | M1 Badehaus                           | M2 `a_gate`/`a_seal`                         | Herausforderung des fehlenden Rang-Siegels                           |
+| `f_vy_owe_ilo`          | M1 Dessik-Annahme                     | —                                            | **Orphan (Bug)** — sollte den M2-Ilo-Beat steuern (§4-E)             |
+| `f_vy_captured`         | M2 Sturm                              | M3 intro & resolve_intro                     | Hinrichtungshof-Variante + Sakristei                                 |
+| `f_vy_ilo_freed`        | M2 Ilo befreien                       | —                                            | **Fast verwaist** — Auszahlung hängt am Geschwister-`queueEvent`     |
+| `f_vy_ilo_abandoned`    | M2 Ilo zurücklassen                   | M4 `n_vy4_approach` (alarmiert)              | Verzögerter Verrat → doppelte Wache                                  |
+| `f_vy_alarm`            | M2 (drängen/Glocke/Ilo-lassen/Gewalt) | M4 `n_vy4_exfil`                             | Lauter vs. leiser Abzug                                              |
+| `f_vy_first_convinced`  | M3 Überzeugen ERFOLG                  | M3 resolve                                   | **Nicht erreichbar (§4-A)** → `out_vy3_convinced` tot                |
+| `f_vy_first_doubt`      | M3 Erklären ERFOLG                    | M3 resolve · M5 `watch_seryn`                | Seryn folgt, „um den Beweis zu sehen"                                |
+| `f_vy_first_defeated`   | M3 Duell                              | M3 resolve · M5 (witness/watch/attack)       | Gefangener Seryn; kann beim M5-Angriff sterben                       |
+| `f_vy_seryn_recruited`  | M3 Überzeugen/Zweifel · Eid           | M4 wards · M5 witness                        | Seryn im Aufgebot                                                    |
+| `f_vy_expedition_freed` | M3 alle drei Auflösungen              | —                                            | **Orphan** — das Erfolgs-Flag des Bogens hat keinen Leser (§4-I)     |
+| `f_vy_sacrament_dose`   | M3 alle drei Ergebnisse               | Tech `t_radiance_cell.visibleIf`             | Macht Strahlungszelle erforschbar                                    |
+| `f_vy_godtech`          | M4-Ergebnis                           | Tech `t_radiance_cell.visibleIf`             | Alternative Freischaltung für Strahlungszelle                        |
+| `f_vy_watched_god`      | M5 beobachten                         | Tech `t_projection_theory.visibleIf`         | Schaltet Projektionstheorie frei                                     |
+| `f_vy_fought_god`       | M5 Angriff                            | —                                            | **Orphan** — Auszahlung hängt an Geschwister-Effekten                |
+| `f_vy_anchor_destroyed` | M5 Angriff                            | —                                            | **Orphan** — nur Flavor/Log                                          |
+| `f_vy_call_intercepted` | Abfangen SIEG                         | —                                            | **Orphan (bewusst)** — reservierter Deployment-Lock-Hook (Bibel §10) |
 
-**Orphan summary (7):** `f_vy_owe_ilo` and `f_vy_expedition_freed` are the
-consequential ones (a genuinely unwired promise-gate and the arc's own
-success marker). `f_vy_ilo_freed`, `f_vy_fought_god`, `f_vy_anchor_destroyed`
-are harmless (their effects fire as siblings). `intro_cautious` and
-`f_vy_call_intercepted` are documented, deliberate reserved seeds.
-`f_vy_intel_pilgrims` / `f_vy_first_convinced` are readable-but-never-written
-(their _writer_ gate is unreachable — the mirror-image failure, §4-A).
-
----
-
-## 3. Timeline (in-fiction day count per beat)
-
-The engine carries a **mechanical** `campaign.day` (starts at 1, +1 per
-`endDay`), but the story text almost never states a day number. The only hard
-in-fiction anchors are Day 1 and the "Recon One nine days silent" backstory;
-everything after is relative ("soon", "by morning", "at dawn", "two days
-later") and elastic to however many days the player burns between missions.
-
-| #   | Beat                                | In-fiction day marker (as written)                           | Mechanical timing        | Contradiction?                              |
-| --- | ----------------------------------- | ------------------------------------------------------------ | ------------------------ | ------------------------------------------- |
-| 0   | Recon One crosses to Andara         | "eleven days ago" (intro)                                    | before Day 1             | —                                           |
-| 0   | Two check-ins, then silence         | "nine days of nothing"                                       | before Day 1             | ✔ internally consistent (2 + 9 = 11)        |
-| 1   | Intro / rescue authorized           | **"Day 1"** (only explicit number)                           | Day 1                    | —                                           |
-| 2   | m_vy_arrival                        | "nine days silent" (mission desc)                            | player-launched, ≥ Day 1 | ⚠ **T-1** urgency vs elastic cadence        |
-| 3   | m_vy_ledger                         | "the next tithe leaves soon"; tithe "crosses twice a season" | any later day            | ⚠ **T-2** seasonal tithe always "imminent"  |
-| 4   | m_vy_intercept                      | (none)                                                       | any later day            | —                                           |
-| 4a  | ev_vy_regroup (on intercept defeat) | "by morning Mercer has re-planned"                           | queued **+1 day**        | —                                           |
-| 5   | m_vy_1 Pilgrim Roads                | "A day to work before the plan"                              | any later day            | —                                           |
-| 6   | m_vy_2 Penitence                    | "at dawn the cell doors open" (C path)                       | any later day            | —                                           |
-| 6a  | ev_vy_dessik_word (if Ilo freed)    | —                                                            | queued **+5 days**       | —                                           |
-| 7   | m_vy_3 First Blade                  | "burn at dusk… dusk is hours away" (C)                       | any later day            | —                                           |
-| 8   | m_vy_4 Relic Vault                  | "the shift is thin" / night rounds                           | any later day            | ⚠ **T-3** Seryn's withdrawal timing (below) |
-| 9   | m_vy_5 Luminous One                 | caldera "a day beyond" the city (gazetteer)                  | any later day            | —                                           |
-| 9a  | ev_vy_gratitude (attack)            | provisional council "in the quiet after"                     | queued **+3 days**       | —                                           |
-| 9b  | ev_vy_seryn_oath (watch+defeated)   | **"two days later"**                                         | queued **+2 days**       | ✔ text matches the +2d queue                |
-
-**Timeline contradictions**
-
-- **T-1 (urgency vs. cadence).** The fiction frames Recon One's rescue as a
-  days-count emergency ("nine days silent", "before the trail goes cold"),
-  but nothing bounds the real days the player spends between missions
-  (research, base-building, and fatigue recovery all consume `endDay`s). A
-  campaign that idles 40 days between arrival and Pilgrim Roads still reads
-  "nine days silent" and "before the trail goes cold".
-- **T-2 (the elastic tithe).** The crossing plan depends on catching "the next
-  grain-tithe", which "crosses twice a season" — yet it is always "soon"
-  regardless of when the player launches `m_vy_intercept` / `m_vy_1`. There is
-  no in-content clock that can miss the tithe.
-- **T-3 (Seryn's withdrawal).** Canon (bible §3/§5) times the Portion
-  withdrawal as "over days": hands shaking by M4, light gone by the oath.
-  The content honors this _only if_ several days actually elapse M3→M4→M5→+2.
-  A rushed M3→M4→M5 (three consecutive `endDay`s) shows "hands begin to shake"
-  (M4) and "the light gone from under his skin" (oath, +2d) across ~5 days —
-  coherent, but the engine does not guarantee any minimum, so a same-day
-  chain would compress "over days" into hours. The oath text hard-codes "two
-  days later", which is the one place the fiction and the `delayDays: 2` queue
-  agree exactly.
+**Orphan-Zusammenfassung (7):** `f_vy_owe_ilo` und `f_vy_expedition_freed` sind
+die folgenreichen (eine echt unverdrahtete Versprechen-Schranke und der eigene
+Erfolgsmarker des Bogens). `f_vy_ilo_freed`, `f_vy_fought_god`,
+`f_vy_anchor_destroyed` sind harmlos (ihre Effekte feuern als Geschwister).
+`intro_cautious` und `f_vy_call_intercepted` sind dokumentierte, bewusst
+reservierte Keime. `f_vy_intel_pilgrims` / `f_vy_first_convinced` sind
+lesbar-aber-nie-geschrieben (ihre _Schreiber_-Schranke ist nicht erreichbar —
+der spiegelbildliche Fehler, §4-A).
 
 ---
 
-## 4. Inconsistencies found
+## 3. Zeitleiste (fiktionale Tageszählung pro Beat)
 
-Numbered patchwork seams — contradictions, unreachable/dead content,
-unearned reveals, and unwired flags — discovered by tracing the shipped
-content against the engine's roster and gating rules. **None are fixed here.**
+Die Engine führt einen **mechanischen** `campaign.day` (beginnt bei 1, +1 pro
+`endDay`), doch der Story-Text nennt fast nie eine Tageszahl. Die einzigen
+harten fiktionalen Anker sind Tag 1 und die Vorgeschichte „Recon One neun Tage
+still"; alles danach ist relativ („bald", „bis zum Morgen", „im Morgengrauen",
+„zwei Tage später") und dehnbar, je nachdem, wie viele Tage der Spieler zwischen
+den Missionen verbraucht.
 
-1. **(A) The entire diplomacy spine of M1–M3 is mechanically unreachable.**
-   The arc forces the M1–M3 squad to exactly `h_mercer` + `h_okafor`
-   (`squad.min == max == 2`, and Seryn is not recruited until M3). Their
-   diplomacy is 2 and 3. Level-ups (`economy-and-roster.md §7`) add +1 only to
-   each hero's **highest base skill** — Mercer→combat, Okafor→science — so
-   **effective diplomacy is permanently capped at 3**, below every diplomacy
-   gate in the arc. Consequently these are all dead:
-   - M1 `o_vy1_pilgrims` (dip ≥ 4) → `f_vy_intel_pilgrims` can never be set;
-     `n_vy1_pilgrims_detail` is unreachable.
-   - M2 `o_vy2_a_bluff_easy` (needs pilgrims, dip ≥ 4) **and**
-     `o_vy2_a_bluff_hard` (dip ≥ 5) are both unreachable — in the
-     uniform-stolen branch only `ossuary` (needs patrols) or `push2` (alarm)
-     can pass.
-   - M3 **all four** convince options (dip ≥ 5/6/7) fail → `n_vy3_hardens` →
-     duel. `f_vy_first_convinced` can never be set, so outcome
-     `out_vy3_convinced` ("The First Blade defects", the marquee walk-out
-     recruitment) is **dead content**. In practice M3 resolves only as
-     _doubt_ (Okafor science) or _defeated_ (duel).
+| #   | Beat                                       | Fiktionaler Tages-Marker (wie geschrieben)                              | Mechanisches Timing       | Widerspruch?                                                |
+| --- | ------------------------------------------ | ----------------------------------------------------------------------- | ------------------------- | ----------------------------------------------------------- |
+| 0   | Recon One setzt nach Andara über           | „vor elf Tagen" (Intro)                                                 | vor Tag 1                 | —                                                           |
+| 0   | Zwei Meldungen, dann Stille                | „neun Tage nichts"                                                      | vor Tag 1                 | ✔ in sich stimmig (2 + 9 = 11)                              |
+| 1   | Intro / Rettung genehmigt                  | **„Tag 1"** (einzige explizite Zahl)                                    | Tag 1                     | —                                                           |
+| 2   | m_vy_arrival                               | „neun Tage still" (Missionsbeschr.)                                     | spielergestartet, ≥ Tag 1 | ⚠ **T-1** Dringlichkeit vs. dehnbarer Takt                  |
+| 3   | m_vy_ledger                                | „der nächste Zehnt geht bald ab"; Zehnt „setzt zweimal pro Saison über" | jeder spätere Tag         | ⚠ **T-2** saisonaler Zehnt stets „unmittelbar bevorstehend" |
+| 4   | m_vy_intercept                             | (keiner)                                                                | jeder spätere Tag         | —                                                           |
+| 4a  | ev_vy_regroup (bei Niederlage im Abfangen) | „bis zum Morgen hat Mercer neu geplant"                                 | eingereiht **+1 Tag**     | —                                                           |
+| 5   | m_vy_1 Pilgerstraßen                       | „Ein Tag zum Arbeiten vor dem Plan"                                     | jeder spätere Tag         | —                                                           |
+| 6   | m_vy_2 Penitenz                            | „im Morgengrauen öffnen sich die Zellentüren" (C-Pfad)                  | jeder spätere Tag         | —                                                           |
+| 6a  | ev_vy_dessik_word (falls Ilo befreit)      | —                                                                       | eingereiht **+5 Tage**    | —                                                           |
+| 7   | m_vy_3 Erste Klinge                        | „Verbrennung in der Dämmerung … die Dämmerung ist Stunden entfernt" (C) | jeder spätere Tag         | —                                                           |
+| 8   | m_vy_4 Reliquiengewölbe                    | „die Schicht ist dünn besetzt" / Nachtrunden                            | jeder spätere Tag         | ⚠ **T-3** Timing von Seryns Entzug (unten)                  |
+| 9   | m_vy_5 Der Leuchtende                      | Caldera „einen Tag jenseits" der Stadt (Gazetteer)                      | jeder spätere Tag         | —                                                           |
+| 9a  | ev_vy_gratitude (Angriff)                  | vorläufiger Rat „in der Stille danach"                                  | eingereiht **+3 Tage**    | —                                                           |
+| 9b  | ev_vy_seryn_oath (beobachten+besiegt)      | **„zwei Tage später"**                                                  | eingereiht **+2 Tage**    | ✔ Text passt zur +2T-Einreihung                             |
 
-   Root cause: the content was authored for a squad containing a diplomat
-   (bible §5 plans one), but no diplomat is recruitable before the arc needs
-   one, and the arc's fixed 2-slot squads leave no room besides Mercer+Okafor.
+**Zeitleisten-Widersprüche**
 
-2. **(B) `doubt` and `f_vy_intel_comms` are perfectly coupled, collapsing the
-   M3 "explain" branch.** The only writer of `doubt` is M1 `o_vy1_relay`, which
-   sets `f_vy_intel_comms = true` **and** `doubt += 1` atomically. So
-   `comms ⟺ doubt ≥ 1` always. The explain options fork on both independently:
-   - `o_vy3_explain_b2` (doubt < 1 ∧ comms = true) — **impossible**.
-   - `o_vy3_explain_b3` (doubt ≥ 1 ∧ comms = false) — **impossible**.
-
-   Only `b1` (no comms, sci ≥ 7) and `b4` (comms, sci ≥ 4) can ever fire; two
-   of the four authored explain branches are unreachable.
-
-3. **(C) `o_vy5_no_seryn` is unreachable.** Every M3 completion sets exactly
-   one of `f_vy_first_convinced` / `f_vy_first_doubt` / `f_vy_first_defeated`,
-   the first two of which set `f_vy_seryn_recruited`. So entering M5,
-   `f_vy_seryn_recruited OR f_vy_first_defeated` is **always true** — the
-   `n_vy5_witness` option requiring both false ("Move closer", the no-Seryn
-   witness variant) can never be shown.
-
-4. **(D) Stale approach flags: refusing Dessik leaves `f_vy_approach_worker`
-   set.** `o_vy1_worker_choice` sets `f_vy_approach_worker = true` _before_
-   the Dessik node. If the player then refuses (`o_vy1_dessik_refuse` →
-   `f_vy_dessik_refused`) and returns to `n_vy1_plan`, the worker flag is
-   never cleared. Picking uniform/assault afterward yields **two** approach
-   flags. `n_vy2_router` shows an eligible option per flag, so the player can
-   be offered — and enter — the worker branch (`n_vy2_b_kitchens`) they backed
-   out of, with no work passes and `f_vy_owe_ilo` false.
-
-5. **(E) `f_vy_owe_ilo` is an orphan — the promise gate was never wired.** The
-   flag is set when you swear to free Ilo, but **nothing reads it**. The M2
-   Ilo decision (`n_vy2_b_kitchens` → free/leave) is presented unconditionally
-   on the worker branch. Combined with (D), a player who _refused_ Dessik (or
-   never promised) can still reach kitchens and "keep the promise" — freeing
-   Ilo, and even queueing `ev_vy_dessik_word` — for a debt they never incurred.
-   (arc-veyra spec §4 explicitly intended "only if `f_vy_owe_ilo`".)
-
-6. **(F) Intercept ↔ Pilgrim-Roads tonal contradiction.** `m_vy_intercept`'s
-   victory debrief declares the way home _won_: "The way home exists again:
-   narrow, borrowed, and ours." The very next mission, `m_vy_1` `n_vy1_arrive`,
-   opens: "The crossing in is free. **It is the door home that is shut.**" —
-   with no acknowledgment that Command already holds the tribute call. The
-   payoff of the seized call is deferred all the way to M3's outcome log ("out
-   through the Door under a tribute call the temple believes"), leaving M1
-   reading as if the intercept never happened.
-
-7. **(G) `doubt` is modeled as a 0–3 accumulator but only ever reaches 1.**
-   The arc spec (§3) and the M3 threshold math (`7 − doubt`) assume `doubt`
-   grows across multiple evidence beats. Only one beat exists
-   (`o_vy1_relay`), so `doubt ∈ {0, 1}`. The `doubt ≥ 1` option tiers are
-   really "doubt == 1", and the intended graduated-skepticism system is inert.
-
-8. **(H) Narration uses canon taxonomy before the fiction teaches it.** On
-   first contact in `m_vy_arrival`, the narration already names the aliens
-   "**Tenders**" and distinguishes castes — "porter" and "**flanker**
-   Tenders — man-height, quick" — vocabulary the POV team has no way to know
-   (the villagers are silent; nobody explains the words). "Tender/porter/
-   flanker" are D-10 canon terms (bible §8) surfacing in the authorial voice
-   ahead of any in-world introduction. (By contrast "Veyra", "the Luminous
-   One", "the Portion", "Seryn Vael" _are_ earned — spoken by villagers/Odel.)
-
-9. **(I) `f_vy_expedition_freed` — the arc's defining success flag — has no
-   reader.** It is set (identically) on all three M3 resolutions and is the
-   documented Act-1 bottleneck ("always true by end of M3", arc spec §3). Yet
-   no downstream option, mission `availability`, or tech reads it. The literal
-   objective of the opening ("bring Recon One home") leaves no queryable trace
-   in state beyond the `addPersonnel +4` and a log line.
-
-10. **(J) Seryn-present options gate on the recruit _flag_, not squad
-    membership.** M4 `o_vy4_seryn` ("Seryn… stills one pillar with a word")
-    and M5 `o_vy5_seryn_present` ("Beside you, Seryn cannot look away") test
-    `f_vy_seryn_recruited` (a campaign flag), not whether Seryn is in the
-    deployed squad. M4/M5 allow free squad selection (2/4), so a **benched**
-    Seryn still narratively "stills a pillar" and stands "beside you". (The
-    engine's own `squadHasArchetype`/`squadSkillAtLeast` conditions exist for
-    exactly this and are used elsewhere in M4.)
-
-11. **(K) `m_vy_intercept`'s mechanical promise has no teeth yet.** Victory
-    sets `f_vy_call_intercepted`, described in-fiction as "the only call that
-    opens the way home" — but the flag is never read (the deployment-lock
-    mechanic ships separately; bible §10 flags it as a reserved hook). So the
-    whole tactical mission's stated stakes ("the way home") are currently
-    narrative-only; nothing in the Veyra missions is actually gated on having
-    intercepted the call.
-
-12. **(L) Recruitment-timing asymmetry at M5 attack, for a _recruited_ Seryn.**
-    On the M5 **attack** path, only a _defeated/captive_ Seryn gets the
-    dramatic beat (`o_vy5_attack_defeated` → he tears loose, shields his god,
-    dies). A _recruited_ Seryn (convinced/doubt) who watches you open fire on
-    the god he served his whole life gets only the generic
-    `o_vy5_attack_other` ("Walk out into a silence") — no reaction, despite the
-    earlier `n_vy5_seryn_watch` establishing how much the sight costs him.
-
-13. **(M) Reachable-outcome imbalance in M3.** Because convince is dead (§4-1),
-    the shipped M3 has effectively **two** live resolutions (doubt, defeated),
-    not three. `f_vy_sacrament_dose` and the M4 unlock are set on all three,
-    so nothing soft-locks — but the branching the mission presents (and its
-    debrief-hint machinery around locked options) advertises a moral third
-    path the roster cannot take.
+- **T-1 (Dringlichkeit vs. Takt).** Die Fiktion rahmt die Rettung von Recon One
+  als einen an Tagen gemessenen Notfall („neun Tage still", „bevor die Spur
+  kalt wird"), doch nichts begrenzt die tatsächlichen Tage, die der Spieler
+  zwischen Missionen verbringt (Forschung, Basisausbau und
+  Erschöpfungserholung verbrauchen alle `endDay`s). Eine Kampagne, die 40 Tage
+  zwischen Ankunft und Pilgerstraßen untätig verstreichen lässt, liest sich
+  immer noch als „neun Tage still" und „bevor die Spur kalt wird".
+- **T-2 (der dehnbare Zehnt).** Der Übergangsplan hängt davon ab, „den nächsten
+  Getreidezehnt" zu erwischen, der „zweimal pro Saison übersetzt" — doch er ist
+  stets „bald", egal, wann der Spieler `m_vy_intercept` / `m_vy_1` startet. Es
+  gibt keine Uhr im Inhalt, die den Zehnt verpassen könnte.
+- **T-3 (Seryns Entzug).** Der Kanon (Bibel §3/§5) taktet den Entzug der
+  Portion als „über Tage hinweg": zitternde Hände bis M4, das Licht erloschen
+  beim Eid. Der Inhalt hält dies _nur dann_ ein, wenn tatsächlich mehrere Tage
+  M3→M4→M5→+2 vergehen. Eine hastige Kette M3→M4→M5 (drei aufeinanderfolgende
+  `endDay`s) zeigt „die Hände beginnen zu zittern" (M4) und „das Licht unter
+  seiner Haut ist fort" (Eid, +2T) über ~5 Tage — kohärent, doch die Engine
+  garantiert kein Minimum, sodass eine Kette am selben Tag „über Tage hinweg"
+  in Stunden zusammendrücken würde. Der Eid-Text schreibt „zwei Tage später"
+  fest, die eine Stelle, an der Fiktion und die `delayDays: 2`-Einreihung genau
+  übereinstimmen.
 
 ---
 
-## Appendix — reachability notes (effective skills, shipped roster)
+## 4. Gefundene Inkonsistenzen
 
-- **M1–M3 forced squad:** Mercer + Okafor. Effective maxima (before fatigue):
-  combat **6** (Mercer, → 7 after one level-up on combat), science **7**
-  (Okafor, rising), diplomacy **3** (Okafor; **never rises** — see §4-1),
-  resolve **5** (Mercer), engineering 4 (Okafor).
-- **XP to M3:** arrival (+10) + ledger (+10) + intercept (+15) = 35 squad XP ⇒
-  Mercer reaches L2 (25) ⇒ combat 7, so the M3 duel's "clean" branch
-  (combat ≥ 7) is reachable; the diplomacy branches are not.
-- **M4/M5 free squad (2/4):** with Okafor present, all `scientist OR sci ≥ 6`
-  gates pass; Seryn (if recruited) may be added but is not required.
-- Fatigue ≥ 50 applies −1 to every effective skill; it can only _lower_ the
-  values above, never raise diplomacy to a passing threshold.
+Nummerierte Flickwerk-Nähte — Widersprüche, nicht erreichbarer/toter Inhalt,
+unverdiente Enthüllungen und unverdrahtete Flags —, entdeckt beim
+Nachverfolgen des ausgelieferten Inhalts gegen das Aufgebot und die
+Freischaltregeln der Engine. **Hier wird nichts davon behoben.**
+
+1. **(A) Das gesamte Diplomatie-Rückgrat von M1–M3 ist mechanisch nicht
+   erreichbar.** Der Bogen zwingt den M1–M3-Trupp auf exakt `h_mercer` +
+   `h_okafor` (`squad.min == max == 2`, und Seryn wird erst in M3 rekrutiert).
+   Ihre Diplomatie ist 2 und 3. Stufenaufstiege (`economy-and-roster.md §7`)
+   addieren +1 nur zur **höchsten Basisfertigkeit** jedes Helden —
+   Mercer→Kampf, Okafor→Wissenschaft —, sodass die **effektive Diplomatie
+   dauerhaft bei 3 gedeckelt** ist, unterhalb jeder Diplomatie-Schranke im
+   Bogen. Folglich sind diese alle tot:
+   - M1 `o_vy1_pilgrims` (dip ≥ 4) → `f_vy_intel_pilgrims` kann nie gesetzt
+     werden; `n_vy1_pilgrims_detail` ist nicht erreichbar.
+   - M2 `o_vy2_a_bluff_easy` (braucht pilgrims, dip ≥ 4) **und**
+     `o_vy2_a_bluff_hard` (dip ≥ 5) sind beide nicht erreichbar — im
+     uniform-stolen-Zweig kann nur `ossuary` (braucht patrols) oder `push2`
+     (Alarm) durchkommen.
+   - M3 **alle vier** Überzeugen-Optionen (dip ≥ 5/6/7) scheitern →
+     `n_vy3_hardens` → Duell. `f_vy_first_convinced` kann nie gesetzt werden,
+     also ist das Ergebnis `out_vy3_convinced` („Die Erste Klinge läuft über",
+     die Aushänge-Abgang-Rekrutierung) **toter Inhalt**. In der Praxis löst
+     sich M3 nur als _Zweifel_ (Okafor Wissenschaft) oder _besiegt_ (Duell)
+     auf.
+
+   Ursache: Der Inhalt wurde für einen Trupp mit einem Diplomaten verfasst
+   (Bibel §5 sieht einen vor), doch kein Diplomat ist rekrutierbar, bevor der
+   Bogen einen braucht, und die festen 2-Slot-Trupps des Bogens lassen neben
+   Mercer+Okafor keinen Platz.
+
+2. **(B) `doubt` und `f_vy_intel_comms` sind perfekt gekoppelt, was den
+   „Erklären"-Zweig von M3 kollabieren lässt.** Der einzige Schreiber von
+   `doubt` ist M1 `o_vy1_relay`, der `f_vy_intel_comms = true` **und**
+   `doubt += 1` atomar setzt. Also gilt stets `comms ⟺ doubt ≥ 1`. Die
+   Erklären-Optionen verzweigen unabhängig nach beidem:
+   - `o_vy3_explain_b2` (doubt < 1 ∧ comms = true) — **unmöglich**.
+   - `o_vy3_explain_b3` (doubt ≥ 1 ∧ comms = false) — **unmöglich**.
+
+   Nur `b1` (kein comms, sci ≥ 7) und `b4` (comms, sci ≥ 4) können je feuern;
+   zwei der vier verfassten Erklären-Zweige sind nicht erreichbar.
+
+3. **(C) `o_vy5_no_seryn` ist nicht erreichbar.** Jeder M3-Abschluss setzt
+   genau eines von `f_vy_first_convinced` / `f_vy_first_doubt` /
+   `f_vy_first_defeated`, wovon die ersten beiden `f_vy_seryn_recruited`
+   setzen. Beim Eintritt in M5 ist also
+   `f_vy_seryn_recruited OR f_vy_first_defeated` **immer wahr** — die
+   `n_vy5_witness`-Option, die beide falsch verlangt („Näher herantreten", die
+   Ohne-Seryn-Zeugen-Variante), kann nie gezeigt werden.
+
+4. **(D) Veraltete Annäherungs-Flags: Dessik abzulehnen lässt
+   `f_vy_approach_worker` gesetzt.** `o_vy1_worker_choice` setzt
+   `f_vy_approach_worker = true` _vor_ dem Dessik-Knoten. Lehnt der Spieler
+   dann ab (`o_vy1_dessik_refuse` → `f_vy_dessik_refused`) und kehrt zu
+   `n_vy1_plan` zurück, wird das Arbeiter-Flag nie gelöscht. Wählt er danach
+   Uniform/Sturm, ergeben sich **zwei** Annäherungs-Flags. `n_vy2_router` zeigt
+   pro Flag eine berechtigte Option, sodass dem Spieler der Arbeiter-Zweig
+   (`n_vy2_b_kitchens`), aus dem er ausgestiegen ist, angeboten werden — und er
+   ihn betreten — kann, ohne Arbeitspapiere und mit `f_vy_owe_ilo` falsch.
+
+5. **(E) `f_vy_owe_ilo` ist ein Orphan — die Versprechen-Schranke wurde nie
+   verdrahtet.** Das Flag wird gesetzt, wenn du schwörst, Ilo zu befreien, aber
+   **nichts liest es**. Die M2-Ilo-Entscheidung (`n_vy2_b_kitchens` →
+   befreien/zurücklassen) wird auf dem Arbeiter-Zweig bedingungslos angeboten.
+   In Kombination mit (D) kann ein Spieler, der Dessik _abgelehnt_ (oder nie
+   versprochen) hat, dennoch die Küchen erreichen und „das Versprechen halten"
+   — Ilo befreien und sogar `ev_vy_dessik_word` einreihen — für eine Schuld,
+   die er nie eingegangen ist. (Die arc-veyra-Spec §4 beabsichtigte
+   ausdrücklich „nur wenn `f_vy_owe_ilo`".)
+
+6. **(F) Tonaler Widerspruch Abfangen ↔ Pilgerstraßen.** Das Sieg-Debriefing
+   von `m_vy_intercept` erklärt den Heimweg für _gewonnen_: „Der Heimweg
+   existiert wieder: schmal, geliehen und unser." Die unmittelbar nächste
+   Mission, `m_vy_1` `n_vy1_arrive`, beginnt: „Der Übergang hinein ist frei.
+   **Es ist die Tür nach Hause, die verschlossen ist.**" — ohne Anerkennung,
+   dass Command den Tributruf bereits hält. Die Auszahlung des ergriffenen Rufs
+   wird bis zum Ergebnis-Log von M3 hinausgezögert („hinaus durch die Tür unter
+   einem Tributruf, dem der Tempel glaubt"), sodass sich M1 liest, als hätte das
+   Abfangen nie stattgefunden.
+
+7. **(G) `doubt` ist als 0–3-Akkumulator modelliert, erreicht aber nie mehr als 1.** Die Bogen-Spec (§3) und die M3-Schwellenmathematik (`7 − doubt`) nehmen
+   an, dass `doubt` über mehrere Beweis-Beats wächst. Es existiert nur ein Beat
+   (`o_vy1_relay`), also `doubt ∈ {0, 1}`. Die `doubt ≥ 1`-Optionsstufen sind
+   in Wahrheit „doubt == 1", und das beabsichtigte System abgestufter Skepsis
+   ist wirkungslos.
+
+8. **(H) Die Erzählung verwendet Kanon-Taxonomie, bevor die Fiktion sie
+   lehrt.** Beim ersten Kontakt in `m_vy_arrival` benennt die Erzählung die
+   Aliens bereits als „**Drohnen**" und unterscheidet Kasten — „Träger" und
+   „**Flankierer**-Drohnen — mannshoch, flink" — Vokabular, das das POV-Team
+   unmöglich kennen kann (die Dorfbewohner sind stumm; niemand erklärt die
+   Wörter). „Drohne/Träger/Flankierer" sind D-10-Kanon-Begriffe (Bibel §8), die
+   in der Autorenstimme vor jeder weltinternen Einführung auftauchen. (Im
+   Gegensatz dazu _sind_ „Veyra", „der Leuchtende", „die Portion", „Seryn Vael"
+   verdient — von Dorfbewohnern/Odel gesprochen.)
+
+9. **(I) `f_vy_expedition_freed` — das prägende Erfolgs-Flag des Bogens — hat
+   keinen Leser.** Es wird (identisch) bei allen drei M3-Auflösungen gesetzt und
+   ist der dokumentierte Akt-1-Engpass („bis zum Ende von M3 immer wahr",
+   Bogen-Spec §3). Doch keine nachgelagerte Option, keine Missions-`availability`
+   und keine Tech liest es. Das buchstäbliche Ziel der Eröffnung („Recon One nach
+   Hause bringen") hinterlässt außer dem `addPersonnel +4` und einer Log-Zeile
+   keine abfragbare Spur im Zustand.
+
+10. **(J) Seryn-anwesend-Optionen prüfen das Rekrutierungs-_Flag_, nicht die
+    Trupp-Zugehörigkeit.** M4 `o_vy4_seryn` („Seryn … stillt einen Pfeiler mit
+    einem Wort") und M5 `o_vy5_seryn_present` („Neben dir kann Seryn nicht
+    wegsehen") prüfen `f_vy_seryn_recruited` (ein Kampagnen-Flag), nicht, ob
+    Seryn im entsandten Trupp ist. M4/M5 erlauben freie Truppwahl (2/4), sodass
+    ein **auf der Bank sitzender** Seryn narrativ dennoch „einen Pfeiler stillt"
+    und „neben dir" steht. (Die engineeigenen Bedingungen
+    `squadHasArchetype`/`squadSkillAtLeast` existieren genau dafür und werden
+    andernorts in M4 genutzt.)
+
+11. **(K) Das mechanische Versprechen von `m_vy_intercept` hat noch keine
+    Zähne.** Der Sieg setzt `f_vy_call_intercepted`, fiktional beschrieben als
+    „der einzige Ruf, der den Heimweg öffnet" — doch das Flag wird nie gelesen
+    (die Deployment-Lock-Mechanik wird separat ausgeliefert; Bibel §10 markiert
+    es als reservierten Hook). Damit sind die genannten Einsätze der gesamten
+    taktischen Mission („der Heimweg") derzeit rein narrativ; nichts in den
+    Veyra-Missionen ist tatsächlich daran gebunden, den Ruf abgefangen zu haben.
+
+12. **(L) Asymmetrie im Rekrutierungs-Timing beim M5-Angriff, für einen
+    _rekrutierten_ Seryn.** Auf dem M5-**Angriffs**-Pfad erhält nur ein
+    _besiegter/gefangener_ Seryn den dramatischen Beat
+    (`o_vy5_attack_defeated` → er reißt sich los, schirmt seinen Gott ab,
+    stirbt). Ein _rekrutierter_ Seryn (überzeugt/Zweifel), der zusieht, wie du
+    das Feuer auf den Gott eröffnest, dem er sein ganzes Leben gedient hat,
+    bekommt nur das generische `o_vy5_attack_other` („Hinaus in eine Stille
+    treten") — keine Reaktion, obwohl das frühere `n_vy5_seryn_watch`
+    festhält, wie viel ihn der Anblick kostet.
+
+13. **(M) Ungleichgewicht erreichbarer Ergebnisse in M3.** Weil Überzeugen tot
+    ist (§4-1), hat das ausgelieferte M3 effektiv **zwei** lebende Auflösungen
+    (Zweifel, besiegt), nicht drei. `f_vy_sacrament_dose` und die M4-Freischaltung
+    werden bei allen dreien gesetzt, sodass nichts soft-lockt — doch die
+    Verzweigung, die die Mission darbietet (und ihre Debrief-Hinweis-Maschinerie
+    rund um gesperrte Optionen), bewirbt einen moralischen dritten Pfad, den das
+    Aufgebot nicht nehmen kann.
+
+---
+
+## Anhang — Erreichbarkeitsnotizen (effektive Fertigkeiten, ausgeliefertes Aufgebot)
+
+- **M1–M3 erzwungener Trupp:** Mercer + Okafor. Effektive Maxima (vor
+  Erschöpfung): Kampf **6** (Mercer, → 7 nach einem Stufenaufstieg auf Kampf),
+  Wissenschaft **7** (Okafor, steigend), Diplomatie **3** (Okafor; **steigt
+  nie** — siehe §4-1), Entschlossenheit **5** (Mercer), Technik 4 (Okafor).
+- **XP bis M3:** Ankunft (+10) + Verzeichnis (+10) + Abfangen (+15) = 35
+  Trupp-XP ⇒ Mercer erreicht L2 (25) ⇒ Kampf 7, sodass der „saubere" Zweig des
+  M3-Duells (Kampf ≥ 7) erreichbar ist; die Diplomatie-Zweige sind es nicht.
+- **M4/M5 freier Trupp (2/4):** mit anwesendem Okafor bestehen alle
+  `scientist OR sci ≥ 6`-Schranken; Seryn (falls rekrutiert) kann hinzugefügt
+  werden, ist aber nicht erforderlich.
+- Erschöpfung ≥ 50 verhängt −1 auf jede effektive Fertigkeit; sie kann die
+  obigen Werte nur _senken_, niemals Diplomatie auf eine bestehende Schwelle
+  heben.

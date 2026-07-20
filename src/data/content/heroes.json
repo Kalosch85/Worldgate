@@ -11,7 +11,7 @@
       "resolve": 5
     },
     "abilities": ["ab_shot"],
-    "bio": "Career officer; volunteered for the program after the first breach. A decade of deployments, some beyond even the Director's clearance. By the book: fast, efficient, no loose ends."
+    "bio": "Berufsoffizier; meldete sich nach dem ersten Durchbruch freiwillig für das Programm. Ein Jahrzehnt an Einsätzen, manche jenseits selbst der Freigabestufe des Direktors. Nach Vorschrift: schnell, effizient, keine losen Enden."
   },
   {
     "id": "h_okafor",
@@ -25,7 +25,7 @@
       "resolve": 3
     },
     "abilities": ["ab_shot", "ab_patch"],
-    "bio": "Astrophysicist. Decoded the gate's address notation in six weeks. Field-certified — outshot half the security detail on the range."
+    "bio": "Astrophysikerin. Entschlüsselte die Adressnotation des Tors in sechs Wochen. Feldqualifiziert — schoss auf dem Stand die halbe Sicherheitseinheit aus."
   },
   {
     "id": "h_seryn",
@@ -39,6 +39,6 @@
       "resolve": 6
     },
     "abilities": ["ab_shot"],
-    "bio": "First Blade of the Luminous One, foremost of the Graced. The Portion's grace is leaving him a day at a time — the sword arm that remains is his own."
+    "bio": "Erste Klinge des Leuchtenden, Vornehmster der Begnadeten. Die Gnade der Portion verlässt ihn Tag um Tag — der Schwertarm, der bleibt, ist sein eigener."
   }
 ]

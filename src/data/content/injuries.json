@@ -1,4 +1,4 @@
 [
-  { "id": "inj_wounded", "name": "Wounded", "daysToHeal": 5, "skillPenalties": { "combat": -2 } },
-  { "id": "inj_shaken", "name": "Shaken", "daysToHeal": 3, "skillPenalties": { "resolve": -2 } }
+  { "id": "inj_wounded", "name": "Verwundet", "daysToHeal": 5, "skillPenalties": { "combat": -2 } },
+  { "id": "inj_shaken", "name": "Erschüttert", "daysToHeal": 3, "skillPenalties": { "resolve": -2 } }
 ]

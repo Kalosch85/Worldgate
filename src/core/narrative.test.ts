@@ -161,7 +161,7 @@ describe("chooseEventOption — golden paths (§5, §6)", () => {
     expect(done.heroes.find((h) => h.hero === "h_mercer")!.xp).toBe(10);
     expect(done.heroes.find((h) => h.hero === "h_okafor")!.xp).toBe(10);
     const journal = done.journal.map((j) => j.text);
-    expect(journal).toContain("The Silent Valley: The address, freely given");
+    expect(journal).toContain("Das stille Tal: Die Adresse, freiwillig gegeben");
     expect(journal.some((t) => t.includes("Veyra"))).toBe(true);
     // No squad-gated options anywhere on this script → no debrief hint.
     expect(journal.some((t) => t.startsWith("Debrief:"))).toBe(false);
@@ -184,7 +184,7 @@ describe("chooseEventOption — golden paths (§5, §6)", () => {
     expect(done.missions.available).toContain("m_vy_ledger");
     expect(done.missions.completed).toEqual([{ mission: "m_vy_arrival", outcome: "out_va_fight", day: 1 }]);
     expect(done.heroes.find((h) => h.hero === "h_okafor")!.xp).toBe(5);
-    expect(done.journal.map((j) => j.text)).toContain("The Silent Valley: A silence bought in blood");
+    expect(done.journal.map((j) => j.text)).toContain("Das stille Tal: Eine mit Blut erkaufte Stille");
   });
 
   it("queues a follow-up with fireOnDay = day + delay (M2 kept promise, +5d)", () => {
@@ -212,7 +212,7 @@ describe("chooseEventOption — golden paths (§5, §6)", () => {
     expect(done.activeMission).toBeNull();
     expect(done.flags.f_vy_godtech).toBe(true);
     expect(done.journal.map((j) => j.text)).toContain(
-      "Debrief: a different team composition might have opened other approaches.",
+      "Debrief: Eine andere Teamzusammenstellung hätte vielleicht andere Wege eröffnet.",
     );
   });
 

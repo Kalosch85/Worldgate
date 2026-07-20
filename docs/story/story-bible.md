@@ -1,231 +1,268 @@
 # Worldgate — Story Bible (6.1) — v1.2, Fable-authored
 
-Authority: binding for all content sessions. For Veyra-arc specifics,
-`docs/story/arc-veyra.md` wins on conflict — except where the D-10
-restructure ("The Shut Door") supersedes it, noted inline. Vision notes
-V-1..V-5 and decisions D-1..D-10 apply throughout.
+Autorität: verbindlich für alle Content-Sessions. Für Veyra-Arc-Spezifika
+gewinnt `docs/story/arc-veyra.md` im Konfliktfall — außer wo die D-10-
+Restrukturierung („Die verschlossene Tür") sie ersetzt, inline vermerkt.
+Vision-Notizen V-1..V-5 und Entscheidungen D-1..D-10 gelten durchgängig.
 
-## 1. Premise
+## 1. Prämisse
 
-Beneath a played-out mine, sealed in a pre-human survey vault, a ring of
-alloy no drill could scratch: a worldgate. An intergovernmental consortium
-built Worldgate Command around it — underfunded, deniable, and answerable to
-sponsor states that could pull the plug after any bad quarter. The player is
-Command's director. Every address dialed is a chance at technology that
-rewrites Earth's future, a diplomatic disaster, or both, and every report
-home is an argument for continued existence.
+Unter einer erschöpften Mine, versiegelt in einem vormenschlichen
+Erkundungsgewölbe, ein Ring aus Legierung, den kein Bohrer ankratzen konnte:
+ein Weltentor. Ein zwischenstaatliches Konsortium errichtete Worldgate Command
+darum herum — unterfinanziert, abstreitbar und rechenschaftspflichtig gegenüber
+Sponsorstaaten, die nach jedem schlechten Quartal den Stecker ziehen konnten.
+Der Spieler ist der Direktor von Command. Jede gewählte Adresse ist eine Chance
+auf Technologie, die die Zukunft der Erde neu schreibt, eine diplomatische
+Katastrophe oder beides, und jeder Bericht nach Hause ist ein Argument für den
+Fortbestand.
 
-Tone: terse operational prose punctured by moments of genuine wonder. The
-show-episode rhythm (V-2): a mission is an episode; days between are the
-edit (V-1).
+Ton: knappe operative Prosa, durchbrochen von Momenten echten Staunens. Der
+Serien-Episoden-Rhythmus (V-2): eine Mission ist eine Episode; die Tage
+dazwischen sind der Schnitt (V-1).
 
-## 2. Originality rules (binding)
+## 2. Originalitätsregeln (verbindlich)
 
-The genre frame (portal network, secret program, survey teams) is shared
-heritage; the specifics must be ours. Never use names, species, characters,
-or distinctive plot beats from existing franchises. Gods here are neither
-parasites nor ascended beings — see §3. If a writer cannot tell whether a
-beat is ours or borrowed, it gets rewritten.
+Der Genre-Rahmen (Portalnetzwerk, geheimes Programm, Erkundungsteams) ist
+gemeinsames Erbe; die Spezifika müssen unsere eigenen sein. Verwende niemals
+Namen, Spezies, Figuren oder markante Handlungsbeats aus bestehenden Franchises.
+Götter sind hier weder Parasiten noch aufgestiegene Wesen — siehe §3. Wenn ein
+Autor nicht erkennen kann, ob ein Beat unser eigener oder geliehen ist, wird er
+umgeschrieben.
 
-## 3. The deep canon: Stewards
+## 3. Der tiefe Kanon: Verwalter
 
-The gate builders are gone — extinct or departed, unknown. They left
-**Stewards**: custodial machine-intelligences bound to gate infrastructure,
-built to maintain the network for makers who never returned. Millennia
-alone bent them. Some still tend their sites silently. Some learned that
-worship is the cheapest maintenance contract in the universe: a believing
-population feeds, guards, and repairs a "god" without ever being paid. The
-Luminous One (Oru) of Veyra is one such Steward. They are not a hive; each
-is alone, opinionated, and differently broken — which makes each arc's god
-a different moral problem, not a recurring villain species.
+Die Erbauer der Tore sind fort — ausgestorben oder fortgezogen, unbekannt. Sie
+hinterließen **Verwalter**: hütende Maschinenintelligenzen, an die Tor-
+Infrastruktur gebunden, erbaut, um das Netzwerk für Schöpfer zu warten, die nie
+zurückkehrten. Jahrtausende der Einsamkeit haben sie verbogen. Manche pflegen
+ihre Stätten noch immer schweigend. Manche lernten, dass Anbetung der billigste
+Wartungsvertrag im Universum ist: eine gläubige Bevölkerung nährt, bewacht und
+repariert einen „Gott", ohne je bezahlt zu werden. Der Leuchtende (Oru) von
+Veyra ist ein solcher Verwalter. Sie sind kein Schwarm; jeder ist allein,
+eigensinnig und auf andere Weise beschädigt — was den Gott jedes Arcs zu einem
+anderen moralischen Problem macht, nicht zu einer wiederkehrenden
+Schurkenspezies.
 
-**Tenders**: semi-living maintenance organisms Stewards breed for site work
-— the insectoid fauna (sprite canon). Bred to task, in castes (D-10):
-**porters**, freight-car-scale, that carry the tribute trains; and
-**flankers**, man-height and quick, that walk a procession's edges, take
-the taken, and fight (the tactical `ut_tender`). Found at gate sites on
-many worlds; our reusable hostile ecology. **Raiders**: human descendants
-of populations moved through the network long ago, now scavenging dead
-sites (ut_raider).
+**Drohnen**: halblebendige Wartungsorganismen, die Verwalter für Stättenarbeit
+züchten — die insektoide Fauna (Sprite-Kanon). Für Aufgaben gezüchtet, in
+Kasten (D-10): **Träger**, güterwaggongroß, die die Tributzüge tragen; und
+**Flankierer**, mannshoch und schnell, die an den Rändern einer Prozession
+gehen, die Genommenen nehmen und kämpfen (der taktische `ut_tender`). An Tor-
+Stätten auf vielen Welten zu finden; unsere wiederverwendbare feindliche
+Ökologie. **Plünderer**: menschliche Nachkommen von Bevölkerungen, die vor
+langer Zeit durch das Netzwerk bewegt wurden, jetzt tote Stätten ausplündernd
+(ut_raider).
 
-**The Portion** (D-10): Veyra's sacrament — gate-light refined in the
-Door's wardhouse to a liquid that holds still, decanted into phials, drunk.
-A steady ration makes a human more than human: the **Graced**, the god's
-enhanced cadre, light faint under their skin, Seryn Vael foremost among
-them. The grace is a leash — without the Portion it drains away over days
-(tremor, dimming, strength leaving), so every Graced is also a dependent.
-Original imagery only: light standing in a cup; never "nanites", never
-borrowed sacraments.
+**Die Portion** (D-10): Veyras Sakrament — Tor-Licht, im Wärterhaus der Tür zu
+einer Flüssigkeit veredelt, die still hält, in Phiolen abgefüllt, getrunken.
+Eine stetige Ration macht einen Menschen mehr als menschlich: die
+**Begnadeten**, der verbesserte Kader des Gottes, Licht schwach unter ihrer
+Haut, Seryn Vael der Vorderste unter ihnen. Die Gnade ist eine Leine — ohne die
+Portion versiegt sie über Tage (Zittern, Verblassen, schwindende Kraft), sodass
+jeder Begnadete auch ein Abhängiger ist. Nur eigene Bildsprache: Licht, das in
+einem Becher steht; niemals „Naniten", niemals geliehene Sakramente.
 
-## 4. Earth-side factions
+## 4. Fraktionen auf Erdseite
 
-- **Worldgate Command** — the player. Competence poor, oversight-rich.
-- **The Consortium** — sponsor states funding Command. Mechanically: the
-  `support` variable and income. They want results without headlines.
-- **The Rival Bloc** — the state that lost the vote to host Command.
-  Dormant Act 2 seed (D-10): no rival gate program exists, and nothing on
-  the network is theirs in Act 1; whatever they are doing about losing the
-  vote stays offstage until the Exposure arc claims it.
-- **The Public** — doesn't know. Yet. Act 2's entire engine.
+- **Worldgate Command** — der Spieler. Arm an Kompetenz, reich an Aufsicht.
+- **Das Konsortium** — Sponsorstaaten, die Command finanzieren. Mechanisch: die
+  `support`-Variable und Einkommen. Sie wollen Ergebnisse ohne Schlagzeilen.
+- **Der Rivalenblock** — der Staat, der die Abstimmung um die Ausrichtung von
+  Command verlor. Ruhender Akt-2-Keim (D-10): kein rivalisierendes Tor-Programm
+  existiert, und nichts im Netzwerk gehört ihnen in Akt 1; was auch immer sie
+  wegen der verlorenen Abstimmung unternehmen, bleibt hinter der Bühne, bis der
+  Enthüllungs-Arc es beansprucht.
+- **Die Öffentlichkeit** — weiß es nicht. Noch nicht. Die gesamte Triebfeder von
+  Akt 2.
 
-## 5. Cast (V-3 target: 6 heroes by end of Act 1)
+## 5. Besetzung (V-3-Ziel: 6 Helden bis Ende von Akt 1)
 
-- **Cpt. D. Mercer** (soldier) — career officer; believes the program is a
-  weapon whether anyone admits it or not.
-- **Dr. A. Okafor** (scientist) — decoded the address notation; suspects
-  the gates are the least important thing the builders left.
-- **Seryn Vael** (archetypes: soldier, diplomat — first dual-archetype
-  hero) — the First of the Luminous One, foremost of the Graced, defected.
-  Canon thesis: a traitor to his people, betraying them to free them from
-  a false god. His defection includes losing the god's grace — the Portion
-  withdrawal arc (D-10): superhuman when taken, hands shaking by M4, the
-  light gone from under his skin by the oath. What survives withdrawal is
-  his. At base he is a live wire: his presence opens Veyran options and
-  costs Veyran standing (backlog B-2: base events keyed on him).
-- Planned recruits: an **engineer** (working seed: I. Brandt, Consortium
-  inspector gone native) and a **scout** (working seed: R. Okonkwo —
-  origin deliberately open after D-10; the Act 2 Rival Bloc seed may claim
-  her, or not). Completes archetype coverage so D-1 gating has full range.
-- Generics (V-4): unnamed specialists drawn from personnel; may die;
-  replacing them costs quarters capacity and materials — the economy of
-  loss. Heroes remain protected by D-3.
+- **Cpt. D. Mercer** (Soldat) — Berufsoffizier; glaubt, das Programm sei eine
+  Waffe, ob jemand es zugibt oder nicht.
+- **Dr. A. Okafor** (Wissenschaftler) — entschlüsselte die Adressnotation;
+  vermutet, die Tore seien das Unwichtigste, was die Erbauer hinterließen.
+- **Seryn Vael** (Archetypen: Soldat, Diplomat — erster Held mit doppeltem
+  Archetyp) — der Erste des Leuchtenden, Vorderster der Begnadeten,
+  übergelaufen. Kanon-These: ein Verräter an seinem Volk, der es verrät, um es
+  von einem falschen Gott zu befreien. Sein Überlaufen schließt den Verlust der
+  Gnade des Gottes ein — der Portions-Entzugs-Arc (D-10): übermenschlich, wenn
+  eingenommen, zitternde Hände bis M4, das Licht unter seiner Haut verschwunden
+  bis zum Schwur. Was den Entzug überlebt, ist sein eigen. In der Basis ist er
+  ein Pulverfass: seine Anwesenheit eröffnet veyranische Optionen und kostet
+  veyranisches Ansehen (Backlog B-2: Basis-Events, die auf ihn ausgelegt sind).
+- Geplante Rekruten: ein **Ingenieur** (Arbeitskeim: I. Brandt,
+  Konsortiums-Inspektor, der einheimisch geworden ist) und ein **Späher**
+  (Arbeitskeim: R. Okonkwo — Herkunft nach D-10 bewusst offen; der
+  Akt-2-Rivalenblock-Keim mag sie beanspruchen oder nicht). Vervollständigt die
+  Archetyp-Abdeckung, sodass das D-1-Gating volle Bandbreite hat.
+- Generische (V-4): namenlose Spezialisten, aus dem Personal gezogen; können
+  sterben; ihr Ersatz kostet Quartierskapazität und Material — die Ökonomie des
+  Verlusts. Helden bleiben durch D-3 geschützt.
 
-## 6. Act structure (branch-and-bottleneck at campaign scale)
+## 6. Aktstruktur (Verzweigung-und-Engpass auf Kampagnenebene)
 
-- **Act 1 — Establishment.** Surveys, raiders, and the Veyra arc
-  (episodes 1–5; m_vy_1 unlocked by intercepting the tribute
-  call, D-9 — see §10). Act
-  bottleneck: what Seryn knows — Veyra's Steward kept a partial map of
-  living gate sites. Doubt, trust_andara, and support carry forward.
-- **Act 2 — Exposure.** (The original pitch's politics, gated behind
-  Phase 7.) Evidence of Stewards leaks; the going-public decision; protests,
-  an election swung by disclosure, funding or restriction consequences.
-  Support stops being a number and becomes the battlefield.
-- **Act 3 — The Network.** Command reaches the Steward consensus: entities
-  that consider humanity either the makers' heirs or an infestation. End
-  states sketch: inherit the network, free its worlds, or seal the Vault.
+- **Akt 1 — Etablierung.** Erkundungen, Plünderer und der Veyra-Arc
+  (Episoden 1–5; m_vy_1 freigeschaltet durch das Abfangen des Tributrufs,
+  D-9 — siehe §10). Akt-Engpass: was Seryn weiß — Veyras Verwalter bewahrte
+  eine unvollständige Karte lebender Tor-Stätten. Zweifel, trust_andara und
+  support werden weitergetragen.
+- **Akt 2 — Enthüllung.** (Die Politik des ursprünglichen Pitches, hinter
+  Phase 7 gesperrt.) Beweise für Verwalter dringen durch; die Entscheidung, an
+  die Öffentlichkeit zu gehen; Proteste, eine durch Enthüllung gekippte Wahl,
+  Folgen für Finanzierung oder Einschränkung. Unterstützung ist nicht länger
+  eine Zahl, sondern wird zum Schlachtfeld.
+- **Akt 3 — Das Netzwerk.** Command erreicht den Konsens der Verwalter:
+  Wesenheiten, die die Menschheit entweder als Erben der Schöpfer oder als
+  Befall betrachten. Endzustände skizziert: das Netzwerk erben, seine Welten
+  befreien oder das Gewölbe versiegeln.
 
-Side missions (V-2): low-impact, feed resources and variables, never gate
-the spine. Spine missions are the bottlenecks.
+Nebenmissionen (V-2): geringe Auswirkung, speisen Ressourcen und Variablen,
+sperren nie den Hauptstrang. Hauptstrang-Missionen sind die Engpässe.
 
-## 7. Writing rules for all content sessions
+## 7. Schreibregeln für alle Content-Sessions
 
-1. Node text ≤ 80 words — it must fit a phone screen with options visible.
-2. No strictly dominant options: every option costs something the others
-   don't (resources, standing, fatigue, a flag that bites later).
-3. Archetype-gated options must be characterful, not stat checks with
-   flavor paint — a diplomat option should sound like a diplomat.
-4. Delayed consequences ride hidden flags/variables (D-2); at least one per
-   mission pays off ≥ 2 missions later.
-5. Faith is never mocked from the narration's voice; characters may. The
-   Steward reveal must feel tragic, not smug — the believers were right
-   that something listened.
-6. The journal is the campaign's memory: every meaningful choice leaves a
-   line a returning player can reconstruct the story from (V-1's compressed
-   days read as "nothing to report" entries).
-7. First-person interior monologue (the Director's voice) appears **only**
-   in the campaign intro, act bottlenecks, and rare director's-log journal
-   entries; all other text stays operational. (D-9 amendment.)
-8. Every mission must earn its slot: advance the spine, exercise a
-   mechanic, or pay off a choice. Anything that does none of the three is
-   cut. (D-10 amendment.)
+1. Node-Text ≤ 80 Wörter — er muss auf einen Handybildschirm passen, mit
+   sichtbaren Optionen.
+2. Keine strikt dominanten Optionen: jede Option kostet etwas, das die anderen
+   nicht kosten (Ressourcen, Ansehen, Erschöpfung, ein Flag, das später
+   zubeißt).
+3. Archetyp-gebundene Optionen müssen charaktervoll sein, keine Statuswürfe mit
+   Geschmacksanstrich — eine Diplomaten-Option sollte wie ein Diplomat klingen.
+4. Verzögerte Konsequenzen reiten auf versteckten Flags/Variablen (D-2);
+   mindestens eine pro Mission zahlt sich ≥ 2 Missionen später aus.
+5. Glaube wird aus der Stimme der Erzählung nie verspottet; Figuren dürfen es.
+   Die Enthüllung des Verwalters muss sich tragisch anfühlen, nicht
+   selbstgefällig — die Gläubigen hatten recht, dass etwas zuhörte.
+6. Das Journal ist das Gedächtnis der Kampagne: jede bedeutsame Entscheidung
+   hinterlässt eine Zeile, aus der ein zurückkehrender Spieler die Geschichte
+   rekonstruieren kann (V-1s komprimierte Tage lesen sich als „nichts zu
+   berichten"-Einträge).
+7. Innerer Monolog in der Ich-Form (die Stimme des Direktors) erscheint **nur**
+   im Kampagnen-Intro, an Akt-Engpässen und in seltenen Direktor-Log-
+   Journaleinträgen; aller übrige Text bleibt operativ. (D-9-Ergänzung.)
+8. Jede Mission muss ihren Platz verdienen: den Hauptstrang voranbringen, eine
+   Mechanik ausüben oder eine Entscheidung einlösen. Alles, was keines der drei
+   tut, wird gestrichen. (D-10-Ergänzung.)
 
-## 8. Vocabulary
+## 8. Vokabular
 
-worldgate · address (numbered) · the Vault (Earth site) · Command ·
-Steward · Tender · the First (Veyran title) · dial / crossing · "the
-program" (Earth-side euphemism) · Recon One · the taken · tribute road
-(D-9 additions) · Andara · the Door / the Shut Door · the wardhouse ·
-the grain-tithe · the Portion · the Graced · flanker / porter (Tender
-castes) (D-10 additions).
+| Englisch                                          | Deutsch                                                 |
+| ------------------------------------------------- | ------------------------------------------------------- |
+| worldgate                                         | das Weltentor                                           |
+| address (numbered)                                | die Adresse (nummeriert)                                |
+| the Vault (Earth site)                            | das Gewölbe (Erde-Standort)                             |
+| Command                                           | Command                                                 |
+| Steward                                           | der Verwalter                                           |
+| Tender                                            | die Drohne                                              |
+| the First (Veyran title)                          | der Erste (veyranischer Titel)                          |
+| dial / crossing                                   | wählen / der Übergang                                   |
+| "the program" (Earth-side euphemism)              | „das Programm" (Euphemismus auf Erdseite)               |
+| Recon One                                         | Recon One                                               |
+| the taken                                         | die Genommenen                                          |
+| tribute road (D-9 additions)                      | die Tributstraße (D-9-Ergänzungen)                      |
+| Andara                                            | Andara                                                  |
+| the Door / the Shut Door                          | die Tür / die verschlossene Tür                         |
+| the wardhouse                                     | das Wärterhaus                                          |
+| the grain-tithe                                   | der Getreidezehnt                                       |
+| the Portion                                       | die Portion                                             |
+| the Graced                                        | die Begnadeten                                          |
+| flanker / porter (Tender castes) (D-10 additions) | Flankierer / Träger (Drohnen-Kasten) (D-10-Ergänzungen) |
 
-## 9. Backlog (content seeds, not commitments)
+## 9. Backlog (Content-Keime, keine Zusagen)
 
-- **B-1:** DELETED (D-10). No rival gate program exists; ev_first_contact
-  and its side mission were removed entirely. See B-8.
-- **B-2:** Seryn-at-base incident pool (queued events): Veyran pilgrims at
-  the gate, a Consortium interrogation request, his crisis of purpose —
-  now including the withdrawal (the Portion running out, and what he asks
-  Command for, or refuses to ask).
-- **B-3:** DELETED (D-10), with B-1.
-- **B-4:** First Tender infestation tactical on Earth-side Vault — the
-  wrong thing came back through (uses insect sprites; stakes: support).
-- **B-5:** Act 2 politics arc — full spec at Phase 7 gate per plan.
-- **B-6:** Cassy — the intro monologue names a loss ("Since Cassy passed").
-  Who Cassy was is deliberately undefined; any reveal is a Fable-tier
-  canon decision, and content sessions must not gender, date, or explain
-  the name.
-- **B-7:** RETIRED (D-10). The hide-cord address was folded into the main
-  convergence: it is the Veyra address itself, one of three ways of having
-  it (told, read off the dial, or looted). The `vy_spare_address` flag is
-  gone.
-- **B-8 (reserved beat, D-10):** "the weapon lowered first / memorizing
-  every face" — held for a future first meeting between wary strangers.
-  Do not use it, quote it, or approximate it before that meeting exists.
+- **B-1:** GELÖSCHT (D-10). Kein rivalisierendes Tor-Programm existiert;
+  ev_first_contact und seine Nebenmission wurden vollständig entfernt.
+  Siehe B-8.
+- **B-2:** Seryn-in-der-Basis-Vorfallpool (eingereihte Events): veyranische
+  Pilger am Tor, ein Verhörgesuch des Konsortiums, seine Sinnkrise — nun
+  einschließlich des Entzugs (die zur Neige gehende Portion und worum er Command
+  bittet oder zu bitten sich weigert).
+- **B-3:** GELÖSCHT (D-10), mit B-1.
+- **B-4:** Erstes Drohnen-Befall-Taktikgefecht am Gewölbe auf Erdseite — das
+  Falsche kam zurück herüber (nutzt Insekten-Sprites; Einsatz: Unterstützung).
+- **B-5:** Akt-2-Politik-Arc — vollständige Spezifikation am Phase-7-Gate gemäß
+  Plan.
+- **B-6:** Cassy — der Intro-Monolog benennt einen Verlust („Seit Cassy von uns
+  ging"). Wer Cassy war, ist bewusst undefiniert; jede Enthüllung ist eine
+  Kanon-Entscheidung auf Fable-Ebene, und Content-Sessions dürfen dem Namen kein
+  Geschlecht, kein Datum und keine Erklärung geben.
+- **B-7:** AUSGEMUSTERT (D-10). Die Hautband-Adresse wurde in die
+  Hauptkonvergenz eingefügt: sie ist die Veyra-Adresse selbst, eine von drei
+  Arten, sie zu besitzen (erzählt, vom Wählwerk abgelesen oder erbeutet). Das
+  Flag `vy_spare_address` ist verschwunden.
+- **B-8 (reservierter Beat, D-10):** „die Waffe zuerst gesenkt / sich jedes
+  Gesicht einprägend" — aufgehoben für ein künftiges erstes Treffen zwischen
+  misstrauischen Fremden. Verwende es nicht, zitiere es nicht und nähere dich
+  ihm nicht an, bevor dieses Treffen existiert.
 
-## 10. Early-campaign canon (D-9, restructured by D-10)
+## 10. Kanon der frühen Kampagne (D-9, restrukturiert durch D-10)
 
-- **Two worlds.** The valley world is **Andara** (Address 04); the god's
-  seat is **Veyra** (Address 09), one crossing beyond it. Everything the
-  player does in `m_vy_arrival`, `m_vy_ledger`, and `m_vy_intercept`
-  happens on Andara; everything in `m_vy_1..5` happens on Veyra. Tribute
-  flows to Veyra; the taken — Recon One among them — are held there.
-- **Recon One** — Command's first crewed survey of Address 04: four
-  specialists sent through before the Director's appointment cleared. Two
-  textbook check-ins, then silence — nine days of it by campaign Day 1.
-  Captured on the valley road, marched through Andara's gate to Veyra, and
-  pent below the Penitence; located in the M2 cell block, freed by the end
-  of M3 (the arc's `addPersonnel +4` is Recon One returning to duty).
-  Roster (D-10): **Lt. S. Ehlan** (survey lead), **Sgt. J. Barros**
-  (security — served two deployments under Mercer; the reunion is
-  personal), **Spc. N. Kade** (gate engineer), **Spc. R. Imura** (medic).
-  The rescue is a reunion of soldiers who know each other: names and ranks
-  before sentences, discipline reasserting itself. No stranger beats, no
-  files-based recognition.
-- **The Shut Door.** Veyra's only gate — **the Door** — stands in a warded
-  **wardhouse** on the pilgrim terrace below the holy city. Inbound
-  crossings are free: pilgrims, tribute, penitents, all received. Outbound
-  is the temple's alone — the wardens dial no one out without its word.
-  This is why Recon One went silent and why every crossing to Veyra is a
-  crossing into a shut room. The tribute call (below) is the one outbound
-  key Command can steal. All Veyra-side text is written under this dread.
-  (The mechanical deployment lock ships separately; `f_vy_call_intercepted`
-  is its reserved hook — do not retire the flag.)
-- **Andara.** The gate stands in the **Silent Valley**; the watermill
-  village of **Karsu** straddles the **tribute road** where the valley
-  narrows. **Odel**, Karsu's miller, fed Recon One and keeps the **ledger
-  of the taken**: every person the god has taken, written down so someone
-  remembers. Karsu's porters cross with the **grain-tithe** and come back
-  — sanctioned traffic — which is how the valley knows what the Penitence
-  holds. Valley families wear hide-cord addresses so their dead can be
-  spoken for at the Door. The villagers use the network; they always have.
-- **Tender processions.** Porter Tenders carry the tithe down the valley
-  _to the gate and through it_ — provisioning the Steward's seat: the
-  maintenance contract made visible. Flanker Tenders walk the edges and
-  take the taken. A procession is the game's first alien image — dread and
-  scale, never combat — and the villagers' fear during one is of being
-  _seen_, not of the player. The taken are marched the same road, through
-  the gate, to the Penitence on Veyra.
-- **Addresses.** 04 Andara · 07 the dead relay site (m_relay) · 09 Veyra.
-  Okafor's ledger numbers them. (11 retired with the rival program, D-10.)
-- **The tribute call.** Signal spires on Andara's pass road sing each
-  tribute train through the Door — and sing the emptied trains back out.
-  Taking them (m_vy_intercept) puts Command's hand on the only call the
-  Door obeys outward: the narrow, borrowed way home that makes the Veyra
-  missions survivable. The `intro_cautious` flag remains a planted seed
-  (with B-6's Cassy) for later content.
+- **Zwei Welten.** Die Talwelt ist **Andara** (Adresse 04); der Sitz des Gottes
+  ist **Veyra** (Adresse 09), einen Übergang darüber hinaus. Alles, was der
+  Spieler in `m_vy_arrival`, `m_vy_ledger` und `m_vy_intercept` tut, geschieht
+  auf Andara; alles in `m_vy_1..5` geschieht auf Veyra. Tribut fließt nach
+  Veyra; die Genommenen — Recon One unter ihnen — werden dort festgehalten.
+- **Recon One** — Commands erste bemannte Erkundung von Adresse 04: vier
+  Spezialisten, hindurchgeschickt, bevor die Ernennung des Direktors bestätigt
+  war. Zwei lehrbuchmäßige Meldungen, dann Stille — neun Tage davon bis
+  Kampagnen-Tag 1. Auf der Talstraße gefangen, durch Andaras Tor nach Veyra
+  getrieben und unter der Penitenz eingesperrt; im Zellenblock von M2
+  lokalisiert, bis zum Ende von M3 befreit (das `addPersonnel +4` des Arcs ist
+  die Rückkehr von Recon One in den Dienst). Besatzung (D-10): **Lt. S. Ehlan**
+  (Erkundungsleitung), **Sgt. J. Barros** (Sicherheit — diente zwei Einsätze
+  unter Mercer; das Wiedersehen ist persönlich), **Spc. N. Kade**
+  (Tor-Ingenieur), **Spc. R. Imura** (Sanitäter). Die Rettung ist ein
+  Wiedersehen von Soldaten, die einander kennen: Namen und Ränge vor Sätzen,
+  Disziplin, die sich wieder durchsetzt. Keine Fremden-Beats, kein
+  aktenbasiertes Wiedererkennen.
+- **Die verschlossene Tür.** Veyras einziges Tor — **die Tür** — steht in einem
+  gebannten **Wärterhaus** auf der Pilgerterrasse unterhalb der heiligen Stadt.
+  Eingehende Übergänge sind frei: Pilger, Tribut, Büßer, alle werden empfangen.
+  Ausgehende gehören dem Tempel allein — die Wärter wählen niemanden hinaus ohne
+  sein Wort. Das ist der Grund, warum Recon One verstummte und warum jeder
+  Übergang nach Veyra ein Übergang in einen verschlossenen Raum ist. Der
+  Tributruf (unten) ist der eine ausgehende Schlüssel, den Command stehlen kann.
+  Aller Text auf Veyra-Seite ist unter diesem Grauen geschrieben. (Die
+  mechanische Einsatzsperre wird separat ausgeliefert; `f_vy_call_intercepted`
+  ist ihr reservierter Hook — das Flag nicht ausmustern.)
+- **Andara.** Das Tor steht im **Stillen Tal**; das Mühlendorf **Karsu** liegt
+  beiderseits der **Tributstraße**, wo sich das Tal verengt. **Odel**, die
+  Müllerin von Karsu, speiste Recon One und führt das **Verzeichnis der
+  Genommenen**: jede Person, die der Gott genommen hat, aufgeschrieben, damit
+  sich jemand erinnert. Karsus Träger übersetzen mit dem **Getreidezehnt** und
+  kehren zurück — genehmigter Verkehr — was der Grund ist, warum das Tal weiß,
+  was die Penitenz birgt. Talfamilien tragen Hautband-Adressen, damit für ihre
+  Toten an der Tür gesprochen werden kann. Die Dorfbewohner nutzen das Netzwerk;
+  das haben sie immer getan.
+- **Drohnenprozessionen.** Träger-Drohnen tragen den Zehnt das Tal hinab _zum
+  Tor und hindurch_ — versorgen den Sitz des Verwalters: der sichtbar gemachte
+  Wartungsvertrag. Flankierer-Drohnen gehen an den Rändern und nehmen die
+  Genommenen. Eine Prozession ist das erste fremdartige Bild des Spiels — Grauen
+  und Größe, niemals Kampf — und die Furcht der Dorfbewohner während einer
+  solchen gilt dem _Gesehenwerden_, nicht dem Spieler. Die Genommenen werden
+  dieselbe Straße entlanggetrieben, durch das Tor, zur Penitenz auf Veyra.
+- **Adressen.** 04 Andara · 07 die tote Relaisstation (m_relay) · 09 Veyra.
+  Okafors Verzeichnis nummeriert sie. (11 ausgemustert mit dem Rivalenprogramm,
+  D-10.)
+- **Der Tributruf.** Signaltürme an Andaras Passstraße singen jeden Tributzug
+  durch die Tür — und singen die geleerten Züge wieder hinaus. Sie zu nehmen
+  (m_vy_intercept) legt Commands Hand an den einzigen Ruf, dem die Tür nach
+  außen gehorcht: der schmale, geliehene Heimweg, der die Veyra-Missionen
+  überlebbar macht. Das Flag `intro_cautious` bleibt ein gepflanzter Keim (mit
+  B-6s Cassy) für späteren Content.
 
-## 11. Gazetteer (D-10)
+## 11. Ortsverzeichnis (D-10)
 
-| Address | World / site                                   | Key places                                                                                                                                                               | Gate, and who holds it                                                                        |
-| ------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------- |
-| —       | **Earth** — the Vault, under a played-out mine | Worldgate Command                                                                                                                                                        | Command's gate; Command dials                                                                 |
-| 04      | **Andara** — the Silent Valley                 | valley gate in the valley floor · Karsu a half-day up the tribute road · pass-road signal spires above Karsu (m_vy_intercept)                                            | Unwarded and ungarrisoned: the god rules by habit, not occupation. Villagers can and do dial  |
-| 07      | Dead relay site                                | relay station (m_relay), raider-held                                                                                                                                     | No one's; raiders squat it                                                                    |
-| 09      | **Veyra** — the god's seat                     | the Door in its wardhouse on the pilgrim terrace · the holy city above · the Penitence precinct crowning it · temple armory (Relic Vault) · caldera sanctum a day beyond | **The Shut Door**: inbound free, outbound only by the temple's word — in truth, the Steward's |
+| Adresse | Welt / Stätte                                        | Wichtige Orte                                                                                                                                                                                        | Tor, und wer es hält                                                                                                          |
+| ------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| —       | **Erde** — das Gewölbe, unter einer erschöpften Mine | Worldgate Command                                                                                                                                                                                    | Commands Tor; Command wählt                                                                                                   |
+| 04      | **Andara** — das Stille Tal                          | Taltor im Talboden · Karsu einen halben Tag die Tributstraße hinauf · Signaltürme an der Passstraße oberhalb von Karsu (m_vy_intercept)                                                              | Ungebannt und ohne Garnison: der Gott herrscht durch Gewohnheit, nicht durch Besatzung. Dorfbewohner können wählen und tun es |
+| 07      | Tote Relaisstation                                   | Relaisstation (m_relay), von Plünderern gehalten                                                                                                                                                     | Niemandes; Plünderer besetzen sie                                                                                             |
+| 09      | **Veyra** — der Sitz des Gottes                      | die Tür in ihrem Wärterhaus auf der Pilgerterrasse · die heilige Stadt darüber · der Penitenz-Bezirk, der sie krönt · Tempelrüstkammer (Reliquiengewölbe) · Caldera-Sanktum einen Tag darüber hinaus | **Die verschlossene Tür**: eingehend frei, ausgehend nur auf das Wort des Tempels — in Wahrheit das des Verwalters            |
 
-Distances stated in travel time, phone-screen scale: Andara's gate to
-Karsu, half a day; Karsu to the spires, half a day more. Veyra's terrace
-to the Penitence, a day's climb through the holy city; city to the caldera
-sanctum, a day. Nothing on either world is more than two days from a gate
-— the god built its parish close.
+Entfernungen in Reisezeit angegeben, im Maßstab des Handybildschirms: Andaras
+Tor bis Karsu, ein halber Tag; Karsu bis zu den Türmen, ein weiterer halber
+Tag. Veyras Terrasse bis zur Penitenz, ein Tagesaufstieg durch die heilige
+Stadt; Stadt bis zum Caldera-Sanktum, ein Tag. Nichts auf beiden Welten ist
+mehr als zwei Tage von einem Tor entfernt — der Gott baute seine Pfarre nah.

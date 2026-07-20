@@ -3,6 +3,7 @@
  * in-progress or autosaved campaign, and export/import the save string.
  */
 import { useState, type CSSProperties } from "react";
+import { strings } from "../strings.js";
 import { buttonStyle, panelStyle, theme } from "../theme.js";
 
 const textareaStyle: CSSProperties = {
@@ -67,16 +68,16 @@ export function MainMenu({
     >
       <header style={{ textAlign: "center" }}>
         <h1 style={{ margin: 0, fontSize: "clamp(2rem, 8vw, 3rem)", letterSpacing: "0.02em" }}>Worldgate</h1>
-        <p style={{ margin: "0.25rem 0 0", color: theme.textDim }}>Strategic prototype</p>
+        <p style={{ margin: "0.25rem 0 0", color: theme.textDim }}>{strings.mainMenu.subtitle}</p>
       </header>
 
       <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", width: "100%", maxWidth: 420 }}>
         <button type="button" style={{ ...buttonStyle("primary"), width: "100%" }} onClick={onNewCampaign}>
-          New Campaign
+          {strings.mainMenu.newCampaign}
         </button>
         {canContinue && (
           <button type="button" style={{ ...buttonStyle("ghost"), width: "100%" }} onClick={onContinue}>
-            Continue
+            {strings.mainMenu.continue}
           </button>
         )}
 
@@ -87,13 +88,18 @@ export function MainMenu({
               style={{ ...buttonStyle("ghost"), width: "100%" }}
               onClick={() => setShowExport((v) => !v)}
             >
-              {showExport ? "Hide save string" : "Export save"}
+              {showExport ? strings.mainMenu.hideSave : strings.mainMenu.exportSave}
             </button>
             {showExport && (
               <div style={{ marginTop: "0.6rem", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                <textarea readOnly style={textareaStyle} value={exportString} aria-label="Save string" />
+                <textarea
+                  readOnly
+                  style={textareaStyle}
+                  value={exportString}
+                  aria-label={strings.mainMenu.saveStringLabel}
+                />
                 <button type="button" style={buttonStyle("ghost")} onClick={copyExport}>
-                  {copied ? "Copied ✓" : "Copy to clipboard"}
+                  {copied ? strings.mainMenu.copied : strings.mainMenu.copy}
                 </button>
               </div>
             )}
@@ -101,7 +107,7 @@ export function MainMenu({
         )}
 
         <section style={panelStyle}>
-          <h2 style={{ margin: "0 0 0.6rem", fontSize: "1rem" }}>Import save</h2>
+          <h2 style={{ margin: "0 0 0.6rem", fontSize: "1rem" }}>{strings.mainMenu.importSave}</h2>
           <textarea
             style={textareaStyle}
             value={importText}
@@ -109,8 +115,8 @@ export function MainMenu({
               setImportText(e.target.value);
               setImportError(null);
             }}
-            placeholder="Paste a Worldgate save string…"
-            aria-label="Import save string"
+            placeholder={strings.mainMenu.importPlaceholder}
+            aria-label={strings.mainMenu.importAriaLabel}
           />
           {importError && <p style={{ margin: "0.5rem 0 0", color: theme.danger }}>{importError}</p>}
           <button
@@ -118,7 +124,7 @@ export function MainMenu({
             style={{ ...buttonStyle("ghost"), width: "100%", marginTop: "0.5rem" }}
             onClick={submitImport}
           >
-            Load imported save
+            {strings.mainMenu.loadImported}
           </button>
         </section>
       </div>

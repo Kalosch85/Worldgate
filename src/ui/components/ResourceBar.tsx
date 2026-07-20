@@ -5,6 +5,7 @@
  */
 import type { CSSProperties } from "react";
 import type { GameStateT } from "../../data/schemas.js";
+import { strings } from "../strings.js";
 import { theme } from "../theme.js";
 
 const chip: CSSProperties = {
@@ -50,12 +51,12 @@ export function ResourceBar({ state }: { state: GameStateT }) {
         borderBottom: `1px solid ${theme.border}`,
       }}
     >
-      <Stat label="Day" value={state.campaign.day} />
-      <Stat label="Funds" value={funds} />
-      <Stat label="Materials" value={materials} />
-      <Stat label="Intel" value={intel} />
-      <Stat label="Exotics" value={exotics} />
-      <Stat label="Support" value={support} />
+      <Stat label={strings.resources.day} value={state.campaign.day} />
+      <Stat label={strings.resources.funds} value={funds} />
+      <Stat label={strings.resources.materials} value={materials} />
+      <Stat label={strings.resources.intel} value={intel} />
+      <Stat label={strings.resources.exotics} value={exotics} />
+      <Stat label={strings.resources.support} value={support} />
     </div>
   );
 }

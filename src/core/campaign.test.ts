@@ -61,8 +61,8 @@ describe("newCampaign intro launch (D-9)", () => {
     // D-10: science-first grants the briefing head start (+4 intel).
     expect(s.resources.intel).toBe(4);
     const lines = s.journal.map((j) => j.text);
-    expect(lines).toContain("Day 1. Rescue crossing authorized. Address 04.");
-    expect(lines).toContain("First Day: Rescue crossing authorized");
+    expect(lines).toContain("Tag 1. Rettungsübergang genehmigt. Adresse 04.");
+    expect(lines).toContain("Erster Tag: Rettungsübergang genehmigt");
     // Incident-style completion: no MissionDef wrapper, so no completed entry.
     expect(s.missions.completed).toEqual([]);
   });

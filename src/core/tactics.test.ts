@@ -379,8 +379,8 @@ describe("interact order & objectives (§8)", () => {
     // §9: the downed hero (okafor) takes inj_wounded, not death.
     const okf = next.heroes.find((h) => h.hero === "h_okafor")!;
     expect(okf.injuries).toContainEqual({ injury: "inj_wounded", daysRemaining: 5 });
-    expect(next.journal.map((j) => j.text)).toContain("Dr. A. Okafor was wounded in action.");
-    expect(next.journal.map((j) => j.text)).toContain("Secure the Relay: victory");
+    expect(next.journal.map((j) => j.text)).toContain("Dr. A. Okafor wurde im Einsatz verwundet.");
+    expect(next.journal.map((j) => j.text)).toContain("Die Relaisstation sichern: Sieg");
   });
 
   it("loses when the whole squad is down, and wounds every downed hero (§8, §9)", () => {
@@ -398,7 +398,7 @@ describe("interact order & objectives (§8)", () => {
     expect(next.variables.support).toBe(4);
     const merc = next.heroes.find((h) => h.hero === "h_mercer")!;
     expect(merc.injuries).toContainEqual({ injury: "inj_wounded", daysRemaining: 5 });
-    expect(next.journal.map((j) => j.text)).toContain("Secure the Relay: defeat");
+    expect(next.journal.map((j) => j.text)).toContain("Die Relaisstation sichern: Niederlage");
   });
 });
 

@@ -175,9 +175,9 @@ describe("interactable feedback (§11)", () => {
     m.ap = 0;
     const view = buildBattleView(s, CONTENT, { selectedUnit: "u_h_mercer", mode: { kind: "move" } })!;
     expect(view.consoles.find((c) => c.id === "con_a")!.reachableNext).toBe(false);
-    expect(interpretTap(view, 7, 0)).toEqual({ kind: "message", text: "No AP left" });
+    expect(interpretTap(view, 7, 0)).toEqual({ kind: "message", text: "Keine AP übrig" });
     // The button reports the same reason instead of sitting silently disabled.
-    expect(interactButtonTap(view)).toEqual({ kind: "message", text: "No AP left" });
+    expect(interactButtonTap(view)).toEqual({ kind: "message", text: "Keine AP übrig" });
   });
 
   it("tapping the wrong console (out of order) names the one to activate first", () => {
@@ -187,7 +187,7 @@ describe("interactable feedback (§11)", () => {
     m.pos = { x: 6, y: 4 };
     const view = buildBattleView(s, CONTENT, { selectedUnit: "u_h_mercer", mode: { kind: "move" } })!;
     expect(view.consoles.find((c) => c.id === "con_b")!.reachableNext).toBe(false);
-    expect(interpretTap(view, 7, 4)).toEqual({ kind: "message", text: "Activate Console A first" });
+    expect(interpretTap(view, 7, 4)).toEqual({ kind: "message", text: "Zuerst Konsole A aktivieren" });
   });
 
   it("tapping the next console from a distance says to move closer", () => {
@@ -195,6 +195,6 @@ describe("interactable feedback (§11)", () => {
     const m = battle(s).units.find((u) => u.id === "u_h_mercer")!;
     m.pos = { x: 3, y: 0 }; // has AP, far from console A (7,0)
     const view = buildBattleView(s, CONTENT, { selectedUnit: "u_h_mercer", mode: { kind: "move" } })!;
-    expect(interpretTap(view, 7, 0)).toEqual({ kind: "message", text: "Move closer" });
+    expect(interpretTap(view, 7, 0)).toEqual({ kind: "message", text: "Näher herangehen" });
   });
 });

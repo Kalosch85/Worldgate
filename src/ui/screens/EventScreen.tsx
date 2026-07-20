@@ -16,16 +16,10 @@
 import { useMemo, useState, type ReactNode } from "react";
 import { eligibleOptions } from "../../core/narrative.js";
 import type { Action } from "../../core/reducer.js";
-import type { ContentBundleT, Effect, GameStateT, ResourceIdT } from "../../data/schemas.js";
+import type { ContentBundleT, Effect, GameStateT } from "../../data/schemas.js";
 import { NextMissions } from "../components/NextMissions.js";
+import { RESOURCE_LABELS, strings, variableLabel } from "../strings.js";
 import { buttonStyle, panelStyle, theme } from "../theme.js";
-
-const RESOURCE_LABELS: Record<ResourceIdT, string> = {
-  funds: "Funds",
-  materials: "Materials",
-  intel: "Intel",
-  exotics: "Exotics",
-};
 
 interface Delta {
   label: string;
@@ -39,12 +33,6 @@ interface Completion {
   hint: boolean;
   /** Optional authored recap line from the outcome (schema `debrief`). */
   debriefText?: string;
-}
-
-/** Prettify a variable id for display: `trust_andara` → "Trust andara". */
-function variableLabel(name: string): string {
-  const spaced = name.replace(/_/g, " ");
-  return spaced.charAt(0).toUpperCase() + spaced.slice(1);
 }
 
 /**
@@ -141,7 +129,7 @@ export function EventScreen({
   // Completion panel — outcome label, visible effect summary, debrief hint.
   if (completion) {
     return shell(
-      <section style={panelStyle} aria-label="Mission outcome">
+      <section style={panelStyle} aria-label={strings.event.outcomeAriaLabel}>
         <div
           style={{
             fontSize: "0.7rem",
@@ -151,7 +139,7 @@ export function EventScreen({
             color: theme.accent,
           }}
         >
-          Mission complete
+          {strings.event.missionComplete}
         </div>
         <h2 style={{ margin: "0.35rem 0 0.75rem", fontSize: "1.3rem" }}>{completion.label}</h2>
         {completion.debriefText && (
@@ -159,7 +147,7 @@ export function EventScreen({
             {completion.debriefText}
           </p>
         )}
-        <DeltaList deltas={completion.deltas} emptyText="No immediate change." />
+        <DeltaList deltas={completion.deltas} emptyText={strings.event.noImmediateChange} />
         <NextMissions missionIds={newlyUnlocked} content={content} />
         {completion.hint && (
           <p
@@ -173,7 +161,7 @@ export function EventScreen({
               fontSize: "0.85rem",
             }}
           >
-            A different team composition might have opened other approaches.
+            {strings.event.teamCompositionHint}
           </p>
         )}
         <button
@@ -181,7 +169,7 @@ export function EventScreen({
           style={{ ...buttonStyle("primary"), width: "100%", marginTop: "1rem" }}
           onClick={onDone}
         >
-          Return to base
+          {strings.common.returnToBase}
         </button>
       </section>,
     );
@@ -191,13 +179,13 @@ export function EventScreen({
   if (!active || !node) {
     return shell(
       <section style={panelStyle}>
-        <p style={{ margin: 0, color: theme.textDim }}>No active mission.</p>
+        <p style={{ margin: 0, color: theme.textDim }}>{strings.event.noActiveMission}</p>
         <button
           type="button"
           style={{ ...buttonStyle("primary"), width: "100%", marginTop: "1rem" }}
           onClick={onDone}
         >
-          Return to base
+          {strings.common.returnToBase}
         </button>
       </section>,
     );
@@ -207,7 +195,7 @@ export function EventScreen({
 
   return shell(
     <>
-      <section style={panelStyle} aria-label="Narrative">
+      <section style={panelStyle} aria-label={strings.event.narrativeAriaLabel}>
         {node.speaker && (
           <div style={{ fontWeight: 700, color: theme.accent, marginBottom: "0.35rem" }}>{node.speaker}</div>
         )}

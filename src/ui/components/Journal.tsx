@@ -3,17 +3,16 @@
  * and (later) mission resolution. Newest entries first.
  */
 import type { GameStateT } from "../../data/schemas.js";
+import { strings } from "../strings.js";
 import { panelStyle, theme } from "../theme.js";
 
 export function Journal({ state }: { state: GameStateT }) {
   const entries = state.journal;
   return (
-    <section style={panelStyle} aria-label="Journal">
-      <h2 style={{ margin: "0 0 0.75rem", fontSize: "1.05rem" }}>Journal</h2>
+    <section style={panelStyle} aria-label={strings.journal.title}>
+      <h2 style={{ margin: "0 0 0.75rem", fontSize: "1.05rem" }}>{strings.journal.title}</h2>
       {entries.length === 0 ? (
-        <p style={{ margin: 0, color: theme.textDim }}>
-          Nothing logged yet. End a day to advance the campaign.
-        </p>
+        <p style={{ margin: 0, color: theme.textDim }}>{strings.journal.empty}</p>
       ) : (
         <ol
           style={{
@@ -31,7 +30,7 @@ export function Journal({ state }: { state: GameStateT }) {
             .map(({ entry, i }) => (
               <li key={i} style={{ display: "flex", gap: "0.6rem", fontSize: "0.9rem" }}>
                 <span style={{ color: theme.accent, fontVariantNumeric: "tabular-nums", flexShrink: 0 }}>
-                  Day {entry.day}
+                  {strings.journal.day(entry.day)}
                 </span>
                 <span style={{ color: theme.text }}>{entry.text}</span>
               </li>

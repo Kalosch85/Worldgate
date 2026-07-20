@@ -1,8 +1,8 @@
 [
   {
     "id": "t_gate_stabilizer",
-    "name": "Gate Stabilizer",
-    "description": "Reliable dialing to surveyed addresses.",
+    "name": "Tor-Stabilisator",
+    "description": "Zuverlässiges Wählen zu erkundeten Adressen.",
     "cost": 20,
     "prerequisites": [],
     "effects": [
@@ -12,14 +12,14 @@
       },
       {
         "type": "log",
-        "text": "The gate holds a stable connection for the first time."
+        "text": "Das Tor hält zum ersten Mal eine stabile Verbindung."
       }
     ]
   },
   {
     "id": "t_field_medicine",
-    "name": "Field Medicine",
-    "description": "Improved recovery for returning teams.",
+    "name": "Feldmedizin",
+    "description": "Bessere Erholung für zurückkehrende Teams.",
     "cost": 15,
     "prerequisites": ["t_gate_stabilizer"],
     "effects": [
@@ -33,14 +33,14 @@
   },
   {
     "id": "t_radiance_cell",
-    "name": "Radiance Cell",
-    "description": "Decanted from a captured dose of the First's Portion — gate-light refined to a standing charge. Dense, stable, and not remotely holy.",
+    "name": "Strahlungszelle",
+    "description": "Abgefüllt aus einer erbeuteten Dosis der Portion des Ersten — Torlicht, veredelt zu einer stehenden Ladung. Dicht, stabil und nicht im Entferntesten heilig.",
     "cost": 30,
     "prerequisites": [],
     "effects": [
       {
         "type": "log",
-        "text": "The 'holy fire' is refined gate-light. The god feeds its chosen from a power main."
+        "text": "Das ‚heilige Feuer‘ ist veredeltes Torlicht. Der Gott speist seine Auserwählten aus einer Stromleitung."
       }
     ],
     "visibleIf": [
@@ -63,14 +63,14 @@
   },
   {
     "id": "t_projection_theory",
-    "name": "Projection Theory",
-    "description": "Field recordings of the Luminous One reveal how a being can appear anywhere it is worshipped.",
+    "name": "Projektionstheorie",
+    "description": "Feldaufnahmen des Leuchtenden zeigen, wie ein Wesen überall dort erscheinen kann, wo es verehrt wird.",
     "cost": 45,
     "prerequisites": ["t_radiance_cell"],
     "effects": [
       {
         "type": "log",
-        "text": "Not omnipresence. Emitters."
+        "text": "Keine Allgegenwart. Emitter."
       }
     ],
     "visibleIf": [

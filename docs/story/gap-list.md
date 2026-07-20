@@ -1,148 +1,160 @@
-# Story-gap list — after Restructure 2, "The Shut Door" (D-10)
+# Story-Lücken-Liste — nach Umstrukturierung 2, „Die verschlossene Tür" (D-10)
 
-Every question a player plausibly holds at each story beat, marked either
-**answered-where** (the beat that answers it) or **OPEN**. OPEN items are
-the player's to decide next; content sessions must not answer them on
-their own initiative (they are Fable-tier canon decisions).
+Jede Frage, die ein Spieler an jedem Story-Beat plausibel hat, markiert
+entweder **beantwortet-wo** (der Beat, der sie beantwortet) oder **OFFEN**.
+OFFENE Punkte sind vom Spieler als Nächstes zu entscheiden; Inhalts-Sessions
+dürfen sie nicht aus eigener Initiative beantworten (es sind
+Kanon-Entscheidungen der Fable-Stufe).
 
-## Intro — First Day (ev_intro)
+## Intro — Erster Tag (ev_intro)
 
-- Who is Cassy, and what did the Director lose? — **OPEN** (B-6; guarded:
-  never gender, date, or explain without a Fable decision).
-- Why was Recon One sent before the Director's appointment cleared, and on
-  whose authority? — **OPEN** (a predecessor exists — Okafor's "my
-  predecessor's notes" — but who they were and why they left is unwritten).
-- What do the other fifty addresses hold? — **OPEN** by design (the
-  campaign's horizon; 07 and 09 get answered, the rest are Act 2+ space).
-- Why does the Consortium fund a program it expects nothing from? —
-  answered-partly in the bible's premise (deniability, plug-pulling); the
-  sponsors' actual motives are **OPEN**.
+- Wer ist Cassy, und was hat der Direktor verloren? — **OFFEN** (B-6;
+  geschützt: niemals Geschlecht, Datum oder Erklärung ohne eine
+  Fable-Entscheidung).
+- Warum wurde Recon One entsandt, bevor die Ernennung des Direktors bestätigt
+  war, und auf wessen Befugnis? — **OFFEN** (ein Vorgänger existiert — Okafors
+  „die Notizen meines Vorgängers" —, doch wer er war und warum er ging, ist
+  ungeschrieben).
+- Was bergen die anderen fünfzig Adressen? — **OFFEN** (bewusst) (der Horizont
+  der Kampagne; 07 und 09 werden beantwortet, der Rest ist Akt-2+-Raum).
+- Warum finanziert das Konsortium ein Programm, von dem es nichts erwartet? —
+  teilweise beantwortet in der Prämisse der Bibel (Abstreitbarkeit,
+  Stecker-Ziehen); die tatsächlichen Motive der Geldgeber sind **OFFEN**.
 
-## The Silent Valley — m_vy_arrival (Andara)
+## Das stille Tal — m_vy_arrival (Andara)
 
-- What happened to Recon One? — answered here (taken alive through the
-  gate; four fingers) and completed in m_vy_ledger / M2.
-- Why do the villagers hide from the Tenders if the Tenders never look at
-  anyone? — answered-partly here ("their fear is of being seen") and in
-  m_vy_ledger (the price is sometimes people); the exact rules of a
-  taking — who is chosen, and by what sign — are **OPEN**.
-- Where does the tribute go? — answered in m_vy_ledger and on-screen in
-  M1–M4 (through the gate, to the temple stores on Veyra).
-- Why does a whole valley wear gate addresses on hide cords? — answered in
-  the violent branch and n_vy1_faces (so the dead can be spoken for where
-  the taken are brought; the villagers use the network).
-- Can the villagers dial anywhere else — and if so, why stay? — **OPEN**
-  (they can dial; whether anywhere else would have them, and what the god
-  does about runaways who don't run to it, is unwritten).
-- RUN branch: what happens to the field families who fled to Veyra? —
-  answered-partly in n_vy1_faces (penitents at the wardhouse, begging
-  pardon); their long-term fate is **OPEN**.
+- Was ist mit Recon One geschehen? — hier beantwortet (lebend durch das Tor
+  genommen; vier Finger) und in m_vy_ledger / M2 vervollständigt.
+- Warum verstecken sich die Dorfbewohner vor den Drohnen, wenn die Drohnen
+  niemanden ansehen? — teilweise hier beantwortet („ihre Furcht ist, gesehen zu
+  werden") und in m_vy_ledger (der Preis sind manchmal Menschen); die genauen
+  Regeln einer Nahme — wer gewählt wird und nach welchem Zeichen — sind
+  **OFFEN**.
+- Wohin geht der Tribut? — beantwortet in m_vy_ledger und auf dem Bildschirm in
+  M1–M4 (durch das Tor, zu den Tempellagern auf Veyra).
+- Warum trägt ein ganzes Tal Tor-Adressen an Hautschnüren? — beantwortet im
+  gewalttätigen Zweig und in n_vy1_faces (damit für die Toten dort gesprochen
+  werden kann, wohin die Genommenen gebracht werden; die Dorfbewohner nutzen das
+  Netzwerk).
+- Können die Dorfbewohner sich auch anderswohin wählen — und wenn ja, warum
+  bleiben? — **OFFEN** (sie können wählen; ob irgendwo anders sie aufnähme und
+  was der Gott mit Ausreißern tut, die nicht zu ihm rennen, ist ungeschrieben).
+- RENN-Zweig: Was geschieht mit den Feldfamilien, die nach Veyra flohen? —
+  teilweise beantwortet in n_vy1_faces (Büßer am Wärterhaus, um Vergebung
+  bittend); ihr langfristiges Schicksal ist **OFFEN**.
 
-## The Ledger of the Taken — m_vy_ledger (Karsu)
+## Das Verzeichnis der Genommenen — m_vy_ledger (Karsu)
 
-- Are the four alive? — answered here (fresh ink, porters' word).
-- How does a valley on one world know what a prison on another holds? —
-  answered here (Karsu's porters cross with the grain-tithe and come back).
-- Who is Seryn Vael? — foreshadowed here (the First Blade, the Portion at
-  the road shrine); answered in M3.
-- Why does the god feed the valley — what does it get from generations of
-  grain? — answered-partly in M5 (a Steward's maintenance contract); what
-  the tithe physically _does_ on Veyra is **OPEN**.
-- Violent route: will Karsu ever open again? — **OPEN** (the hard-close is
-  permanent in Act 1; any thaw is a future Fable decision).
+- Sind die vier am Leben? — hier beantwortet (frische Tinte, das Wort der
+  Träger).
+- Woher weiß ein Tal auf einer Welt, was ein Gefängnis auf einer anderen birgt?
+  — hier beantwortet (Karsus Träger setzen mit dem Getreidezehnt über und kehren
+  zurück).
+- Wer ist Seryn Vael? — hier angedeutet (die Erste Klinge, die Portion am
+  Straßenschrein); beantwortet in M3.
+- Warum ernährt der Gott das Tal — was bekommt er von Generationen von Getreide?
+  — teilweise beantwortet in M5 (der Wartungsvertrag eines Verwalters); was der
+  Zehnt physisch auf Veyra _bewirkt_, ist **OFFEN**.
+- Gewalttätige Route: Wird Karsu je wieder öffnen? — **OFFEN** (die harte
+  Schließung ist in Akt 1 dauerhaft; jedes Tauwetter ist eine künftige
+  Fable-Entscheidung).
 
-## The Tribute Call — m_vy_intercept (the pass spires)
+## Der Tributruf — m_vy_intercept (die Signaltürme des Passes)
 
-- Why do we need the spires before crossing? — answered in the mission
-  text and ledger logs (the Door opens outward only for called traffic;
-  the spires are the way home).
-- Does the temple notice forged calls? — **OPEN** (deliberate menace; the
-  deployment-lock mechanic that ships separately will decide how this
-  bites; `f_vy_call_intercepted` is its reserved hook).
-- What are the spires, mechanically — who built them? — **OPEN** (Steward
-  infrastructure is implied, never stated).
+- Warum brauchen wir die Türme vor dem Übergang? — beantwortet im Missionstext
+  und in den Verzeichnis-Logs (die Tür öffnet nach außen nur für gerufenen
+  Verkehr; die Türme sind der Heimweg).
+- Bemerkt der Tempel gefälschte Rufe? — **OFFEN** (bewusste Bedrohung; die
+  separat ausgelieferte Deployment-Lock-Mechanik wird entscheiden, wie das
+  zubeißt; `f_vy_call_intercepted` ist ihr reservierter Hook).
+- Was sind die Türme mechanisch — wer hat sie gebaut? — **OFFEN**
+  (Verwalter-Infrastruktur wird angedeutet, nie ausgesprochen).
 
-## Pilgrim Roads — m_vy_1 (Veyra: the Door, the terrace)
+## Pilgerstraßen — m_vy_1 (Veyra: die Tür, die Terrasse)
 
-- Why did Recon One never check in again? — answered here and in M2
-  (the Door opens in, never out; they were behind it in days).
-- Who are the pilgrims — how many worlds feed this god? — **OPEN** (the
-  terrace implies a parish of worlds; only Andara is named).
-- The boy and his father are here — do they know what we are? — answered
-  per branch in n_vy1_faces (thanks, fear-and-debt, or the cold turned
-  back).
-- What is "the Penitence's mercy" for heretics? — answered in M3's
-  execution-yard variant (burning at dusk).
+- Warum meldete sich Recon One nie wieder? — hier und in M2 beantwortet (die Tür
+  öffnet nach innen, nie nach außen; sie waren binnen Tagen dahinter).
+- Wer sind die Pilger — wie viele Welten ernähren diesen Gott? — **OFFEN** (die
+  Terrasse deutet eine Gemeinde von Welten an; nur Andara wird genannt).
+- Der Junge und sein Vater sind hier — wissen sie, was wir sind? — je nach Zweig
+  in n_vy1_faces beantwortet (Dank, Furcht-und-Schuld oder die Kälte der
+  Abweisung).
+- Was ist „die Gnade der Penitenz" für Ketzer? — beantwortet in der
+  Hinrichtungshof-Variante von M3 (Verbrennung in der Dämmerung).
 
-## The Penitence — m_vy_2
+## Die Penitenz — m_vy_2
 
-- Is Recon One intact — bodies and minds? — answered here (gaunt, unarmed,
-  discipline holding; names and ranks before sentences).
-- Who questioned them, and what did the temple learn about Earth? —
-  **OPEN** ("men who drank light" asked; what the god now knows about
-  Address Earth is deliberately unanswered — Act 2 fuel).
-- Who is Ilo, and why was he condemned? — answered-partly (a smuggler,
-  Dessik's son); what he smuggled is **OPEN**.
-- Why does the prison run on ritual? — answered-partly (the whole city
-  does; the god is a maintenance intelligence — M5 recontextualizes).
+- Ist Recon One unversehrt — an Leib und Verstand? — hier beantwortet (hager,
+  unbewaffnet, die Disziplin hält; Namen und Ränge vor den Urteilen).
+- Wer hat sie verhört, und was hat der Tempel über die Erde erfahren? —
+  **OFFEN** („Männer, die Licht tranken" fragten; was der Gott nun über die
+  Adresse Erde weiß, ist bewusst unbeantwortet — Treibstoff für Akt 2).
+- Wer ist Ilo, und warum wurde er verurteilt? — teilweise beantwortet (ein
+  Schmuggler, Dessiks Sohn); was er schmuggelte, ist **OFFEN**.
+- Warum läuft das Gefängnis auf Ritual? — teilweise beantwortet (die ganze Stadt
+  tut es; der Gott ist eine Wartungsintelligenz — M5 rückt es in neues Licht).
 
-## The First Blade — m_vy_3
+## Die Erste Klinge — m_vy_3
 
-- What makes Seryn more than a man? — answered here (the Portion, the
-  light under his skin) and named in the ledger foreshadow.
-- Why does he defect (any branch)? — answered per branch (argument,
-  evidence, or defeat-then-witness); the thesis line is bible §5.
-- What happens to a Graced who stops drinking? — answered across M4, M5,
-  and the oath (tremor, dimming, the grace leaving); whether withdrawal
-  can kill him is **OPEN**.
-- Are there other Graced, and where were they during the escape? —
-  **OPEN** (the honor guard is not stated to be Graced; the cadre's size
-  is unwritten — a deliberate Act 2 lever).
-- How do we get four prisoners and a squad out through a shut Door? —
-  answered in the outcome logs (out under a tribute call the temple
-  believes).
+- Was macht Seryn zu mehr als einem Mann? — hier beantwortet (die Portion, das
+  Licht unter seiner Haut) und in der Andeutung des Verzeichnisses genannt.
+- Warum läuft er über (jeder Zweig)? — je nach Zweig beantwortet (Argument,
+  Beweis oder Niederlage-dann-Zeugenschaft); die Kernaussage ist Bibel §5.
+- Was geschieht mit einem Begnadeten, der aufhört zu trinken? — über M4, M5 und
+  den Eid hinweg beantwortet (Zittern, Verblassen, die Gnade, die geht); ob der
+  Entzug ihn töten kann, ist **OFFEN**.
+- Gibt es weitere Begnadete, und wo waren sie während der Flucht? — **OFFEN**
+  (von der Ehrengarde wird nicht gesagt, dass sie begnadet ist; die Größe des
+  Kaders ist ungeschrieben — ein bewusster Akt-2-Hebel).
+- Wie bringen wir vier Gefangene und einen Trupp durch eine verschlossene Tür
+  hinaus? — in den Ergebnis-Logs beantwortet (hinaus unter einem Tributruf, dem
+  der Tempel glaubt).
 
-## Relic Vault — m_vy_4
+## Reliquiengewölbe — m_vy_4
 
-- What is the vault core? — answered here and in t_radiance_cell (a power
-  cell dense enough to feed a cathedral of light).
-- Why are tribute crates stamped outbound from Veyra? — answered-partly in
-  bible §3/§10 (the Steward provisions its other, dead sites); which sites
-  and why they still matter is **OPEN**.
-- Dessik sold us out (Ilo abandoned): what did he get for it? — **OPEN**.
+- Was ist der Kern des Gewölbes? — hier und in t_radiance_cell beantwortet (eine
+  Energiezelle, dicht genug, um eine Kathedrale aus Licht zu speisen).
+- Warum sind Tribut-Kisten als ausgehend von Veyra gestempelt? — teilweise in
+  Bibel §3/§10 beantwortet (der Verwalter versorgt seine anderen, toten
+  Standorte); welche Standorte und warum sie noch von Bedeutung sind, ist
+  **OFFEN**.
+- Dessik hat uns verraten (Ilo zurückgelassen): Was hat er dafür bekommen? —
+  **OFFEN**.
 
-## The Luminous One — m_vy_5
+## Der Leuchtende — m_vy_5
 
-- What is the god? — answered here (a Steward keeping the lamp lit so the
-  long watch would never be alone).
-- Watch path: the god remains — does the taking go on? Does the Door ever
-  open? — **OPEN** (the player's next decision-space; nothing after M5 is
-  authored for the watch ending).
-- Fight path: the anchor is destroyed and a provisional council forms —
-  who leads free Veyra, and what happens to the Penitence, the wardens,
-  the remaining Graced, and the parish worlds that still send tithe to a
-  dark Door? — **OPEN** (ev_vy_gratitude sketches the council only).
-- Where did the god flee (fight path)? — **OPEN** ("it has outrun worse
-  than you" — a thread for the Steward-consensus arc, Act 3).
-- What does Seryn's partial map of living gate sites hold? — **OPEN** (the
-  Act 1 bottleneck per bible §6; not yet authored).
-- Does Andara learn its god is a machine — and from whom? — **OPEN**
-  (trust_andara persists as the accumulator for whatever that becomes).
+- Was ist der Gott? — hier beantwortet (ein Verwalter, der die Lampe am Brennen
+  hält, damit die lange Wacht niemals allein wäre).
+- Beobachten-Pfad: Der Gott bleibt — geht die Nahme weiter? Öffnet die Tür je? —
+  **OFFEN** (der nächste Entscheidungsraum des Spielers; nach M5 ist nichts für
+  das Beobachten-Ende verfasst).
+- Kampf-Pfad: Der Anker ist zerstört und ein vorläufiger Rat bildet sich — wer
+  führt das freie Veyra, und was geschieht mit der Penitenz, den Wärtern, den
+  verbliebenen Begnadeten und den Gemeinde-Welten, die weiterhin Zehnt an eine
+  dunkle Tür senden? — **OFFEN** (ev_vy_gratitude skizziert nur den Rat).
+- Wohin floh der Gott (Kampf-Pfad)? — **OFFEN** („es ist Schlimmerem als dir
+  entkommen" — ein Faden für den Verwalter-Konsens-Bogen, Akt 3).
+- Was enthält Seryns unvollständige Karte lebender Tor-Standorte? — **OFFEN**
+  (der Akt-1-Engpass gemäß Bibel §6; noch nicht verfasst).
+- Erfährt Andara, dass sein Gott eine Maschine ist — und von wem? — **OFFEN**
+  (trust_andara bleibt als Akkumulator für das erhalten, was daraus wird).
 
-## Follow-ups (oath, gratitude, Dessik's word)
+## Folge-Ereignisse (Eid, Dankbarkeit, Dessiks Wort)
 
-- Can Command synthesize the Portion — and would it? — **OPEN** (the
-  captured dose unlocks t_radiance_cell as power research only; a
-  human-enhancement program is an unasked, unanswered, deliberately
-  radioactive question — Fable-tier).
-- What does Dessik's network cost Command down the line? — **OPEN** (his
-  intel is priced as a kept promise; his ambitions are unwritten).
-- Seryn at base: pilgrims at the gate, Consortium interrogation requests,
-  the Portion running out — **OPEN** (B-2 pool, not yet authored).
+- Kann Command die Portion synthetisieren — und würde es das? — **OFFEN** (die
+  erbeutete Dosis schaltet t_radiance_cell nur als Energieforschung frei; ein
+  Programm zur Menschenverbesserung ist eine ungestellte, unbeantwortete,
+  bewusst radioaktive Frage — Fable-Stufe).
+- Was kostet Dessiks Netzwerk Command auf lange Sicht? — **OFFEN** (seine
+  Aufklärung ist als gehaltenes Versprechen beziffert; seine Ambitionen sind
+  ungeschrieben).
+- Seryn in der Basis: Pilger am Tor, Verhör-Anfragen des Konsortiums, die zur
+  Neige gehende Portion — **OFFEN** (B-2-Pool, noch nicht verfasst).
 
-## Standing reserved items
+## Stehende reservierte Punkte
 
-- B-6 Cassy (guarded), B-8 "the weapon lowered first / memorizing every
-  face" (reserved for a future wary-strangers first meeting), the Rival
-  Bloc's Act 2 shape (bible §4), the deployment-lock mechanic
-  (`f_vy_call_intercepted`), and the `intro_cautious` seed.
+- B-6 Cassy (geschützt), B-8 „die Waffe zuerst gesenkt / sich jedes Gesicht
+  einprägend" (reserviert für ein künftiges erstes Treffen misstrauischer
+  Fremder), die Akt-2-Gestalt des Rivalenblocks (Bibel §4), die
+  Deployment-Lock-Mechanik (`f_vy_call_intercepted`) und der
+  `intro_cautious`-Keim.

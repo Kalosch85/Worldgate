@@ -41,9 +41,9 @@ describe("golden scenarios (docs/specs/economy-and-roster.md §8)", () => {
     expect(state.research.completed).toContain("t_gate_stabilizer");
     expect(state.research.current).toBeNull();
     expect(state.missions.available).toContain("m_relay");
-    expect(
-      state.journal.some((j) => j.text === "The gate holds a stable connection for the first time."),
-    ).toBe(true);
+    expect(state.journal.some((j) => j.text === "Das Tor hält zum ersten Mal eine stabile Verbindung.")).toBe(
+      true,
+    );
     expect(state.resources.funds).toBe(148);
     expect(state.campaign.day).toBe(5);
   });
@@ -65,7 +65,7 @@ describe("golden scenarios (docs/specs/economy-and-roster.md §8)", () => {
     const next = endDay(state, ctx());
     expect(next.resources.funds).toBe(0);
     expect(next.variables.support).toBe(-6);
-    expect(next.journal.some((j) => j.text === "Payroll missed.")).toBe(true);
+    expect(next.journal.some((j) => j.text === "Zahltag verpasst.")).toBe(true);
   });
 });
 
@@ -105,7 +105,7 @@ describe("startResearch", () => {
     };
     const next = startResearch(eligible, CONTENT, "t_field_medicine");
     expect(next.research.current).toEqual({ tech: "t_field_medicine", progress: 0 });
-    expect(next.journal.some((j) => j.text.includes("discarded"))).toBe(true);
+    expect(next.journal.some((j) => j.text.includes("verworfen"))).toBe(true);
   });
 
   it("canStartResearch guard agrees with the throw behavior", () => {
@@ -273,7 +273,7 @@ describe("endDay recovery (step 4)", () => {
     };
     const next = endDay(injured, ctx());
     expect(next.heroes[0]!.injuries).toEqual([]);
-    expect(next.journal.some((j) => j.text.includes("recovered from"))).toBe(true);
+    expect(next.journal.some((j) => j.text.includes("hat sich von"))).toBe(true);
   });
 
   it("keeps an injury with remaining days, just decremented", () => {

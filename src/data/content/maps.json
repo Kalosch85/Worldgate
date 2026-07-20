@@ -1,7 +1,7 @@
 [
   {
     "id": "map_relay",
-    "name": "Relay Station",
+    "name": "Relaisstation",
     "width": 8,
     "height": 6,
     "tiles": ["........", ".-...#..", "...+.#..", ".#...-..", ".#......", "........"],
@@ -29,7 +29,7 @@
   },
   {
     "id": "map_vy_intercept",
-    "name": "Pass Road Spires",
+    "name": "Passstraßen-Türme",
     "width": 8,
     "height": 6,
     "tiles": ["........", ".-...#..", "...+.#..", ".#...-..", ".#......", "........"],

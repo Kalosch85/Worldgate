@@ -1,6 +1,6 @@
 # Narrativ-Review — Veyra-Bogen (Deutsch)
 
-Prosa-Review ohne JSON-Kontakt. Für jede Passage steht der aktuelle Text als **ORIGINAL** (nur Referenz, nicht ändern) und darunter ein leeres **NEU:**-Feld. Trage Überarbeitungen ausschließlich in **NEU** ein; ein leeres NEU-Feld lässt die Quelle unverändert. Sprecher, Bedingungen und Effekte sind **read-only** Kontext. Reihenfolge = erzählerischer Ablauf (Unlock-Kette), nicht Dateireihenfolge. Anker (`<!-- key: … -->`) nicht verändern — sie steuern den Rückspiel-Konverter (siehe README am Ende).
+Prosa-Review ohne JSON-Kontakt. Für jede Passage steht der aktuelle Text als **ORIGINAL** (nur Referenz, nicht ändern) und darunter ein **NEU:**-Feld, das bereits mit einer **exakten Kopie des ORIGINAL** vorbefüllt ist — editiere direkt darin. Lässt du eine Passage unverändert (NEU zeichengleich mit ORIGINAL), wird sie beim Rückspiel übersprungen; nur geänderte Passagen landen im JSON. Jede Passage ist fortlaufend nummeriert (`[P###]`), damit sie im Review referenzierbar ist. Sprecher, Bedingungen und Effekte sind **read-only** Kontext. Reihenfolge = erzählerischer Ablauf (Unlock-Kette), nicht Dateireihenfolge. Anker (`<!-- key: … -->`) nicht verändern — sie steuern den Rückspiel-Konverter (siehe README am Ende).
 
 Generiert aus `src/data/content/events.json` + `missions.json`. Stand: siehe PR.
 
@@ -12,7 +12,7 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 ### Event: Erster Tag (`ev_intro`) · Einstieg `n_in_sign`
 
-#### Knoten `n_in_sign`
+#### [P001] Knoten `n_in_sign`
 
 <!-- key: ev_intro::node::n_in_sign::text -->
 
@@ -20,16 +20,13 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **ORIGINAL:**
 
-> Ich wusste nicht, was mich erwartete, als ich unterschrieb. „Geheime Versetzung. Annehmen oder ablehnen.“ Keine Einweisung, keine Einzelheiten — nur eine Unterschriftszeile und ein wartender Wagen. Womit ich gewiss nicht gerechnet hatte: mitten in einen Science-Fiction-Comic zu treten. Interstellare Reisen durch einen leuchtenden Ring. Nun. Das ist neu. ... Seit Cassy fort ist, kann ich die Arbeit gebrauchen. Vielleicht mehr noch den Abstand.
+> Ich wusste nicht, was mich erwartete, als ich unterschrieb. „Geheime Versetzung. Annehmen oder ablehnen.“ Kein Briefing, keine Einzelheiten — nur eine Unterschriftszeile und ein wartender Wagen, eigentlich nichts neues, aber irgendwas schien anders.... Aber mitten in einen Science-Fiction-Comic geworfen zu werden, damit hatte ich sicherlich nicht gerechnet. Interstellare Reisen durch einen leuchtenden Ring? Nun, das ist neu. Funktionsweise? Unklar, Herkunft? Unbekannt. Egal, seit Cassy fort ist weiß ich ohnehin nicht was ich tun soll, da kann ich die Arbeit gebrauchen. Vielleicht mehr noch den Abstand.
 
 **NEU:**
 
-> Ich wusste nicht, was mich erwartete, als ich unterschrieb. „Geheime Versetzung. Annehmen oder ablehnen.“ Kein Briefing, keine Einzelheiten — nur eine Unterschriftszeile und ein wartender Wagen, eigentlich nichts neues, aber irgendwas schien anders....
-> Aber mitten in einen Science-Fiction-Comic geworfen zu werden, damit hatte ich sicherlich nicht gerechnet.
-> Interstellare Reisen durch einen leuchtenden Ring? Nun, das ist neu. Funktionsweise? Unklar, Herkunft? Unbekannt.
-> Egal, seit Cassy fort ist weiß ich ohnehin nicht was ich tun soll, da kann ich die Arbeit gebrauchen. Vielleicht mehr noch den Abstand.
+Ich wusste nicht, was mich erwartete, als ich unterschrieb. „Geheime Versetzung. Annehmen oder ablehnen.“ Kein Briefing, keine Einzelheiten — nur eine Unterschriftszeile und ein wartender Wagen, eigentlich nichts neues, aber irgendwas schien anders.... Aber mitten in einen Science-Fiction-Comic geworfen zu werden, damit hatte ich sicherlich nicht gerechnet. Interstellare Reisen durch einen leuchtenden Ring? Nun, das ist neu. Funktionsweise? Unklar, Herkunft? Unbekannt. Egal, seit Cassy fort ist weiß ich ohnehin nicht was ich tun soll, da kann ich die Arbeit gebrauchen. Vielleicht mehr noch den Abstand.
 
-##### Option `o_in_down` (auf Knoten `n_in_sign`)
+##### [P002] Option `o_in_down` (auf Knoten `n_in_sign`)
 
 <!-- key: ev_intro::node::n_in_sign::option::o_in_down::text -->
 
@@ -43,7 +40,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Knoten `n_in_ring`
+Hinunter.
+
+#### [P003] Knoten `n_in_ring`
 
 <!-- key: ev_intro::node::n_in_ring::text -->
 
@@ -51,14 +50,13 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **ORIGINAL:**
 
-> Vierhundert Meter tief hängt der Ring in seiner Halterung wie ein angehaltener Atem. Seit heute Morgen gehört er mir — samt einem Budget, das sagt, das Konsortium erwartet nichts. Dr. Okafor wartet mit einem Adressverzeichnis. Captain Mercer wartet mit einer Waffenliste. Alle hier unten warten auf mich. Erster Tag. Kein Druck.
+> Vierhundert Meter tief in einen verlassen Bergwerk. Da hängt der Ring in seiner Halterung, also würde er den Atem anhalten. Keine Bewegung, und doch hat man das Gefühl, dass jeden Moment etwas passieren würde. Seit heute Morgen unter meinem Kommando — samt einem Budget das seines Gleichen sucht. Zwei Soldaten, Dr. Okafor und Captain Mercer warten sichtlich ungeduldig im Briefing Room, scheint als waere keine Zeit zum auspacken. Wen ich zuerst anhöre wird sicherlich bemerkt werden.
 
 **NEU:**
 
-> Vierhundert Meter tief in einen verlassen Bergwerk.
-> Da hängt der Ring in seiner Halterung, also würde er den Atem anhalten. Keine Bewegung, und doch hat man das Gefühl, dass jeden Moment etwas passieren würde. Seit heute Morgen unter meinem Kommando — samt einem Budget das seines Gleichen sucht. Zwei Soldaten, Dr. Okafor und Captain Mercer warten sichtlich ungeduldig im Briefing Room, scheint als waere keine Zeit zum auspacken. Wen ich zuerst anhöre wird sicherlich bemerkt werden.
+Vierhundert Meter tief in einen verlassen Bergwerk. Da hängt der Ring in seiner Halterung, also würde er den Atem anhalten. Keine Bewegung, und doch hat man das Gefühl, dass jeden Moment etwas passieren würde. Seit heute Morgen unter meinem Kommando — samt einem Budget das seines Gleichen sucht. Zwei Soldaten, Dr. Okafor und Captain Mercer warten sichtlich ungeduldig im Briefing Room, scheint als waere keine Zeit zum auspacken. Wen ich zuerst anhöre wird sicherlich bemerkt werden.
 
-##### Option `o_in_science` (auf Knoten `n_in_ring`)
+##### [P004] Option `o_in_science` (auf Knoten `n_in_ring`)
 
 <!-- key: ev_intro::node::n_in_ring::option::o_in_science::text -->
 
@@ -72,7 +70,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-##### Option `o_in_threats` (auf Knoten `n_in_ring`)
+Mit der Wissenschaft beginnen. Erst Okafor.
+
+##### [P005] Option `o_in_threats` (auf Knoten `n_in_ring`)
 
 <!-- key: ev_intro::node::n_in_ring::option::o_in_threats::text -->
 
@@ -86,7 +86,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Knoten `n_in_okafor`
+Mit den Bedrohungen beginnen. Erst Mercer.
+
+#### [P006] Knoten `n_in_okafor`
 
 <!-- key: ev_intro::node::n_in_okafor::text -->
 
@@ -98,9 +100,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-> Dr. Okafor entschlüsselte die Adressnotation in sechs Wochen. Das Essay nennt sie unentbehrlich, unermüdlich und anstrengend. Mit zwei davon komme ich klar. Sie reicht mir das Briefing, das sie fertig hatte, ehe ich darum bat: einundfünfzig Adressen, eine gewählt. Recon One sprang vor elf Tagen zu Adresse 04. Zwei Meldungen — atembare Luft, Terrassenfelder, ein Dorf an einer weißen Straße — dann neun Tage nichts.“
+Dr. Okafor entschlüsselte die Adressnotation in sechs Wochen. Das Essay nennt sie unentbehrlich, unermüdlich und anstrengend. Mit zwei davon komme ich klar. Sie reicht mir das Briefing, das sie fertig hatte, ehe ich darum bat: einundfünfzig Adressen, eine gewählt. Recon One sprang vor elf Tagen zu Adresse 04. Zwei Meldungen — atembare Luft, Terrassenfelder, ein Dorf an einer weißen Straße — dann neun Tage nichts.“
 
-##### Option `o_in_okafor_then` (auf Knoten `n_in_okafor`)
+##### [P007] Option `o_in_okafor_then` (auf Knoten `n_in_okafor`)
 
 <!-- key: ev_intro::node::n_in_okafor::option::o_in_okafor_then::text -->
 
@@ -114,7 +116,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Knoten `n_in_mercer`
+Jetzt die Bedrohungen. Mercer.
+
+#### [P008] Knoten `n_in_mercer`
 
 <!-- key: ev_intro::node::n_in_mercer::text -->
 
@@ -126,9 +130,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-> Mercer. Ich las die Akte — ein Jahrzehnt an Einsätzen, manche so geheim, dass nicht einmal ich wusste, dass wir dort waren. Spezialeinheit wir aus dem Buch: schnell, effizient, keine losen Enden. Gut. Seine Fähigkeiten werde sicher brauchen. Seine Anforderungen waren unterschrieben, ehe ich mich setzte. „Recon One. Vier Leute, zwei Meldungen, neun Tage Funkstille. Gefangen genommen oder getötet. Gehen Sie vom schlimmsten aus, dann irren Sie sich höchstens in die richtige Richtung.“
+Mercer. Ich las die Akte — ein Jahrzehnt an Einsätzen, manche so geheim, dass nicht einmal ich wusste, dass wir dort waren. Spezialeinheit wir aus dem Buch: schnell, effizient, keine losen Enden. Gut. Seine Fähigkeiten werde sicher brauchen. Seine Anforderungen waren unterschrieben, ehe ich mich setzte. „Recon One. Vier Leute, zwei Meldungen, neun Tage Funkstille. Gefangen genommen oder getötet. Gehen Sie vom schlimmsten aus, dann irren Sie sich höchstens in die richtige Richtung.“
 
-##### Option `o_in_mercer_then` (auf Knoten `n_in_mercer`)
+##### [P009] Option `o_in_mercer_then` (auf Knoten `n_in_mercer`)
 
 <!-- key: ev_intro::node::n_in_mercer::option::o_in_mercer_then::text -->
 
@@ -142,7 +146,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Knoten `n_in_mercer_2`
+Jetzt die Wissenschaft. Okafor.
+
+#### [P010] Knoten `n_in_mercer_2`
 
 <!-- key: ev_intro::node::n_in_mercer_2::text -->
 
@@ -150,11 +156,13 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **ORIGINAL:**
 
-> Mercer. Ich las die Akte — ein Jahrzehnt an Einsätzen, manche so geheim, dass nicht einmal ich wusste, dass wir dort waren. Spezialeinheit wir aus dem Buch: schnell, effizient, keine losen Enden. Gut. Seine Fähigkeiten werde sicher brauchen. Seine Anforderungen waren unterschrieben, ehe ich mich setzte. „Recon One. Vier Leute, zwei Meldungen, neun Tage Funkstille. Gefangen genommen oder getötet. Gehen Sie vom schlimmsten aus, dann irren Sie sich höchstens in die richtige Richtung.“
+> Mercer findet mich, ehe ich nach ihm schicke. Ich las die Akte — ein Jahrzehnt an Einsätzen, manche so geheim, dass nicht einmal ich wissen durfte, dass wir dort waren. Nach Vorschrift: schnell, effizient, keine losen Enden. Gut. Die Vorschrift werde ich heute brauchen. Er hört Okafors Briefing schweigend an, dann: „Jemand hat sie an ihren Meldungen gehindert. Planen Sie damit, dann irren Sie sich höchstens in die richtige Richtung.“
 
 **NEU:**
 
-##### Option `o_in_mercer2_go` (auf Knoten `n_in_mercer_2`)
+Mercer findet mich, ehe ich nach ihm schicke. Ich las die Akte — ein Jahrzehnt an Einsätzen, manche so geheim, dass nicht einmal ich wissen durfte, dass wir dort waren. Nach Vorschrift: schnell, effizient, keine losen Enden. Gut. Die Vorschrift werde ich heute brauchen. Er hört Okafors Briefing schweigend an, dann: „Jemand hat sie an ihren Meldungen gehindert. Planen Sie damit, dann irren Sie sich höchstens in die richtige Richtung.“
+
+##### [P011] Option `o_in_mercer2_go` (auf Knoten `n_in_mercer_2`)
 
 <!-- key: ev_intro::node::n_in_mercer_2::option::o_in_mercer2_go::text -->
 
@@ -168,7 +176,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Knoten `n_in_okafor_2`
+Zur Wählebene.
+
+#### [P012] Knoten `n_in_okafor_2`
 
 <!-- key: ev_intro::node::n_in_okafor_2::text -->
 
@@ -176,12 +186,13 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **ORIGINAL:**
 
-„Das Tor hält. Die Adresse hält, die Verbindung steht stabil. Was auch immer sie an ihren Meldungen gehindert hat, Direktor — es ist nicht die Physik, und genau das macht mir Angst“
+> „Das Tor hält. Die Adresse hält, die Verbindung ist stabil. Was auch immer sie an ihren Meldungen gehindert hat, Direktor — es ist nicht die Physik, und genau das macht mir Angst“
 
 **NEU:**
+
 „Das Tor hält. Die Adresse hält, die Verbindung ist stabil. Was auch immer sie an ihren Meldungen gehindert hat, Direktor — es ist nicht die Physik, und genau das macht mir Angst“
 
-##### Option `o_in_okafor2_go` (auf Knoten `n_in_okafor_2`)
+##### [P013] Option `o_in_okafor2_go` (auf Knoten `n_in_okafor_2`)
 
 <!-- key: ev_intro::node::n_in_okafor_2::option::o_in_okafor2_go::text -->
 
@@ -195,7 +206,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Knoten `n_in_decide`
+Zur Wählebene.
+
+#### [P014] Knoten `n_in_decide`
 
 <!-- key: ev_intro::node::n_in_decide::text -->
 
@@ -203,13 +216,13 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **ORIGINAL:**
 
-> Wir können binnen einer Stunde wählen. Was auch immer auf der anderen Seite ist, hat Recon One seit neun Tagen.
+> Wir können binnen einer Stunde wählen.
 
 **NEU:**
 
-> Wir können binnen einer Stunde wählen.
+Wir können binnen einer Stunde wählen.
 
-##### Option `o_in_commit` (auf Knoten `n_in_decide`)
+##### [P015] Option `o_in_commit` (auf Knoten `n_in_decide`)
 
 <!-- key: ev_intro::node::n_in_decide::option::o_in_commit::text -->
 
@@ -223,7 +236,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-##### Option `o_in_cautious` (auf Knoten `n_in_decide`)
+Das Team zusammenstellen. Wir holen sie heim.
+
+##### [P016] Option `o_in_cautious` (auf Knoten `n_in_decide`)
 
 <!-- key: ev_intro::node::n_in_decide::option::o_in_cautious::text -->
 
@@ -237,7 +252,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Ergebnis `out_in_go` — Label
+Das Team zusammenstellen — aber beim ersten Zeichen von Ärger kommen sie zurück.
+
+#### [P017] Ergebnis `out_in_go` — Label
 
 <!-- key: ev_intro::outcome::out_in_go::label -->
 
@@ -250,6 +267,8 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
+Rettungssprung genehmigt
+
 ---
 
 ## 2. Mission: Das stille Tal (`m_vy_arrival`)
@@ -259,7 +278,7 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 ### Event: Das stille Tal (`ev_vy_arrival`) · Einstieg `n_va_gate`
 
-#### Knoten `n_va_gate`
+#### [P018] Knoten `n_va_gate`
 
 <!-- key: ev_vy_arrival::node::n_va_gate::text -->
 
@@ -267,11 +286,13 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **ORIGINAL:**
 
-> Das Tor öffnet sich, ein grünes Tal unter zwei Sonnen — Terrassenfelder, eine Straße aus festem weißem Stein, tief eingefahrene Karrenspuren. Recon Ones Markierungsbake liegt zehn Meter entfernt, oder das was davon übrig ist. Keine Leichen. Keine Patronenhülsen. Talaufwärts läutet eine Glocke einmal und verstummt, wie ein Versehen.
+> Das Tor öffnet sich auf ein grünes Tal unter zwei Sonnen — Terrassenfelder, eine Straße aus festem weißem Stein, tief eingefahrene Karrenspuren. Recon Ones Markierungsbake liegt zehn Meter entfernt, glatt abgebrochen. Keine Leichen. Keine Patronenhülsen. Talaufwärts läutet eine Glocke einmal und verstummt, wie ein Versehen.
 
 **NEU:**
 
-##### Option `o_va_road` (auf Knoten `n_va_gate`)
+Das Tor öffnet sich auf ein grünes Tal unter zwei Sonnen — Terrassenfelder, eine Straße aus festem weißem Stein, tief eingefahrene Karrenspuren. Recon Ones Markierungsbake liegt zehn Meter entfernt, glatt abgebrochen. Keine Leichen. Keine Patronenhülsen. Talaufwärts läutet eine Glocke einmal und verstummt, wie ein Versehen.
+
+##### [P019] Option `o_va_road` (auf Knoten `n_va_gate`)
 
 <!-- key: ev_vy_arrival::node::n_va_gate::option::o_va_road::text -->
 
@@ -285,7 +306,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Knoten `n_va_villagers`
+Der Straße talaufwärts folgen.
+
+#### [P020] Knoten `n_va_villagers`
 
 <!-- key: ev_vy_arrival::node::n_va_villagers::text -->
 
@@ -297,9 +320,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-> Sie kommen laufend aus den Feldreihen — ein Dutzend Dorfbewohner, so menschlich wie ihr, sonnengegerbt und hastig. Keiner von ihnen macht einen Laut. Sie ziehen an euren Armen und Rucksäcken, drängen euch von der Straße zur Baumgrenze, die Finger auf den Lippen. Der Älteste deutet die Straße hinab, dann drückt er die Hand flach zur Erde, die Botschaft ist klar: runter. Versteckt euch. Sofort.
+Sie kommen laufend aus den Feldreihen — ein Dutzend Dorfbewohner, so menschlich wie ihr, sonnengegerbt und hastig. Keiner von ihnen macht einen Laut. Sie ziehen an euren Armen und Rucksäcken, drängen euch von der Straße zur Baumgrenze, die Finger auf den Lippen. Der Älteste deutet die Straße hinab, dann drückt er die Hand flach zur Erde, die Botschaft ist klar: runter. Versteckt euch. Sofort.
 
-##### Option `o_va_trust` (auf Knoten `n_va_villagers`)
+##### [P021] Option `o_va_trust` (auf Knoten `n_va_villagers`)
 
 <!-- key: ev_vy_arrival::node::n_va_villagers::option::o_va_trust::text -->
 
@@ -313,7 +336,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-##### Option `o_va_refuse` (auf Knoten `n_va_villagers`)
+Ihnen vertrauen. Runter von der Straße.
+
+##### [P022] Option `o_va_refuse` (auf Knoten `n_va_villagers`)
 
 <!-- key: ev_vy_arrival::node::n_va_villagers::option::o_va_refuse::text -->
 
@@ -327,9 +352,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-> Losreißen. Vertrauen muss verdient werden.
+Losreißen. Vertrauen muss verdient werden.
 
-#### Knoten `n_va_procession`
+#### [P023] Knoten `n_va_procession`
 
 <!-- key: ev_vy_arrival::node::n_va_procession::text -->
 
@@ -337,13 +362,13 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **ORIGINAL:**
 
-> Von der Baumgrenze spürt ihr es, ehe ihr es seht: ein Schritt, der euch durch den Boden erreicht, dann Sichtkontakt. Drohnen. Insektengestalten von der Größe von Güterwaggons, im Gänsemarsch, beladen mit Korn, Stoff, verschnürten Kisten — Tribut. Sie ziehen vorbei, ohne einen einzigen Blick auf die Welt um sie her, die weiße Straße hinab, zum Tor. Hindurch. Die Dorfbewohner sehen ihnen nicht nach. Sie sehen euch an und beschwören euch zum Schweigen.
+> Von der Baumgrenze spürt ihr es, ehe ihr es seht: ein Karren und weitere Töne, fremdartig und doch bekannt. Dann Sichtkontakt. Insekten wenigstens zweineinhalb Meter groß, bewaffnet, dazu einige Menschen die einen Karren schieben, verschnürten Kisten, Korn, Obst — Tribut? Sie ziehen vorbei, ohne einen einzigen Blick auf die Welt um sie her, die weiße Straße hinab, zum Tor. Hindurch. Die Dorfbewohner sehen ihnen nicht nach. Sie sehen euch an und beschwören euch zum Schweigen.
 
 **NEU:**
 
-> Von der Baumgrenze spürt ihr es, ehe ihr es seht: ein Karren und weitere Töne, fremdartig und doch bekannt. Dann Sichtkontakt. Insekten wenigstens zweineinhalb Meter groß, bewaffnet, dazu einige Menschen die einen Karren schieben, verschnürten Kisten, Korn, Obst — Tribut? Sie ziehen vorbei, ohne einen einzigen Blick auf die Welt um sie her, die weiße Straße hinab, zum Tor. Hindurch. Die Dorfbewohner sehen ihnen nicht nach. Sie sehen euch an und beschwören euch zum Schweigen.
+Von der Baumgrenze spürt ihr es, ehe ihr es seht: ein Karren und weitere Töne, fremdartig und doch bekannt. Dann Sichtkontakt. Insekten wenigstens zweineinhalb Meter groß, bewaffnet, dazu einige Menschen die einen Karren schieben, verschnürten Kisten, Korn, Obst — Tribut? Sie ziehen vorbei, ohne einen einzigen Blick auf die Welt um sie her, die weiße Straße hinab, zum Tor. Hindurch. Die Dorfbewohner sehen ihnen nicht nach. Sie sehen euch an und beschwören euch zum Schweigen.
 
-##### Option `o_va_stay_down` (auf Knoten `n_va_procession`)
+##### [P024] Option `o_va_stay_down` (auf Knoten `n_va_procession`)
 
 <!-- key: ev_vy_arrival::node::n_va_procession::option::o_va_stay_down::text -->
 
@@ -357,7 +382,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Knoten `n_va_escape`
+Unten bleiben, bis die letzte fort ist.
+
+#### [P025] Knoten `n_va_escape`
 
 <!-- key: ev_vy_arrival::node::n_va_escape::text -->
 
@@ -366,10 +393,12 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 **ORIGINAL:**
 
 > Die letzte Träger-Drohne zieht vorbei, und die Dorfbewohner erheben sich, drängen euch am Graben entlang zum Mühlenpfad — eine stumme, halb rennende Reihe, nahezu lautlos. Dann stolpert ein Junge, kein Kind, aber sicherlich noch kein Mann, vielleicht 13 Jahre alt. Offensichtlich verletzt, vielleicht nur eine Zerrung vielleicht ein gebrochenes Bein. Ein kaum hörbares wimmern und ein knacken von trockenen Ästen. Mercer sieht sofort, zwei der Drohnen blieben stehen, die Köpfe zucken hin und her. Sie haben etwas gehört und werden jeden Moment umdrehen. Mercer ist bereits auf dem Weg zu dem Jungen.
-> **NEU:**
-> Die letzte Träger-Drohne zieht vorbei, und die Dorfbewohner erheben sich, drängen euch am Graben entlang zum Mühlenpfad — eine stumme, halb rennende Reihe, nahezu lautlos. Dann stolpert ein Junge, kein Kind, aber sicherlich noch kein Mann, vielleicht 13 Jahre alt. Offensichtlich verletzt, vielleicht nur eine Zerrung vielleicht ein gebrochenes Bein. Ein kaum hörbares wimmern und ein knacken von trockenen Ästen. Mercer sieht sofort, zwei der Drohnen blieben stehen, die Köpfe zucken hin und her. Sie haben etwas gehört und werden jeden Moment umdrehen. Mercer ist bereits auf dem Weg zu dem Jungen.
 
-##### Option `o_va_hide` (auf Knoten `n_va_escape`)
+**NEU:**
+
+Die letzte Träger-Drohne zieht vorbei, und die Dorfbewohner erheben sich, drängen euch am Graben entlang zum Mühlenpfad — eine stumme, halb rennende Reihe, nahezu lautlos. Dann stolpert ein Junge, kein Kind, aber sicherlich noch kein Mann, vielleicht 13 Jahre alt. Offensichtlich verletzt, vielleicht nur eine Zerrung vielleicht ein gebrochenes Bein. Ein kaum hörbares wimmern und ein knacken von trockenen Ästen. Mercer sieht sofort, zwei der Drohnen blieben stehen, die Köpfe zucken hin und her. Sie haben etwas gehört und werden jeden Moment umdrehen. Mercer ist bereits auf dem Weg zu dem Jungen.
+
+##### [P026] Option `o_va_hide` (auf Knoten `n_va_escape`)
 
 <!-- key: ev_vy_arrival::node::n_va_escape::option::o_va_hide::text -->
 
@@ -383,7 +412,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-##### Option `o_va_run` (auf Knoten `n_va_escape`)
+Ihn in Deckung bringen. Verstecken.
+
+##### [P027] Option `o_va_run` (auf Knoten `n_va_escape`)
 
 <!-- key: ev_vy_arrival::node::n_va_escape::option::o_va_run::text -->
 
@@ -397,7 +428,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Knoten `n_va_hide`
+Keine Zeit zu verstecken. Den Jungen packen und rennen.
+
+#### [P028] Knoten `n_va_hide`
 
 <!-- key: ev_vy_arrival::node::n_va_hide::text -->
 
@@ -405,13 +438,13 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **ORIGINAL:**
 
-> Mercer zieht den Jungen hinter einen mannhohen Stein, zu schmal um sich hinzulegen er muss ihn halten, der Junge kann nicht alleine stehen. Ein trockenes Rasseln und schnarren, ganz nah. Er zieht den jungen langsam, lautlos um den Stein, während die Drohnen vorbeiziehen — stets den Stein zwischen seinem Rücken und dem Schwenk ihrer augenlosen Köpfe —, bis das Rasseln die weiße Straße hinab verklingt. In den Feldreihen atmet niemand. Dann ist der Vater des Jungen, presst seine Stirn an die seines Sohnes, sein Blick gegenüber Mercer spricht Bände.
+> Mercer zieht den Jungen hinter einen mannhohen Stein, zu schmal um sich hinzulegen, der Junge kann nicht alleine stehen. Mercer hält ihn,dann nähert sich ein trockenes Rasseln, ein Schnarren, ganz nah. Er zieht den jungen langsam, lautlos um den Stein herum, während die Drohnen vorbeiziehen — stets den Stein zwischen seinem Rücken und dem Schwenk ihrer augenlosen Köpfe —, bis das Rasseln die weiße Straße hinab verklingt. In den Feldreihen atmet niemand. Dann ist der Vater des Jungen, presst seine Stirn an die seines Sohnes, sein Blick gegenüber Mercer spricht Bände.
 
 **NEU:**
 
-> Mercer zieht den Jungen hinter einen mannhohen Stein, zu schmal um sich hinzulegen, der Junge kann nicht alleine stehen. Mercer hält ihn,dann nähert sich ein trockenes Rasseln, ein Schnarren, ganz nah. Er zieht den jungen langsam, lautlos um den Stein herum, während die Drohnen vorbeiziehen — stets den Stein zwischen seinem Rücken und dem Schwenk ihrer augenlosen Köpfe —, bis das Rasseln die weiße Straße hinab verklingt. In den Feldreihen atmet niemand. Dann ist der Vater des Jungen, presst seine Stirn an die seines Sohnes, sein Blick gegenüber Mercer spricht Bände.
+Mercer zieht den Jungen hinter einen mannhohen Stein, zu schmal um sich hinzulegen, der Junge kann nicht alleine stehen. Mercer hält ihn,dann nähert sich ein trockenes Rasseln, ein Schnarren, ganz nah. Er zieht den jungen langsam, lautlos um den Stein herum, während die Drohnen vorbeiziehen — stets den Stein zwischen seinem Rücken und dem Schwenk ihrer augenlosen Köpfe —, bis das Rasseln die weiße Straße hinab verklingt. In den Feldreihen atmet niemand. Dann ist der Vater des Jungen, presst seine Stirn an die seines Sohnes, sein Blick gegenüber Mercer spricht Bände.
 
-##### Option `o_va_hide_on` (auf Knoten `n_va_hide`)
+##### [P029] Option `o_va_hide_on` (auf Knoten `n_va_hide`)
 
 <!-- key: ev_vy_arrival::node::n_va_hide::option::o_va_hide_on::text -->
 
@@ -425,7 +458,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Knoten `n_va_told`
+Euch von den Dorfbewohnern in Sicherheit führen lassen.
+
+#### [P030] Knoten `n_va_told`
 
 <!-- key: ev_vy_arrival::node::n_va_told::text -->
 
@@ -437,7 +472,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-##### Option `o_va_home` (auf Knoten `n_va_told`)
+An der Baumgrenze zeichnet der Älteste Glyphen in den Staub — langsam, Strich für Strich, damit Okafor jede einzelne abmalen kann. Eine Adresse. Er kreuzt die Handgelenke: die Gebundenen. Vier Finger: vier wie ihr, durch das Tor genommen, lebend beim Übertreten. Der Ort, wohin die Genommenen gebracht werden. Eine Frau spricht seinen Namen laut aus, das erste Wort, das den ganzen Tag über jemand von ihnen gewagt hat: Veyra.
+
+##### [P031] Option `o_va_home` (auf Knoten `n_va_told`)
 
 <!-- key: ev_vy_arrival::node::n_va_told::option::o_va_home::text -->
 
@@ -451,7 +488,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Knoten `n_va_run`
+Mit der Adresse heimkehren.
+
+#### [P032] Knoten `n_va_run`
 
 <!-- key: ev_vy_arrival::node::n_va_run::text -->
 
@@ -459,13 +498,13 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **ORIGINAL:**
 
-> Drei Schritte, und die Flankierer haben den Winkel. Mercer wirft den Jungen zu Boden, dreht sich um und legt die erste Drohne mit einer Salve auf den Rücken. Die zweite ist fast über ihm, als Okafor sie niederstreckt — zwei Schuss, keine vergeudete Bewegung, die Musterschülerin des Schießausbilders. Das Rasseln hört auf. Das ganze Tal hat die Schüsse gehört.
+> Mercer sprintet zu dem Jungen und stößt ihn zu Boden, dreht sich um und erschießt die erste Drohne. Die zweite ist fast über ihm, als Okafor sie niederstreckt — zwei Schuss, keine vergeudete Bewegung, die Musterschülerin des Schießausbilders. Das Rasseln verstummt. Aber das ganze Tal hat die Schüsse gehört.
 
 **NEU:**
 
-> Mercer sprintet zu dem Jungen und stößt ihn zu Boden, dreht sich um und erschießt die erste Drohne. Die zweite ist fast über ihm, als Okafor sie niederstreckt — zwei Schuss, keine vergeudete Bewegung, die Musterschülerin des Schießausbilders. Das Rasseln verstummt. Aber das ganze Tal hat die Schüsse gehört.
+Mercer sprintet zu dem Jungen und stößt ihn zu Boden, dreht sich um und erschießt die erste Drohne. Die zweite ist fast über ihm, als Okafor sie niederstreckt — zwei Schuss, keine vergeudete Bewegung, die Musterschülerin des Schießausbilders. Das Rasseln verstummt. Aber das ganze Tal hat die Schüsse gehört.
 
-##### Option `o_va_run_watch` (auf Knoten `n_va_run`)
+##### [P033] Option `o_va_run_watch` (auf Knoten `n_va_run`)
 
 <!-- key: ev_vy_arrival::node::n_va_run::option::o_va_run_watch::text -->
 
@@ -479,7 +518,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Knoten `n_va_run_gate`
+Die Dorfbewohner decken.
+
+#### [P034] Knoten `n_va_run_gate`
 
 <!-- key: ev_vy_arrival::node::n_va_run_gate::text -->
 
@@ -491,7 +532,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-##### Option `o_va_run_home` (auf Knoten `n_va_run_gate`)
+Der Vater reißt den Jungen hoch und presst seine Stirn an die seines Sohnes — einmal, fest. Dann rennen die Dorfbewohner, nicht zu den Bäumen: zum Tor. Eine alte Frau dreht die Wählsteine durch eine Adresse, die Okafor aus Instinkt einprägt; der Ring öffnet sich, und die Feldfamilien strömen hindurch. Das Tor schließt sich. Stille. Sie flohen zu dem Ort, wohin die Genommenen gebracht werden — zur Tür ihres eigenen Gottes.
+
+##### [P035] Option `o_va_run_home` (auf Knoten `n_va_run_gate`)
 
 <!-- key: ev_vy_arrival::node::n_va_run_gate::option::o_va_run_home::text -->
 
@@ -505,7 +548,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Knoten `n_va_fight`
+Die Adresse notieren. Heimkehren.
+
+#### [P036] Knoten `n_va_fight`
 
 <!-- key: ev_vy_arrival::node::n_va_fight::text -->
 
@@ -513,11 +558,13 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **ORIGINAL:**
 
-> Ihr reißt euch los, und ein Stab kracht gegen Mercers Gewehr — dann ist es eine Rauferei an der Baumgrenze, stumm und verzweifelt, die Dorfbewohner kämpfen wie Menschen, die es sich nicht leisten können, gehört zu werden. Es endet falsch. Ein junger Dorfbewohner liegt am Boden, das Genick an einer Wurzel verdreht, reglos. Da beginnt der Boden zu beben.
+> Ihr stoßt euch frei, und ein Stab kracht gegen Mercers Gewehr — dann ist es eine Rauferei an der Baumgrenze, stumm und verzweifelt, die Dorfbewohner kämpfen wie Menschen, die es sich nicht leisten können, gehört zu werden. Es endet falsch. Ein junger Dorfbewohner liegt am Boden, das Genick an einer Wurzel verdreht, reglos. Da beginnt der Boden zu beben.
 
 **NEU:**
 
-##### Option `o_va_freeze` (auf Knoten `n_va_fight`)
+Ihr stoßt euch frei, und ein Stab kracht gegen Mercers Gewehr — dann ist es eine Rauferei an der Baumgrenze, stumm und verzweifelt, die Dorfbewohner kämpfen wie Menschen, die es sich nicht leisten können, gehört zu werden. Es endet falsch. Ein junger Dorfbewohner liegt am Boden, das Genick an einer Wurzel verdreht, reglos. Da beginnt der Boden zu beben.
+
+##### [P037] Option `o_va_freeze` (auf Knoten `n_va_fight`)
 
 <!-- key: ev_vy_arrival::node::n_va_fight::option::o_va_freeze::text -->
 
@@ -531,7 +578,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Knoten `n_va_procession_fight`
+Erstarren.
+
+#### [P038] Knoten `n_va_procession_fight`
 
 <!-- key: ev_vy_arrival::node::n_va_procession_fight::text -->
 
@@ -543,7 +592,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-##### Option `o_va_take_address` (auf Knoten `n_va_procession_fight`)
+Jede Hand hält inne — ihre und eure. Drohnen, Insektengestalten von der Größe von Güterwaggons, ziehen unter Tributlasten die weiße Straße hinab, und alles Lebende im Tal hält still wie Stein, bis sie vorbei sind — zum Tor und hindurch. Okafor prüft den gefallenen Dorfbewohner auf einen Puls und findet keinen. Findet stattdessen eine Lederschnur an seinem Hals, eingebrannt mit Tor-Glyphen: eine Adresse. Von der Art, die ein ganzes Tal trägt, damit für seine Toten dort gesprochen werden kann, wohin die Genommenen gebracht werden.
+
+##### [P039] Option `o_va_take_address` (auf Knoten `n_va_procession_fight`)
 
 <!-- key: ev_vy_arrival::node::n_va_procession_fight::option::o_va_take_address::text -->
 
@@ -557,7 +608,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Knoten `n_va_fight_exit`
+Die Schnur einstecken. Abziehen, ehe die anderen sich sammeln.
+
+#### [P040] Knoten `n_va_fight_exit`
 
 <!-- key: ev_vy_arrival::node::n_va_fight_exit::text -->
 
@@ -569,7 +622,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-##### Option `o_va_home_cold` (auf Knoten `n_va_fight_exit`)
+Die Dorfbewohner holen ihre Toten schweigend zurück, und das Schweigen ist ein Urteil. Was die Schnur auch bedeutet, wohin die Genommenen auch gehen — jemand in diesem Tal weiß es, und keiner hier wird es euch je verraten. Die Glyphen auf der Schnur eines toten Jungen sind die einzige Spur, mit der ihr geht.
+
+##### [P041] Option `o_va_home_cold` (auf Knoten `n_va_fight_exit`)
 
 <!-- key: ev_vy_arrival::node::n_va_fight_exit::option::o_va_home_cold::text -->
 
@@ -583,7 +638,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Ergebnis `out_va_hide` — Label
+Heimkehren.
+
+#### [P042] Ergebnis `out_va_hide` — Label
 
 <!-- key: ev_vy_arrival::outcome::out_va_hide::label -->
 
@@ -596,7 +653,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-##### Ergebnis `out_va_hide` — Debrief
+Die Adresse, freiwillig gegeben
+
+##### [P043] Ergebnis `out_va_hide` — Debrief
 
 <!-- key: ev_vy_arrival::outcome::out_va_hide::debrief -->
 
@@ -608,7 +667,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Ergebnis `out_va_run` — Label
+Ihr gingt mit den Feldfamilien in Deckung und ließt den Zug der Drohnen ungesehen passieren. Zum Dank gaben sie euch, wofür Command gesprungen war: Veyra, die Adresse, wohin die Genommenen gebracht werden — und die Nachricht, dass vier Außenweltler lebend durch das Tor gingen.
+
+#### [P044] Ergebnis `out_va_run` — Label
 
 <!-- key: ev_vy_arrival::outcome::out_va_run::label -->
 
@@ -621,7 +682,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-##### Ergebnis `out_va_run` — Debrief
+Die Adresse, vom Wählwerk abgelesen
+
+##### [P045] Ergebnis `out_va_run` — Debrief
 
 <!-- key: ev_vy_arrival::outcome::out_va_run::debrief -->
 
@@ -633,7 +696,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Ergebnis `out_va_fight` — Label
+Die Deckung brach, und zwei Drohnen fielen — Beweis, dass es möglich ist. Die Feldfamilien rannten zur Tür ihres eigenen Gottes und wählten das Tor vor euren Augen; Okafor las die Adresse vom Wählwerk ab. Die Genommenen gingen denselben Weg, und jetzt können wir es auch.
+
+#### [P046] Ergebnis `out_va_fight` — Label
 
 <!-- key: ev_vy_arrival::outcome::out_va_fight::label -->
 
@@ -646,7 +711,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-##### Ergebnis `out_va_fight` — Debrief
+Eine mit Blut erkaufte Stille
+
+##### [P047] Ergebnis `out_va_fight` — Debrief
 
 <!-- key: ev_vy_arrival::outcome::out_va_fight::debrief -->
 
@@ -658,6 +725,8 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
+Ein Dorfbewohner ist durch eure Hand tot, und die Schnur, die er trug, hielt die Glyphen, die Command brauchte — die Adresse, zu der die Genommenen und Toten des Tals gewählt werden. Ihr habt eure Peilung nach Veyra. Das Tal wird nicht vergessen, wie ihr sie genommen habt.
+
 ---
 
 ## 3. Mission: Das Verzeichnis der Genommenen (`m_vy_ledger`)
@@ -667,7 +736,7 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 ### Event: Das Verzeichnis der Genommenen (`ev_vy_ledger`) · Einstieg `n_vl_arrive`
 
-#### Knoten `n_vl_arrive`
+#### [P048] Knoten `n_vl_arrive`
 
 <!-- key: ev_vy_ledger::node::n_vl_arrive::text -->
 
@@ -679,7 +748,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-##### Option `o_vl_warm` (auf Knoten `n_vl_arrive`)
+Karsu: ein Mühlendorf aus Stein und Moos, wo das Tal sich verengt, quer über der Tributstraße. Rauch aus den Schornsteinen. Augen an den Fensterläden. Sie wussten, dass ihr kommt, ehe ihr die Brücke überquertet.
+
+##### [P049] Option `o_vl_warm` (auf Knoten `n_vl_arrive`)
 
 <!-- key: ev_vy_ledger::node::n_vl_arrive::option::o_vl_warm::text -->
 
@@ -693,7 +764,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-##### Option `o_vl_wary` (auf Knoten `n_vl_arrive`)
+Zur Brücke gehen.
+
+##### [P050] Option `o_vl_wary` (auf Knoten `n_vl_arrive`)
 
 <!-- key: ev_vy_ledger::node::n_vl_arrive::option::o_vl_wary::text -->
 
@@ -707,7 +780,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-##### Option `o_vl_closed` (auf Knoten `n_vl_arrive`)
+Zur Brücke gehen.
+
+##### [P051] Option `o_vl_closed` (auf Knoten `n_vl_arrive`)
 
 <!-- key: ev_vy_ledger::node::n_vl_arrive::option::o_vl_closed::text -->
 
@@ -721,7 +796,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Knoten `n_vl_welcome`
+Zur Brücke gehen.
+
+#### [P052] Knoten `n_vl_welcome`
 
 <!-- key: ev_vy_ledger::node::n_vl_welcome::text -->
 
@@ -733,7 +810,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-##### Option `o_vl_enter` (auf Knoten `n_vl_welcome`)
+Der Junge von der Straße erwartet euch an der Brücke, zerschunden und grinsend, und ganz Karsu hat die Geschichte inzwischen gehört: der Außenweltler, der ihn hinter einem Stein hielt und sich mit dem Gang der Drohnen selbst mitdrehte. Odel, die Müllerin, öffnet die Tür des Verzeichnishauses selbst. „Karsu zahlt, was es schuldet. Kommt herein.“
+
+##### [P053] Option `o_vl_enter` (auf Knoten `n_vl_welcome`)
 
 <!-- key: ev_vy_ledger::node::n_vl_welcome::option::o_vl_enter::text -->
 
@@ -747,7 +826,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Knoten `n_vl_story`
+Hineingehen.
+
+#### [P054] Knoten `n_vl_story`
 
 <!-- key: ev_vy_ledger::node::n_vl_story::text -->
 
@@ -759,7 +840,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-##### Option `o_vl_ask_taken` (auf Knoten `n_vl_story`)
+Am Mühlenfeuer sprechen sie vom Erleuchteten, wie Bauern vom Wetter sprechen: ohne Zweifel. Er hört jedes Gebet, das auf der Tributstraße gesprochen wird — Namen, bei Einbruch der Dämmerung genannt, sind bis zum Morgen erhört. Er wandelt, wo man ihn verehrt. Neun Generationen lang hat er das Tal vor Hungersnot bewahrt, und der Preis ist der Tribut, und manchmal ist der Preis Menschen. Sie lügen nicht. Das merkt ihr.
+
+##### [P055] Option `o_vl_ask_taken` (auf Knoten `n_vl_story`)
 
 <!-- key: ev_vy_ledger::node::n_vl_story::option::o_vl_ask_taken::text -->
 
@@ -773,7 +856,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Knoten `n_vl_ledger`
+Nach den Genommenen fragen.
+
+#### [P056] Knoten `n_vl_ledger`
 
 <!-- key: ev_vy_ledger::node::n_vl_ledger::text -->
 
@@ -785,7 +870,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-##### Option `o_vl_ask_road` (auf Knoten `n_vl_ledger`)
+Das Verzeichnis ist ein Mühlenbuch, mehlbestäubt, älter als jede Hand im Raum: jede Seele, die der Gott genommen hat, aufgeschrieben, damit jemand sich erinnert. Vier Einträge in frischer Tinte tragen eine Außenweltler-Glyphe. Odel berührt jeden der Reihe nach — lebendig. Karsus Träger sprangen mit dem letzten Getreidezehnt und sahen sie: eingesperrt unter der Bußstätte, dem Gefängnis, das die heilige Stadt auf Veyra unterhält, der Welt hinter dem Tor.
+
+##### [P057] Option `o_vl_ask_road` (auf Knoten `n_vl_ledger`)
 
 <!-- key: ev_vy_ledger::node::n_vl_ledger::option::o_vl_ask_road::text -->
 
@@ -799,7 +886,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Knoten `n_vl_first`
+Fragen, wie Korn — und Träger — nach Veyra springen.
+
+#### [P058] Knoten `n_vl_first`
 
 <!-- key: ev_vy_ledger::node::n_vl_first::text -->
 
@@ -811,7 +900,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-##### Option `o_vl_ask_crossing` (auf Knoten `n_vl_first`)
+Sie dämpft das Feuer, ehe sie antwortet, als könnte der Name hören. „Als die Begnadeten zuletzt zu einer Nahme herabkamen, führte die Erste Klinge sie selbst an. Seryn Vael. Er stand am Straßenschrein und trank seine Portion — Licht, das in einem Becher stand, und er trank es wie Wasser. Betet, dass die Tür nicht in seiner Hand liegt an dem Tag, an dem ihr springt.“
+
+##### [P059] Option `o_vl_ask_crossing` (auf Knoten `n_vl_first`)
 
 <!-- key: ev_vy_ledger::node::n_vl_first::option::o_vl_ask_crossing::text -->
 
@@ -825,7 +916,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Knoten `n_vl_transport`
+Und der Sprung?
+
+#### [P060] Knoten `n_vl_transport`
 
 <!-- key: ev_vy_ledger::node::n_vl_transport::text -->
 
@@ -837,7 +930,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-##### Option `o_vl_porters` (auf Knoten `n_vl_transport`)
+Der Getreidezehnt setzt zweimal je Jahreszeit über: Karren zum Taltor, Träger hindurch, geradewegs in die Tempelspeicher auf der anderen Seite. Träger brauchen Papiere, und Papiere lassen sich für die beschaffen, denen Karsu vertraut. Der Turm an der Passstraße singt jeden Zug hindurch — die Tür öffnet sich für Verkehr, den sie erwartet, hinein und wieder hinaus. Der nächste Zehnt bricht bald auf.
+
+##### [P061] Option `o_vl_porters` (auf Knoten `n_vl_transport`)
 
 <!-- key: ev_vy_ledger::node::n_vl_transport::option::o_vl_porters::text -->
 
@@ -851,7 +946,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-##### Option `o_vl_own_terms` (auf Knoten `n_vl_transport`)
+Den Weg der Träger nehmen. Karsu zum Dank eure übrige Feldmedizin lassen.
+
+##### [P062] Option `o_vl_own_terms` (auf Knoten `n_vl_transport`)
 
 <!-- key: ev_vy_ledger::node::n_vl_transport::option::o_vl_own_terms::text -->
 
@@ -865,7 +962,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Knoten `n_vl_wary`
+Den Gefallen ablehnen — ihr setzt als Pilger über, zu euren eigenen Bedingungen.
+
+#### [P063] Knoten `n_vl_wary`
 
 <!-- key: ev_vy_ledger::node::n_vl_wary::text -->
 
@@ -877,7 +976,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-##### Option `o_vl_wary_ask` (auf Knoten `n_vl_wary`)
+Ein Karren versperrt halb die Brücke. Der Junge, den Mercer rettete, ist nicht hier — seine Familie floh mit den übrigen durch das Tor, und Karsu hält ihre Häuser gefegt für eine Rückkehr, die niemand verspricht. Odel, die Müllerin, kommt allein heraus. „Ihr habt einen der Unsrigen gerettet und uns die Feldfamilien gekostet. Nach den Schüssen durchstreiften die Begnadeten einen Tag lang dieses Tal — die Leute der Ersten Klinge, auf der Jagd. Beides ist wahr. Sagt, was ihr wollt.“
+
+##### [P064] Option `o_vl_wary_ask` (auf Knoten `n_vl_wary`)
 
 <!-- key: ev_vy_ledger::node::n_vl_wary::option::o_vl_wary_ask::text -->
 
@@ -891,7 +992,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Knoten `n_vl_wary_ledger`
+Nach den Genommenen fragen.
+
+#### [P065] Knoten `n_vl_wary_ledger`
 
 <!-- key: ev_vy_ledger::node::n_vl_wary_ledger::text -->
 
@@ -903,7 +1006,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-##### Option `o_vl_wary_porters` (auf Knoten `n_vl_wary_ledger`)
+Sie bringt das Mühlenbuch an die Brücke, statt die Tür zu öffnen: jede genommene Seele, aufgeschrieben, damit jemand sich erinnert. Vier frische Einträge tragen eine Außenweltler-Glyphe — lebendig, sagen die Träger, eingesperrt unter der Bußstätte auf Veyra, hinter dem Tor. „Der Getreidezehnt springt bald, und der Passturm singt ihn durch die Tür. Papiere sind zu haben — für die, die für das Risiko zahlen, das sie mit sich tragen.“
+
+##### [P066] Option `o_vl_wary_porters` (auf Knoten `n_vl_wary_ledger`)
 
 <!-- key: ev_vy_ledger::node::n_vl_wary_ledger::option::o_vl_wary_porters::text -->
 
@@ -917,7 +1022,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-##### Option `o_vl_wary_own` (auf Knoten `n_vl_wary_ledger`)
+Für Papiere und einen Platz im Zehntzug zahlen.
+
+##### [P067] Option `o_vl_wary_own` (auf Knoten `n_vl_wary_ledger`)
 
 <!-- key: ev_vy_ledger::node::n_vl_wary_ledger::option::o_vl_wary_own::text -->
 
@@ -931,7 +1038,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Knoten `n_vl_barred`
+Euer Material behalten. Als Pilger springen, zu euren eigenen Bedingungen.
+
+#### [P068] Knoten `n_vl_barred`
 
 <!-- key: ev_vy_ledger::node::n_vl_barred::text -->
 
@@ -943,7 +1052,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-##### Option `o_vl_listen` (auf Knoten `n_vl_barred`)
+Ein Karren versperrt die Brücke. Dahinter steht ganz Karsu, stumm, wie das Tal für die Drohnen stumm wird. Sie wissen, was zwischen den Bäumen geschah. Odel, die Müllerin, tritt allein vor und spricht über die Barriere hinweg, denn ihr Gesetz verlangt, dass für die Genommenen gesprochen werde — selbst zu euch.
+
+##### [P069] Option `o_vl_listen` (auf Knoten `n_vl_barred`)
 
 <!-- key: ev_vy_ledger::node::n_vl_barred::option::o_vl_listen::text -->
 
@@ -957,7 +1068,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Knoten `n_vl_barred_ledger`
+Zuhören.
+
+#### [P070] Knoten `n_vl_barred_ledger`
 
 <!-- key: ev_vy_ledger::node::n_vl_barred_ledger::text -->
 
@@ -969,7 +1082,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-##### Option `o_vl_high_country` (auf Knoten `n_vl_barred_ledger`)
+„Der Erleuchtete hält das Tal satt; der Preis ist Tribut, und manchmal Menschen — eingetragen im Verzeichnis, damit jemand sich erinnert. Eure Vier sind am Leben, eingesperrt unter der Bußstätte, auf Veyra, hinter dem Tor. Wenn der Passturm singt, springt der Zehnt. Ihr werdet nicht dabei sein. Und betet, dass die Erste Klinge nicht an der Tür steht, wenn ihr euren eigenen Weg hindurch findet.“ Die Fensterläden schließen sich.
+
+##### [P071] Option `o_vl_high_country` (auf Knoten `n_vl_barred_ledger`)
 
 <!-- key: ev_vy_ledger::node::n_vl_barred_ledger::option::o_vl_high_country::text -->
 
@@ -983,7 +1098,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Ergebnis `out_vl_transport` — Label
+Dann als Pilger springen — kalt, schwer, allein.
+
+#### [P072] Ergebnis `out_vl_transport` — Label
 
 <!-- key: ev_vy_ledger::outcome::out_vl_transport::label -->
 
@@ -996,7 +1113,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **NEU:**
 
-#### Ergebnis `out_vl_pilgrims` — Label
+Der Weg der Träger
+
+#### [P073] Ergebnis `out_vl_pilgrims` — Label
 
 <!-- key: ev_vy_ledger::outcome::out_vl_pilgrims::label -->
 
@@ -1008,6 +1127,8 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 > Dann als Pilger
 
 **NEU:**
+
+Dann als Pilger
 
 ---
 
@@ -1030,7 +1151,7 @@ _Rein taktische Mission — kein Narrativtext._
 
 ### Event: Sammeln am Tor (`ev_vy_regroup`) · Einstieg `n_vr_regroup`
 
-#### Knoten `n_vr_regroup`
+#### [P074] Knoten `n_vr_regroup`
 
 <!-- key: ev_vy_regroup::node::n_vr_regroup::text -->
 
@@ -1042,7 +1163,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vr_again` (auf Knoten `n_vr_regroup`)
+Das Team kommt durch das Tor zurück, dem Zugriff der Drohnen zuvor, zerschunden und ohne Antworten. Die Türme singen noch an der Passstraße — der Tributruf geht weiter, mit euch oder ohne euch. Bis zum Morgen hat Mercer die Annäherung neu geplant.
+
+##### [P075] Option `o_vr_again` (auf Knoten `n_vr_regroup`)
 
 <!-- key: ev_vy_regroup::node::n_vr_regroup::option::o_vr_again::text -->
 
@@ -1056,7 +1179,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Ergebnis `out_vr_again` — Label
+Erneut hinein.
+
+#### [P076] Ergebnis `out_vr_again` — Label
 
 <!-- key: ev_vy_regroup::outcome::out_vr_again::label -->
 
@@ -1069,6 +1194,8 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
+Die Türme singen noch
+
 ---
 
 ## 6. Mission: Pilgerwege (`m_vy_1`)
@@ -1078,7 +1205,7 @@ _Rein taktische Mission — kein Narrativtext._
 
 ### Event: Pilgerstraßen (`ev_vy_pilgrim_roads`) · Einstieg `n_vy1_arrive`
 
-#### Knoten `n_vy1_arrive`
+#### [P077] Knoten `n_vy1_arrive`
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_arrive::text -->
 
@@ -1090,7 +1217,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy1_arrive_porters` (auf Knoten `n_vy1_arrive`)
+Veyra. Die Tür steht offen in ihrem Wachhaus auf der Pilgerterrasse, und sie öffnet nur in eine Richtung: Die Wachen wählen niemanden hinaus ohne das Wort des Tempels. Über der Terrasse steigt die heilige Stadt empor, weißer Stein und Glockentürme, bis zum ringförmigen Bezirk der Bußstätte — wo vier Namen in frischer Tinte warten. Der Sprung hinein ist frei. Es ist die Tür nach Hause, die verschlossen ist.
+
+##### [P078] Option `o_vy1_arrive_porters` (auf Knoten `n_vy1_arrive`)
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_arrive::option::o_vy1_arrive_porters::text -->
 
@@ -1104,7 +1233,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy1_arrive_foot` (auf Knoten `n_vy1_arrive`)
+Mit Karsus Zehntzug springen — Trägerpapiere, Korn auf den Schultern, erwarteter Verkehr.
+
+##### [P079] Option `o_vy1_arrive_foot` (auf Knoten `n_vy1_arrive`)
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_arrive::option::o_vy1_arrive_foot::text -->
 
@@ -1118,7 +1249,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy1_faces`
+Als Pilger springen — zwei weitere staubige Reisende unter den vielen, die die Tür empfängt.
+
+#### [P080] Knoten `n_vy1_faces`
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_faces::text -->
 
@@ -1130,7 +1263,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy1_faces_hidden` (auf Knoten `n_vy1_faces`)
+Gesichter auf der Terrasse.
+
+##### [P081] Option `o_vy1_faces_hidden` (auf Knoten `n_vy1_faces`)
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_faces::option::o_vy1_faces_hidden::text -->
 
@@ -1144,7 +1279,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy1_faces_run` (auf Knoten `n_vy1_faces`)
+Unter den Pilgern: der Junge von der Straße und sein Vater, mit dem Zehnt des Tals heraufgekommen. Der Vater sucht Mercers Blick und faltet beide Hände flach — der Dank des Tals, gegeben, wo der Gott es sehen kann. Auch die Dorfbewohner nutzen das Netz. Das taten sie immer schon.
+
+##### [P082] Option `o_vy1_faces_run` (auf Knoten `n_vy1_faces`)
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_faces::option::o_vy1_faces_run::text -->
 
@@ -1158,7 +1295,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy1_faces_killed` (auf Knoten `n_vy1_faces`)
+Am Wachhaus, in Büßergrau: der Junge von der Straße und sein Vater — die geflohenen Feldfamilien, gekommen, um für die toten Drohnen um Vergebung zu bitten. Der Vater presst seine Stirn an die seines Sohnes, dann sieht er euch an: Furcht und Schuld im selben Gesicht. Auch die Dorfbewohner nutzen das Netz.
+
+##### [P083] Option `o_vy1_faces_killed` (auf Knoten `n_vy1_faces`)
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_faces::option::o_vy1_faces_killed::text -->
 
@@ -1172,7 +1311,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy1_gather`
+Am Wachhaus, in Büßergrau: ein Gesicht von der Baumgrenze — der Vater des toten Jungen, gekommen, um den Namen seines Sohnes dort zu sprechen, wohin die Genommenen und die Toten gebracht werden. Er sieht euch an, und durch euch hindurch, und wendet sich ab. Er weiß genau, wer ihr seid. Auch die Dorfbewohner nutzen das Netz.
+
+#### [P084] Knoten `n_vy1_gather`
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_gather::text -->
 
@@ -1184,7 +1325,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy1_pilgrims` (auf Knoten `n_vy1_gather`)
+Ein Tag Zeit zum Arbeiten, ehe der Plan ein Plan sein muss. Genug Zeit, um etwas zu erfahren, wenn ihr acht gebt, wer zuhört.
+
+##### [P085] Option `o_vy1_pilgrims` (auf Knoten `n_vy1_gather`)
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_gather::option::o_vy1_pilgrims::text -->
 
@@ -1198,7 +1341,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy1_patrols` (auf Knoten `n_vy1_gather`)
+Unter den Pilgern lauschen.
+
+##### [P086] Option `o_vy1_patrols` (auf Knoten `n_vy1_gather`)
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_gather::option::o_vy1_patrols::text -->
 
@@ -1212,7 +1357,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy1_relay` (auf Knoten `n_vy1_gather`)
+Den Tempelpatrouillen folgen.
+
+##### [P087] Option `o_vy1_relay` (auf Knoten `n_vy1_gather`)
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_gather::option::o_vy1_relay::text -->
 
@@ -1226,7 +1373,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy1_move_on` (auf Knoten `n_vy1_gather`)
+Okafor: den Funkverkehr des Tempels anzapfen.
+
+##### [P088] Option `o_vy1_move_on` (auf Knoten `n_vy1_gather`)
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_gather::option::o_vy1_move_on::text -->
 
@@ -1240,7 +1389,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy1_pilgrims_detail`
+Wir wissen genug. Zum Plan übergehen.
+
+#### [P089] Knoten `n_vy1_pilgrims_detail`
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_pilgrims_detail::text -->
 
@@ -1252,7 +1403,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy1_pilgrims_continue` (auf Knoten `n_vy1_pilgrims_detail`)
+Worte treiben zwischen den Prozessionen: „Oru wandelt, wo man ihn verehrt.“ Lehre, kein Beweis — aber der erste Riss darin, wie sie ihn erklären.
+
+##### [P090] Option `o_vy1_pilgrims_continue` (auf Knoten `n_vy1_pilgrims_detail`)
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_pilgrims_detail::option::o_vy1_pilgrims_continue::text -->
 
@@ -1266,7 +1419,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy1_patrols_detail`
+Weiter.
+
+#### [P091] Knoten `n_vy1_patrols_detail`
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_patrols_detail::text -->
 
@@ -1278,7 +1433,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy1_patrols_continue` (auf Knoten `n_vy1_patrols_detail`)
+Die Wachablösungen sind lockerer, als sie wirken — vorhersehbar, wenn man lange genug zusieht.
+
+##### [P092] Option `o_vy1_patrols_continue` (auf Knoten `n_vy1_patrols_detail`)
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_patrols_detail::option::o_vy1_patrols_continue::text -->
 
@@ -1292,7 +1449,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy1_relay_detail`
+Weiter.
+
+#### [P093] Knoten `n_vy1_relay_detail`
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_relay_detail::text -->
 
@@ -1304,7 +1463,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy1_relay_continue` (auf Knoten `n_vy1_relay_detail`)
+Okafor zapft den Funkverkehr an und schweigt einen langen Moment. „Das ist verschlüsselt“, sagt sie schließlich. „Götter brauchen keine Verschlüsselung.“
+
+##### [P094] Option `o_vy1_relay_continue` (auf Knoten `n_vy1_relay_detail`)
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_relay_detail::option::o_vy1_relay_continue::text -->
 
@@ -1318,7 +1479,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy1_plan`
+Weiter.
+
+#### [P095] Knoten `n_vy1_plan`
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_plan::text -->
 
@@ -1330,7 +1493,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy1_uniform_choice` (auf Knoten `n_vy1_plan`)
+Drei Wege hinein, und keiner davon leicht.
+
+##### [P096] Option `o_vy1_uniform_choice` (auf Knoten `n_vy1_plan`)
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_plan::option::o_vy1_uniform_choice::text -->
 
@@ -1344,7 +1509,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy1_worker_choice` (auf Knoten `n_vy1_plan`)
+Wachuniformen — als Tempelpersonal hineinspazieren.
+
+##### [P097] Option `o_vy1_worker_choice` (auf Knoten `n_vy1_plan`)
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_plan::option::o_vy1_worker_choice::text -->
 
@@ -1358,7 +1525,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy1_assault_choice` (auf Knoten `n_vy1_plan`)
+Versorgungsarbeiter — mit den Getreidekarren hinein.
+
+##### [P098] Option `o_vy1_assault_choice` (auf Knoten `n_vy1_plan`)
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_plan::option::o_vy1_assault_choice::text -->
 
@@ -1372,7 +1541,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy1_uniform`
+Offener Angriff — laut hinein.
+
+#### [P099] Knoten `n_vy1_uniform`
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_uniform::text -->
 
@@ -1384,7 +1555,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy1_knockout` (auf Knoten `n_vy1_uniform`)
+Der Kasernenhof leert sich vor dem Schichtwechsel.
+
+##### [P100] Option `o_vy1_knockout` (auf Knoten `n_vy1_uniform`)
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_uniform::option::o_vy1_knockout::text -->
 
@@ -1398,7 +1571,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy1_bathhouse` (auf Knoten `n_vy1_uniform`)
+Eine einzelne Wache niederschlagen und ihre Uniform nehmen.
+
+##### [P101] Option `o_vy1_bathhouse` (auf Knoten `n_vy1_uniform`)
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_uniform::option::o_vy1_bathhouse::text -->
 
@@ -1412,7 +1587,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy1_uniform_body`
+Einen anderen Weg finden: während der Vigilstunde ein Uniform-Set aus dem Badehaus entwenden.
+
+#### [P102] Knoten `n_vy1_uniform_body`
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_uniform_body::text -->
 
@@ -1424,7 +1601,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy1_hide_body` (auf Knoten `n_vy1_uniform_body`)
+Er ist bewusstlos und bleibt es eine Weile. Was nun?
+
+##### [P103] Option `o_vy1_hide_body` (auf Knoten `n_vy1_uniform_body`)
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_uniform_body::option::o_vy1_hide_body::text -->
 
@@ -1438,7 +1617,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy1_leave_body` (auf Knoten `n_vy1_uniform_body`)
+Ihn in der Zisterne verstecken.
+
+##### [P104] Option `o_vy1_leave_body` (auf Knoten `n_vy1_uniform_body`)
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_uniform_body::option::o_vy1_leave_body::text -->
 
@@ -1452,7 +1633,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy1_dessik`
+Ihn liegen lassen. Schnell weiter.
+
+#### [P105] Knoten `n_vy1_dessik`
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_dessik::text -->
 
@@ -1464,7 +1647,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy1_dessik_accept` (auf Knoten `n_vy1_dessik`)
+Der Makler Dessik besorgt euch Arbeitspässe — für einen Preis. Sein Sohn Ilo ist als Schmuggler verurteilt, irgendwo in der Bußstätte festgehalten. „Holt ihn heraus“, sagt Dessik, „und die Karren gehören euch.“
+
+##### [P106] Option `o_vy1_dessik_accept` (auf Knoten `n_vy1_dessik`)
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_dessik::option::o_vy1_dessik_accept::text -->
 
@@ -1478,7 +1663,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy1_dessik_refuse` (auf Knoten `n_vy1_dessik`)
+Es schwören.
+
+##### [P107] Option `o_vy1_dessik_refuse` (auf Knoten `n_vy1_dessik`)
 
 <!-- key: ev_vy_pilgrim_roads::node::n_vy1_dessik::option::o_vy1_dessik_refuse::text -->
 
@@ -1492,7 +1679,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Ergebnis `out_vy1_uniform` — Label
+Ablehnen. Einen anderen Weg hinein finden.
+
+#### [P108] Ergebnis `out_vy1_uniform` — Label
 
 <!-- key: ev_vy_pilgrim_roads::outcome::out_vy1_uniform::label -->
 
@@ -1504,7 +1693,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Ergebnis `out_vy1_worker` — Label
+Infiltration vorbereitet — Wachuniform
+
+#### [P109] Ergebnis `out_vy1_worker` — Label
 
 <!-- key: ev_vy_pilgrim_roads::outcome::out_vy1_worker::label -->
 
@@ -1516,7 +1707,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Ergebnis `out_vy1_assault` — Label
+Infiltration vorbereitet — Versorgungskarren
+
+#### [P110] Ergebnis `out_vy1_assault` — Label
 
 <!-- key: ev_vy_pilgrim_roads::outcome::out_vy1_assault::label -->
 
@@ -1528,6 +1721,8 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
+Plan: offener Angriff
+
 ---
 
 ## 7. Mission: Die Bußstätte (`m_vy_2`)
@@ -1537,7 +1732,7 @@ _Rein taktische Mission — kein Narrativtext._
 
 ### Event: Die Bußstätte (`ev_vy_penitence`) · Einstieg `n_vy2_router`
 
-#### Knoten `n_vy2_router`
+#### [P111] Knoten `n_vy2_router`
 
 <!-- key: ev_vy_penitence::node::n_vy2_router::text -->
 
@@ -1549,7 +1744,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_route_uniform` (auf Knoten `n_vy2_router`)
+Der Plan trägt euch zum Tempeltor. Was auch als Nächstes geschieht, es geschieht schnell.
+
+##### [P112] Option `o_vy2_route_uniform` (auf Knoten `n_vy2_router`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_router::option::o_vy2_route_uniform::text -->
 
@@ -1563,7 +1760,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_route_worker` (auf Knoten `n_vy2_router`)
+In Wachuniform annähern.
+
+##### [P113] Option `o_vy2_route_worker` (auf Knoten `n_vy2_router`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_router::option::o_vy2_route_worker::text -->
 
@@ -1577,7 +1776,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_route_assault` (auf Knoten `n_vy2_router`)
+Mit den Getreidekarren annähern.
+
+##### [P114] Option `o_vy2_route_assault` (auf Knoten `n_vy2_router`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_router::option::o_vy2_route_assault::text -->
 
@@ -1591,7 +1792,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy2_a_gate`
+Das Tor frontal angreifen.
+
+#### [P115] Knoten `n_vy2_a_gate`
 
 <!-- key: ev_vy_penitence::node::n_vy2_a_gate::text -->
 
@@ -1603,7 +1806,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_a_case_complication` (auf Knoten `n_vy2_a_gate`)
+Wachuniform, Tempeltor, morgendlicher Schichtwechsel.
+
+##### [P116] Option `o_vy2_a_case_complication` (auf Knoten `n_vy2_a_gate`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_a_gate::option::o_vy2_a_case_complication::text -->
 
@@ -1617,7 +1822,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_a_case_smooth` (auf Knoten `n_vy2_a_gate`)
+Zum Kontrollposten vorrücken.
+
+##### [P117] Option `o_vy2_a_case_smooth` (auf Knoten `n_vy2_a_gate`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_a_gate::option::o_vy2_a_case_smooth::text -->
 
@@ -1631,7 +1838,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_a_case_seal` (auf Knoten `n_vy2_a_gate`)
+Zum Kontrollposten vorrücken.
+
+##### [P118] Option `o_vy2_a_case_seal` (auf Knoten `n_vy2_a_gate`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_a_gate::option::o_vy2_a_case_seal::text -->
 
@@ -1645,7 +1854,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy2_a_complication`
+Zum Kontrollposten vorrücken.
+
+#### [P119] Knoten `n_vy2_a_complication`
 
 <!-- key: ev_vy_penitence::node::n_vy2_a_complication::text -->
 
@@ -1657,7 +1868,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_a_talk` (auf Knoten `n_vy2_a_complication`)
+Ein Feldwebel kneift die Augen zu eurem Gesicht zusammen. Er schwört, die Uhr der vermissten Wache an eurem Handgelenk gesehen zu haben.
+
+##### [P120] Option `o_vy2_a_talk` (auf Knoten `n_vy2_a_complication`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_a_complication::option::o_vy2_a_talk::text -->
 
@@ -1671,7 +1884,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_a_overpower` (auf Knoten `n_vy2_a_complication`)
+Ihn beschwichtigen.
+
+##### [P121] Option `o_vy2_a_overpower` (auf Knoten `n_vy2_a_complication`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_a_complication::option::o_vy2_a_overpower::text -->
 
@@ -1685,7 +1900,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_a_push` (auf Knoten `n_vy2_a_complication`)
+Den Kontrollposten lautlos ausschalten.
+
+##### [P122] Option `o_vy2_a_push` (auf Knoten `n_vy2_a_complication`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_a_complication::option::o_vy2_a_push::text -->
 
@@ -1699,7 +1916,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy2_a_seal`
+Vorbeidrängen, ehe er es durchdenkt.
+
+#### [P123] Knoten `n_vy2_a_seal`
 
 <!-- key: ev_vy_penitence::node::n_vy2_a_seal::text -->
 
@@ -1711,7 +1930,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_a_bluff_easy` (auf Knoten `n_vy2_a_seal`)
+Das innere Tor verlangt ein Rangsiegel, das eure geliehene Uniform nicht hat.
+
+##### [P124] Option `o_vy2_a_bluff_easy` (auf Knoten `n_vy2_a_seal`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_a_seal::option::o_vy2_a_bluff_easy::text -->
 
@@ -1725,7 +1946,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_a_bluff_hard` (auf Knoten `n_vy2_a_seal`)
+Als neu Versetzte bluffen.
+
+##### [P125] Option `o_vy2_a_bluff_hard` (auf Knoten `n_vy2_a_seal`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_a_seal::option::o_vy2_a_bluff_hard::text -->
 
@@ -1739,7 +1962,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_a_ossuary` (auf Knoten `n_vy2_a_seal`)
+Als neu Versetzte bluffen.
+
+##### [P126] Option `o_vy2_a_ossuary` (auf Knoten `n_vy2_a_seal`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_a_seal::option::o_vy2_a_ossuary::text -->
 
@@ -1753,7 +1978,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_a_push2` (auf Knoten `n_vy2_a_seal`)
+Stattdessen durch den Beinhaus-Gang schlüpfen.
+
+##### [P127] Option `o_vy2_a_push2` (auf Knoten `n_vy2_a_seal`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_a_seal::option::o_vy2_a_push2::text -->
 
@@ -1767,7 +1994,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy2_a_cells`
+Vorbeidrängen, ehe sie es durchdenken.
+
+#### [P128] Knoten `n_vy2_a_cells`
 
 <!-- key: ev_vy_penitence::node::n_vy2_a_cells::text -->
 
@@ -1779,7 +2008,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_a_open` (auf Knoten `n_vy2_a_cells`)
+Zellentrakt. Reihen von Türen — und hinter einer, vier hager gewordene Gesichter. Barros ist am Gitter, ehe das Licht ihn findet: Mercers alter Feldwebel, zwei Einsätze zwischen ihnen. „Captain Mercer. Feldwebel Barros.“ Dann, aus dem Dunkel, fest wie ein Appell: „Leutnant Ehlan. Kade. Imura. Alle anwesend, Sir.“ Namen und Ränge vor Sätzen — Tage aus nichts als Disziplin, und sie hält.
+
+##### [P129] Option `o_vy2_a_open` (auf Knoten `n_vy2_a_cells`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_a_cells::option::o_vy2_a_open::text -->
 
@@ -1793,7 +2024,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy2_a_report`
+Die Türen öffnen.
+
+#### [P130] Knoten `n_vy2_a_report`
 
 <!-- key: ev_vy_penitence::node::n_vy2_a_report::text -->
 
@@ -1805,7 +2038,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_a_quiet` (auf Knoten `n_vy2_a_report`)
+Ehlan meldet, als wäre die Gefangenschaft ein Posten gewesen: auf der Talstraße genommen, durch das Tor getrieben, verhört von Männern, die Licht tranken. „Wir haben die Sprünge gezählt, Captain. Die Tür unten öffnet hinein, nie hinaus — niemand geht fort außer auf das Wort der Wachen. Wie ihr auch hereinkamt, es ist kein Weg nach Hause.“ Wie hinaus?
+
+##### [P131] Option `o_vy2_a_quiet` (auf Knoten `n_vy2_a_report`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_a_report::option::o_vy2_a_quiet::text -->
 
@@ -1819,7 +2054,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_a_bell` (auf Knoten `n_vy2_a_report`)
+Leiser Weg hinaus. Langsam, aber leise.
+
+##### [P132] Option `o_vy2_a_bell` (auf Knoten `n_vy2_a_report`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_a_report::option::o_vy2_a_bell::text -->
 
@@ -1833,7 +2070,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy2_b_kitchens`
+Ablenkung am Glockenturm. Schnell, aber laut.
+
+#### [P133] Knoten `n_vy2_b_kitchens`
 
 <!-- key: ev_vy_penitence::node::n_vy2_b_kitchens::text -->
 
@@ -1845,7 +2084,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_b_free_ilo` (auf Knoten `n_vy2_b_kitchens`)
+Getreidekarren, Essensrunden — das Gefängnis läuft nach Ritual, vorhersehbar wie ein Uhrwerk. Hinter einer Zellentür vier hagere Gesichter. Barros umklammert das Gitter: „Captain. Feldwebel Barros — Ehlan, Kade, Imura, alle anwesend, Sir.“ Ehlan meldet schon: Die Tür unten öffnet hinein, nie hinaus; niemand geht fort außer auf das Wort der Wachen. Und drei Türen weiter: Ilo, Dessiks Sohn.
+
+##### [P134] Option `o_vy2_b_free_ilo` (auf Knoten `n_vy2_b_kitchens`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_b_kitchens::option::o_vy2_b_free_ilo::text -->
 
@@ -1859,7 +2100,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_b_leave_ilo` (auf Knoten `n_vy2_b_kitchens`)
+Auch Ilo befreien. Ein Versprechen ist ein Versprechen.
+
+##### [P135] Option `o_vy2_b_leave_ilo` (auf Knoten `n_vy2_b_kitchens`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_b_kitchens::option::o_vy2_b_leave_ilo::text -->
 
@@ -1873,7 +2116,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy2_b_exfil`
+Ihn zurücklassen. Recon One geht vor.
+
+#### [P136] Knoten `n_vy2_b_exfil`
 
 <!-- key: ev_vy_penitence::node::n_vy2_b_exfil::text -->
 
@@ -1885,7 +2130,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_b_resolve` (auf Knoten `n_vy2_b_exfil`)
+Zwei zusätzliche Personen lautlos zu bewegen, und die Wachablösung im Gang wartet nicht.
+
+##### [P137] Option `o_vy2_b_resolve` (auf Knoten `n_vy2_b_exfil`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_b_exfil::option::o_vy2_b_resolve::text -->
 
@@ -1899,7 +2146,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_b_alarm` (auf Knoten `n_vy2_b_exfil`)
+Die Nerven halten, das Tempo halten.
+
+##### [P138] Option `o_vy2_b_alarm` (auf Knoten `n_vy2_b_exfil`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_b_exfil::option::o_vy2_b_alarm::text -->
 
@@ -1913,7 +2162,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy2_c_assault_1`
+Es erzwingen und den Lärm in Kauf nehmen.
+
+#### [P139] Knoten `n_vy2_c_assault_1`
 
 <!-- key: ev_vy_penitence::node::n_vy2_c_assault_1::text -->
 
@@ -1925,7 +2176,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_c_1` (auf Knoten `n_vy2_c_assault_1`)
+Die Wandgeschütze zielen, ehe ihr in Reichweite seid. Vorläufer-Technik, sagt jemand — das Licht sieht nach keiner Waffe aus, gegen die ihr geübt habt.
+
+##### [P140] Option `o_vy2_c_1` (auf Knoten `n_vy2_c_assault_1`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_c_assault_1::option::o_vy2_c_1::text -->
 
@@ -1939,7 +2192,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy2_c_assault_2`
+Weiter.
+
+#### [P141] Knoten `n_vy2_c_assault_2`
 
 <!-- key: ev_vy_penitence::node::n_vy2_c_assault_2::text -->
 
@@ -1951,7 +2206,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_c_2` (auf Knoten `n_vy2_c_assault_2`)
+Handfeuerwaffen prallen an einem Schild ab, dessen Rand ihr nicht seht. Das würde nie ein fairer Kampf werden.
+
+##### [P142] Option `o_vy2_c_2` (auf Knoten `n_vy2_c_assault_2`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_c_assault_2::option::o_vy2_c_2::text -->
 
@@ -1965,7 +2222,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy2_c_assault_3`
+Weiter.
+
+#### [P143] Knoten `n_vy2_c_assault_3`
 
 <!-- key: ev_vy_penitence::node::n_vy2_c_assault_3::text -->
 
@@ -1977,7 +2236,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_c_press` (auf Knoten `n_vy2_c_assault_3`)
+Kein Weg hindurch. Nur eine Wahl, wie das hier endet.
+
+##### [P144] Option `o_vy2_c_press` (auf Knoten `n_vy2_c_assault_3`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_c_assault_3::option::o_vy2_c_press::text -->
 
@@ -1991,7 +2252,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_c_fallback` (auf Knoten `n_vy2_c_assault_3`)
+In die Bresche drängen.
+
+##### [P145] Option `o_vy2_c_fallback` (auf Knoten `n_vy2_c_assault_3`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_c_assault_3::option::o_vy2_c_fallback::text -->
 
@@ -2005,7 +2268,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy2_bottleneck_ab`
+Zum Tor zurückweichen.
+
+#### [P146] Knoten `n_vy2_bottleneck_ab`
 
 <!-- key: ev_vy_penitence::node::n_vy2_bottleneck_ab::text -->
 
@@ -2017,7 +2282,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_bn_alarm` (auf Knoten `n_vy2_bottleneck_ab`)
+Die Erste Klinge weiß bereits, dass ihr hier seid.
+
+##### [P147] Option `o_vy2_bn_alarm` (auf Knoten `n_vy2_bottleneck_ab`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_bottleneck_ab::option::o_vy2_bn_alarm::text -->
 
@@ -2031,7 +2298,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_bn_quiet` (auf Knoten `n_vy2_bottleneck_ab`)
+Glocken über euch — sie waren schnell, um euch zuvorzukommen.
+
+##### [P148] Option `o_vy2_bn_quiet` (auf Knoten `n_vy2_bottleneck_ab`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_bottleneck_ab::option::o_vy2_bn_quiet::text -->
 
@@ -2045,7 +2314,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy2_bottleneck_c`
+Keine Glocken. Nur eine Stille, die bedeutet, dass sie es schon wussten.
+
+#### [P149] Knoten `n_vy2_bottleneck_c`
 
 <!-- key: ev_vy_penitence::node::n_vy2_bottleneck_c::text -->
 
@@ -2057,7 +2328,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy2_c_move` (auf Knoten `n_vy2_bottleneck_c`)
+Ausrüstung beschlagnahmt, Zellen neben genau den Leuten, für die ihr gekommen seid — die Rettung, umgekehrt. Im Dunkeln zuerst die Namen: Ehlan. Kade. Imura. Und Barros, der durch eine aufgeplatzte Lippe seinen alten Captain angrinst: „Hat ja gedauert, Sir.“ Bei Tagesanbruch öffnen sich die Zellentüren von selbst. Der Hof wartet.
+
+##### [P150] Option `o_vy2_c_move` (auf Knoten `n_vy2_bottleneck_c`)
 
 <!-- key: ev_vy_penitence::node::n_vy2_bottleneck_c::option::o_vy2_c_move::text -->
 
@@ -2071,7 +2344,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Ergebnis `out_vy2_next` — Label
+Los.
+
+#### [P151] Ergebnis `out_vy2_next` — Label
 
 <!-- key: ev_vy_penitence::outcome::out_vy2_next::label -->
 
@@ -2083,6 +2358,8 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
+Die Erste Klinge rückt heran
+
 ---
 
 ## 8. Folge-Ereignis (`ev_vy_dessik_word`)
@@ -2091,7 +2368,7 @@ _Rein taktische Mission — kein Narrativtext._
 
 ### Event: Dessiks Wort (`ev_vy_dessik_word`) · Einstieg `n_vy_dessik`
 
-#### Knoten `n_vy_dessik`
+#### [P152] Knoten `n_vy_dessik`
 
 <!-- key: ev_vy_dessik_word::node::n_vy_dessik::text -->
 
@@ -2103,7 +2380,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy_dessik_take` (auf Knoten `n_vy_dessik`)
+Die Nachricht kommt über drei Mittelsmänner und einen bestochenen Wähler: Dessik und sein Sohn Ilo, lebendig und frei. „Ein Schmuggler zahlt seine Schulden, oder man vertraut ihm nicht mehr“, lautet die Botschaft. „Meine Routen sind jetzt eure Routen. Hier ist das Erste davon.“ Beigefügt ist ein dickes Bündel abgefangener Botschaften, das kein Tempel je zu teilen gedachte.
+
+##### [P153] Option `o_vy_dessik_take` (auf Knoten `n_vy_dessik`)
 
 <!-- key: ev_vy_dessik_word::node::n_vy_dessik::option::o_vy_dessik_take::text -->
 
@@ -2118,7 +2397,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Ergebnis `out_vy_dessik` — Label
+Nehmen, was er sendet.
+
+#### [P154] Ergebnis `out_vy_dessik` — Label
 
 <!-- key: ev_vy_dessik_word::outcome::out_vy_dessik::label -->
 
@@ -2130,6 +2411,8 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
+Eine beglichene Schuld
+
 ---
 
 ## 9. Mission: Die Erste Klinge (`m_vy_3`)
@@ -2139,7 +2422,7 @@ _Rein taktische Mission — kein Narrativtext._
 
 ### Event: Die Erste Klinge (`ev_vy_first_blade`) · Einstieg `n_vy3_intro`
 
-#### Knoten `n_vy3_intro`
+#### [P155] Knoten `n_vy3_intro`
 
 <!-- key: ev_vy_first_blade::node::n_vy3_intro::text -->
 
@@ -2151,7 +2434,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_intro_ab` (auf Knoten `n_vy3_intro`)
+Die andere Seite des Tors. Welcher Plan euch auch so weit trug, hier endet er.
+
+##### [P156] Option `o_vy3_intro_ab` (auf Knoten `n_vy3_intro`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_intro::option::o_vy3_intro_ab::text -->
 
@@ -2165,7 +2450,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_intro_c` (auf Knoten `n_vy3_intro`)
+Seryn Vael und seine Ehrengarde stellen euch mitten in der Flucht im Prozessionshof.
+
+##### [P157] Option `o_vy3_intro_c` (auf Knoten `n_vy3_intro`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_intro::option::o_vy3_intro_c::text -->
 
@@ -2179,7 +2466,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy3_confront`
+Richthof, Morgengrauen. Seryn verliest das Urteil: „Ihr alle brennt bei Einbruch der Dämmerung. Oru ist gnädig — die Dämmerung ist Stunden entfernt.“
+
+#### [P158] Knoten `n_vy3_confront`
 
 <!-- key: ev_vy_first_blade::node::n_vy3_confront::text -->
 
@@ -2191,7 +2480,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_convince_b1_win` (auf Knoten `n_vy3_confront`)
+Seryn tritt auf gleiche Höhe, die Klinge noch in der Scheide, und das Licht ist unter seiner Haut — schwach, in den Adern seines Halses und seiner Hände. Die Gnade der Portion, offen getragen, wie ein anderer seinen Rang trägt. „Sagt, wozu ihr gekommen seid — oder auch nicht.“
+
+##### [P159] Option `o_vy3_convince_b1_win` (auf Knoten `n_vy3_confront`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_confront::option::o_vy3_convince_b1_win::text -->
 
@@ -2205,7 +2496,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_convince_b1_fail` (auf Knoten `n_vy3_confront`)
+Ihn überzeugen — ein Gott, der sich von Hinrichtungen nährt, verdient keine Erste Klinge.
+
+##### [P160] Option `o_vy3_convince_b1_fail` (auf Knoten `n_vy3_confront`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_confront::option::o_vy3_convince_b1_fail::text -->
 
@@ -2219,7 +2512,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_convince_b2_win` (auf Knoten `n_vy3_confront`)
+Ihn überzeugen — ein Gott, der sich von Hinrichtungen nährt, verdient keine Erste Klinge.
+
+##### [P161] Option `o_vy3_convince_b2_win` (auf Knoten `n_vy3_confront`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_confront::option::o_vy3_convince_b2_win::text -->
 
@@ -2233,7 +2528,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_convince_b2_fail` (auf Knoten `n_vy3_confront`)
+Ihn überzeugen — ihm seine eigene Schrift vorhalten: Ein Gott, der sich von Hinrichtungen nährt, verdient keine Erste Klinge.
+
+##### [P162] Option `o_vy3_convince_b2_fail` (auf Knoten `n_vy3_confront`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_confront::option::o_vy3_convince_b2_fail::text -->
 
@@ -2247,7 +2544,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_convince_b3_win` (auf Knoten `n_vy3_confront`)
+Ihn überzeugen — ihm seine eigene Schrift vorhalten: Ein Gott, der sich von Hinrichtungen nährt, verdient keine Erste Klinge.
+
+##### [P163] Option `o_vy3_convince_b3_win` (auf Knoten `n_vy3_confront`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_confront::option::o_vy3_convince_b3_win::text -->
 
@@ -2261,7 +2560,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_convince_b3_fail` (auf Knoten `n_vy3_confront`)
+Ihn überzeugen — ein Gott, der sich von Hinrichtungen nährt, verdient keine Erste Klinge.
+
+##### [P164] Option `o_vy3_convince_b3_fail` (auf Knoten `n_vy3_confront`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_confront::option::o_vy3_convince_b3_fail::text -->
 
@@ -2275,7 +2576,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_convince_b4_win` (auf Knoten `n_vy3_confront`)
+Ihn überzeugen — ein Gott, der sich von Hinrichtungen nährt, verdient keine Erste Klinge.
+
+##### [P165] Option `o_vy3_convince_b4_win` (auf Knoten `n_vy3_confront`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_confront::option::o_vy3_convince_b4_win::text -->
 
@@ -2289,7 +2592,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_convince_b4_fail` (auf Knoten `n_vy3_confront`)
+Ihn überzeugen — ihm seine eigene Schrift vorhalten: Ein Gott, der sich von Hinrichtungen nährt, verdient keine Erste Klinge.
+
+##### [P166] Option `o_vy3_convince_b4_fail` (auf Knoten `n_vy3_confront`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_confront::option::o_vy3_convince_b4_fail::text -->
 
@@ -2303,7 +2608,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_explain_b1_win` (auf Knoten `n_vy3_confront`)
+Ihn überzeugen — ihm seine eigene Schrift vorhalten: Ein Gott, der sich von Hinrichtungen nährt, verdient keine Erste Klinge.
+
+##### [P167] Option `o_vy3_explain_b1_win` (auf Knoten `n_vy3_confront`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_confront::option::o_vy3_explain_b1_win::text -->
 
@@ -2317,7 +2624,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_explain_b1_fail` (auf Knoten `n_vy3_confront`)
+Erklären — es gibt keinen Gott. Nur Energiesignaturen und Projektionsartefakte.
+
+##### [P168] Option `o_vy3_explain_b1_fail` (auf Knoten `n_vy3_confront`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_confront::option::o_vy3_explain_b1_fail::text -->
 
@@ -2331,7 +2640,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_explain_b2_win` (auf Knoten `n_vy3_confront`)
+Erklären — es gibt keinen Gott. Nur Energiesignaturen und Projektionsartefakte.
+
+##### [P169] Option `o_vy3_explain_b2_win` (auf Knoten `n_vy3_confront`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_confront::option::o_vy3_explain_b2_win::text -->
 
@@ -2345,7 +2656,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_explain_b2_fail` (auf Knoten `n_vy3_confront`)
+Erklären — es gibt keinen Gott, und Okafor hat die Aufzeichnungen als Beweis.
+
+##### [P170] Option `o_vy3_explain_b2_fail` (auf Knoten `n_vy3_confront`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_confront::option::o_vy3_explain_b2_fail::text -->
 
@@ -2359,7 +2672,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_explain_b3_win` (auf Knoten `n_vy3_confront`)
+Erklären — es gibt keinen Gott, und Okafor hat die Aufzeichnungen als Beweis.
+
+##### [P171] Option `o_vy3_explain_b3_win` (auf Knoten `n_vy3_confront`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_confront::option::o_vy3_explain_b3_win::text -->
 
@@ -2373,7 +2688,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_explain_b3_fail` (auf Knoten `n_vy3_confront`)
+Erklären — es gibt keinen Gott. Nur Energiesignaturen und Projektionsartefakte.
+
+##### [P172] Option `o_vy3_explain_b3_fail` (auf Knoten `n_vy3_confront`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_confront::option::o_vy3_explain_b3_fail::text -->
 
@@ -2387,7 +2704,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_explain_b4_win` (auf Knoten `n_vy3_confront`)
+Erklären — es gibt keinen Gott. Nur Energiesignaturen und Projektionsartefakte.
+
+##### [P173] Option `o_vy3_explain_b4_win` (auf Knoten `n_vy3_confront`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_confront::option::o_vy3_explain_b4_win::text -->
 
@@ -2401,7 +2720,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_explain_b4_fail` (auf Knoten `n_vy3_confront`)
+Erklären — es gibt keinen Gott, und Okafor hat die Aufzeichnungen als Beweis.
+
+##### [P174] Option `o_vy3_explain_b4_fail` (auf Knoten `n_vy3_confront`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_confront::option::o_vy3_explain_b4_fail::text -->
 
@@ -2415,7 +2736,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_fight` (auf Knoten `n_vy3_confront`)
+Erklären — es gibt keinen Gott, und Okafor hat die Aufzeichnungen als Beweis.
+
+##### [P175] Option `o_vy3_fight` (auf Knoten `n_vy3_confront`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_confront::option::o_vy3_fight::text -->
 
@@ -2429,7 +2752,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy3_hardens`
+Ihn bekämpfen.
+
+#### [P176] Knoten `n_vy3_hardens`
 
 <!-- key: ev_vy_first_blade::node::n_vy3_hardens::text -->
 
@@ -2441,7 +2766,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_hardens_continue` (auf Knoten `n_vy3_hardens`)
+Etwas in seinem Gesicht verschließt sich. „Ihr hattet eure Gelegenheit zu sprechen“, sagt er, und die Ehrengarde fächert sich hinter ihm auf.
+
+##### [P177] Option `o_vy3_hardens_continue` (auf Knoten `n_vy3_hardens`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_hardens::option::o_vy3_hardens_continue::text -->
 
@@ -2455,7 +2782,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy3_duel`
+Ziehen.
+
+#### [P178] Knoten `n_vy3_duel`
 
 <!-- key: ev_vy_first_blade::node::n_vy3_duel::text -->
 
@@ -2467,7 +2796,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_duel_clean` (auf Knoten `n_vy3_duel`)
+Drei Gänge, Klinge gegen Klinge, und er ist schneller als alles, gegen das ihr geübt habt — ein Begnadeter, die Portion in ihm lodernd. Doch er ist ein Mann gegen ein Team, mit dem befreiten Recon One im Rücken, und Zahlen ermüden nicht.
+
+##### [P179] Option `o_vy3_duel_clean` (auf Knoten `n_vy3_duel`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_duel::option::o_vy3_duel_clean::text -->
 
@@ -2481,7 +2812,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_duel_costly` (auf Knoten `n_vy3_duel`)
+Den Vorteil nutzen.
+
+##### [P180] Option `o_vy3_duel_costly` (auf Knoten `n_vy3_duel`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_duel::option::o_vy3_duel_costly::text -->
 
@@ -2495,7 +2828,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy3_resolve_intro`
+Den Vorteil nutzen.
+
+#### [P181] Knoten `n_vy3_resolve_intro`
 
 <!-- key: ev_vy_first_blade::node::n_vy3_resolve_intro::text -->
 
@@ -2507,7 +2842,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_ri_vestry` (auf Knoten `n_vy3_resolve_intro`)
+Die Tore hinter euch, Recon One befreit, die Stadt redet schon über das, was sie sah.
+
+##### [P182] Option `o_vy3_ri_vestry` (auf Knoten `n_vy3_resolve_intro`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_resolve_intro::option::o_vy3_ri_vestry::text -->
 
@@ -2521,7 +2858,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_ri_plain` (auf Knoten `n_vy3_resolve_intro`)
+Im Hinausgehen mitnehmen, was in der Sakristei übrig ist.
+
+##### [P183] Option `o_vy3_ri_plain` (auf Knoten `n_vy3_resolve_intro`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_resolve_intro::option::o_vy3_ri_plain::text -->
 
@@ -2535,7 +2874,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy3_resolve`
+Weiter.
+
+#### [P184] Knoten `n_vy3_resolve`
 
 <!-- key: ev_vy_first_blade::node::n_vy3_resolve::text -->
 
@@ -2547,7 +2888,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_resolve_convinced` (auf Knoten `n_vy3_resolve`)
+So oder so endet die Geschichte der Ersten Klinge hier — vorerst.
+
+##### [P185] Option `o_vy3_resolve_convinced` (auf Knoten `n_vy3_resolve`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_resolve::option::o_vy3_resolve_convinced::text -->
 
@@ -2561,7 +2904,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_resolve_doubt` (auf Knoten `n_vy3_resolve`)
+Seryn befiehlt der Ehrengarde zurückzutreten, streift seinen Patronengurt voller Portions-Phiolen ab und reicht ihn hinüber. „Untersucht es. Ich habe genug getrunken.“ Er geht mit euch hinaus.
+
+##### [P186] Option `o_vy3_resolve_doubt` (auf Knoten `n_vy3_resolve`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_resolve::option::o_vy3_resolve_doubt::text -->
 
@@ -2575,7 +2920,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy3_resolve_defeated` (auf Knoten `n_vy3_resolve`)
+Seryn lässt euch passieren — und folgt, um den Beweis mit eigenen Augen zu sehen. Seine letzten Phiolen gibt er Okafor: „Dann sagt mir, was ich getrunken habe.“
+
+##### [P187] Option `o_vy3_resolve_defeated` (auf Knoten `n_vy3_resolve`)
 
 <!-- key: ev_vy_first_blade::node::n_vy3_resolve::option::o_vy3_resolve_defeated::text -->
 
@@ -2589,7 +2936,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Ergebnis `out_vy3_convinced` — Label
+Ihr tragt die Erste Klinge auf einem Getreidekarren hinaus. Er dankt euch nicht. In seiner Ausrüstung: Phiolen stehenden Lichts — die Portion, die ihn zu mehr als einem Mann machte.
+
+#### [P188] Ergebnis `out_vy3_convinced` — Label
 
 <!-- key: ev_vy_first_blade::outcome::out_vy3_convinced::label -->
 
@@ -2602,7 +2951,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Ergebnis `out_vy3_doubt` — Label
+Die Erste Klinge läuft über
+
+#### [P189] Ergebnis `out_vy3_doubt` — Label
 
 <!-- key: ev_vy_first_blade::outcome::out_vy3_doubt::label -->
 
@@ -2615,7 +2966,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Ergebnis `out_vy3_defeated` — Label
+Die Erste Klinge, zweifelnd
+
+#### [P190] Ergebnis `out_vy3_defeated` — Label
 
 <!-- key: ev_vy_first_blade::outcome::out_vy3_defeated::label -->
 
@@ -2628,6 +2981,8 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
+Die Erste Klinge, besiegt
+
 ---
 
 ## 10. Mission: Das Reliquiengewölbe (`m_vy_4`)
@@ -2637,7 +2992,7 @@ _Rein taktische Mission — kein Narrativtext._
 
 ### Event: Reliquiengewölbe (`ev_vy_relic_vault`) · Einstieg `n_vy4_approach`
 
-#### Knoten `n_vy4_approach`
+#### [P191] Knoten `n_vy4_approach`
 
 <!-- key: ev_vy_relic_vault::node::n_vy4_approach::text -->
 
@@ -2649,7 +3004,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy4_alerted` (auf Knoten `n_vy4_approach`)
+Die Tempelrüstkammer liegt hinter dem Heiligtum begraben — zwei Bannsäulen versiegeln die Gewölbetür, und dahinter warten Vorläufer-Reliquien. Irgendwo jenseits davon ist die Maschine, die einen Menschen zum Gott macht. Wachen säumen jeden Säulengang.
+
+##### [P192] Option `o_vy4_alerted` (auf Knoten `n_vy4_approach`)
 
 <!-- key: ev_vy_relic_vault::node::n_vy4_approach::option::o_vy4_alerted::text -->
 
@@ -2663,7 +3020,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy4_quiet` (auf Knoten `n_vy4_approach`)
+Die Säulengänge sind doppelt besetzt — Dessik hat euch verraten, kaum dass ihr ihn verließt. Laut, schnell hinein.
+
+##### [P193] Option `o_vy4_quiet` (auf Knoten `n_vy4_approach`)
 
 <!-- key: ev_vy_relic_vault::node::n_vy4_approach::option::o_vy4_quiet::text -->
 
@@ -2677,7 +3036,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy4_wards`
+Recon Ones Bericht kartierte die Nachtrunden — die Schicht ist dünn besetzt. Auf die Bannsäulen zu.
+
+#### [P194] Knoten `n_vy4_wards`
 
 <!-- key: ev_vy_relic_vault::node::n_vy4_wards::text -->
 
@@ -2689,7 +3050,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy4_seryn` (auf Knoten `n_vy4_wards`)
+Zwei Bannsäulen flankieren die Gewölbetür, jede summend vom selben weißen Licht, vor dem die Pilger knien. Beide müssen erlöschen, ehe die Tür sich öffnet.
+
+##### [P195] Option `o_vy4_seryn` (auf Knoten `n_vy4_wards`)
 
 <!-- key: ev_vy_relic_vault::node::n_vy4_wards::option::o_vy4_seryn::text -->
 
@@ -2703,7 +3066,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy4_science` (auf Knoten `n_vy4_wards`)
+Seryn kennt die Riten — er stillt eine Säule mit einem Wort und einer Geste, wenn auch seine Hände zwischen den Worten zu zittern begonnen haben. Das Team übernimmt die andere.
+
+##### [P196] Option `o_vy4_science` (auf Knoten `n_vy4_wards`)
 
 <!-- key: ev_vy_relic_vault::node::n_vy4_wards::option::o_vy4_science::text -->
 
@@ -2717,7 +3082,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy4_force` (auf Knoten `n_vy4_wards`)
+Okafor liest die Resonanz und fährt beide Säulen sauber herunter.
+
+##### [P197] Option `o_vy4_force` (auf Knoten `n_vy4_wards`)
 
 <!-- key: ev_vy_relic_vault::node::n_vy4_wards::option::o_vy4_force::text -->
 
@@ -2731,7 +3098,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy4_slow` (auf Knoten `n_vy4_wards`)
+Die Leitungen der Säulen zerschlagen — grob, aber sie erlöschen.
+
+##### [P198] Option `o_vy4_slow` (auf Knoten `n_vy4_wards`)
 
 <!-- key: ev_vy_relic_vault::node::n_vy4_wards::option::o_vy4_slow::text -->
 
@@ -2745,7 +3114,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy4_core`
+Keine Abkürzung. Sie von Hand bearbeiten, eine nach der anderen, und hoffen, dass die Wachen träge bleiben.
+
+#### [P199] Knoten `n_vy4_core`
 
 <!-- key: ev_vy_relic_vault::node::n_vy4_core::text -->
 
@@ -2757,7 +3128,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy4_extract` (auf Knoten `n_vy4_core`)
+Die Gewölbetür knirscht auf. Drinnen, gebettet in ein Nest von Projektorgehäusen, sitzt der Kern — eine Energiezelle, dicht genug, um eine Kathedrale aus Licht zu speisen. An den Wänden Tributkisten mit Tor-Glyphen gestempelt: ausgehend. Den Kern herauszubekommen verlangt eine ruhige Hand, während die Wachen vom Saal her heranrücken.
+
+##### [P200] Option `o_vy4_extract` (auf Knoten `n_vy4_core`)
 
 <!-- key: ev_vy_relic_vault::node::n_vy4_core::option::o_vy4_extract::text -->
 
@@ -2771,7 +3144,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy4_yank` (auf Knoten `n_vy4_core`)
+Okafor löst ihn unversehrt aus dem Gehäuse.
+
+##### [P201] Option `o_vy4_yank` (auf Knoten `n_vy4_core`)
 
 <!-- key: ev_vy_relic_vault::node::n_vy4_core::option::o_vy4_yank::text -->
 
@@ -2785,7 +3160,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy4_exfil`
+Keine Zeit für Feinheiten. Herausreißen und rennen.
+
+#### [P202] Knoten `n_vy4_exfil`
 
 <!-- key: ev_vy_relic_vault::node::n_vy4_exfil::text -->
 
@@ -2797,7 +3174,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy4_exfil_alarm` (auf Knoten `n_vy4_exfil`)
+Den Kern in der Hand, ist der Weg hinaus das Einzige, was noch zwischen euch und dem Tor steht.
+
+##### [P203] Option `o_vy4_exfil_alarm` (auf Knoten `n_vy4_exfil`)
 
 <!-- key: ev_vy_relic_vault::node::n_vy4_exfil::option::o_vy4_exfil_alarm::text -->
 
@@ -2811,7 +3190,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy4_exfil_quiet` (auf Knoten `n_vy4_exfil`)
+Die Glocken läuten schon — zum Tor durchkämpfen.
+
+##### [P204] Option `o_vy4_exfil_quiet` (auf Knoten `n_vy4_exfil`)
 
 <!-- key: ev_vy_relic_vault::node::n_vy4_exfil::option::o_vy4_exfil_quiet::text -->
 
@@ -2825,7 +3206,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Ergebnis `out_vy4_secured` — Label
+Hinausschleichen, wie ihr gekommen seid.
+
+#### [P205] Ergebnis `out_vy4_secured` — Label
 
 <!-- key: ev_vy_relic_vault::outcome::out_vy4_secured::label -->
 
@@ -2838,6 +3221,8 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
+Gewölbe gesichert — der Gott hat einen Körper
+
 ---
 
 ## 11. Mission: Der Erleuchtete (`m_vy_5`)
@@ -2847,7 +3232,7 @@ _Rein taktische Mission — kein Narrativtext._
 
 ### Event: Der Erleuchtete (`ev_vy_luminous_one`) · Einstieg `n_vy5_witness`
 
-#### Knoten `n_vy5_witness`
+#### [P206] Knoten `n_vy5_witness`
 
 <!-- key: ev_vy_luminous_one::node::n_vy5_witness::text -->
 
@@ -2859,7 +3244,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy5_seryn_present` (auf Knoten `n_vy5_witness`)
+Der Kern führte euch hierher: ein Sanktum in der toten Caldera, und der Erleuchtete steht darin. Eine hohe Gestalt aus Licht — und um sie her, halb im Fels versunken, die Maschinerie, die keine Schrift benennt. Emitter. Gehäuse. Die Erbauer der Weltentore sind längst fort; dies blieb zurück, um ihr Werk zu hüten, und niemand sagte ihm, wann es aufhören solle. Es hat die Lampe sehr lange brennen lassen, und es hat sie allein am Brennen gehalten.
+
+##### [P207] Option `o_vy5_seryn_present` (auf Knoten `n_vy5_witness`)
 
 <!-- key: ev_vy_luminous_one::node::n_vy5_witness::option::o_vy5_seryn_present::text -->
 
@@ -2873,7 +3260,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy5_no_seryn` (auf Knoten `n_vy5_witness`)
+Neben euch kann Seryn den Blick nicht abwenden.
+
+##### [P208] Option `o_vy5_no_seryn` (auf Knoten `n_vy5_witness`)
 
 <!-- key: ev_vy_luminous_one::node::n_vy5_witness::option::o_vy5_no_seryn::text -->
 
@@ -2887,7 +3276,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy5_seryn_watch`
+Näher herantreten.
+
+#### [P209] Knoten `n_vy5_seryn_watch`
 
 <!-- key: ev_vy_luminous_one::node::n_vy5_seryn_watch::text -->
 
@@ -2899,7 +3290,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy5_seryn_continue` (auf Knoten `n_vy5_seryn_watch`)
+Seryn betrachtet das Licht, dem er sein ganzes Leben gab, und die müden Maschinen, die es erzeugen. Er tobt nicht. Er weint nicht. „Es hat uns nie belogen“, sagt er schließlich, sehr leise. „Es hat nur… die Lampe am Brennen gehalten. Damit es nicht allein im Dunkeln wäre.“ Die Erste Klinge des Erleuchteten senkt zum letzten Mal den Blick von ihrem Gott.
+
+##### [P210] Option `o_vy5_seryn_continue` (auf Knoten `n_vy5_seryn_watch`)
 
 <!-- key: ev_vy_luminous_one::node::n_vy5_seryn_watch::option::o_vy5_seryn_continue::text -->
 
@@ -2913,7 +3306,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy5_decide`
+Nichts sagen. Näher herantreten.
+
+#### [P211] Knoten `n_vy5_decide`
 
 <!-- key: ev_vy_luminous_one::node::n_vy5_decide::text -->
 
@@ -2925,7 +3320,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy5_watch` (auf Knoten `n_vy5_decide`)
+Es hat euch noch nicht gesehen. Was immer es ist — ein Hüter, ein Relikt, ein Geist, der seine Schöpfer überlebte — es ist in Reichweite. Und ebenso alles, was das Sanktum euch erzählen könnte.
+
+##### [P212] Option `o_vy5_watch` (auf Knoten `n_vy5_decide`)
 
 <!-- key: ev_vy_luminous_one::node::n_vy5_decide::option::o_vy5_watch::text -->
 
@@ -2939,7 +3336,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy5_attack` (auf Knoten `n_vy5_decide`)
+Beobachten. Alles aufzeichnen. Es enden lassen und gehen.
+
+##### [P213] Option `o_vy5_attack` (auf Knoten `n_vy5_decide`)
 
 <!-- key: ev_vy_luminous_one::node::n_vy5_decide::option::o_vy5_attack::text -->
 
@@ -2953,7 +3352,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy5_watch_seryn`
+Es beenden. Den Gott jetzt zu Fall bringen.
+
+#### [P214] Knoten `n_vy5_watch_seryn`
 
 <!-- key: ev_vy_luminous_one::node::n_vy5_watch_seryn::text -->
 
@@ -2965,7 +3366,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy5_watch_defeated` (auf Knoten `n_vy5_watch_seryn`)
+Das Wesen vollendet seinen Ritus — ein langsames Zurückfalten des Lichts in die Emitter — und ist einfach fort, wie eine Projektion fort ist. Es wusste nie, dass ihr da wart. Aber ihr wart es, und die Sensoren waren es, und jetzt habt ihr alles: wie eine Maschine, die ein totes Tor hüten sollte, sich zu einem Gott machte, damit die lange Wache niemals allein wäre.
+
+##### [P215] Option `o_vy5_watch_defeated` (auf Knoten `n_vy5_watch_seryn`)
 
 <!-- key: ev_vy_luminous_one::node::n_vy5_watch_seryn::option::o_vy5_watch_defeated::text -->
 
@@ -2979,7 +3382,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy5_watch_doubt` (auf Knoten `n_vy5_watch_seryn`)
+Auf dem Grat hinter euch bittet die gefangene Erste Klinge ums Wort.
+
+##### [P216] Option `o_vy5_watch_doubt` (auf Knoten `n_vy5_watch_seryn`)
 
 <!-- key: ev_vy_luminous_one::node::n_vy5_watch_seryn::option::o_vy5_watch_doubt::text -->
 
@@ -2993,7 +3398,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy5_watch_other` (auf Knoten `n_vy5_watch_seryn`)
+Seryn sieht das letzte Licht erlöschen und lässt es geschehen.
+
+##### [P217] Option `o_vy5_watch_other` (auf Knoten `n_vy5_watch_seryn`)
 
 <!-- key: ev_vy_luminous_one::node::n_vy5_watch_seryn::option::o_vy5_watch_other::text -->
 
@@ -3007,7 +3414,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Knoten `n_vy5_attack_seryn`
+Die Sensoren einpacken. Was es auch war, es ist nun fort.
+
+#### [P218] Knoten `n_vy5_attack_seryn`
 
 <!-- key: ev_vy_luminous_one::node::n_vy5_attack_seryn::text -->
 
@@ -3019,7 +3428,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy5_attack_defeated` (auf Knoten `n_vy5_attack_seryn`)
+Ihr eröffnet das Feuer. Es wirft eine Wand aus Licht auf, an der Handfeuerwaffen abprallen, dann erhebt es sich, faltet sich und entweicht durch ein Tor zwischen einem Atemzug und dem nächsten. Es würde ohnehin entkommen — es ist Schlimmerem als euch entronnen. Doch der Anker des Sanktums birst im Rückstoß, die Emitter erlöschen flackernd, und die Caldera wird still und leer, zum ersten Mal seit einem Zeitalter.
+
+##### [P219] Option `o_vy5_attack_defeated` (auf Knoten `n_vy5_attack_seryn`)
 
 <!-- key: ev_vy_luminous_one::node::n_vy5_attack_seryn::option::o_vy5_attack_defeated::text -->
 
@@ -3033,7 +3444,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy5_attack_other` (auf Knoten `n_vy5_attack_seryn`)
+Im Chaos reißt sich die gefangene Erste Klinge los.
+
+##### [P220] Option `o_vy5_attack_other` (auf Knoten `n_vy5_attack_seryn`)
 
 <!-- key: ev_vy_luminous_one::node::n_vy5_attack_seryn::option::o_vy5_attack_other::text -->
 
@@ -3047,7 +3460,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Ergebnis `out_vy5_watch_defeated` — Label
+Hinaus in eine Stille treten, die keine Glocke je wieder füllen wird.
+
+#### [P221] Ergebnis `out_vy5_watch_defeated` — Label
 
 <!-- key: ev_vy_luminous_one::outcome::out_vy5_watch_defeated::label -->
 
@@ -3060,7 +3475,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Ergebnis `out_vy5_watch_doubt` — Label
+Bezeugt — die Erste Klinge wird folgen
+
+#### [P222] Ergebnis `out_vy5_watch_doubt` — Label
 
 <!-- key: ev_vy_luminous_one::outcome::out_vy5_watch_doubt::label -->
 
@@ -3073,7 +3490,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Ergebnis `out_vy5_watch_other` — Label
+Bezeugt — der Bekehrte bleibt
+
+#### [P223] Ergebnis `out_vy5_watch_other` — Label
 
 <!-- key: ev_vy_luminous_one::outcome::out_vy5_watch_other::label -->
 
@@ -3086,7 +3505,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Ergebnis `out_vy5_fought_seryn_lost` — Label
+Bezeugt — alles aufgezeichnet
+
+#### [P224] Ergebnis `out_vy5_fought_seryn_lost` — Label
 
 <!-- key: ev_vy_luminous_one::outcome::out_vy5_fought_seryn_lost::label -->
 
@@ -3099,7 +3520,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Ergebnis `out_vy5_fought` — Label
+Der Anker zerschmettert — die Erste Klinge verloren
+
+#### [P225] Ergebnis `out_vy5_fought` — Label
 
 <!-- key: ev_vy_luminous_one::outcome::out_vy5_fought::label -->
 
@@ -3112,6 +3535,8 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
+Der Anker zerschmettert
+
 ---
 
 ## 12. Folge-Ereignis (`ev_vy_seryn_oath`)
@@ -3120,7 +3545,7 @@ _Rein taktische Mission — kein Narrativtext._
 
 ### Event: Der Eid der Ersten Klinge (`ev_vy_seryn_oath`) · Einstieg `n_vy_oath`
 
-#### Knoten `n_vy_oath`
+#### [P226] Knoten `n_vy_oath`
 
 <!-- key: ev_vy_seryn_oath::node::n_vy_oath::text -->
 
@@ -3132,7 +3557,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy_oath_accept` (auf Knoten `n_vy_oath`)
+Seryn findet euch zwei Tage später, unbewaffnet, die Tempelfarben von seinem Mantel gestreift, das Licht unter seiner Haut erloschen. Seine Hände sind nicht ruhig. Seine Stimme schon. „Die Gnade verlässt mich — der letzte Griff des Gottes nach dem, was ich bin. Ich diente einer Lampe im Dunkeln, weil ich sie für die Sonne hielt. Ihr habt mir den Unterschied gezeigt und nicht triumphiert.“ Er bietet seine Klinge dar, den Griff voran. „Was von mir bleibt, ist mein, es zu geben. Es sei etwas Wahrem gegeben.“
+
+##### [P227] Option `o_vy_oath_accept` (auf Knoten `n_vy_oath`)
 
 <!-- key: ev_vy_seryn_oath::node::n_vy_oath::option::o_vy_oath_accept::text -->
 
@@ -3146,7 +3573,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Ergebnis `out_vy_oath` — Label
+Der Ersten Klinge einen Platz geben.
+
+#### [P228] Ergebnis `out_vy_oath` — Label
 
 <!-- key: ev_vy_seryn_oath::outcome::out_vy_oath::label -->
 
@@ -3159,6 +3588,8 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
+Die Erste Klinge leistet den Eid
+
 ---
 
 ## 13. Folge-Ereignis (`ev_vy_gratitude`)
@@ -3167,7 +3598,7 @@ _Rein taktische Mission — kein Narrativtext._
 
 ### Event: Der Dank einer Welt (`ev_vy_gratitude`) · Einstieg `n_vy_gratitude`
 
-#### Knoten `n_vy_gratitude`
+#### [P229] Knoten `n_vy_gratitude`
 
 <!-- key: ev_vy_gratitude::node::n_vy_gratitude::text -->
 
@@ -3179,7 +3610,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-##### Option `o_vy_gratitude_accept` (auf Knoten `n_vy_gratitude`)
+Eine Delegation kommt durch das Tor unter keiner Flagge, die jemand kennt — Veyra musste bis jetzt keine erfinden. Ein provisorischer Rat, gebildet in der Stille, nachdem das Licht erlosch, sendet, was eine befreite Welt entbehren kann, und seinen Dank für einen Himmel, der endlich nur ein Himmel ist.
+
+##### [P230] Option `o_vy_gratitude_accept` (auf Knoten `n_vy_gratitude`)
 
 <!-- key: ev_vy_gratitude::node::n_vy_gratitude::option::o_vy_gratitude_accept::text -->
 
@@ -3194,7 +3627,9 @@ _Rein taktische Mission — kein Narrativtext._
 
 **NEU:**
 
-#### Ergebnis `out_vy_gratitude` — Label
+Den Tribut annehmen.
+
+#### [P231] Ergebnis `out_vy_gratitude` — Label
 
 <!-- key: ev_vy_gratitude::outcome::out_vy_gratitude::label -->
 
@@ -3205,6 +3640,8 @@ _Rein taktische Mission — kein Narrativtext._
 > Eine Welt sagt Danke
 
 **NEU:**
+
+Eine Welt sagt Danke
 
 ---
 
@@ -3222,8 +3659,9 @@ Dieses Dokument ist rundlauffähig. Ein Konverter liest es und schreibt ausgefü
   <event>::outcome::<outId>::debrief                  → outcomes[outId].debrief
   ```
 
-- **Anwendung.** Der Konverter nimmt pro Anker den Text zwischen der Zeile `**NEU:**` und dem nächsten Anker bzw. der nächsten Überschrift, entfernt umschließenden Leerraum und die `> `-Blockzitat-Präfixe (falls vorhanden).
-  - Ist das Ergebnis **leer**, bleibt die Quelle unverändert.
-  - Ist es **nicht leer**, überschreibt es exakt das durch den Schlüssel bezeichnete Feld in `src/data/content/events.json`.
+- **Vorbefüllung.** Jedes `**NEU:**`-Feld ist mit einer exakten Kopie des ORIGINAL vorbefüllt; der Reviewer editiert direkt darin.
+- **Anwendung.** Der Konverter nimmt pro Anker den Text zwischen der Zeile `**NEU:**` und dem nächsten Anker bzw. der nächsten Überschrift, entfernt umschließenden Leerraum und die `> `-Blockzitat-Präfixe (falls vorhanden) und normalisiert Zeilenumbrüche/Mehrfach-Leerraum zu einfachen Leerzeichen (Node-Texte sind einzeilige Strings).
+  - Ist **NEU zeichengleich mit ORIGINAL** (nach dieser Normalisierung) oder leer, wird die Passage **übersprungen** — kein Schreibvorgang.
+  - Nur **tatsächlich geänderte** Passagen überschreiben exakt das durch den Schlüssel bezeichnete Feld in `src/data/content/events.json`.
 - **Nur diese Felder** werden zurückgeschrieben: Knoten-`text`, Options-`text`, Ergebnis-`label`, Ergebnis-`debrief`. **ORIGINAL**-Blöcke, Kontextzeilen (Sprecher/Bedingungen/Effekte) und **Log-Texte** sind read-only und werden nie geändert.
 - **IDs bleiben unberührt.** Der Konverter ändert ausschließlich Textwerte, nie `id`/`flag`/`variable`/`next`/Struktur. Nach dem Rückspiel gilt die normale DoD (Golden Tests, `validate-content`) — spec-gepinnte Kanon-Strings (z. B. Ergebnis-Labels von `ev_vy_arrival`, Intro-Log) nur mit passender Test-Aktualisierung ändern.

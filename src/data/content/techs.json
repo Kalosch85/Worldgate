@@ -64,7 +64,7 @@
   {
     "id": "t_projection_theory",
     "name": "Projektionstheorie",
-    "description": "Feldaufnahmen des Leuchtenden zeigen, wie ein Wesen überall dort erscheinen kann, wo es verehrt wird.",
+    "description": "Feldaufnahmen des Erleuchteten zeigen, wie ein Wesen überall dort erscheinen kann, wo es verehrt wird.",
     "cost": 45,
     "prerequisites": ["t_radiance_cell"],
     "effects": [

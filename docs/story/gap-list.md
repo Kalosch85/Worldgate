@@ -40,7 +40,7 @@ Kanon-Entscheidungen der Fable-Stufe).
   bleiben? — **OFFEN** (sie können wählen; ob irgendwo anders sie aufnähme und
   was der Gott mit Ausreißern tut, die nicht zu ihm rennen, ist ungeschrieben).
 - RENN-Zweig: Was geschieht mit den Feldfamilien, die nach Veyra flohen? —
-  teilweise beantwortet in n_vy1_faces (Büßer am Wärterhaus, um Vergebung
+  teilweise beantwortet in n_vy1_faces (Büßer am Wachhaus, um Vergebung
   bittend); ihr langfristiges Schicksal ist **OFFEN**.
 
 ## Das Verzeichnis der Genommenen — m_vy_ledger (Karsu)
@@ -61,7 +61,7 @@ Kanon-Entscheidungen der Fable-Stufe).
 
 ## Der Tributruf — m_vy_intercept (die Signaltürme des Passes)
 
-- Warum brauchen wir die Türme vor dem Übergang? — beantwortet im Missionstext
+- Warum brauchen wir die Türme vor dem Sprung? — beantwortet im Missionstext
   und in den Verzeichnis-Logs (die Tür öffnet nach außen nur für gerufenen
   Verkehr; die Türme sind der Heimweg).
 - Bemerkt der Tempel gefälschte Rufe? — **OFFEN** (bewusste Bedrohung; die
@@ -79,10 +79,10 @@ Kanon-Entscheidungen der Fable-Stufe).
 - Der Junge und sein Vater sind hier — wissen sie, was wir sind? — je nach Zweig
   in n_vy1_faces beantwortet (Dank, Furcht-und-Schuld oder die Kälte der
   Abweisung).
-- Was ist „die Gnade der Penitenz" für Ketzer? — beantwortet in der
+- Was ist „die Gnade der Bußstätte" für Ketzer? — beantwortet in der
   Hinrichtungshof-Variante von M3 (Verbrennung in der Dämmerung).
 
-## Die Penitenz — m_vy_2
+## Die Bußstätte — m_vy_2
 
 - Ist Recon One unversehrt — an Leib und Verstand? — hier beantwortet (hager,
   unbewaffnet, die Disziplin hält; Namen und Ränge vor den Urteilen).
@@ -121,7 +121,7 @@ Kanon-Entscheidungen der Fable-Stufe).
 - Dessik hat uns verraten (Ilo zurückgelassen): Was hat er dafür bekommen? —
   **OFFEN**.
 
-## Der Leuchtende — m_vy_5
+## Der Erleuchtete — m_vy_5
 
 - Was ist der Gott? — hier beantwortet (ein Verwalter, der die Lampe am Brennen
   hält, damit die lange Wacht niemals allein wäre).
@@ -129,7 +129,7 @@ Kanon-Entscheidungen der Fable-Stufe).
   **OFFEN** (der nächste Entscheidungsraum des Spielers; nach M5 ist nichts für
   das Beobachten-Ende verfasst).
 - Kampf-Pfad: Der Anker ist zerstört und ein vorläufiger Rat bildet sich — wer
-  führt das freie Veyra, und was geschieht mit der Penitenz, den Wärtern, den
+  führt das freie Veyra, und was geschieht mit der Bußstätte, den Wachen, den
   verbliebenen Begnadeten und den Gemeinde-Welten, die weiterhin Zehnt an eine
   dunkle Tür senden? — **OFFEN** (ev_vy_gratitude skizziert nur den Rat).
 - Wohin floh der Gott (Kampf-Pfad)? — **OFFEN** („es ist Schlimmerem als dir

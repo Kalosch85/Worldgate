@@ -32,7 +32,7 @@ ev_intro ──unlock──▶ m_vy_arrival ──▶ m_vy_ledger ──▶ m_vy
   narrativen Ergebnissen oder in den taktischen `victoryEffects` von
   `m_vy_intercept`).
 - **Andara (Adresse 04):** Ankunft, Verzeichnis, Abfangen. **Veyra (Adresse 09):**
-  m_vy_1…5. Der erste Übergang nach Veyra ist `m_vy_1`.
+  m_vy_1…5. Der erste Sprung nach Veyra ist `m_vy_1`.
 - **Abseits des Rückgrats:** `m_relay` (Adresse 07, taktisch) wird durch die
   Erforschung von `t_gate_stabilizer` freigeschaltet; es ist nicht Teil des
   Eröffnungs-Rückgrats und schaltet nichts frei.
@@ -120,8 +120,8 @@ flowchart TD
   subgraph LED["ev_vy_ledger (Andara / Karsu)"]
     vl_arrive["n_vl_arrive<br/>Empfang verzweigt nach trust_andara"]
     vl_welcome["n_vl_welcome (trust≥2)"]
-    vl_story["n_vl_story<br/>der Leuchtende, neun Generationen"]
-    vl_ledger["n_vl_ledger<br/>vier in frischer Tinte, eingesperrt unter der Penitenz"]
+    vl_story["n_vl_story<br/>der Erleuchtete, neun Generationen"]
+    vl_ledger["n_vl_ledger<br/>vier in frischer Tinte, eingesperrt unter der Bußstätte"]
     vl_first["n_vl_first (Odel)<br/>Seryn Vael; die Portion am Straßenschrein"]
     vl_trans["n_vl_transport (Odel)<br/>Getreidezehnt, Papiere, Turm passieren"]
     vl_wary["n_vl_wary (0≤trust<2)"]
@@ -156,7 +156,7 @@ flowchart TD
   OUT_VR -.erneut.-> M_INT
 
   %% ============================ PILGRIM ROADS (M1) ============================
-  M_1{{"m_vy_1 — Pilgerstraßen<br/>Trupp 2/2 · ERSTER Übergang nach Veyra"}}
+  M_1{{"m_vy_1 — Pilgerstraßen<br/>Trupp 2/2 · ERSTER Sprung nach Veyra"}}
   M_1 --> vy1_arrive
   subgraph P1["ev_vy_pilgrim_roads (Veyra-Terrasse)"]
     vy1_arrive["n_vy1_arrive<br/>die Tür öffnet nur in eine Richtung hinein"]
@@ -199,7 +199,7 @@ flowchart TD
   OUT_P1_A ==> M_2
 
   %% ============================ PENITENCE (M2) ============================
-  M_2{{"m_vy_2 — Die Penitenz<br/>Trupp 2/2"}}
+  M_2{{"m_vy_2 — Die Bußstätte<br/>Trupp 2/2"}}
   M_2 --> vy2_router
   subgraph P2["ev_vy_penitence (Veyra)"]
     vy2_router["n_vy2_router<br/>verzweigt nach Annäherungs-Flag"]
@@ -302,7 +302,7 @@ flowchart TD
   OUT_P4 ==> M_5
 
   %% ============================ LUMINOUS ONE (M5) ============================
-  M_5{{"m_vy_5 — Der Leuchtende<br/>Trupp 2/4"}}
+  M_5{{"m_vy_5 — Der Erleuchtete<br/>Trupp 2/4"}}
   M_5 --> vy5_wit
   subgraph P5["ev_vy_luminous_one (Veyra / Caldera)"]
     vy5_wit["n_vy5_witness<br/>der Gott ist ein Verwalter, der ein totes Tor pflegt"]
@@ -376,7 +376,7 @@ gesetzt, aber von keiner Bedingung gelesen (in Ereignissen, in der
 | `vy_villager_killed`    | Ankunft `o_va_refuse`                 | M1 `n_vy1_faces` (Getötet-Variante)          | Der Vater des toten Jungen auf der Terrasse                          |
 | `f_vy_boy_hidden`       | Ankunft `o_va_hide`                   | M1 `n_vy1_faces` (Versteckt-Variante)        | Junge + Vater danken auf Veyra                                       |
 | `f_vy_boy_run`          | Ankunft `o_va_run`                    | M1 `n_vy1_faces` (Renn-Variante)             | Feldfamilien als Büßer                                               |
-| `f_vy_transport`        | Verzeichnis Träger-Optionen           | M1 `n_vy1_arrive` (Träger vs. zu Fuß)        | Mit dem Zehntzug übersetzen                                          |
+| `f_vy_transport`        | Verzeichnis Träger-Optionen           | M1 `n_vy1_arrive` (Träger vs. zu Fuß)        | Mit dem Zehntzug springen                                            |
 | `f_vy_intel_pilgrims`   | M1 Pilger (dip≥4)                     | M2 `a_seal` bluff_easy · M3 Überzeugen b2/b4 | **Effektiv verwaist** — Schreiber-Schranke nicht erreichbar (§4-A)   |
 | `f_vy_intel_patrols`    | M1 Patrouillen (combat≥5)             | M2 `a_seal` ossuary                          | Alternative Route durchs innere Tor                                  |
 | `f_vy_intel_comms`      | M1 Relais (sci≥6)                     | M3 Erklären-Zweige                           | Setzt auch `doubt+1` (Kopplung, §4-B)                                |
@@ -434,11 +434,11 @@ den Missionen verbraucht.
 | 4   | m_vy_intercept                             | (keiner)                                                                | jeder spätere Tag         | —                                                           |
 | 4a  | ev_vy_regroup (bei Niederlage im Abfangen) | „bis zum Morgen hat Mercer neu geplant"                                 | eingereiht **+1 Tag**     | —                                                           |
 | 5   | m_vy_1 Pilgerstraßen                       | „Ein Tag zum Arbeiten vor dem Plan"                                     | jeder spätere Tag         | —                                                           |
-| 6   | m_vy_2 Penitenz                            | „im Morgengrauen öffnen sich die Zellentüren" (C-Pfad)                  | jeder spätere Tag         | —                                                           |
+| 6   | m_vy_2 Bußstätte                           | „im Morgengrauen öffnen sich die Zellentüren" (C-Pfad)                  | jeder spätere Tag         | —                                                           |
 | 6a  | ev_vy_dessik_word (falls Ilo befreit)      | —                                                                       | eingereiht **+5 Tage**    | —                                                           |
 | 7   | m_vy_3 Erste Klinge                        | „Verbrennung in der Dämmerung … die Dämmerung ist Stunden entfernt" (C) | jeder spätere Tag         | —                                                           |
 | 8   | m_vy_4 Reliquiengewölbe                    | „die Schicht ist dünn besetzt" / Nachtrunden                            | jeder spätere Tag         | ⚠ **T-3** Timing von Seryns Entzug (unten)                  |
-| 9   | m_vy_5 Der Leuchtende                      | Caldera „einen Tag jenseits" der Stadt (Gazetteer)                      | jeder spätere Tag         | —                                                           |
+| 9   | m_vy_5 Der Erleuchtete                     | Caldera „einen Tag jenseits" der Stadt (Gazetteer)                      | jeder spätere Tag         | —                                                           |
 | 9a  | ev_vy_gratitude (Angriff)                  | vorläufiger Rat „in der Stille danach"                                  | eingereiht **+3 Tage**    | —                                                           |
 | 9b  | ev_vy_seryn_oath (beobachten+besiegt)      | **„zwei Tage später"**                                                  | eingereiht **+2 Tage**    | ✔ Text passt zur +2T-Einreihung                             |
 
@@ -451,8 +451,8 @@ den Missionen verbraucht.
   Erschöpfungserholung verbrauchen alle `endDay`s). Eine Kampagne, die 40 Tage
   zwischen Ankunft und Pilgerstraßen untätig verstreichen lässt, liest sich
   immer noch als „neun Tage still" und „bevor die Spur kalt wird".
-- **T-2 (der dehnbare Zehnt).** Der Übergangsplan hängt davon ab, „den nächsten
-  Getreidezehnt" zu erwischen, der „zweimal pro Saison übersetzt" — doch er ist
+- **T-2 (der dehnbare Zehnt).** Der Sprungplan hängt davon ab, „den nächsten
+  Getreidezehnt" zu erwischen, der „zweimal pro Saison springt" — doch er ist
   stets „bald", egal, wann der Spieler `m_vy_intercept` / `m_vy_1` startet. Es
   gibt keine Uhr im Inhalt, die den Zehnt verpassen könnte.
 - **T-3 (Seryns Entzug).** Der Kanon (Bibel §3/§5) taktet den Entzug der
@@ -543,7 +543,7 @@ Freischaltregeln der Engine. **Hier wird nichts davon behoben.**
 6. **(F) Tonaler Widerspruch Abfangen ↔ Pilgerstraßen.** Das Sieg-Debriefing
    von `m_vy_intercept` erklärt den Heimweg für _gewonnen_: „Der Heimweg
    existiert wieder: schmal, geliehen und unser." Die unmittelbar nächste
-   Mission, `m_vy_1` `n_vy1_arrive`, beginnt: „Der Übergang hinein ist frei.
+   Mission, `m_vy_1` `n_vy1_arrive`, beginnt: „Der Sprung hinein ist frei.
    **Es ist die Tür nach Hause, die verschlossen ist.**" — ohne Anerkennung,
    dass Command den Tributruf bereits hält. Die Auszahlung des ergriffenen Rufs
    wird bis zum Ergebnis-Log von M3 hinausgezögert („hinaus durch die Tür unter
@@ -563,7 +563,7 @@ Freischaltregeln der Engine. **Hier wird nichts davon behoben.**
    unmöglich kennen kann (die Dorfbewohner sind stumm; niemand erklärt die
    Wörter). „Drohne/Träger/Flankierer" sind D-10-Kanon-Begriffe (Bibel §8), die
    in der Autorenstimme vor jeder weltinternen Einführung auftauchen. (Im
-   Gegensatz dazu _sind_ „Veyra", „der Leuchtende", „die Portion", „Seryn Vael"
+   Gegensatz dazu _sind_ „Veyra", „der Erleuchtete", „die Portion", „Seryn Vael"
    verdient — von Dorfbewohnern/Odel gesprochen.)
 
 9. **(I) `f_vy_expedition_freed` — das prägende Erfolgs-Flag des Bogens — hat

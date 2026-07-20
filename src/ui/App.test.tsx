@@ -131,7 +131,8 @@ describe("App shell", () => {
     expect(container!.textContent).toContain("Recon Ones Markierungsbake");
     click("Der Straße talaufwärts folgen");
     click("Ihnen vertrauen.");
-    expect(container!.textContent).toContain("Drohnen");
+    // The alien-procession reveal node (n_va_procession).
+    expect(container!.textContent).toContain("Insekten wenigstens zweineinhalb Meter groß");
     click("Unten bleiben, bis die letzte fort ist");
     click("Ihn in Deckung bringen");
     click("in Sicherheit führen lassen");

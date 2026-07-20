@@ -235,9 +235,9 @@ describe("endDay guard (narrative-engine spec §3)", () => {
       ...newCampaign(1),
       activeMission: {
         kind: "narrative",
-        mission: "m_rival_stranded",
-        script: "ev_first_contact",
-        node: "n_intro",
+        mission: "m_vy_arrival",
+        script: "ev_vy_arrival",
+        node: "n_va_gate",
         squad: ["h_mercer", "h_okafor"],
         gatedSeen: false,
       },

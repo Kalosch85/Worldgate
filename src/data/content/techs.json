@@ -6,8 +6,14 @@
     "cost": 20,
     "prerequisites": [],
     "effects": [
-      { "type": "unlockMission", "mission": "m_relay" },
-      { "type": "log", "text": "The gate holds a stable connection for the first time." }
+      {
+        "type": "unlockMission",
+        "mission": "m_relay"
+      },
+      {
+        "type": "log",
+        "text": "The gate holds a stable connection for the first time."
+      }
     ]
   },
   {
@@ -16,16 +22,44 @@
     "description": "Improved recovery for returning teams.",
     "cost": 15,
     "prerequisites": ["t_gate_stabilizer"],
-    "effects": [{ "type": "modifier", "key": "healRate", "mode": "add", "value": 1 }]
+    "effects": [
+      {
+        "type": "modifier",
+        "key": "healRate",
+        "mode": "add",
+        "value": 1
+      }
+    ]
   },
   {
     "id": "t_radiance_cell",
     "name": "Radiance Cell",
-    "description": "Reverse-engineered temple power core. Dense, stable, and not remotely holy.",
+    "description": "Decanted from a captured dose of the First's Portion — gate-light refined to a standing charge. Dense, stable, and not remotely holy.",
     "cost": 30,
     "prerequisites": [],
-    "effects": [{ "type": "log", "text": "The 'holy fire' is a power cell. A very good one." }],
-    "visibleIf": [{ "type": "flag", "flag": "f_vy_godtech", "value": true }]
+    "effects": [
+      {
+        "type": "log",
+        "text": "The 'holy fire' is refined gate-light. The god feeds its chosen from a power main."
+      }
+    ],
+    "visibleIf": [
+      {
+        "type": "any",
+        "conditions": [
+          {
+            "type": "flag",
+            "flag": "f_vy_sacrament_dose",
+            "value": true
+          },
+          {
+            "type": "flag",
+            "flag": "f_vy_godtech",
+            "value": true
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "t_projection_theory",
@@ -33,7 +67,18 @@
     "description": "Field recordings of the Luminous One reveal how a being can appear anywhere it is worshipped.",
     "cost": 45,
     "prerequisites": ["t_radiance_cell"],
-    "effects": [{ "type": "log", "text": "Not omnipresence. Emitters." }],
-    "visibleIf": [{ "type": "flag", "flag": "f_vy_watched_god", "value": true }]
+    "effects": [
+      {
+        "type": "log",
+        "text": "Not omnipresence. Emitters."
+      }
+    ],
+    "visibleIf": [
+      {
+        "type": "flag",
+        "flag": "f_vy_watched_god",
+        "value": true
+      }
+    ]
   }
 ]

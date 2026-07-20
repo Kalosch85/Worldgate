@@ -12,21 +12,24 @@ import type { ReducerCtx } from "./reducer.js";
 /**
  * Narrative interpreter (docs/specs/narrative-engine.md §4–§7): the §4 condition
  * evaluator, §5 eligibility + squad-gating, the traversal reducer and §6
- * completion via golden paths, and §7 queued-incident firing.
+ * completion via golden paths, and §7 queued-incident firing. Exemplar content
+ * per the spec's D-10 note: golden paths on ev_vy_arrival, gating on
+ * ev_vy_relic_vault.
  */
 const CONTENT: ContentBundleT = loadTestContent();
 const ctx = (seed = 1): ReducerCtx => ({ content: CONTENT, rng: mulberry32(seed) });
 
-/** Launch ev_first_contact via m_rival_stranded and sit on n_intro. */
-function launched(squad: string[], overrides?: Partial<GameStateT>): GameStateT {
+/** Launch a narrative mission (unlocked explicitly — the spine unlocks mid-campaign). */
+function launched(mission: string, squad: string[], overrides?: Partial<GameStateT>): GameStateT {
   const base = { ...newCampaign(1), ...overrides };
-  // D-9: the side mission is unlocked mid-campaign, not at newCampaign.
-  base.missions = { ...base.missions, available: [...base.missions.available, "m_rival_stranded"] };
-  return launchMission(base, CONTENT, "m_rival_stranded", squad);
+  if (!base.missions.available.includes(mission)) {
+    base.missions = { ...base.missions, available: [...base.missions.available, mission] };
+  }
+  return launchMission(base, CONTENT, mission, squad);
 }
 
 describe("evalCondition (§4)", () => {
-  const state = newCampaign(1); // materials 40, funds 100, trust_rival 0, support 5
+  const state = newCampaign(1); // materials 40, funds 100, trust_andara 0, support 5
 
   it("flag: missing reads false", () => {
     expect(evalCondition(state, CONTENT, [], { type: "flag", flag: "x", value: true })).toBe(false);
@@ -95,31 +98,41 @@ describe("evalCondition (§4)", () => {
 });
 
 describe("eligibleOptions (§5)", () => {
-  it("marks squad-gated options when a squad-scoped requirement fails", () => {
-    // Squad = Mercer only (soldier, science 1): no diplomat, science < 5.
-    const state = launched(["h_mercer", "h_okafor"]);
-    // Replace the launched squad with just Mercer to exercise gating on n_intro.
-    const solo = structuredClone(state);
-    solo.activeMission = { ...state.activeMission!, squad: ["h_mercer"] } as typeof solo.activeMission;
+  /** Sit on ev_vy_relic_vault's wards node (n_vy4_wards) with the given squad. */
+  function atWards(squad: string[]): GameStateT {
+    const state = launched("m_vy_4", ["h_mercer", "h_okafor"]);
+    const moved = chooseEventOption(state, ctx(), "o_vy4_quiet"); // f_vy_ilo_abandoned unset
+    const s = structuredClone(moved);
+    s.activeMission = { ...moved.activeMission!, squad } as typeof s.activeMission;
+    return s;
+  }
 
-    const opts = eligibleOptions(solo, CONTENT);
-    const byId = Object.fromEntries(opts.map((o) => [o.option, o]));
-    expect(byId.o_help!.eligible).toBe(true); // no requirements
-    expect(byId.o_leave!.eligible).toBe(true); // no requirements
-    expect(byId.o_interrogate!.eligible).toBe(false);
-    expect(byId.o_interrogate!.gatedBySquad).toBe(true); // squadHasArchetype diplomat
-    expect(byId.o_data!.eligible).toBe(false);
-    expect(byId.o_data!.gatedBySquad).toBe(true); // squadSkillAtLeast science 5
+  it("marks squad-gated options even when the squad condition nests in any()", () => {
+    // Solo Mercer (soldier, science 1): any(scientist, science ≥ 6) fails on
+    // both legs — squad-scoped, so gatedBySquad must be true.
+    const opts = Object.fromEntries(
+      eligibleOptions(atWards(["h_mercer"]), CONTENT).map((o) => [o.option, o]),
+    );
+    expect(opts.o_vy4_science!.eligible).toBe(false);
+    expect(opts.o_vy4_science!.gatedBySquad).toBe(true);
+    expect(opts.o_vy4_force!.eligible).toBe(true); // combat 5 ≤ Mercer's 6
+    expect(opts.o_vy4_slow!.eligible).toBe(true); // no requirements
   });
 
-  it("a diplomat squad opens the diplomat option", () => {
-    // Okafor is a scientist; give the survey a squad including a science 7 hero
-    // so o_data unlocks and o_interrogate stays gated (no diplomat present).
-    const state = launched(["h_mercer", "h_okafor"]);
-    const opts = Object.fromEntries(eligibleOptions(state, CONTENT).map((o) => [o.option, o]));
-    expect(opts.o_data!.eligible).toBe(true); // Okafor science 7 ≥ 5
-    expect(opts.o_interrogate!.eligible).toBe(false);
-    expect(opts.o_interrogate!.gatedBySquad).toBe(true);
+  it("does not blame the squad for a flag-gated option", () => {
+    // o_vy4_seryn requires f_vy_seryn_recruited — ineligible, but not squad-scoped.
+    const opts = Object.fromEntries(
+      eligibleOptions(atWards(["h_mercer"]), CONTENT).map((o) => [o.option, o]),
+    );
+    expect(opts.o_vy4_seryn!.eligible).toBe(false);
+    expect(opts.o_vy4_seryn!.gatedBySquad).toBe(false);
+  });
+
+  it("a scientist squad opens the science option", () => {
+    const opts = Object.fromEntries(
+      eligibleOptions(atWards(["h_mercer", "h_okafor"]), CONTENT).map((o) => [o.option, o]),
+    );
+    expect(opts.o_vy4_science!.eligible).toBe(true);
   });
 
   it("returns [] when no narrative mission is active", () => {
@@ -128,90 +141,111 @@ describe("eligibleOptions (§5)", () => {
 });
 
 describe("chooseEventOption — golden paths (§5, §6)", () => {
-  it("o_help route: reaches out_contact with the exact end state", () => {
-    const state = launched(["h_mercer", "h_okafor"]);
-    const afterHelp = chooseEventOption(state, ctx(), "o_help");
-    // Advanced to n_help, effects applied, mission still active.
-    expect(afterHelp.activeMission?.kind).toBe("narrative");
-    expect((afterHelp.activeMission as { node: string }).node).toBe("n_help");
-    expect(afterHelp.resources.materials).toBe(35); // 40 − 5
-    expect(afterHelp.variables.trust_rival).toBe(2); // 0 + 2
-    expect(afterHelp.flags.helped_rivals).toBe(true);
-    expect(afterHelp.missions.queuedEvents).toEqual([{ event: "ev_first_contact", fireOnDay: 31 }]);
+  it("hide route: the address freely given, with the exact end state", () => {
+    const state = launched("m_vy_arrival", ["h_mercer", "h_okafor"]);
+    let s = chooseEventOption(state, ctx(), "o_va_road");
+    s = chooseEventOption(s, ctx(), "o_va_trust");
+    s = chooseEventOption(s, ctx(), "o_va_stay_down");
+    s = chooseEventOption(s, ctx(), "o_va_hide");
+    expect((s.activeMission as { node: string }).node).toBe("n_va_hide");
+    expect(s.variables.trust_andara).toBe(2); // 0 + 2
+    expect(s.flags.f_vy_boy_hidden).toBe(true);
+    s = chooseEventOption(s, ctx(), "o_va_hide_on");
+    const done = chooseEventOption(s, ctx(), "o_va_home");
 
-    const done = chooseEventOption(afterHelp, ctx(), "o_return");
     expect(done.activeMission).toBeNull();
-    // out_contact outcome: +10 xp squad (still level 1) + the log line.
+    expect(done.resources.materials).toBe(40); // untouched on this route
+    expect(done.missions.available).toContain("m_vy_ledger");
+    expect(done.missions.completed).toEqual([{ mission: "m_vy_arrival", outcome: "out_va_hide", day: 1 }]);
+    // out_va_hide: +10 xp squad (still level 1) + journal lines.
     expect(done.heroes.find((h) => h.hero === "h_mercer")!.xp).toBe(10);
     expect(done.heroes.find((h) => h.hero === "h_okafor")!.xp).toBe(10);
-    expect(done.missions.available).not.toContain("m_rival_stranded");
-    expect(done.missions.completed).toEqual([
-      { mission: "m_rival_stranded", outcome: "out_contact", day: 1 },
-    ]);
     const journal = done.journal.map((j) => j.text);
-    expect(journal).toContain("Someone on the other side owes us. Or knows us.");
-    expect(journal).toContain("The Stranded Survey Team: Contact established");
-    // Debrief hint fires: no hero is a diplomat, so o_interrogate stayed gated.
-    expect(journal).toContain("Debrief: a different team composition might have opened other approaches.");
+    expect(journal).toContain("The Silent Valley: The address, freely given");
+    expect(journal.some((t) => t.includes("Veyra"))).toBe(true);
+    // No squad-gated options anywhere on this script → no debrief hint.
+    expect(journal.some((t) => t.startsWith("Debrief:"))).toBe(false);
   });
 
-  it("suppresses the debrief hint when settings.showLockedOptions is true", () => {
-    const state = launched(["h_mercer", "h_okafor"], { settings: { showLockedOptions: true } });
-    const afterHelp = chooseEventOption(state, ctx(), "o_help");
-    const done = chooseEventOption(afterHelp, ctx(), "o_return");
-    expect(done.journal.some((t) => t.text.startsWith("Debrief:"))).toBe(false);
-  });
+  it("violent route: trust_andara −3, vy_villager_killed, with the exact end state", () => {
+    const state = launched("m_vy_arrival", ["h_mercer", "h_okafor"]);
+    let s = chooseEventOption(state, ctx(), "o_va_road");
+    s = chooseEventOption(s, ctx(), "o_va_refuse");
+    expect(s.variables.trust_andara).toBe(-3);
+    expect(s.flags.vy_villager_killed).toBe(true);
+    // fatigue +10 to the squad on the refuse option.
+    expect(s.heroes.find((h) => h.hero === "h_mercer")!.fatigue).toBe(10);
+    s = chooseEventOption(s, ctx(), "o_va_freeze");
+    s = chooseEventOption(s, ctx(), "o_va_take_address");
+    const done = chooseEventOption(s, ctx(), "o_va_home_cold");
 
-  it("o_leave route: reaches out_cold with the exact end state", () => {
-    const state = launched(["h_mercer", "h_okafor"]);
-    const done = chooseEventOption(state, ctx(), "o_leave");
     expect(done.activeMission).toBeNull();
-    expect(done.resources.materials).toBe(40); // untouched
-    expect(done.variables.trust_rival).toBe(-3); // 0 − 3
-    expect(done.flags.abandoned_rivals).toBe(true);
-    // fatigue +5 to squad, then out_cold +5 xp.
-    expect(done.heroes.find((h) => h.hero === "h_mercer")!.fatigue).toBe(5);
+    expect(done.flags.f_vy_boy_hidden).toBeUndefined();
+    expect(done.missions.available).toContain("m_vy_ledger");
+    expect(done.missions.completed).toEqual([{ mission: "m_vy_arrival", outcome: "out_va_fight", day: 1 }]);
     expect(done.heroes.find((h) => h.hero === "h_okafor")!.xp).toBe(5);
-    expect(done.missions.completed).toEqual([{ mission: "m_rival_stranded", outcome: "out_cold", day: 1 }]);
-    expect(done.journal.map((j) => j.text)).toContain("The Stranded Survey Team: Walked away");
-    // No queued follow-up on the leave route.
-    expect(done.missions.queuedEvents).toEqual([]);
+    expect(done.journal.map((j) => j.text)).toContain("The Silent Valley: A silence bought in blood");
   });
 
-  it("arms the debrief hint when the current node has a squad-gated option", () => {
-    // Solo Mercer: n_intro's o_interrogate/o_data are gated → gatedSeen arms,
-    // and the debrief line lands on completion (showLockedOptions is false).
-    const base = launched(["h_mercer", "h_okafor"]);
-    // Override to the solo squad for the traversal assertion (the squad-size
-    // guard is enforced at launch, not during traversal).
-    const solo = structuredClone(base);
-    solo.activeMission = { ...base.activeMission!, squad: ["h_mercer"] } as typeof solo.activeMission;
+  it("queues a follow-up with fireOnDay = day + delay (M2 kept promise, +5d)", () => {
+    // Sit ev_vy_penitence on the worker branch and free Ilo.
+    const base = launched("m_vy_2", ["h_mercer", "h_okafor"], undefined);
+    const routed = structuredClone(base);
+    routed.flags.f_vy_approach_worker = true;
+    routed.flags.f_vy_owe_ilo = true;
+    let s = chooseEventOption(routed, ctx(), "o_vy2_route_worker");
+    s = chooseEventOption(s, ctx(), "o_vy2_b_free_ilo");
+    expect(s.missions.queuedEvents).toEqual([{ event: "ev_vy_dessik_word", fireOnDay: 6 }]); // day 1 + 5
+  });
 
-    const afterHelp = chooseEventOption(solo, ctx(), "o_help");
-    expect((afterHelp.activeMission as { gatedSeen: boolean }).gatedSeen).toBe(true);
-    const done = chooseEventOption(afterHelp, ctx(), "o_return");
+  it("arms the debrief hint when a node shows a squad-gated option", () => {
+    // Solo Mercer at the wards: o_vy4_science is squad-gated → gatedSeen arms,
+    // and the debrief line lands on completion (showLockedOptions false).
+    const state = launched("m_vy_4", ["h_mercer", "h_okafor"]);
+    let s = chooseEventOption(state, ctx(), "o_vy4_quiet");
+    const solo = structuredClone(s);
+    solo.activeMission = { ...s.activeMission!, squad: ["h_mercer"] } as typeof solo.activeMission;
+    s = chooseEventOption(solo, ctx(), "o_vy4_force");
+    expect((s.activeMission as { gatedSeen: boolean }).gatedSeen).toBe(true);
+    s = chooseEventOption(s, ctx(), "o_vy4_yank");
+    const done = chooseEventOption(s, ctx(), "o_vy4_exfil_quiet");
+    expect(done.activeMission).toBeNull();
+    expect(done.flags.f_vy_godtech).toBe(true);
     expect(done.journal.map((j) => j.text)).toContain(
       "Debrief: a different team composition might have opened other approaches.",
     );
   });
 
+  it("suppresses the debrief hint when settings.showLockedOptions is true", () => {
+    const state = launched("m_vy_4", ["h_mercer", "h_okafor"], {
+      settings: { showLockedOptions: true },
+    });
+    let s = chooseEventOption(state, ctx(), "o_vy4_quiet");
+    const solo = structuredClone(s);
+    solo.activeMission = { ...s.activeMission!, squad: ["h_mercer"] } as typeof solo.activeMission;
+    s = chooseEventOption(solo, ctx(), "o_vy4_force");
+    s = chooseEventOption(s, ctx(), "o_vy4_yank");
+    const done = chooseEventOption(s, ctx(), "o_vy4_exfil_quiet");
+    expect(done.journal.some((t) => t.text.startsWith("Debrief:"))).toBe(false);
+  });
+
   it("does not mutate the input state", () => {
-    const state = launched(["h_mercer", "h_okafor"]);
+    const state = launched("m_vy_arrival", ["h_mercer", "h_okafor"]);
     const before = JSON.stringify(state);
-    chooseEventOption(state, ctx(), "o_help");
+    chooseEventOption(state, ctx(), "o_va_road");
     expect(JSON.stringify(state)).toBe(before);
   });
 });
 
 describe("chooseEventOption — invalid inputs (§5.1)", () => {
   it("throws when no narrative mission is active", () => {
-    expect(() => chooseEventOption(newCampaign(1), ctx(), "o_help")).toThrow(RuleError);
+    expect(() => chooseEventOption(newCampaign(1), ctx(), "o_va_road")).toThrow(RuleError);
   });
 
   it("throws on an option not on the current node", () => {
-    const state = launched(["h_mercer", "h_okafor"]);
+    const state = launched("m_vy_arrival", ["h_mercer", "h_okafor"]);
     try {
-      chooseEventOption(state, ctx(), "o_return"); // belongs to n_help, not n_intro
+      chooseEventOption(state, ctx(), "o_va_home"); // belongs to n_va_told, not n_va_gate
       throw new Error("expected throw");
     } catch (err) {
       expect(err).toBeInstanceOf(RuleError);
@@ -220,11 +254,12 @@ describe("chooseEventOption — invalid inputs (§5.1)", () => {
   });
 
   it("throws on an ineligible option", () => {
-    const state = launched(["h_mercer", "h_okafor"]);
-    const solo = structuredClone(state);
-    solo.activeMission = { ...state.activeMission!, squad: ["h_mercer"] } as typeof solo.activeMission;
+    const state = launched("m_vy_4", ["h_mercer", "h_okafor"]);
+    const moved = chooseEventOption(state, ctx(), "o_vy4_quiet");
+    const solo = structuredClone(moved);
+    solo.activeMission = { ...moved.activeMission!, squad: ["h_mercer"] } as typeof solo.activeMission;
     try {
-      chooseEventOption(solo, ctx(), "o_data"); // science 5+ not met by Mercer
+      chooseEventOption(solo, ctx(), "o_vy4_science"); // any(scientist, science 6) not met
       throw new Error("expected throw");
     } catch (err) {
       expect(err).toBeInstanceOf(RuleError);
@@ -240,8 +275,8 @@ describe("fireDueIncident / endDay integration (§7)", () => {
     s.heroes.find((h) => h.hero === "h_okafor")!.fatigue = 90; // exhausted, excluded
     s.campaign.day = 40;
     s.missions.queuedEvents = [
-      { event: "ev_first_contact", fireOnDay: 35 },
-      { event: "ev_first_contact", fireOnDay: 30 },
+      { event: "ev_vy_regroup", fireOnDay: 35 },
+      { event: "ev_vy_regroup", fireOnDay: 30 },
     ];
     return s;
   }
@@ -251,12 +286,12 @@ describe("fireDueIncident / endDay integration (§7)", () => {
     const next = endDay(s, ctx());
     expect(next.activeMission?.kind).toBe("narrative");
     const am = next.activeMission as { script: string; node: string; squad: string[]; mission?: string };
-    expect(am.script).toBe("ev_first_contact");
-    expect(am.node).toBe("n_intro");
+    expect(am.script).toBe("ev_vy_regroup");
+    expect(am.node).toBe("n_vr_regroup");
     expect(am.mission).toBeUndefined(); // queue-fired incident, no MissionDef wrapper
     expect(am.squad).toEqual(["h_mercer"]); // Okafor exhausted → excluded
     // The lower-fireOnDay entry fired; the fireOnDay 35 entry remains queued.
-    expect(next.missions.queuedEvents).toEqual([{ event: "ev_first_contact", fireOnDay: 35 }]);
+    expect(next.missions.queuedEvents).toEqual([{ event: "ev_vy_regroup", fireOnDay: 35 }]);
   });
 
   it("blocks endDay while a mission is active", () => {
@@ -267,15 +302,15 @@ describe("fireDueIncident / endDay integration (§7)", () => {
 
   it("does nothing when no entry is due yet", () => {
     const s = newCampaign(1);
-    s.missions.queuedEvents = [{ event: "ev_first_contact", fireOnDay: 999 }];
+    s.missions.queuedEvents = [{ event: "ev_vy_regroup", fireOnDay: 999 }];
     const next = fireDueIncident(s, CONTENT);
     expect(next.activeMission).toBeNull();
-    expect(next.missions.queuedEvents).toEqual([{ event: "ev_first_contact", fireOnDay: 999 }]);
+    expect(next.missions.queuedEvents).toEqual([{ event: "ev_vy_regroup", fireOnDay: 999 }]);
   });
 
   it("is a no-op when a mission is already active", () => {
-    const active = launched(["h_mercer", "h_okafor"]);
-    active.missions.queuedEvents = [{ event: "ev_first_contact", fireOnDay: 1 }];
+    const active = launched("m_vy_arrival", ["h_mercer", "h_okafor"]);
+    active.missions.queuedEvents = [{ event: "ev_vy_regroup", fireOnDay: 1 }];
     expect(fireDueIncident(active, CONTENT)).toBe(active);
   });
 });

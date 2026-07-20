@@ -75,8 +75,8 @@ One interpreter for each lives in `core`. Rules:
   points per mission write to flags/variables; paths reconverge at authored
   nodes. Cross-mission reactivity comes from `availability` conditions,
   option `requirements`, and `queueEvent` — not from path multiplication.
-- Flags = discrete facts ("abandoned_rivals"). Variables = accumulating
-  stances ("trust_rival", "support"). Prefer variables when a thing can grow.
+- Flags = discrete facts ("vy_villager_killed"). Variables = accumulating
+  stances ("trust_andara", "support"). Prefer variables when a thing can grow.
 - Option eligibility is always computed by the engine and returned per option.
   Rendering ineligible options is purely a UI decision:
   `settings.showLockedOptions` (D-1: default `false`, no UI toggle in the

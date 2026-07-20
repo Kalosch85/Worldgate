@@ -47,7 +47,8 @@ describe("newCampaign intro launch (D-9)", () => {
     };
     choose("o_in_down");
     choose("o_in_science");
-    choose("o_in_okafor_go");
+    choose("o_in_okafor_then");
+    choose("o_in_mercer2_go");
     choose(finalOption);
     return s;
   };
@@ -57,6 +58,8 @@ describe("newCampaign intro launch (D-9)", () => {
     expect(s.activeMission).toBeNull();
     expect(s.missions.available).toEqual(["m_vy_arrival"]);
     expect(s.flags["intro_cautious"]).toBeUndefined();
+    // D-10: science-first grants the briefing head start (+4 intel).
+    expect(s.resources.intel).toBe(4);
     const lines = s.journal.map((j) => j.text);
     expect(lines).toContain("Day 1. Rescue crossing authorized. Address 04.");
     expect(lines).toContain("First Day: Rescue crossing authorized");
@@ -70,12 +73,14 @@ describe("newCampaign intro launch (D-9)", () => {
     expect(s.missions.available).toEqual(["m_vy_arrival"]);
   });
 
-  it("the Mercer fork reconverges on the same decision node", () => {
+  it("the threats-first fork reconverges on the decision node and grants materials", () => {
     let s = newCampaign(1, CONTENT);
-    for (const option of ["o_in_down", "o_in_threats", "o_in_mercer_go"]) {
+    for (const option of ["o_in_down", "o_in_threats", "o_in_mercer_then", "o_in_okafor2_go"]) {
       s = apply(s, { type: "chooseEventOption", option }, ctx());
     }
     expect(s.activeMission?.kind === "narrative" && s.activeMission.node).toBe("n_in_decide");
+    // D-10: threats-first approves Mercer's requisitions (+4 materials).
+    expect(s.resources.materials).toBe(44);
   });
 });
 
@@ -119,7 +124,6 @@ describe("D-9 unlock chain — static content walk", () => {
     const intercept = unlocksOf("m_vy_intercept");
     expect(intercept).toContain("m_vy_1"); // victory
     expect(intercept).toContain("m_vy_intercept"); // defeat → regroup retry
-    expect(intercept).toContain("m_rival_stranded"); // optional side op
     expect(unlocksOf("m_vy_1")).toContain("m_vy_2");
     expect(unlocksOf("m_vy_2")).toContain("m_vy_3");
     expect(unlocksOf("m_vy_3")).toContain("m_vy_4"); // arc-veyra §M3 mandate

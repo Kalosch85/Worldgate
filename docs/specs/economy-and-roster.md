@@ -21,7 +21,7 @@ No other schema edits are authorized.
 ## 2. Initial campaign state (factory `newCampaign(seed)`)
 
 day 1 · funds 100 · materials 40 · intel 0 · exotics 0 ·
-variables `{ support: 5, trust_rival: 0 }` · flags `{}` · modifiers `{}` ·
+variables `{ support: 5, trust_andara: 0 }` (D-10) · flags `{}` · modifiers `{}` ·
 journal `[]` · personnel total 20, assignments `{ logistics: 12, research: 6,
 infirmary: 2 }` · heroes: `h_mercer`, `h_okafor` (xp 0, level 1, fatigue 0,
 no injuries, empty skillBonuses) · research `{ current: null, completed: [] }` ·

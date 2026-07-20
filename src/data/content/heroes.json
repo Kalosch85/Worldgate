@@ -3,24 +3,42 @@
     "id": "h_mercer",
     "name": "Cpt. D. Mercer",
     "archetypes": ["soldier"],
-    "skills": { "combat": 6, "science": 1, "engineering": 2, "diplomacy": 2, "resolve": 5 },
+    "skills": {
+      "combat": 6,
+      "science": 1,
+      "engineering": 2,
+      "diplomacy": 2,
+      "resolve": 5
+    },
     "abilities": ["ab_shot"],
-    "bio": "Career officer. Volunteered for the program after the first breach."
+    "bio": "Career officer; volunteered for the program after the first breach. A decade of deployments, some beyond even the Director's clearance. By the book: fast, efficient, no loose ends."
   },
   {
     "id": "h_okafor",
     "name": "Dr. A. Okafor",
     "archetypes": ["scientist"],
-    "skills": { "combat": 2, "science": 7, "engineering": 4, "diplomacy": 3, "resolve": 3 },
+    "skills": {
+      "combat": 2,
+      "science": 7,
+      "engineering": 4,
+      "diplomacy": 3,
+      "resolve": 3
+    },
     "abilities": ["ab_shot", "ab_patch"],
-    "bio": "Astrophysicist. Decoded the gate's address notation."
+    "bio": "Astrophysicist. Decoded the gate's address notation in six weeks. Field-certified — outshot half the security detail on the range."
   },
   {
     "id": "h_seryn",
     "name": "Seryn Vael",
     "archetypes": ["soldier"],
-    "skills": { "combat": 7, "science": 1, "engineering": 1, "diplomacy": 4, "resolve": 6 },
+    "skills": {
+      "combat": 7,
+      "science": 1,
+      "engineering": 1,
+      "diplomacy": 4,
+      "resolve": 6
+    },
     "abilities": ["ab_shot"],
-    "bio": "First Blade of the Luminous One. Faith broken or bent — but the sword arm never wavered."
+    "bio": "First Blade of the Luminous One, foremost of the Graced. The Portion's grace is leaving him a day at a time — the sword arm that remains is his own."
   }
 ]

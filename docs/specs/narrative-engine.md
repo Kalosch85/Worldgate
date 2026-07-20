@@ -107,15 +107,20 @@ targets ≥ 44px; portrait-friendly.
 
 ## 9. Required tests
 
-- Golden paths: ev_first_contact via o_help route and o_leave route with
-  exact end-state assertions (resources, trust_rival, flags, queued entry
-  fireOnDay = day + 30, journal lines).
-- Gating: squad [h_mercer] hides o_interrogate and o_data
-  (gatedBySquad true); squad [h_okafor] at fatigue 55 fails science 5+
-  (effective 7−1=6… choose fatigue such that it flips: base 7, tired −1 ⇒ 6,
-  still ≥ 5 — so instead assert with an injury: inj_shaken does not affect
-  science; use a constructed hero or assert the −1 arithmetic directly in a
-  selector test and the flip with min 7).
+(D-10 note: the original exemplar event, ev_first_contact, was deleted by
+the Shut Door restructure. The same coverage now runs against surviving
+content — golden paths on ev_vy_arrival, gating on ev_vy_relic_vault —
+with the requirements below unchanged in kind.)
+
+- Golden paths: two ev_vy_arrival routes (freely-given and violent) with
+  exact end-state assertions (resources, trust_andara, flags, unlocked
+  missions, journal lines); a queued-entry fireOnDay = day + N assertion
+  rides whichever surviving queueEvent the test exercises.
+- Gating: a squad-scoped requirement failing must set gatedBySquad true
+  even when nested in all/any/not (ev_vy_relic_vault's any(scientist,
+  science ≥ 6) wards option, solo Mercer); a flag-gated ineligible option
+  must NOT set it. The fatigue-flip arithmetic assertion stands: base 7,
+  tired −1 ⇒ 6, asserted with min 7.
 - Incident firing: queued entry due ⇒ fires exactly one, squad excludes an
   exhausted hero, endDay blocked while active.
 - launchMission RuleError paths, including tactical_not_implemented and the

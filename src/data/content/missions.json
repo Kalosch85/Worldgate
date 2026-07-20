@@ -4,102 +4,197 @@
     "name": "The Silent Valley",
     "description": "Address 04. Recon One's last known position, nine days silent. Cross, find the trail, bring back anything that says where they went.",
     "availability": [],
-    "squad": { "min": 2, "max": 2 },
-    "payload": { "kind": "narrative", "eventScript": "ev_vy_arrival" }
+    "squad": {
+      "min": 2,
+      "max": 2
+    },
+    "payload": {
+      "kind": "narrative",
+      "eventScript": "ev_vy_arrival"
+    }
   },
   {
     "id": "m_vy_ledger",
     "name": "The Ledger of the Taken",
-    "description": "Return to the valley. Its people know where the taken are brought — and whether four offworlders are still alive to follow.",
+    "description": "Return to the valley. Karsu keeps the ledger of the taken — and knows whether four offworlders are still alive behind the gate.",
     "availability": [],
-    "squad": { "min": 2, "max": 2 },
-    "payload": { "kind": "narrative", "eventScript": "ev_vy_ledger" }
+    "squad": {
+      "min": 2,
+      "max": 2
+    },
+    "payload": {
+      "kind": "narrative",
+      "eventScript": "ev_vy_ledger"
+    }
   },
   {
     "id": "m_vy_intercept",
     "name": "The Tribute Call",
-    "description": "Signal spires on the pass road call each tribute train through to the temple. Take the spires in sequence and put Command's hand on the call the Penitence is listening for.",
+    "description": "Signal spires on the pass road sing each tribute train through the Door on Veyra — and sing the emptied trains back out. Take the spires in sequence and Command's hand is on the only call that opens the way home.",
     "availability": [],
-    "squad": { "min": 2, "max": 3 },
+    "squad": {
+      "min": 2,
+      "max": 3
+    },
     "launchCost": 0,
-    "payload": { "kind": "tactical", "map": "map_vy_intercept" },
+    "payload": {
+      "kind": "tactical",
+      "map": "map_vy_intercept"
+    },
     "victoryEffects": [
-      { "type": "resource", "resource": "intel", "delta": 5 },
-      { "type": "xp", "scope": "squad", "amount": 15 },
-      { "type": "fatigue", "scope": "squad", "delta": 20 },
-      { "type": "flag", "flag": "f_vy_call_intercepted", "value": true },
-      { "type": "unlockMission", "mission": "m_vy_1" },
-      { "type": "unlockMission", "mission": "m_rival_stranded" },
+      {
+        "type": "resource",
+        "resource": "intel",
+        "delta": 5
+      },
+      {
+        "type": "xp",
+        "scope": "squad",
+        "amount": 15
+      },
+      {
+        "type": "fatigue",
+        "scope": "squad",
+        "delta": 20
+      },
+      {
+        "type": "flag",
+        "flag": "f_vy_call_intercepted",
+        "value": true
+      },
+      {
+        "type": "unlockMission",
+        "mission": "m_vy_1"
+      },
       {
         "type": "log",
-        "text": "The tribute call is ours — the temple hears what we send. In the spire traffic, Okafor found a rival-bloc distress marker: Address 11."
+        "text": "The tribute call is ours. The Door on Veyra opens for what the spires ask — and now the spires ask what Command wants. The way home exists again: narrow, borrowed, and ours."
       }
     ],
     "defeatEffects": [
-      { "type": "variable", "variable": "support", "delta": -1 },
-      { "type": "queueEvent", "event": "ev_vy_regroup", "delayDays": 1 }
+      {
+        "type": "variable",
+        "variable": "support",
+        "delta": -1
+      },
+      {
+        "type": "queueEvent",
+        "event": "ev_vy_regroup",
+        "delayDays": 1
+      }
     ]
   },
   {
     "id": "m_relay",
     "name": "Secure the Relay",
     "description": "Raiders hold a working relay station at a dead address. Take the consoles intact and Command owns a listening post on the network.",
-    "availability": [{ "type": "techResearched", "tech": "t_gate_stabilizer" }],
-    "squad": { "min": 2, "max": 4 },
-    "payload": { "kind": "tactical", "map": "map_relay" },
-    "victoryEffects": [
-      { "type": "resource", "resource": "intel", "delta": 5 },
-      { "type": "xp", "scope": "squad", "amount": 15 },
-      { "type": "fatigue", "scope": "squad", "delta": 20 }
+    "availability": [
+      {
+        "type": "techResearched",
+        "tech": "t_gate_stabilizer"
+      }
     ],
-    "defeatEffects": [{ "type": "variable", "variable": "support", "delta": -1 }]
-  },
-  {
-    "id": "m_rival_stranded",
-    "name": "Distress: Address 11",
-    "description": "A rival-bloc marker pulled from the spire traffic: their survey team is stranded at a dead site, return address burned out. Nobody's program wants to be the first to ask for help.",
-    "availability": [],
-    "squad": { "min": 1, "max": 3 },
-    "payload": { "kind": "narrative", "eventScript": "ev_first_contact" }
+    "squad": {
+      "min": 2,
+      "max": 4
+    },
+    "payload": {
+      "kind": "tactical",
+      "map": "map_relay"
+    },
+    "victoryEffects": [
+      {
+        "type": "resource",
+        "resource": "intel",
+        "delta": 5
+      },
+      {
+        "type": "xp",
+        "scope": "squad",
+        "amount": 15
+      },
+      {
+        "type": "fatigue",
+        "scope": "squad",
+        "delta": 20
+      }
+    ],
+    "defeatEffects": [
+      {
+        "type": "variable",
+        "variable": "support",
+        "delta": -1
+      }
+    ]
   },
   {
     "id": "m_vy_1",
     "name": "Pilgrim Roads",
-    "description": "The holy city crowns the mountain above Karsu's valley. Find a way into the Penitence before Recon One's trail goes cold.",
+    "description": "The Door on Veyra opens one way. Cross to the god's seat and find a way into the Penitence before Recon One's trail goes cold.",
     "availability": [],
-    "squad": { "min": 2, "max": 2 },
-    "payload": { "kind": "narrative", "eventScript": "ev_vy_pilgrim_roads" }
+    "squad": {
+      "min": 2,
+      "max": 2
+    },
+    "payload": {
+      "kind": "narrative",
+      "eventScript": "ev_vy_pilgrim_roads"
+    }
   },
   {
     "id": "m_vy_2",
     "name": "The Penitence",
     "description": "The plan is set. Get inside the basilica-prison and find Recon One.",
     "availability": [],
-    "squad": { "min": 2, "max": 2 },
-    "payload": { "kind": "narrative", "eventScript": "ev_vy_penitence" }
+    "squad": {
+      "min": 2,
+      "max": 2
+    },
+    "payload": {
+      "kind": "narrative",
+      "eventScript": "ev_vy_penitence"
+    }
   },
   {
     "id": "m_vy_3",
     "name": "The First Blade",
     "description": "Seryn Vael, the Luminous One's champion, stands between you and the way out.",
     "availability": [],
-    "squad": { "min": 2, "max": 2 },
-    "payload": { "kind": "narrative", "eventScript": "ev_vy_first_blade" }
+    "squad": {
+      "min": 2,
+      "max": 2
+    },
+    "payload": {
+      "kind": "narrative",
+      "eventScript": "ev_vy_first_blade"
+    }
   },
   {
     "id": "m_vy_4",
     "name": "Relic Vault",
     "description": "Seize the precursor artifacts from the temple armory: arm the research, and find the god's sanctum.",
     "availability": [],
-    "squad": { "min": 2, "max": 4 },
-    "payload": { "kind": "narrative", "eventScript": "ev_vy_relic_vault" }
+    "squad": {
+      "min": 2,
+      "max": 4
+    },
+    "payload": {
+      "kind": "narrative",
+      "eventScript": "ev_vy_relic_vault"
+    }
   },
   {
     "id": "m_vy_5",
     "name": "The Luminous One",
     "description": "The vault core resonates with a sanctum in the caldera. Track it, and meet the god face to face.",
     "availability": [],
-    "squad": { "min": 2, "max": 4 },
-    "payload": { "kind": "narrative", "eventScript": "ev_vy_luminous_one" }
+    "squad": {
+      "min": 2,
+      "max": 4
+    },
+    "payload": {
+      "kind": "narrative",
+      "eventScript": "ev_vy_luminous_one"
+    }
   }
 ]

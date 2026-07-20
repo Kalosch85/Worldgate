@@ -23,6 +23,10 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 > Ich wusste nicht, was mich erwartete, als ich unterschrieb. „Geheime Versetzung. Annehmen oder ablehnen.“ Keine Einweisung, keine Einzelheiten — nur eine Unterschriftszeile und ein wartender Wagen. Womit ich gewiss nicht gerechnet hatte: mitten in einen Science-Fiction-Comic zu treten. Interstellare Reisen durch einen leuchtenden Ring. Nun. Das ist neu. ... Seit Cassy fort ist, kann ich die Arbeit gebrauchen. Vielleicht mehr noch den Abstand.
 
 **NEU:**
+> Ich wusste nicht, was mich erwartete, als ich unterschrieb. „Geheime Versetzung. Annehmen oder ablehnen.“ Kein Briefing, keine Einzelheiten — nur eine Unterschriftszeile und ein wartender Wagen, eigentlich nichts neues, aber irgendwas schien anders....
+Aber mitten in einen Science-Fiction-Comic geworfen zu werden, damit hatte ich sicherlich nicht gerechnet.
+Interstellare Reisen durch einen leuchtenden Ring? Nun, das ist neu. Funktionsweise? Unklar, Herkunft? Unbekannt.
+Egal, seit Cassy fort ist weiß ich ohnehin nicht was ich tun soll, da kann ich die Arbeit gebrauchen. Vielleicht mehr noch den Abstand.
 
 ##### Option `o_in_down` (auf Knoten `n_in_sign`)
 
@@ -49,7 +53,8 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 > Vierhundert Meter tief hängt der Ring in seiner Halterung wie ein angehaltener Atem. Seit heute Morgen gehört er mir — samt einem Budget, das sagt, das Konsortium erwartet nichts. Dr. Okafor wartet mit einem Adressverzeichnis. Captain Mercer wartet mit einer Waffenliste. Alle hier unten warten auf mich. Erster Tag. Kein Druck.
 
 **NEU:**
-
+> Vierhundert Meter tief in einen verlassen Bergwerk. 
+Da hängt der Ring in seiner Halterung, also würde er den Atem anhalten. Keine Bewegung, und doch hat man das Gefühl, dass jeden Moment etwas passieren würde. Seit heute Morgen unter meinem Kommando — samt einem Budget das seines Gleichen sucht. Zwei Soldaten, Dr. Okafor und Captain Mercer warten sichtlich ungeduldig im Briefing Room, scheint als waere keine Zeit zum auspacken. Wen ich zuerst anhöre wird sicherlich bemerkt werden.
 ##### Option `o_in_science` (auf Knoten `n_in_ring`)
 
 <!-- key: ev_intro::node::n_in_ring::option::o_in_science::text -->
@@ -86,10 +91,10 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **ORIGINAL:**
 
-> Okafor entschlüsselte die Adressnotation in sechs Wochen. Die Notizen meines Vorgängers nennen sie unentbehrlich und anstrengend. Mit beidem komme ich klar. Sie reicht mir das Briefing, das sie fertig hatte, ehe ich darum bat: einundfünfzig Adressen, eine gewählt. Recon One sprang vor elf Tagen zu Adresse 04. Zwei Meldungen — atembare Luft, Terrassenfelder, ein Dorf an einer weißen Straße — dann neun Tage nichts. „Das Tor hält“, sagt sie. „Genau das macht mir Angst.“
+> Dr. Okafor entschlüsselte die Adressnotation in sechs Wochen. Das Essay nennt sie unentbehrlich, unermüdlich und anstrengend. Mit zwei davon komme ich klar. Sie reicht mir das Briefing, das sie fertig hatte, ehe ich darum bat: einundfünfzig Adressen, eine gewählt. Recon One sprang vor elf Tagen zu Adresse 04. Zwei Meldungen — atembare Luft, Terrassenfelder, ein Dorf an einer weißen Straße — dann neun Tage nichts.“
 
 **NEU:**
-
+> Dr. Okafor entschlüsselte die Adressnotation in sechs Wochen. Das Essay nennt sie unentbehrlich, unermüdlich und anstrengend. Mit zwei davon komme ich klar. Sie reicht mir das Briefing, das sie fertig hatte, ehe ich darum bat: einundfünfzig Adressen, eine gewählt. Recon One sprang vor elf Tagen zu Adresse 04. Zwei Meldungen — atembare Luft, Terrassenfelder, ein Dorf an einer weißen Straße — dann neun Tage nichts.“
 ##### Option `o_in_okafor_then` (auf Knoten `n_in_okafor`)
 
 <!-- key: ev_intro::node::n_in_okafor::option::o_in_okafor_then::text -->
@@ -112,10 +117,10 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **ORIGINAL:**
 
-> Mercer. Ich las die Akte — ein Jahrzehnt an Einsätzen, manche so geheim, dass nicht einmal ich wissen durfte, dass wir dort waren. Nach Vorschrift: schnell, effizient, keine losen Enden. Gut. Die Vorschrift werde ich heute brauchen. Seine Anforderungen waren unterschrieben, ehe ich mich setzte. „Recon One. Vier Leute, zwei Meldungen, neun Tage Funkstille. Jemand hat sie an ihren Meldungen gehindert. Planen Sie damit, dann irren Sie sich höchstens in die richtige Richtung.“
+> Mercer. Ich las die Akte — ein Jahrzehnt an Einsätzen, manche so geheim, dass nicht einmal ich wusste, dass wir dort waren. Spezialeinheit wir aus dem Buch: schnell, effizient, keine losen Enden. Gut. Seine Fähigkeiten werde sicher brauchen. Seine Anforderungen waren unterschrieben, ehe ich mich setzte. „Recon One. Vier Leute, zwei Meldungen, neun Tage Funkstille. Gefangen genommen oder getötet. Gehen Sie vom schlimmsten aus, dann irren Sie sich höchstens in die richtige Richtung.“
 
 **NEU:**
-
+> Mercer. Ich las die Akte — ein Jahrzehnt an Einsätzen, manche so geheim, dass nicht einmal ich wusste, dass wir dort waren. Spezialeinheit wir aus dem Buch: schnell, effizient, keine losen Enden. Gut. Seine Fähigkeiten werde sicher brauchen. Seine Anforderungen waren unterschrieben, ehe ich mich setzte. „Recon One. Vier Leute, zwei Meldungen, neun Tage Funkstille. Gefangen genommen oder getötet. Gehen Sie vom schlimmsten aus, dann irren Sie sich höchstens in die richtige Richtung.“
 ##### Option `o_in_mercer_then` (auf Knoten `n_in_mercer`)
 
 <!-- key: ev_intro::node::n_in_mercer::option::o_in_mercer_then::text -->
@@ -138,7 +143,7 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **ORIGINAL:**
 
-> Mercer findet mich, ehe ich nach ihm schicke. Ich las die Akte — ein Jahrzehnt an Einsätzen, manche so geheim, dass nicht einmal ich wissen durfte, dass wir dort waren. Nach Vorschrift: schnell, effizient, keine losen Enden. Gut. Die Vorschrift werde ich heute brauchen. Er hört Okafors Briefing schweigend an, dann: „Jemand hat sie an ihren Meldungen gehindert. Planen Sie damit, dann irren Sie sich höchstens in die richtige Richtung.“
+> Mercer. Ich las die Akte — ein Jahrzehnt an Einsätzen, manche so geheim, dass nicht einmal ich wusste, dass wir dort waren. Spezialeinheit wir aus dem Buch: schnell, effizient, keine losen Enden. Gut. Seine Fähigkeiten werde sicher brauchen. Seine Anforderungen waren unterschrieben, ehe ich mich setzte. „Recon One. Vier Leute, zwei Meldungen, neun Tage Funkstille. Gefangen genommen oder getötet. Gehen Sie vom schlimmsten aus, dann irren Sie sich höchstens in die richtige Richtung.“
 
 **NEU:**
 
@@ -163,11 +168,11 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 - _Sprecher: —_
 
 **ORIGINAL:**
-
-> Okafor entschlüsselte die Adressnotation in sechs Wochen. Die Notizen meines Vorgängers nennen sie unentbehrlich und anstrengend. Mit beidem komme ich klar. Sie bestätigt Mercers Zählung ohne Beschönigung: einundfünfzig Adressen, eine gewählt, Recon One seit neun Tagen stumm auf Adresse 04. „Das Tor hält. Die Adresse hält. Was auch immer sie an ihren Meldungen gehindert hat, Direktor — es ist nicht die Physik.“
+ 
+ „Das Tor hält. Die Adresse hält, die Verbindung steht stabil. Was auch immer sie an ihren Meldungen gehindert hat, Direktor — es ist nicht die Physik, und genau das macht mir Angst“
 
 **NEU:**
-
+ „Das Tor hält. Die Adresse hält, die Verbindung ist stabil. Was auch immer sie an ihren Meldungen gehindert hat, Direktor — es ist nicht die Physik, und genau das macht mir Angst“
 ##### Option `o_in_okafor2_go` (auf Knoten `n_in_okafor_2`)
 
 <!-- key: ev_intro::node::n_in_okafor_2::option::o_in_okafor2_go::text -->
@@ -193,7 +198,7 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 > Wir können binnen einer Stunde wählen. Was auch immer auf der anderen Seite ist, hat Recon One seit neun Tagen.
 
 **NEU:**
-
+> Wir können binnen einer Stunde wählen.
 ##### Option `o_in_commit` (auf Knoten `n_in_decide`)
 
 <!-- key: ev_intro::node::n_in_decide::option::o_in_commit::text -->
@@ -252,7 +257,7 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **ORIGINAL:**
 
-> Das Tor öffnet sich auf ein grünes Tal unter zwei Sonnen — Terrassenfelder, eine Straße aus festem weißem Stein, tief eingefahrene Karrenspuren. Recon Ones Markierungsbake liegt zehn Meter entfernt, glatt abgebrochen. Keine Leichen. Keine Patronenhülsen. Talaufwärts läutet eine Glocke einmal und verstummt, wie ein Versehen.
+> Das Tor öffnet sich, ein grünes Tal unter zwei Sonnen — Terrassenfelder, eine Straße aus festem weißem Stein, tief eingefahrene Karrenspuren. Recon Ones Markierungsbake liegt zehn Meter entfernt, oder das was davon übrig ist. Keine Leichen. Keine Patronenhülsen. Talaufwärts läutet eine Glocke einmal und verstummt, wie ein Versehen.
 
 **NEU:**
 
@@ -278,10 +283,10 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **ORIGINAL:**
 
-> Sie kommen laufend aus den Feldreihen — ein Dutzend Dorfbewohner, so menschlich wie ihr, sonnengegerbt und dringlich. Keiner von ihnen macht einen Laut. Sie ziehen an euren Armen und Rucksäcken, drängen euch von der Straße zur Baumgrenze, die Finger auf den Lippen. Der Älteste deutet die Straße hinab, dann drückt er die Hand flach zur Erde: runter. Versteckt euch. Sofort.
+> Sie kommen laufend aus den Feldreihen — ein Dutzend Dorfbewohner, so menschlich wie ihr, sonnengegerbt und hastig. Keiner von ihnen macht einen Laut. Sie ziehen an euren Armen und Rucksäcken, drängen euch von der Straße zur Baumgrenze, die Finger auf den Lippen. Der Älteste deutet die Straße hinab, dann drückt er die Hand flach zur Erde, die Botschaft ist klar: runter. Versteckt euch. Sofort.
 
 **NEU:**
-
+> Sie kommen laufend aus den Feldreihen — ein Dutzend Dorfbewohner, so menschlich wie ihr, sonnengegerbt und hastig. Keiner von ihnen macht einen Laut. Sie ziehen an euren Armen und Rucksäcken, drängen euch von der Straße zur Baumgrenze, die Finger auf den Lippen. Der Älteste deutet die Straße hinab, dann drückt er die Hand flach zur Erde, die Botschaft ist klar: runter. Versteckt euch. Sofort.
 ##### Option `o_va_trust` (auf Knoten `n_va_villagers`)
 
 <!-- key: ev_vy_arrival::node::n_va_villagers::option::o_va_trust::text -->
@@ -306,10 +311,10 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **ORIGINAL:**
 
-> Losreißen. Man überlässt Fremden nicht die Straße.
+> Losreißen. Vertrauen muss verdient werden.
 
 **NEU:**
-
+> Losreißen. Vertrauen muss verdient werden.
 #### Knoten `n_va_procession`
 
 <!-- key: ev_vy_arrival::node::n_va_procession::text -->
@@ -318,10 +323,10 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **ORIGINAL:**
 
-> Von der Baumgrenze spürt ihr es, ehe ihr es seht: ein Schritt, der euch durch den Boden erreicht. Drohnen. Insektengestalten von der Größe von Güterwaggons, im Gänsemarsch, beladen mit Korn, Stoff, verschnürten Kisten — Tribut. Sie ziehen vorbei, ohne einen einzigen Blick auf die Welt um sie her, die weiße Straße hinab, zum Tor. Hindurch. Die Dorfbewohner sehen ihnen nicht nach. Sie sehen euch an und beschwören euch zum Schweigen.
+> Von der Baumgrenze spürt ihr es, ehe ihr es seht: ein Schritt, der euch durch den Boden erreicht, dann Sichtkontakt. Drohnen. Insektengestalten von der Größe von Güterwaggons, im Gänsemarsch, beladen mit Korn, Stoff, verschnürten Kisten — Tribut. Sie ziehen vorbei, ohne einen einzigen Blick auf die Welt um sie her, die weiße Straße hinab, zum Tor. Hindurch. Die Dorfbewohner sehen ihnen nicht nach. Sie sehen euch an und beschwören euch zum Schweigen.
 
 **NEU:**
-
+> Von der Baumgrenze spürt ihr es, ehe ihr es seht: ein Karren und weitere Töne, fremdartig und doch bekannt. Dann Sichtkontakt. Insekten wenigstens zweineinhalb Meter groß, bewaffnet, dazu einige Menschen die einen Karren schieben, verschnürten Kisten, Korn, Obst — Tribut? Sie ziehen vorbei, ohne einen einzigen Blick auf die Welt um sie her, die weiße Straße hinab, zum Tor. Hindurch. Die Dorfbewohner sehen ihnen nicht nach. Sie sehen euch an und beschwören euch zum Schweigen.
 ##### Option `o_va_stay_down` (auf Knoten `n_va_procession`)
 
 <!-- key: ev_vy_arrival::node::n_va_procession::option::o_va_stay_down::text -->
@@ -344,10 +349,9 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **ORIGINAL:**
 
-> Die letzte Träger-Drohne zieht vorbei, und die Dorfbewohner erheben sich, drängen euch am Graben entlang zum Mühlenpfad — eine stumme, halb rennende Reihe. Dann verfängt sich ein Junge, kein Kind mehr, noch kein Mann, mit dem Fuß in einer Furche und stürzt hart, die Stäbe klappern. Die Straße hinab schwenken zwei Flankierer-Drohnen — mannshoch, flink, die Köpfe zuckend — zum Geräusch zurück. Mercer läuft schon in die falsche Richtung.
-
+> Die letzte Träger-Drohne zieht vorbei, und die Dorfbewohner erheben sich, drängen euch am Graben entlang zum Mühlenpfad — eine stumme, halb rennende Reihe, nahezu lautlos. Dann stolpert ein Junge, kein Kind, aber sicherlich noch kein Mann, vielleicht 13 Jahre alt. Offensichtlich verletzt, vielleicht nur eine Zerrung vielleicht ein gebrochenes Bein. Ein kaum hörbares wimmern und ein knacken von trockenen Ästen. Mercer sieht sofort, zwei der Drohnen blieben stehen, die Köpfe zucken hin und her. Sie haben etwas gehört und werden jeden Moment umdrehen. Mercer ist bereits auf dem Weg zu dem Jungen.
 **NEU:**
-
+> Die letzte Träger-Drohne zieht vorbei, und die Dorfbewohner erheben sich, drängen euch am Graben entlang zum Mühlenpfad — eine stumme, halb rennende Reihe, nahezu lautlos. Dann stolpert ein Junge, kein Kind, aber sicherlich noch kein Mann, vielleicht 13 Jahre alt. Offensichtlich verletzt, vielleicht nur eine Zerrung vielleicht ein gebrochenes Bein. Ein kaum hörbares wimmern und ein knacken von trockenen Ästen. Mercer sieht sofort, zwei der Drohnen blieben stehen, die Köpfe zucken hin und her. Sie haben etwas gehört und werden jeden Moment umdrehen. Mercer ist bereits auf dem Weg zu dem Jungen.
 ##### Option `o_va_hide` (auf Knoten `n_va_escape`)
 
 <!-- key: ev_vy_arrival::node::n_va_escape::option::o_va_hide::text -->
@@ -384,9 +388,11 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **ORIGINAL:**
 
-> Mercer zieht den Jungen hinter einen Straßenstein und hält ihn still. Schritte. Ein trockenes Rasseln, ganz nah. Er dreht sie um den Stein, während die Drohnen vorbeiziehen — stets den Stein zwischen seinem Rücken und dem Schwenk ihrer augenlosen Köpfe —, bis das Rasseln die weiße Straße hinab verklingt. In den Feldreihen atmet niemand. Dann ist der Vater des Jungen da und presst seine Stirn an die seines Sohnes.
+> Mercer zieht den Jungen hinter einen mannhohen Stein, zu schmal um sich hinzulegen er muss ihn halten, der Junge kann nicht alleine stehen. Ein trockenes Rasseln und schnarren, ganz nah. Er zieht den jungen langsam, lautlos um den Stein, während die Drohnen vorbeiziehen — stets den Stein zwischen seinem Rücken und dem Schwenk ihrer augenlosen Köpfe —, bis das Rasseln die weiße Straße hinab verklingt. In den Feldreihen atmet niemand. Dann ist der Vater des Jungen, presst seine Stirn an die seines Sohnes, sein Blick gegenüber Mercer spricht Bände.
 
 **NEU:**
+> Mercer zieht den Jungen hinter einen mannhohen Stein, zu schmal um sich hinzulegen, der Junge kann nicht alleine stehen. Mercer hält ihn,dann nähert sich ein trockenes Rasseln, ein Schnarren, ganz nah. Er zieht den jungen langsam, lautlos um den Stein herum, während die Drohnen vorbeiziehen — stets den Stein zwischen seinem Rücken und dem Schwenk ihrer augenlosen Köpfe —, bis das Rasseln die weiße Straße hinab verklingt. In den Feldreihen atmet niemand. Dann ist der Vater des Jungen, presst seine Stirn an die seines Sohnes, sein Blick gegenüber Mercer spricht Bände.
+
 
 ##### Option `o_va_hide_on` (auf Knoten `n_va_hide`)
 
@@ -439,7 +445,7 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 > Drei Schritte, und die Flankierer haben den Winkel. Mercer wirft den Jungen zu Boden, dreht sich um und legt die erste Drohne mit einer Salve auf den Rücken. Die zweite ist fast über ihm, als Okafor sie niederstreckt — zwei Schuss, keine vergeudete Bewegung, die Musterschülerin des Schießausbilders. Das Rasseln hört auf. Das ganze Tal hat die Schüsse gehört.
 
 **NEU:**
-
+>  Mercer sprintet zu dem Jungen und stößt ihn zu Boden, dreht sich um und erschießt die erste Drohne. Die zweite ist fast über ihm, als Okafor sie niederstreckt — zwei Schuss, keine vergeudete Bewegung, die Musterschülerin des Schießausbilders. Das Rasseln verstummt. Aber das ganze Tal hat die Schüsse gehört.
 ##### Option `o_va_run_watch` (auf Knoten `n_va_run`)
 
 <!-- key: ev_vy_arrival::node::n_va_run::option::o_va_run_watch::text -->
@@ -488,7 +494,7 @@ _Auto-Start bei `newCampaign` (Tag 1, kein MissionDef, Trupp = alle Start-Helden
 
 **ORIGINAL:**
 
-> Ihr stoßt euch frei, und ein Stab kracht gegen Mercers Gewehr — dann ist es eine Rauferei an der Baumgrenze, stumm und verzweifelt, die Dorfbewohner kämpfen wie Menschen, die es sich nicht leisten können, gehört zu werden. Es endet falsch. Ein junger Dorfbewohner liegt am Boden, das Genick an einer Wurzel verdreht, reglos. Da beginnt der Boden zu beben.
+> Ihr reißt euch los, und ein Stab kracht gegen Mercers Gewehr — dann ist es eine Rauferei an der Baumgrenze, stumm und verzweifelt, die Dorfbewohner kämpfen wie Menschen, die es sich nicht leisten können, gehört zu werden. Es endet falsch. Ein junger Dorfbewohner liegt am Boden, das Genick an einer Wurzel verdreht, reglos. Da beginnt der Boden zu beben.
 
 **NEU:**
 

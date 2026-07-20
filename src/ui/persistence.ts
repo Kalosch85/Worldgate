@@ -9,6 +9,7 @@
  */
 import { deserialize, serialize } from "../core/serialize.js";
 import type { GameStateT } from "../data/schemas.js";
+import { strings } from "./strings.js";
 
 const SAVE_KEY = "worldgate/save/v1";
 
@@ -67,10 +68,10 @@ export function exportSave(state: GameStateT): string {
  */
 export function importSave(text: string): { ok: true; state: GameStateT } | { ok: false; error: string } {
   const trimmed = text.trim();
-  if (!trimmed) return { ok: false, error: "Paste a save string first." };
+  if (!trimmed) return { ok: false, error: strings.mainMenu.pasteFirst };
   try {
     return { ok: true, state: deserialize(trimmed) };
   } catch {
-    return { ok: false, error: "That is not a valid Worldgate save." };
+    return { ok: false, error: strings.mainMenu.invalidSave };
   }
 }

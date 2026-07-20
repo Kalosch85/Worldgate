@@ -16,6 +16,7 @@ import type { BattleAction } from "../core/tactics.js";
 import { hitChance, nextInteractables, reachableTiles, visibleTargets } from "../core/tactics.js";
 import { HERO_MAX_HP } from "../core/tacticsConstants.js";
 import type { ContentBundleT, GameStateT, PosT } from "../data/schemas.js";
+import { strings } from "../ui/strings.js";
 
 type TacticalActiveT = Extract<NonNullable<GameStateT["activeMission"]>, { kind: "tactical" }>;
 type BattleStateT = TacticalActiveT["battle"];
@@ -206,7 +207,7 @@ export function buildBattleView(state: GameStateT, content: ContentBundleT, ui: 
     const prog = Number(battle.objectiveProgress[o.id] ?? 0);
     const nextId = o.interactables[prog];
     o.interactables.forEach((id, i) => {
-      nameById.set(id, `Console ${String.fromCharCode(65 + i)}`);
+      nameById.set(id, strings.battle.consoleName(String.fromCharCode(65 + i)));
       nextIdInSeqOf.set(id, nextId);
     });
   }
@@ -224,15 +225,15 @@ export function buildBattleView(state: GameStateT, content: ContentBundleT, ui: 
     let blockedReason: string | null = null;
     if (!reachableNext) {
       if (!selectablePlayer) {
-        blockedReason = "Select a unit first";
+        blockedReason = strings.battle.selectUnitFirst;
       } else if (!isNext) {
         // Part of a sequence but not the one it expects next → wrong order.
         const nextId = nextIdInSeqOf.get(it.id);
-        blockedReason = nextId ? `Activate ${consoleName(nextId)} first` : null;
+        blockedReason = nextId ? strings.battle.activateFirst(consoleName(nextId)) : null;
       } else if (selectablePlayer.ap === 0) {
-        blockedReason = "No AP left";
+        blockedReason = strings.battle.noApLeft;
       } else {
-        blockedReason = "Move closer";
+        blockedReason = strings.battle.moveCloser;
       }
     }
 
@@ -284,7 +285,7 @@ export function buildBattleView(state: GameStateT, content: ContentBundleT, ui: 
     targets,
     round: battle.round,
     phase: battle.activeSide,
-    banner: `Round ${battle.round}`,
+    banner: strings.battle.round(battle.round),
     objective,
     log: battle.log,
     abilities,
@@ -299,19 +300,21 @@ function describeObjective(map: MapDefT, battle: BattleStateT, enemiesLeft: numb
     switch (o.kind) {
       case "interactSequence": {
         const done = Number(battle.objectiveProgress[o.id] ?? 0);
-        parts.push(`Consoles ${done}/${o.interactables.length}`);
+        parts.push(strings.battle.consoles(done, o.interactables.length));
         break;
       }
       case "eliminateAll":
-        parts.push(`Enemies left: ${enemiesLeft}`);
+        parts.push(strings.battle.enemiesLeft(enemiesLeft));
         break;
       case "surviveRounds": {
         const done = Number(battle.objectiveProgress[o.id] ?? 0);
-        parts.push(`Survive ${done}/${o.rounds} rounds`);
+        parts.push(strings.battle.surviveRounds(done, o.rounds));
         break;
       }
       case "reachZone":
-        parts.push(battle.objectiveProgress[o.id] === true ? "Zone reached" : "Reach the zone");
+        parts.push(
+          battle.objectiveProgress[o.id] === true ? strings.battle.zoneReached : strings.battle.reachZone,
+        );
         break;
     }
   }
@@ -361,7 +364,7 @@ export function interpretTap(view: BattleView, x: number, y: number): TapResult 
   if (player && player.id !== selected) return { kind: "select", unit: player.id };
 
   if (console) {
-    return { kind: "message", text: console.blockedReason ?? `${console.name} is already active` };
+    return { kind: "message", text: console.blockedReason ?? strings.battle.alreadyActive(console.name) };
   }
 
   if (selected && view.mode.kind === "move") {
@@ -389,5 +392,5 @@ export function interactButtonTap(view: BattleView): TapResult {
   }
   const next = view.consoles.find((c) => c.isNext) ?? view.consoles.find((c) => c.blockedReason);
   if (next?.blockedReason) return { kind: "message", text: next.blockedReason };
-  return { kind: "message", text: "No console to activate" };
+  return { kind: "message", text: strings.battle.noConsoleToActivate };
 }

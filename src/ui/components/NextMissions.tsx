@@ -6,6 +6,7 @@
  * core (ARCHITECTURE §1).
  */
 import type { ContentBundleT } from "../../data/schemas.js";
+import { strings } from "../strings.js";
 import { theme } from "../theme.js";
 
 export function NextMissions({
@@ -22,8 +23,10 @@ export function NextMissions({
   });
 
   return (
-    <section aria-label="Newly available missions" style={{ marginTop: "0.9rem" }}>
-      <h3 style={{ margin: "0 0 0.4rem", fontSize: "0.95rem", color: theme.textDim }}>Next</h3>
+    <section aria-label={strings.nextMissions.ariaLabel} style={{ marginTop: "0.9rem" }}>
+      <h3 style={{ margin: "0 0 0.4rem", fontSize: "0.95rem", color: theme.textDim }}>
+        {strings.nextMissions.title}
+      </h3>
       <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
         {entries.map((e) => (
           <div
@@ -49,7 +52,7 @@ export function NextMissions({
                 color: e.tactical ? "#f0b45e" : theme.accent,
               }}
             >
-              {e.tactical ? "Tactical" : "Narrative"}
+              {e.tactical ? strings.common.tactical : strings.common.narrative}
             </span>
           </div>
         ))}

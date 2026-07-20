@@ -1,7 +1,7 @@
 [
   {
     "id": "ut_raider",
-    "name": "Raider",
+    "name": "Plünderer",
     "maxHp": 4,
     "aim": 65,
     "mobility": 4,
@@ -10,7 +10,7 @@
   },
   {
     "id": "ut_tender",
-    "name": "Tender",
+    "name": "Drohne",
     "maxHp": 5,
     "aim": 60,
     "mobility": 3,

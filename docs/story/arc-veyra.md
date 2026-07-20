@@ -1,106 +1,120 @@
 <!--
-FABLE AMENDMENTS — apply during the M1–M5 content-entry session, NOT the §8
-engine session. Recorded here so the canon is not lost; the arc spec below is
-reproduced verbatim.
+FABLE-ÄNDERUNGEN — anzuwenden während der Content-Eingabe-Session M1–M5,
+NICHT der Engine-Session aus §8. Hier festgehalten, damit der Kanon nicht
+verloren geht; die Arc-Spezifikation unten ist wortwörtlich reproduziert.
 
-1. This file is the committed spec (done).
-2. Arc unlock: add { "type": "unlockMission", "mission": "m_vy_1" } to
-   m_relay's victoryEffects. Do NOT invent new condition types. (Deferred:
-   wiring it before m_vy_1 exists fails content validation; apply it in the
-   session that authors m_vy_1.)
-3. Canon, M3 fight path: the one carried home is the First — Seryn Vael,
-   wounded. Frame all related text on this thesis: a traitor to his people who
-   defects to free them from their false god. His fight-path recruitment must
-   be gated on the doubt variable reaching a threshold so the defection is
-   earned by the player's arguments, not granted by victory; if the spec
-   already does this, keep it.
-4. M4–M5 session (plan task 6.2-A3; Fable resolutions B–E) applied:
-   - B: TechDef gained `visibleIf: Condition[]` (the only sanctioned schema
-     edit). t_radiance_cell gated on f_vy_godtech, t_projection_theory on
-     f_vy_watched_god. Setting the arc flags is what makes the techs visible —
-     no separate unlockTech effect exists or is needed.
-   - M4 shipped as the ARC-D3 **narrative fallback**, not tactical: the
-     tactical design needs reinforcement waves + flag-conditional battle init
-     (alerted start on f_vy_ilo_abandoned, deploy-back on f_vy_alarm,
-     Seryn's pre-deactivated pillar) the tactics engine does not express;
-     adding them is a tactics-engine change, out of this content session's
-     scope. The narrative version honors every flag beat and sets identical
-     flags (f_vy_godtech, exotics +3, unlock m_vy_5).
-   - C: §6 full-arc golden tests deferred to post-balance (kept out here).
-   - The M5 epilogue's 4-axis variation is folded into per-ending outcome
-     labels + journal lines (the engine has no conditional-text concatenation).
-   - ev_vy_dessik_word's queue is wired into M2's free-Ilo option (+5 days),
-     the kept-promise symmetry §5 calls for.
-6. D-10 ("The Shut Door" restructure, Fable session) further supersedes
-   parts of this spec; the spec below stays verbatim as history. What
-   changed:
-   - **Two worlds.** The premise's single planet is split: the valley
-     (arrival/ledger/intercept) is **Andara**, Address 04; **Veyra**
-     (Address 09) is the god's seat, one crossing beyond, holding every
-     m_vy_1..5 location. Bible §10–§11 are now the geography authority.
-   - **The Shut Door.** Veyra's gate is warded — inbound free, outbound
-     only by the temple's word. This is the canonical reason Recon One
-     went silent; the tribute call (m_vy_intercept) is the stolen way
-     home. All Veyra-side text assumes it. The mechanical deployment lock
-     ships in a later session (f_vy_call_intercepted is its hook).
-   - **The Portion / the Graced.** Seryn is sacrament-sustained (bible
-     §3); M3 now yields a captured dose on every branch
-     (`f_vy_sacrament_dose`), and t_radiance_cell's visibleIf gates on
-     any(dose, f_vy_godtech) — the §2.2 f_vy_godtech-only gate is
-     superseded. His defection carries a withdrawal arc (text-only).
-   - **No rival gate program exists.** ev_first_contact, m_rival_stranded,
-     trust_rival, and the +30d re-fire are deleted entirely (bible §4
-     reduced to a dormant Act 2 seed; backlog B-1/B-3 deleted, B-8
-     reserved). §1's "Legal note" stands.
-   - **Valley drama + convergence.** The arrival mission's escape gained
-     the falling-boy choice (HIDE/RUN, `trust_andara` +2/0, flags
-     f_vy_boy_hidden/f_vy_boy_run) beside the existing violent branch
-     (trust_andara −3, vy_villager_killed kept; vy_spare_address folded
-     out). All three routes converge on the same Veyra address, and the
-     boy and his father are recognized on Veyra in m_vy_1 (three
-     variants). The M2/M3 rescue is written as a reunion (Recon One
-     roster named, bible §10).
-5. D-9 (early-campaign restructure, Fable session) supersedes parts of this
-   spec; the spec below is kept verbatim as history. What changed:
-   - "Second Expedition" is renamed **Recon One** everywhere (story-bible
-     §10): a four-member survey team, captured pre-campaign; the M3
-     addPersonnel +4 is canonically Recon One returning to duty.
-   - Amendment 2 (m_relay → m_vy_1 unlock) is REVERSED: m_vy_1 now unlocks
-     from m_vy_intercept's victoryEffects. m_relay is an optional side
-     tactical (tech-gated, no spine unlock). New spine before M1:
-     ev_intro (auto-launch at newCampaign) → m_vy_arrival → m_vy_ledger →
-     m_vy_intercept (tactical) → m_vy_1.
-   - M1's entry node is rewritten (the player has already crossed to Veyra
-     three times by then — arrival, ledger, intercept; more with intercept
-     retries) and routes on f_vy_transport (Karsu porter papers).
-   - ev_first_contact moved off the campaign spine to m_rival_stranded
-     ("Distress: Address 11"), unlocked by m_vy_intercept victory.
+1. Diese Datei ist die committete Spezifikation (erledigt).
+2. Arc-Freischaltung: Füge { "type": "unlockMission", "mission": "m_vy_1" } zu
+   den victoryEffects von m_relay hinzu. Erfinde KEINE neuen Bedingungstypen.
+   (Zurückgestellt: die Verdrahtung vor der Existenz von m_vy_1 lässt die
+   Content-Validierung fehlschlagen; wende sie in der Session an, die m_vy_1
+   verfasst.)
+3. Kanon, M3-Kampfpfad: Der Heimgetragene ist der Erste — Seryn Vael,
+   verwundet. Rahme allen zugehörigen Text auf dieser These: ein Verräter an
+   seinem Volk, der überläuft, um es von seinem falschen Gott zu befreien.
+   Seine Rekrutierung auf dem Kampfpfad muss daran gekoppelt sein, dass die
+   Variable doubt einen Schwellenwert erreicht, damit der Überlauf durch die
+   Argumente des Spielers verdient und nicht durch den Sieg gewährt wird;
+   falls die Spezifikation das bereits tut, behalte es bei.
+4. M4–M5-Session (Plan-Aufgabe 6.2-A3; Fable-Resolutionen B–E) angewendet:
+   - B: TechDef erhielt `visibleIf: Condition[]` (die einzige sanktionierte
+     Schema-Änderung). t_radiance_cell an f_vy_godtech gekoppelt,
+     t_projection_theory an f_vy_watched_god. Das Setzen der Arc-Flags macht
+     die Techs sichtbar — es existiert kein separater unlockTech-Effekt und
+     wird auch nicht benötigt.
+   - M4 wurde als der **narrative Rückfall** aus ARC-D3 ausgeliefert, nicht
+     taktisch: Das taktische Design benötigt Verstärkungswellen +
+     flag-abhängige Kampf-Initialisierung (alarmierter Start bei
+     f_vy_ilo_abandoned, Rückversetzung des Einsatzes bei f_vy_alarm, Seryns
+     vordeaktivierter Pfeiler), die die Taktik-Engine nicht ausdrückt; sie
+     hinzuzufügen wäre eine Änderung an der Taktik-Engine und liegt außerhalb
+     des Rahmens dieser Content-Session. Die narrative Fassung ehrt jeden
+     Flag-Beat und setzt identische Flags (f_vy_godtech, exotics +3,
+     Freischaltung m_vy_5).
+   - C: §6 Golden-Tests für den gesamten Arc auf die Zeit nach dem Balancing
+     verschoben (hier ausgelassen).
+   - Die 4-Achsen-Variation des M5-Epilogs ist in outcome-Labels je Ende +
+     Journalzeilen eingefaltet (die Engine hat keine bedingte Textverkettung).
+   - Die Warteschlange von ev_vy_dessik_word ist an die Ilo-befreien-Option
+     von M2 gekoppelt (+5 Tage), die Symmetrie des gehaltenen Versprechens,
+     die §5 verlangt.
+6. D-10 (Umstrukturierung „Die verschlossene Tür", Fable-Session) ersetzt
+   weitere Teile dieser Spezifikation; die Spezifikation unten bleibt
+   wortwörtlich als Historie erhalten. Was sich geändert hat:
+   - **Zwei Welten.** Der einzelne Planet der Prämisse ist aufgeteilt: Das
+     Tal (Ankunft/Verzeichnis/Abfangen) ist **Andara**, Adresse 04; **Veyra**
+     (Adresse 09) ist der Sitz des Gottes, einen Übergang weiter, und
+     beherbergt jeden Schauplatz von m_vy_1..5. Bibel §10–§11 sind nun die
+     Geographie-Autorität.
+   - **Die verschlossene Tür.** Veyras Tor ist verwahrt — hinein frei, hinaus
+     nur auf das Wort des Tempels. Dies ist der kanonische Grund, warum Recon
+     One verstummte; der Tributruf (m_vy_intercept) ist der gestohlene Weg
+     nach Hause. Aller Text auf der Veyra-Seite setzt dies voraus. Die
+     mechanische Einsatzsperre wird in einer späteren Session ausgeliefert
+     (f_vy_call_intercepted ist ihr Aufhänger).
+   - **Die Portion / die Begnadeten.** Seryn wird durch das Sakrament am
+     Leben gehalten (Bibel §3); M3 liefert nun auf jedem Zweig eine erbeutete
+     Dosis (`f_vy_sacrament_dose`), und das visibleIf von t_radiance_cell
+     koppelt an any(dose, f_vy_godtech) — die reine f_vy_godtech-Kopplung aus
+     §2.2 ist ersetzt. Sein Überlauf trägt einen Entzugsbogen (nur Text).
+   - **Es existiert kein rivalisierendes Weltentor-Programm.** ev_first_contact,
+     m_rival_stranded, trust_rival und das erneute Auslösen nach +30 Tagen
+     sind vollständig gestrichen (Bibel §4 auf einen ruhenden Akt-2-Keim
+     reduziert; Backlog B-1/B-3 gestrichen, B-8 reserviert). Der „Rechtliche
+     Hinweis" aus §1 bleibt bestehen.
+   - **Tal-Drama + Konvergenz.** Die Flucht der Ankunftsmission erhielt die
+     Wahl mit dem fallenden Jungen (HIDE/RUN, `trust_andara` +2/0, Flags
+     f_vy_boy_hidden/f_vy_boy_run) neben dem bestehenden gewaltsamen Zweig
+     (trust_andara −3, vy_villager_killed beibehalten; vy_spare_address
+     herausgefaltet). Alle drei Wege laufen auf dieselbe Veyra-Adresse
+     zusammen, und der Junge und sein Vater werden auf Veyra in m_vy_1
+     wiedererkannt (drei Varianten). Die Rettung in M2/M3 ist als Wiedersehen
+     geschrieben (Recon-One-Besatzung benannt, Bibel §10).
+5. D-9 (Umstrukturierung der frühen Kampagne, Fable-Session) ersetzt Teile
+   dieser Spezifikation; die Spezifikation unten bleibt wortwörtlich als
+   Historie erhalten. Was sich geändert hat:
+   - „Zweite Expedition" wird überall in **Recon One** umbenannt (Story-Bibel
+     §10): ein vierköpfiges Erkundungsteam, vor der Kampagne gefangen
+     genommen; das addPersonnel +4 aus M3 ist kanonisch Recon One, das in den
+     Dienst zurückkehrt.
+   - Änderung 2 (Freischaltung m_relay → m_vy_1) ist UMGEKEHRT: m_vy_1
+     schaltet sich nun aus den victoryEffects von m_vy_intercept frei. m_relay
+     ist ein optionaler taktischer Nebenstrang (tech-gekoppelt, keine
+     Hauptstrang-Freischaltung). Neuer Hauptstrang vor M1:
+     ev_intro (automatischer Start bei newCampaign) → m_vy_arrival →
+     m_vy_ledger → m_vy_intercept (taktisch) → m_vy_1.
+   - M1s Eintrittsknoten ist neu geschrieben (der Spieler ist zu diesem
+     Zeitpunkt bereits dreimal nach Veyra übergesetzt — Ankunft, Verzeichnis,
+     Abfangen; mehr bei Wiederholungen des Abfangens) und verzweigt auf
+     f_vy_transport (Trägerpapiere von Karsu).
+   - ev_first_contact vom Kampagnen-Hauptstrang zu m_rival_stranded verschoben
+     („Notruf: Adresse 11"), freigeschaltet durch den Sieg bei m_vy_intercept.
 -->
 
-# Arc: The Luminous One (Veyra) — Content Spec
+# Arc: Der Leuchtende (Veyra) — Content-Spezifikation
 
-Status: FABLE-AUTHORED, ready for content entry. Target files: `src/data/content/events.json`, `missions.json`, `heroes.json`, `techs.json`, `maps.json` (+ small schema addition, §8).
-Fits: D-3 (injuries, no permadeath), D-5 (deterministic narrative), D-6 (branch-and-bottleneck), D-1 (hidden locked options + debrief hint).
+Status: FABLE-VERFASST, bereit für die Content-Eingabe. Zieldateien: `src/data/content/events.json`, `missions.json`, `heroes.json`, `techs.json`, `maps.json` (+ kleine Schema-Ergänzung, §8).
+Passt zu: D-3 (Verletzungen, kein Permadeath), D-5 (deterministische Erzählung), D-6 (Verzweigung-und-Engstelle), D-1 (versteckte gesperrte Optionen + Debrief-Hinweis).
 
 ---
 
-## 0. Arc decisions log
+## 0. Arc-Entscheidungsprotokoll
 
-- **ARC-D1 (default):** M2 assault-path defeat is narratively scripted, not a tactical battle. Rationale: cost (map + AI tuning) and player frustration at rigged fights. Alternative if revisited: "survive 3 turns" tactical.
-- **ARC-D2 (default):** M3 duel vs. the First is a narrative skill confrontation, not tactical.
-- **ARC-D3 (default):** One tactical mission in the arc (M4), with a narrative fallback node if the tactical engine/map isn't ready at entry time.
-- **ARC-D4 (default):** M3 location varies by path (escape route vs. execution yard) so M1/M2 choices are not invalidated.
-- **ARC-D5 (default):** Seryn recruit timing is path-dependent (M3 if talked down, post-M5 if defeated and the god was watched).
+- **ARC-D1 (Standard):** Die Niederlage auf dem Sturmpfad von M2 ist narrativ geskriptet, keine taktische Schlacht. Begründung: Kosten (Karte + KI-Abstimmung) und Spielerfrust bei manipulierten Kämpfen. Alternative bei erneuter Prüfung: taktisches „Überlebe 3 Runden".
+- **ARC-D2 (Standard):** Das Duell in M3 gegen den Ersten ist eine narrative Fertigkeitskonfrontation, nicht taktisch.
+- **ARC-D3 (Standard):** Eine taktische Mission im Arc (M4), mit einem narrativen Rückfall-Knoten, falls Taktik-Engine/Karte zum Eintrittszeitpunkt nicht bereit sind.
+- **ARC-D4 (Standard):** Der Schauplatz von M3 variiert je nach Pfad (Fluchtweg vs. Hinrichtungshof), damit die Entscheidungen aus M1/M2 nicht entwertet werden.
+- **ARC-D5 (Standard):** Der Zeitpunkt von Seryns Rekrutierung ist pfadabhängig (M3, wenn überredet; nach M5, wenn besiegt und der Gott beobachtet wurde).
 
-## 1. Premise
+## 1. Prämisse
 
-Planet **Veyra**: theocratic society worshipping **the Luminous One (Oru)** — in truth a survivor of a precursor species using projection/exo-shell technology to appear divine. Worldgate's **Second Expedition** (generic personnel, not heroes) was captured on arrival and is held in the **Penitence**, a basilica-prison. The god's champion is **Seryn Vael, "the First Blade"** — a true believer, not a cynic. Arc theme: faith vs. evidence; every path shakes Veyran orthodoxy differently.
+Planet **Veyra**: eine theokratische Gesellschaft, die **den Leuchtenden (Oru)** verehrt — in Wahrheit ein Überlebender einer Vorläuferspezies, der Projektions-/Exo-Schalen-Technologie nutzt, um göttlich zu erscheinen. Die **Zweite Expedition** von Worldgate (generisches Personal, keine Helden) wurde bei der Ankunft gefangen genommen und wird in der **Penitenz** festgehalten, einem Basilika-Gefängnis. Der Vorkämpfer des Gottes ist **Seryn Vael, „die Erste Klinge"** — ein wahrer Gläubiger, kein Zyniker. Arc-Thema: Glaube vs. Beweise; jeder Pfad erschüttert die veyranische Orthodoxie auf andere Weise.
 
-Legal note: all names original; premise-level genre similarity only.
+Rechtlicher Hinweis: alle Namen sind original; Ähnlichkeit nur auf Prämissen-/Genre-Ebene.
 
-## 2. Content additions
+## 2. Content-Ergänzungen
 
-### 2.1 Hero (append to heroes.json)
+### 2.1 Held (an heroes.json anhängen)
 
 ```json
 {
@@ -112,10 +126,10 @@ Legal note: all names original; premise-level genre similarity only.
 }
 ```
 
-If the archetype enum is closed, either add `"duelist"` to the enum or use `["soldier"]`; prefer adding the enum value.
-Seryn is NOT in the starting roster. Added at runtime via `addHero` effect (§8).
+Falls das archetype-Enum geschlossen ist, füge entweder `"duelist"` zum Enum hinzu oder verwende `["soldier"]`; bevorzuge das Hinzufügen des Enum-Werts.
+Seryn ist NICHT im Startaufgebot. Wird zur Laufzeit über den `addHero`-Effekt hinzugefügt (§8).
 
-### 2.2 Techs (append to techs.json)
+### 2.2 Techs (an techs.json anhängen)
 
 ```json
 {
@@ -139,172 +153,172 @@ Seryn is NOT in the starting roster. Added at runtime via `addHero` effect (§8)
 }
 ```
 
-Both techs are **hidden until unlocked** by arc flags (see M4/M5). If the tech list has no visibility gating, gate via `prerequisites` + an `unlockTech`-style flag pattern already used elsewhere; if neither exists, simplest: techs only appear in the research UI when a condition `flagSet` passes — implementers: reuse whatever gating `unlockMission` uses; if nothing exists, add `visibleIf: Condition[]` to Tech schema (small, Fable-approved).
+Beide Techs sind **verborgen, bis sie freigeschaltet werden** durch Arc-Flags (siehe M4/M5). Falls die Tech-Liste keine Sichtbarkeitskopplung hat, koppele über `prerequisites` + ein Flag-Muster im Stil von `unlockTech`, das anderswo bereits verwendet wird; falls keines existiert, am einfachsten: Techs erscheinen nur dann in der Forschungs-UI, wenn eine Bedingung `flagSet` erfüllt ist — Implementierende: verwende dieselbe Kopplung wieder, die `unlockMission` nutzt; falls nichts existiert, füge `visibleIf: Condition[]` zum Tech-Schema hinzu (klein, Fable-genehmigt).
 
-### 2.3 Injuries
+### 2.3 Verletzungen
 
-Reuses existing `inj_wounded`, `inj_shaken`. No new injuries.
+Verwendet die bestehenden `inj_wounded`, `inj_shaken` wieder. Keine neuen Verletzungen.
 
-### 2.4 Map (tactical, M4 only)
+### 2.4 Karte (taktisch, nur M4)
 
-`map_temple_vault`, ~10×12: entry hall (open, low cover), colonnade flanks (half cover), inner vault behind **two ward-pillar interactables** (both must be deactivated to open the vault door; interact = 1 AP, one step each). Guard spawns: 5 temple guards baseline; +2 reinforcement spawn trigger, see M4 flag hooks. Reuse existing unit types where possible; if a melee-heavy "zealot" type is wanted, clone the closest existing unit type with +move/−range — do not invent new abilities.
+`map_temple_vault`, ~10×12: Eingangshalle (offen, niedrige Deckung), Kolonnaden-Flanken (halbe Deckung), inneres Gewölbe hinter **zwei Bann-Pfeiler-Interaktiva** (beide müssen deaktiviert werden, um die Gewölbetür zu öffnen; Interaktion = 1 AP, je ein Schritt). Wachen-Spawns: 5 Tempelwachen als Grundwert; +2 Verstärkungs-Spawn-Auslöser, siehe M4-Flag-Aufhänger. Verwende bestehende Einheitentypen, wo möglich, wieder; falls ein nahkampflastiger „Zelot"-Typ gewünscht ist, klone den nächstliegenden bestehenden Einheitentyp mit +Bewegung/−Reichweite — erfinde keine neuen Fähigkeiten.
 
-## 3. Flags and variables
+## 3. Flags und Variablen
 
-All arc flags prefixed `f_vy_`. All deterministic (D-5). Skill checks = existing narrative-engine gating (threshold on squad-best skill), not RNG.
+Alle Arc-Flags mit Präfix `f_vy_`. Alle deterministisch (D-5). Fertigkeitsproben = bestehende Kopplung der Erzähl-Engine (Schwellenwert auf der besten Fertigkeit im Trupp), kein RNG.
 
-| Flag                  | Set in   | Meaning / consumed by                                                                         |
-| --------------------- | -------- | --------------------------------------------------------------------------------------------- |
-| f_vy_intel_comms      | M1       | Intercepted temple comms (science). Unlocks "explain tech" strong path in M3.                 |
-| f_vy_intel_patrols    | M1       | Patrol timing known. Eases infiltration checks in M2.                                         |
-| f_vy_intel_pilgrims   | M1       | Doctrine knowledge. Unlocks "convince" strong path in M3.                                     |
-| f_vy_approach_uniform | M1       | Chose guard-uniform infiltration. Routes M2.                                                  |
-| f_vy_approach_worker  | M1       | Chose provision-worker infiltration. Routes M2.                                               |
-| f_vy_approach_assault | M1       | Chose open assault. Routes M2.                                                                |
-| f_vy_uniform_knockout | M1       | Got uniform by knocking out a guard.                                                          |
-| f_vy_body_hidden      | M1       | Hid the guard well (follow-up choice). Absence + knockout ⇒ M2 complication.                  |
-| f_vy_uniform_stolen   | M1       | Got uniforms from the bath-house (no violence). Missing rank-seals ⇒ M2 inner-gate challenge. |
-| f_vy_owe_ilo          | M1       | Swore to broker Dessik to free his son Ilo.                                                   |
-| f_vy_captured         | M2       | Assault failed; heroes imprisoned, gear confiscated.                                          |
-| f_vy_ilo_freed        | M2       | Kept the promise.                                                                             |
-| f_vy_ilo_abandoned    | M2       | Broke the promise. Consequences: M2 betrayal exit + M4 alerted start.                         |
-| f_vy_alarm            | M2       | Escape went loud (any path). M3 opens mid-pursuit; minor M4 penalty.                          |
-| f_vy_first_convinced  | M3       | Talked Seryn down on moral grounds.                                                           |
-| f_vy_first_doubt      | M3       | Shook Seryn with the tech argument.                                                           |
-| f_vy_first_defeated   | M3       | Beat Seryn in the duel; he is a wounded captive.                                              |
-| f_vy_seryn_recruited  | M3 or M5 | Seryn on the roster (addHero fired).                                                          |
-| f_vy_expedition_freed | M2/M3    | Second Expedition rescued (bottleneck — always true by end of M3).                            |
-| f_vy_godtech          | M4       | Vault tech secured. Unlocks t_radiance_cell + M5.                                             |
-| f_vy_watched_god      | M5       | Observed and recorded. Unlocks t_projection_theory.                                           |
-| f_vy_fought_god       | M5       | Attacked. God escapes; anchor destroyed.                                                      |
-| f_vy_anchor_destroyed | M5       | Veyra freed of the god's presence. +support, queues gratitude event.                          |
+| Flag                  | Gesetzt in | Bedeutung / verbraucht von                                                                                    |
+| --------------------- | ---------- | ------------------------------------------------------------------------------------------------------------- |
+| f_vy_intel_comms      | M1         | Abgefangene Tempel-Kommunikation (science). Schaltet den starken Pfad „Technik erklären" in M3 frei.          |
+| f_vy_intel_patrols    | M1         | Patrouillen-Timing bekannt. Erleichtert Infiltrationsproben in M2.                                            |
+| f_vy_intel_pilgrims   | M1         | Doktrin-Wissen. Schaltet den starken Pfad „überzeugen" in M3 frei.                                            |
+| f_vy_approach_uniform | M1         | Wählte die Infiltration per Wachuniform. Verzweigt M2.                                                        |
+| f_vy_approach_worker  | M1         | Wählte die Infiltration als Versorgungsarbeiter. Verzweigt M2.                                                |
+| f_vy_approach_assault | M1         | Wählte den offenen Sturm. Verzweigt M2.                                                                       |
+| f_vy_uniform_knockout | M1         | Uniform durch Niederschlagen einer Wache erlangt.                                                             |
+| f_vy_body_hidden      | M1         | Die Wache gut versteckt (Folgewahl). Abwesenheit + Niederschlagen ⇒ Komplikation in M2.                       |
+| f_vy_uniform_stolen   | M1         | Uniformen aus dem Badehaus erlangt (ohne Gewalt). Fehlende Rangsiegel ⇒ Herausforderung am inneren Tor in M2. |
+| f_vy_owe_ilo          | M1         | Dem Makler Dessik geschworen, seinen Sohn Ilo zu befreien.                                                    |
+| f_vy_captured         | M2         | Sturm gescheitert; Helden eingekerkert, Ausrüstung beschlagnahmt.                                             |
+| f_vy_ilo_freed        | M2         | Das Versprechen gehalten.                                                                                     |
+| f_vy_ilo_abandoned    | M2         | Das Versprechen gebrochen. Folgen: Verrats-Ausgang in M2 + alarmierter Start in M4.                           |
+| f_vy_alarm            | M2         | Die Flucht wurde laut (jeder Pfad). M3 beginnt mitten in der Verfolgung; kleiner Malus in M4.                 |
+| f_vy_first_convinced  | M3         | Seryn auf moralischer Grundlage zur Aufgabe bewogen.                                                          |
+| f_vy_first_doubt      | M3         | Seryn mit dem technischen Argument erschüttert.                                                               |
+| f_vy_first_defeated   | M3         | Seryn im Duell besiegt; er ist ein verwundeter Gefangener.                                                    |
+| f_vy_seryn_recruited  | M3 oder M5 | Seryn im Aufgebot (addHero ausgelöst).                                                                        |
+| f_vy_expedition_freed | M2/M3      | Zweite Expedition gerettet (Engstelle — am Ende von M3 stets wahr).                                           |
+| f_vy_godtech          | M4         | Gewölbe-Tech gesichert. Schaltet t_radiance_cell + M5 frei.                                                   |
+| f_vy_watched_god      | M5         | Beobachtet und aufgezeichnet. Schaltet t_projection_theory frei.                                              |
+| f_vy_fought_god       | M5         | Angegriffen. Gott entkommt; Anker zerstört.                                                                   |
+| f_vy_anchor_destroyed | M5         | Veyra von der Gegenwart des Gottes befreit. +support, reiht ein Dankbarkeits-Event ein.                       |
 
-Variables: `doubt` (int, 0–3). +1 each from f_vy_intel_comms-style evidence beats (marked below). Consumed in M3: talk-success thresholds drop as doubt rises. Keeps early optional content mechanically relevant.
+Variablen: `doubt` (int, 0–3). Je +1 aus Beweis-Beats im Stil von f_vy_intel_comms (unten markiert). Verbraucht in M3: Die Schwellenwerte für Gesprächserfolge sinken, wenn doubt steigt. Hält frühen optionalen Content mechanisch relevant.
 
-## 4. Mission specs
+## 4. Missions-Spezifikationen
 
-Mission list entry: the arc unlocks as one visible mission at a time (`unlockMission` chain). Squad: h_mercer + h_okafor **required** for M1–M3 (narrative assumes both voices). M4/M5 free squad selection, h_seryn selectable if recruited.
+Missionslisten-Eintrag: Der Arc schaltet jeweils eine sichtbare Mission auf einmal frei (`unlockMission`-Kette). Trupp: h_mercer + h_okafor **erforderlich** für M1–M3 (die Erzählung setzt beide Stimmen voraus). M4/M5 freie Truppauswahl, h_seryn auswählbar, falls rekrutiert.
 
 ---
 
-### M1 — `m_vy_1` "Pilgrim Roads" (narrative)
+### M1 — `m_vy_1` „Pilgerwege" (narrativ)
 
-Unlock: arc trigger (existing campaign hook or immediately after current content; implementer: append to whatever currently gates new missions).
-**Entry `n_arrive`:** Gate opens on a terraced holy city. Briefing text: Second Expedition's last transmission, 9 days silent; local chatter says "heretics await the Penitence's mercy."
-**`n_gather` (hub, pick up to 2 of 3 — implement as revisitable hub with per-option once-flags):**
+Freischaltung: Arc-Auslöser (bestehender Kampagnen-Aufhänger oder unmittelbar nach dem aktuellen Content; Implementierende: an das anhängen, was derzeit neue Missionen koppelt).
+**Eintritt `n_arrive`:** Das Tor öffnet sich auf eine terrassierte heilige Stadt. Briefing-Text: die letzte Übertragung der Zweiten Expedition, seit 9 Tagen verstummt; das lokale Geraune sagt „Ketzer erwarten die Gnade der Penitenz".
+**`n_gather` (Hub, bis zu 2 von 3 wählen — als wieder aufsuchbarer Hub mit Einmal-Flags je Option umsetzen):**
 
-- Listen among pilgrims [diplomacy ≥ 4] → f_vy_intel_pilgrims, doubt +0, text seeds doctrine ("Oru walks where he is worshipped").
-- Shadow the patrols [combat ≥ 5] → f_vy_intel_patrols.
-- Tap the temple relay [science ≥ 6, Okafor line] → f_vy_intel_comms, **doubt +1** (encrypted burst traffic — gods don't need encryption).
-  **`n_plan` (decision hub):**
+- Unter den Pilgern lauschen [diplomacy ≥ 4] → f_vy_intel_pilgrims, doubt +0, Text sät Doktrin („Oru wandelt, wo er verehrt wird").
+- Den Patrouillen folgen [combat ≥ 5] → f_vy_intel_patrols.
+- Das Tempel-Relais anzapfen [science ≥ 6, Okafor-Zeile] → f_vy_intel_comms, **doubt +1** (verschlüsselter Burst-Verkehr — Götter brauchen keine Verschlüsselung).
+  **`n_plan` (Entscheidungs-Hub):**
 
-1. **Guard uniforms** → f_vy_approach_uniform → `n_uniform`
-2. **Provision workers** → f_vy_approach_worker → `n_dessik`
-3. **Open assault** → f_vy_approach_assault → mission end (text: you gate back for weapons; foreboding tone). Effect: unlockMission m_vy_2.
+1. **Wachuniformen** → f_vy_approach_uniform → `n_uniform`
+2. **Versorgungsarbeiter** → f_vy_approach_worker → `n_dessik`
+3. **Offener Sturm** → f_vy_approach_assault → Missionsende (Text: Ihr kehrt durch das Tor zurück, um Waffen zu holen; unheilvoller Ton). Effekt: unlockMission m_vy_2.
    **`n_uniform`:**
 
-- Knock out a lone guard [combat ≥ 5] → f_vy_uniform_knockout → follow-up choice: hide him in the cistern (f_vy_body_hidden) or leave him and move fast (no flag).
-- Find another way: bath-house theft during vigil hour → f_vy_uniform_stolen (text notes the missing rank-seals — visible cost, D-2).
-  Both → mission end, unlockMission m_vy_2.
-  **`n_dessik`:** Broker Dessik supplies work passes **only if** you swear to bring out his son Ilo, condemned as a smuggler. Accept → f_vy_owe_ilo, mission end, unlockMission m_vy_2. Refuse → return to `n_plan` (worker option now disabled — Dessik won't deal).
-  Debrief hint (D-1): if no intel flags set — "Locals talk. Next time, someone should listen before the plan is made."
+- Eine einzelne Wache niederschlagen [combat ≥ 5] → f_vy_uniform_knockout → Folgewahl: sie in der Zisterne verstecken (f_vy_body_hidden) oder sie liegen lassen und sich schnell bewegen (kein Flag).
+- Einen anderen Weg finden: Diebstahl im Badehaus während der Vigilstunde → f_vy_uniform_stolen (Text vermerkt die fehlenden Rangsiegel — sichtbarer Preis, D-2).
+  Beide → Missionsende, unlockMission m_vy_2.
+  **`n_dessik`:** Der Makler Dessik liefert Arbeitspässe **nur, wenn** Ihr schwört, seinen Sohn Ilo herauszuholen, der als Schmuggler verurteilt ist. Annehmen → f_vy_owe_ilo, Missionsende, unlockMission m_vy_2. Ablehnen → zurück zu `n_plan` (Arbeiter-Option nun deaktiviert — Dessik lässt sich nicht darauf ein).
+  Debrief-Hinweis (D-1): falls keine Intel-Flags gesetzt — „Die Einheimischen reden. Nächstes Mal sollte jemand zuhören, bevor der Plan gemacht wird."
 
 ---
 
-### M2 — `m_vy_2` "The Penitence" (narrative, router)
+### M2 — `m_vy_2` „Die Penitenz" (narrativ, Router)
 
-**`n_router`:** conditions on approach flags → three branches. Bottleneck target: end state = confrontation with the First imminent, expedition located.
+**`n_router`:** Bedingungen auf den approach-Flags → drei Zweige. Engstellen-Ziel: Endzustand = Konfrontation mit dem Ersten steht bevor, Expedition lokalisiert.
 
-**Branch A (uniform), `a1_outer_gate`:**
+**Zweig A (Uniform), `a1_outer_gate`:**
 
-- If f_vy_uniform_knockout and NOT f_vy_body_hidden: guard was found; gates on alert → forced complication: talk past a suspicious sergeant [diplomacy ≥ 5] or overpower the checkpoint quietly [combat ≥ 6]; failure of both available checks → f_vy_alarm.
-- If f_vy_uniform_stolen: inner-gate seal challenge → bluff as new transfers [diplomacy ≥ 5, easier with f_vy_intel_pilgrims: threshold 4] or slip through the ossuary passage [f_vy_intel_patrols required].
-  `a2_cells`: locate Second Expedition. Exit choice: **quiet route** (slow; text tension, no flag) vs. **bell-tower diversion** (fast, f_vy_alarm). Either way → `n_bottleneck`.
+- Falls f_vy_uniform_knockout und NICHT f_vy_body_hidden: Die Wache wurde gefunden; Tore in Alarmbereitschaft → erzwungene Komplikation: an einem misstrauischen Feldwebel vorbeireden [diplomacy ≥ 5] oder den Kontrollpunkt lautlos überwältigen [combat ≥ 6]; Scheitern beider verfügbarer Proben → f_vy_alarm.
+- Falls f_vy_uniform_stolen: Siegel-Herausforderung am inneren Tor → als neue Versetzte bluffen [diplomacy ≥ 5, leichter mit f_vy_intel_pilgrims: Schwellenwert 4] oder durch den Beinhaus-Gang schlüpfen [f_vy_intel_patrols erforderlich].
+  `a2_cells`: die Zweite Expedition ausfindig machen. Ausgangswahl: **leiser Weg** (langsam; Text-Spannung, kein Flag) vs. **Ablenkung am Glockenturm** (schnell, f_vy_alarm). So oder so → `n_bottleneck`.
 
-**Branch B (worker), `b1_kitchens`:** enter with the grain carts; meal rounds give cell-block access (text: the prison runs on ritual — predictable). Locate expedition. **Ilo decision** (only if f_vy_owe_ilo, which is always true on this branch):
+**Zweig B (Arbeiter), `b1_kitchens`:** mit den Getreidekarren eintreten; die Essensrunden gewähren Zugang zum Zellenblock (Text: das Gefängnis läuft nach Ritual — vorhersehbar). Expedition ausfindig machen. **Ilo-Entscheidung** (nur falls f_vy_owe_ilo, was auf diesem Zweig stets wahr ist):
 
-- Free Ilo too → f_vy_ilo_freed; harder exfil: one extra check [resolve ≥ 5] or accept f_vy_alarm.
-- Leave him → f_vy_ilo_abandoned → **immediate consequence:** Dessik, watching the gate, tips the wardens; exit becomes a running fight: one required hero gains inj_shaken, f_vy_alarm. (Broken promises bite now, not only later.)
+- Auch Ilo befreien → f_vy_ilo_freed; schwierigere Exfiltration: eine zusätzliche Probe [resolve ≥ 5] oder f_vy_alarm hinnehmen.
+- Ihn zurücklassen → f_vy_ilo_abandoned → **unmittelbare Folge:** Dessik, der das Tor beobachtet, verrät es den Wärtern; der Ausgang wird zu einem laufenden Gefecht: ein erforderlicher Held erhält inj_shaken, f_vy_alarm. (Gebrochene Versprechen beißen jetzt, nicht erst später.)
   → `n_bottleneck`.
 
-**Branch C (assault), `c1_assault` (ARC-D1 — scripted, no tactical):** Three beats of escalating text; the wall guns are precursor-tech, shields ignore small arms. No winnable option is presented; the two choices offered ("press the breach" / "fall back to the gate") both end in capture — the fall-back version spares injuries, the press version adds inj_wounded to one hero. Effects: f_vy_captured, text confirms gear confiscated. Wake in the cells beside the Second Expedition — the rescue inverted. → `n_bottleneck`.
+**Zweig C (Sturm), `c1_assault` (ARC-D1 — geskriptet, nicht taktisch):** Drei Beats eskalierenden Textes; die Mauergeschütze sind Vorläufer-Tech, Schilde ignorieren Handfeuerwaffen. Es wird keine gewinnbare Option präsentiert; die beiden angebotenen Wahlmöglichkeiten („die Bresche stürmen" / „zum Tor zurückfallen") enden beide in Gefangennahme — die Rückfall-Variante erspart Verletzungen, die Sturm-Variante fügt einem Helden inj_wounded hinzu. Effekte: f_vy_captured, Text bestätigt beschlagnahmte Ausrüstung. Erwacht in den Zellen neben der Zweiten Expedition — die Rettung umgekehrt. → `n_bottleneck`.
 
-**`n_bottleneck`:** The First Blade knows. Text varies: (A/B) alarm bells or silent lockdown as you move the prisoners; (C) cell doors open at dawn — the yard awaits. Mission end. unlockMission m_vy_3.
+**`n_bottleneck`:** Die Erste Klinge weiß Bescheid. Text variiert: (A/B) Alarmglocken oder stille Abriegelung, während Ihr die Gefangenen bewegt; (C) die Zellentüren öffnen sich im Morgengrauen — der Hof wartet. Missionsende. unlockMission m_vy_3.
 
 ---
 
-### M3 — `m_vy_3` "The First Blade" (narrative — ARC-D2)
+### M3 — `m_vy_3` „Die Erste Klinge" (narrativ — ARC-D2)
 
-**Entry variants (router on flags):**
+**Eintrittsvarianten (Router auf Flags):**
 
-- A/B paths: Seryn and his honor guard corner the group in the processional court mid-escape.
-- C path: execution yard at dawn; Seryn reads the sentence: _"All of you burn at dusk. Oru is merciful — dusk is hours away."_
-  Same core scene either way (ARC-D4): Seryn will not simply be walked past.
+- A/B-Pfade: Seryn und seine Ehrengarde stellen die Gruppe mitten in der Flucht im Prozessionshof.
+- C-Pfad: Hinrichtungshof im Morgengrauen; Seryn verliest das Urteil: _„Ihr alle brennt bei Einbruch der Dämmerung. Oru ist gnädig — die Dämmerung ist Stunden entfernt."_
+  So oder so dieselbe Kernszene (ARC-D4): An Seryn wird man nicht einfach vorbeigehen.
 
-**`n_confront` (decision):**
+**`n_confront` (Entscheidung):**
 
-1. **Convince — moral argument** ("A god who feeds on executions deserves no First Blade.") Check: diplomacy ≥ 7 − doubt; threshold −1 if f_vy_intel_pilgrims (you can quote his own scripture back at him). Success → f_vy_first_convinced.
-2. **Explain — there is no god** (Okafor: encryption, power signatures, projection artifacts). Check: science ≥ 7 − doubt; threshold −2 if f_vy_intel_comms (you have the recordings). Success → f_vy_first_doubt.
-3. **Fight him.** → `n_duel`.
-   **Failure of 1 or 2** (check not met): Seryn's faith hardens — auto-routes to `n_duel` after one more exchange. (No dead ends; talk paths risk the duel's injury cost.)
+1. **Überzeugen — moralisches Argument** („Ein Gott, der sich von Hinrichtungen nährt, verdient keine Erste Klinge.") Probe: diplomacy ≥ 7 − doubt; Schwellenwert −1 bei f_vy_intel_pilgrims (Ihr könnt ihm seine eigene Schrift zitieren). Erfolg → f_vy_first_convinced.
+2. **Erklären — es gibt keinen Gott** (Okafor: Verschlüsselung, Energiesignaturen, Projektionsartefakte). Probe: science ≥ 7 − doubt; Schwellenwert −2 bei f_vy_intel_comms (Ihr habt die Aufzeichnungen). Erfolg → f_vy_first_doubt.
+3. **Ihn bekämpfen.** → `n_duel`.
+   **Scheitern von 1 oder 2** (Probe nicht erfüllt): Seryns Glaube verhärtet sich — automatische Verzweigung zu `n_duel` nach einem weiteren Wortwechsel. (Keine Sackgassen; Gesprächspfade riskieren die Verletzungskosten des Duells.)
 
-**`n_duel`:** Structured 3-beat narrative duel, deterministic: outcome fixed (heroes win — he is one man against a team and the freed expedition), cost varies by combat skill: squad-best combat ≥ 7 → Seryn takes inj_wounded only; < 7 → additionally one hero gains inj_wounded. Effects: f_vy_first_defeated, injury h_seryn inj_wounded. Text: you carry the First Blade out on a grain cart. He does not thank you.
+**`n_duel`:** Strukturiertes narratives Duell in 3 Beats, deterministisch: Ausgang festgelegt (die Helden gewinnen — er ist ein Mann gegen ein Team und die befreite Expedition), die Kosten variieren nach der combat-Fertigkeit: bestes combat im Trupp ≥ 7 → Seryn erhält nur inj_wounded; < 7 → zusätzlich erhält ein Held inj_wounded. Effekte: f_vy_first_defeated, Verletzung h_seryn inj_wounded. Text: Ihr tragt die Erste Klinge auf einem Getreidekarren hinaus. Er dankt Euch nicht.
 
 **`n_resolve`:**
 
-- f_vy_first_convinced: Seryn orders the honor guard to stand down, walks out WITH you. Effects: addHero h_seryn, f_vy_seryn_recruited. His defection is the loudest possible heresy — text notes the city will not forget.
-- f_vy_first_doubt: Seryn lets you pass and follows "to see the proof with his own eyes." Effects: addHero h_seryn, f_vy_seryn_recruited (mechanically recruited; text frames him as conditional — pays off in M5).
-- f_vy_first_defeated: he is a prisoner in the infirmary, not a hero yet (recruit possible post-M5, ARC-D5).
-  All: f_vy_expedition_freed, addPersonnel +4 (§8; fallback: intel +15 and log text if effect not added), unlockMission m_vy_4. C-path extra: gear recovered from the vestry on the way out (text only — no mechanical gear system exists; do not invent one).
-  Debrief hint if duel happened with talk options never attempted: "He listened for a moment, before the swords. Worth remembering."
+- f_vy_first_convinced: Seryn befiehlt der Ehrengarde, abzulassen, und geht MIT Euch hinaus. Effekte: addHero h_seryn, f_vy_seryn_recruited. Sein Überlauf ist die lauteste denkbare Ketzerei — der Text vermerkt, dass die Stadt es nicht vergessen wird.
+- f_vy_first_doubt: Seryn lässt Euch passieren und folgt, „um den Beweis mit eigenen Augen zu sehen." Effekte: addHero h_seryn, f_vy_seryn_recruited (mechanisch rekrutiert; der Text rahmt ihn als bedingt — zahlt sich in M5 aus).
+- f_vy_first_defeated: Er ist ein Gefangener im Lazarett, noch kein Held (Rekrutierung möglich nach M5, ARC-D5).
+  Alle: f_vy_expedition_freed, addPersonnel +4 (§8; Rückfall: intel +15 und Log-Text, falls der Effekt nicht ergänzt wurde), unlockMission m_vy_4. C-Pfad-Extra: Ausrüstung auf dem Weg hinaus aus der Sakristei geborgen (nur Text — es existiert kein mechanisches Ausrüstungssystem; erfinde keines).
+  Debrief-Hinweis, falls das Duell stattfand, ohne dass Gesprächsoptionen je versucht wurden: „Er hörte einen Moment lang zu, vor den Schwertern. Wert, sich das zu merken."
 
 ---
 
-### M4 — `m_vy_4` "Relic Vault" (tactical; narrative fallback per ARC-D3)
+### M4 — `m_vy_4` „Reliquiengewölbe" (taktisch; narrativer Rückfall gemäß ARC-D3)
 
-Objective: seize precursor artifacts from the temple armory to (a) arm research, (b) locate the god's sanctum.
-**Tactical version:** map_temple_vault. Objective: deactivate both ward-pillars (interactables), then hold the vault room 1 turn while Okafor-or-any-scientist archetype extracts the core (third interactable), then exfil zone. Enemy: 5 guards; reinforcement trigger (+2) on turn 3 **or** immediately at deployment if f_vy_ilo_abandoned (Dessik's tip made the temple paranoid — delayed consequence, D-2 hidden). If f_vy_alarm: player deploys 1 tile-row further from the objective (minor). If f_vy_seryn_recruited and h_seryn in squad: one ward-pillar starts deactivated (he knows the rites).
-**Narrative fallback (if engine/map unready):** same beats as a 5-node event with combat/science checks; must set identical flags.
-Outcome: f_vy_godtech, exotics +3, unlock t_radiance_cell (visible), unlockMission m_vy_5. Downed heroes per D-3 standard handling.
+Ziel: Vorläufer-Artefakte aus der Tempelrüstkammer erbeuten, um (a) die Forschung mit Material zu versorgen, (b) das Sanktum des Gottes zu lokalisieren.
+**Taktische Fassung:** map_temple_vault. Ziel: beide Bann-Pfeiler (Interaktiva) deaktivieren, dann den Gewölberaum 1 Runde halten, während Okafor oder ein beliebiger Wissenschaftler-Archetyp den Kern extrahiert (drittes Interaktivum), dann Exfil-Zone. Feind: 5 Wachen; Verstärkungs-Auslöser (+2) in Runde 3 **oder** sofort beim Einsatz, falls f_vy_ilo_abandoned (Dessiks Tipp machte den Tempel paranoid — verzögerte Folge, D-2 versteckt). Falls f_vy_alarm: Der Spieler setzt eine Feldreihe weiter vom Ziel entfernt ein (gering). Falls f_vy_seryn_recruited und h_seryn im Trupp: Ein Bann-Pfeiler beginnt deaktiviert (er kennt die Riten).
+**Narrativer Rückfall (falls Engine/Karte nicht bereit):** dieselben Beats als 5-Knoten-Event mit combat-/science-Proben; muss identische Flags setzen.
+Ergebnis: f_vy_godtech, exotics +3, Freischaltung t_radiance_cell (sichtbar), unlockMission m_vy_5. Kampfunfähige Helden gemäß Standardbehandlung aus D-3.
 
 ---
 
-### M5 — `m_vy_5` "The Luminous One" (narrative)
+### M5 — `m_vy_5` „Der Leuchtende" (narrativ)
 
-Entry: the vault core resonates with a sanctum in the caldera; the team tracks it. **`n_witness`:** the god manifests — a tall figure of light attended by machinery the texts never mention. If Seryn present (any recruit state incl. captive brought as witness — implementer: condition on f_vy_seryn_recruited OR f_vy_first_defeated): one paragraph of him watching.
+Eintritt: Der Gewölbekern resoniert mit einem Sanktum in der Caldera; das Team verfolgt es. **`n_witness`:** Der Gott manifestiert sich — eine hohe Gestalt aus Licht, umgeben von Maschinerie, die die Texte nie erwähnen. Falls Seryn anwesend (jeder Rekrutierungszustand inkl. als Zeuge mitgebrachter Gefangener — Implementierende: Bedingung auf f_vy_seryn_recruited ODER f_vy_first_defeated): ein Absatz, in dem er zusieht.
 
 **`n_decide`:**
 
-1. **Watch and record.** Effects: f_vy_watched_god, unlock t_projection_theory, intel +20. The being finishes its rite and departs; you have everything on sensors. If f_vy_first_doubt: Seryn's conversion completes (text). If f_vy_first_defeated: Seryn, watching from the ridge, asks to speak — **queueEvent ev_vy_seryn_oath, fireOnDay +2** → that event: addHero h_seryn, f_vy_seryn_recruited.
-2. **Attack.** Scripted: the being shields, ascends, gates out — **escapes regardless** (fixed). But the sanctum anchor shatters in the exchange: f_vy_fought_god, f_vy_anchor_destroyed, variable support +2, queueEvent ev_vy_gratitude (fireOnDay +3: Veyran provisional council sends tribute — funds +40, log). Cost: one required hero inj_shaken (staring into that light), **no t_projection_theory**, and if f_vy_first_defeated: Seryn breaks free during the chaos to shield his god and is gone — recruit permanently lost (text: he owed it a death, if nothing else).
-   Trade-off is explicit and exclusive: **science (tech + Seryn-on-all-paths) vs. politics (support + funds + a freed world)**.
+1. **Beobachten und aufzeichnen.** Effekte: f_vy_watched_god, Freischaltung t_projection_theory, intel +20. Das Wesen beendet seinen Ritus und geht; Ihr habt alles auf den Sensoren. Falls f_vy_first_doubt: Seryns Wandlung vollzieht sich (Text). Falls f_vy_first_defeated: Seryn, der vom Grat aus zusieht, bittet um ein Wort — **queueEvent ev_vy_seryn_oath, fireOnDay +2** → jenes Event: addHero h_seryn, f_vy_seryn_recruited.
+2. **Angreifen.** Geskriptet: Das Wesen schirmt sich ab, steigt auf, wechselt durch ein Tor hinüber — **entkommt in jedem Fall** (festgelegt). Doch der Anker des Sanktums zerbirst im Schlagabtausch: f_vy_fought_god, f_vy_anchor_destroyed, Variable support +2, queueEvent ev_vy_gratitude (fireOnDay +3: der veyranische Übergangsrat sendet Tribut — funds +40, Log). Kosten: ein erforderlicher Held inj_shaken (vom Blick in jenes Licht), **kein t_projection_theory**, und falls f_vy_first_defeated: Seryn reißt sich im Chaos los, um seinen Gott zu schützen, und ist fort — Rekrut dauerhaft verloren (Text: er schuldete ihm einen Tod, wenn schon nichts anderes).
+   Der Zielkonflikt ist ausdrücklich und exklusiv: **Wissenschaft (Tech + Seryn-auf-allen-Pfaden) vs. Politik (support + funds + eine befreite Welt)**.
 
-**Epilogue node:** varies on 4 axes (approach, Ilo, Seryn state, watch/fight). Write 1 short paragraph per axis, concatenated by condition — not a combinatorial explosion (4 slots, 2–3 variants each ≈ 10 paragraphs).
+**Epilog-Knoten:** variiert auf 4 Achsen (Vorgehen, Ilo, Seryn-Zustand, beobachten/kämpfen). Schreibe 1 kurzen Absatz je Achse, per Bedingung verkettet — keine kombinatorische Explosion (4 Slots, je 2–3 Varianten ≈ 10 Absätze).
 
-## 5. Follow-up events (events.json)
+## 5. Folge-Events (events.json)
 
-- `ev_vy_seryn_oath` — as above (watch + defeated path recruit).
-- `ev_vy_gratitude` — as above (fight path payoff).
-- `ev_vy_dessik_word` — queued (+5 days) if f_vy_ilo_freed: Dessik's smuggler network feeds Worldgate intel: intel +10, log. (Kept promises also pay late — symmetry with the betrayal.)
+- `ev_vy_seryn_oath` — wie oben (Rekrutierung auf dem Beobachten- + Besiegt-Pfad).
+- `ev_vy_gratitude` — wie oben (Auszahlung des Kampfpfads).
+- `ev_vy_dessik_word` — eingereiht (+5 Tage) falls f_vy_ilo_freed: Dessiks Schmugglernetzwerk speist Worldgate mit Aufklärungsdaten: intel +10, Log. (Gehaltene Versprechen zahlen sich ebenfalls spät aus — Symmetrie zum Verrat.)
 
-## 6. Outcome matrix (for tests)
+## 6. Ergebnismatrix (für Tests)
 
-Minimum end-states to golden-test after a scripted full-arc run:
+Minimale Endzustände für Golden-Tests nach einem geskripteten Durchlauf des gesamten Arcs:
 
-1. Uniform-knockout-hidden / talk-convince / watch → f_vy_seryn_recruited at M3, t_projection_theory unlocked, no arc injuries.
-2. Worker / abandon Ilo / duel / fight god → Seryn permanently lost, support +2, funds event queued, ≥2 injuries incurred across arc, M4 started alerted.
-3. Assault / explain-with-comms / watch → f_vy_captured true, doubt ≥ 1, recruit at M3, expedition freed.
-   Assert: f_vy_expedition_freed true in ALL runs; exactly one of watched/fought set; mission chain unlocks strictly in order.
+1. Uniform-Niederschlag-versteckt / überreden / beobachten → f_vy_seryn_recruited bei M3, t_projection_theory freigeschaltet, keine Arc-Verletzungen.
+2. Arbeiter / Ilo zurücklassen / Duell / Gott bekämpfen → Seryn dauerhaft verloren, support +2, funds-Event eingereiht, ≥2 Verletzungen über den Arc hinweg erlitten, M4 alarmiert begonnen.
+3. Sturm / erklären-mit-Comms / beobachten → f_vy_captured wahr, doubt ≥ 1, Rekrutierung bei M3, Expedition befreit.
+   Assert: f_vy_expedition_freed in ALLEN Durchläufen wahr; genau eines von watched/fought gesetzt; die Missionskette schaltet strikt der Reihe nach frei.
 
-## 7. Implementation tasks (sequential, per session)
+## 7. Implementierungsaufgaben (sequenziell, je Session)
 
-1. **[S] Schema + validation:** add `addHero` (+ optional `addPersonnel`) effect types to Effect union in schemas.ts; interpreter cases; validator: `addHero` must reference heroes.json id not already in starting roster. Tests for both. (§8)
-2. **[S] Content entry M1–M3:** heroes.json (h_seryn), events + missions for m_vy_1..3 exactly per §4; run content validator; hand-test on deployed build.
-3. **[S] Content entry M4–M5 + follow-ups:** techs, m_vy_4 (narrative fallback first if 4.3 not merged; tactical map + battle def when it is), m_vy_5, §5 events, §6 golden tests.
+1. **[S] Schema + Validierung:** füge die Effekttypen `addHero` (+ optional `addPersonnel`) zur Effect-Union in schemas.ts hinzu; Interpreter-Fälle; Validator: `addHero` muss eine heroes.json-id referenzieren, die nicht bereits im Startaufgebot ist. Tests für beide. (§8)
+2. **[S] Content-Eingabe M1–M3:** heroes.json (h_seryn), Events + Missionen für m_vy_1..3 exakt gemäß §4; Content-Validator ausführen; Handtest auf dem deployten Build.
+3. **[S] Content-Eingabe M4–M5 + Folge-Inhalte:** Techs, m_vy_4 (zuerst narrativer Rückfall, falls 4.3 nicht gemergt; taktische Karte + Kampfdefinition, sobald doch), m_vy_5, §5-Events, §6-Golden-Tests.
 
-## 8. Engine gaps (blocking, small)
+## 8. Engine-Lücken (blockierend, klein)
 
-- **`addHero` effect** `{ type: "addHero", hero: Id }` → pushes fresh HeroState (xp 0, level 1, fatigue 0, no injuries) for the given hero id; no-op with warning if already present.
-- **`addPersonnel` effect** `{ type: "addPersonnel", amount: int }` → personnel.total += amount. Optional; fallback documented in M3.
-- **Tech visibility gating** — only if none exists; see §2.2.
-  No other engine work required; everything else uses the existing Effect/Condition vocabulary. If any condition/check syntax referenced here doesn't match the narrative-engine spec exactly, the spec wins — map intent, don't extend the DSL.
+- **`addHero`-Effekt** `{ type: "addHero", hero: Id }` → legt einen frischen HeroState (xp 0, level 1, fatigue 0, keine Verletzungen) für die gegebene hero-id an; No-op mit Warnung, falls bereits vorhanden.
+- **`addPersonnel`-Effekt** `{ type: "addPersonnel", amount: int }` → personnel.total += amount. Optional; Rückfall in M3 dokumentiert.
+- **Tech-Sichtbarkeitskopplung** — nur falls keine existiert; siehe §2.2.
+  Keine weitere Engine-Arbeit erforderlich; alles Übrige verwendet das bestehende Effect/Condition-Vokabular. Falls eine hier referenzierte Bedingungs-/Proben-Syntax nicht exakt der Erzähl-Engine-Spezifikation entspricht, gewinnt die Spezifikation — bilde die Absicht ab, erweitere nicht die DSL.

@@ -1,16 +1,16 @@
 [
   {
     "id": "ev_intro",
-    "title": "First Day",
+    "title": "Erster Tag",
     "entryNode": "n_in_sign",
     "nodes": [
       {
         "id": "n_in_sign",
-        "text": "I didn't know what to expect when I signed. 'Classified posting. Accept or decline.' No briefing, no details — just a signature line and a car waiting outside. I certainly didn't expect to walk into the pages of a science-fiction comic. Interstellar travel through a glowing ring. Well. That's new. ... Since Cassy passed, I could use the work. Maybe the distance more.",
+        "text": "Ich wusste nicht, was mich erwartete, als ich unterschrieb. „Geheime Versetzung. Annehmen oder ablehnen.“ Keine Einweisung, keine Einzelheiten — nur eine Unterschriftszeile und ein wartender Wagen. Womit ich gewiss nicht gerechnet hatte: mitten in einen Science-Fiction-Comic zu treten. Interstellare Reisen durch einen leuchtenden Ring. Nun. Das ist neu. ... Seit Cassy fort ist, kann ich die Arbeit gebrauchen. Vielleicht mehr noch den Abstand.",
         "options": [
           {
             "id": "o_in_down",
-            "text": "Go down.",
+            "text": "Hinunter.",
             "next": {
               "kind": "node",
               "node": "n_in_ring"
@@ -20,11 +20,11 @@
       },
       {
         "id": "n_in_ring",
-        "text": "Four hundred meters down, the ring hangs in its cradle like a held breath. As of this morning it's mine — along with a budget that says the Consortium expects nothing. Dr. Okafor waits with an address ledger. Captain Mercer waits with a weapons manifest. Everyone down here is waiting on me. First day. No pressure.",
+        "text": "Vierhundert Meter tief hängt der Ring in seiner Halterung wie ein angehaltener Atem. Seit heute Morgen gehört er mir — samt einem Budget, das sagt, das Konsortium erwartet nichts. Dr. Okafor wartet mit einem Adressverzeichnis. Captain Mercer wartet mit einer Waffenliste. Alle hier unten warten auf mich. Erster Tag. Kein Druck.",
         "options": [
           {
             "id": "o_in_science",
-            "text": "Start with the science. Okafor first.",
+            "text": "Mit der Wissenschaft beginnen. Erst Okafor.",
             "effects": [
               {
                 "type": "resource",
@@ -39,7 +39,7 @@
           },
           {
             "id": "o_in_threats",
-            "text": "Start with the threats. Mercer first.",
+            "text": "Mit den Bedrohungen beginnen. Erst Mercer.",
             "effects": [
               {
                 "type": "resource",
@@ -56,11 +56,11 @@
       },
       {
         "id": "n_in_okafor",
-        "text": "Okafor decoded the address notation in six weeks. My predecessor's notes call her indispensable and exhausting. I can work with both. She hands me the brief she prepared before I asked for one: fifty-one addresses, one dialed. Recon One went through to Address 04 eleven days ago. Two check-ins — breathable air, terraced fields, a village on a white road — then nine days of nothing. 'The gate holds,' she says. 'That's what frightens me.'",
+        "text": "Okafor entschlüsselte die Adressnotation in sechs Wochen. Die Notizen meines Vorgängers nennen sie unentbehrlich und anstrengend. Mit beidem komme ich klar. Sie reicht mir das Briefing, das sie fertig hatte, ehe ich darum bat: einundfünfzig Adressen, eine gewählt. Recon One ging vor elf Tagen zu Adresse 04 hinüber. Zwei Meldungen — atembare Luft, Terrassenfelder, ein Dorf an einer weißen Straße — dann neun Tage nichts. „Das Tor hält“, sagt sie. „Genau das macht mir Angst.“",
         "options": [
           {
             "id": "o_in_okafor_then",
-            "text": "Now the threats. Mercer.",
+            "text": "Jetzt die Bedrohungen. Mercer.",
             "next": {
               "kind": "node",
               "node": "n_in_mercer_2"
@@ -70,11 +70,11 @@
       },
       {
         "id": "n_in_mercer",
-        "text": "Mercer. I read the file — a decade of deployments, some so classified even I wasn't cleared to know we'd been there. By the book: fast, efficient, no loose ends. Good. I'll need the book today. His requisitions were signed before I sat down. 'Recon One. Four people, two check-ins, nine days of silence. Somebody stopped them checking in. Plan for that, and you get to be wrong in the good direction.'",
+        "text": "Mercer. Ich las die Akte — ein Jahrzehnt an Einsätzen, manche so geheim, dass nicht einmal ich wissen durfte, dass wir dort waren. Nach Vorschrift: schnell, effizient, keine losen Enden. Gut. Die Vorschrift werde ich heute brauchen. Seine Anforderungen waren unterschrieben, ehe ich mich setzte. „Recon One. Vier Leute, zwei Meldungen, neun Tage Funkstille. Jemand hat sie an ihren Meldungen gehindert. Planen Sie damit, dann irren Sie sich höchstens in die richtige Richtung.“",
         "options": [
           {
             "id": "o_in_mercer_then",
-            "text": "Now the science. Okafor.",
+            "text": "Jetzt die Wissenschaft. Okafor.",
             "next": {
               "kind": "node",
               "node": "n_in_okafor_2"
@@ -84,11 +84,11 @@
       },
       {
         "id": "n_in_mercer_2",
-        "text": "Mercer finds me before I send for him. I read the file — a decade of deployments, some so classified even I wasn't cleared to know we'd been there. By the book: fast, efficient, no loose ends. Good. I'll need the book today. He hears Okafor's brief in silence, then: 'Somebody stopped them checking in. Plan for that, and you get to be wrong in the good direction.'",
+        "text": "Mercer findet mich, ehe ich nach ihm schicke. Ich las die Akte — ein Jahrzehnt an Einsätzen, manche so geheim, dass nicht einmal ich wissen durfte, dass wir dort waren. Nach Vorschrift: schnell, effizient, keine losen Enden. Gut. Die Vorschrift werde ich heute brauchen. Er hört Okafors Briefing schweigend an, dann: „Jemand hat sie an ihren Meldungen gehindert. Planen Sie damit, dann irren Sie sich höchstens in die richtige Richtung.“",
         "options": [
           {
             "id": "o_in_mercer2_go",
-            "text": "To the dialing floor.",
+            "text": "Zur Wählebene.",
             "next": {
               "kind": "node",
               "node": "n_in_decide"
@@ -98,11 +98,11 @@
       },
       {
         "id": "n_in_okafor_2",
-        "text": "Okafor decoded the address notation in six weeks. My predecessor's notes call her indispensable and exhausting. I can work with both. She confirms Mercer's count without softening it: fifty-one addresses, one dialed, Recon One nine days dark on Address 04. 'The gate holds. The address holds. Whatever stopped them checking in, Director — it isn't the physics.'",
+        "text": "Okafor entschlüsselte die Adressnotation in sechs Wochen. Die Notizen meines Vorgängers nennen sie unentbehrlich und anstrengend. Mit beidem komme ich klar. Sie bestätigt Mercers Zählung ohne Beschönigung: einundfünfzig Adressen, eine gewählt, Recon One seit neun Tagen stumm auf Adresse 04. „Das Tor hält. Die Adresse hält. Was auch immer sie an ihren Meldungen gehindert hat, Direktor — es ist nicht die Physik.“",
         "options": [
           {
             "id": "o_in_okafor2_go",
-            "text": "To the dialing floor.",
+            "text": "Zur Wählebene.",
             "next": {
               "kind": "node",
               "node": "n_in_decide"
@@ -112,11 +112,11 @@
       },
       {
         "id": "n_in_decide",
-        "text": "We can dial within the hour. Whatever is on the other side has had Recon One for nine days.",
+        "text": "Wir können binnen einer Stunde wählen. Was auch immer auf der anderen Seite ist, hat Recon One seit neun Tagen.",
         "options": [
           {
             "id": "o_in_commit",
-            "text": "Assemble the team. We bring them home.",
+            "text": "Das Team zusammenstellen. Wir holen sie heim.",
             "next": {
               "kind": "end",
               "outcome": "out_in_go"
@@ -124,7 +124,7 @@
           },
           {
             "id": "o_in_cautious",
-            "text": "Assemble the team — but at the first sign of trouble, they come back.",
+            "text": "Das Team zusammenstellen — aber beim ersten Zeichen von Ärger kommen sie zurück.",
             "effects": [
               {
                 "type": "flag",
@@ -143,7 +143,7 @@
     "outcomes": [
       {
         "id": "out_in_go",
-        "label": "Rescue crossing authorized",
+        "label": "Rettungsübergang genehmigt",
         "effects": [
           {
             "type": "unlockMission",
@@ -151,7 +151,7 @@
           },
           {
             "type": "log",
-            "text": "Day 1. Rescue crossing authorized. Address 04."
+            "text": "Tag 1. Rettungsübergang genehmigt. Adresse 04."
           }
         ]
       }
@@ -159,16 +159,16 @@
   },
   {
     "id": "ev_vy_arrival",
-    "title": "The Silent Valley",
+    "title": "Das stille Tal",
     "entryNode": "n_va_gate",
     "nodes": [
       {
         "id": "n_va_gate",
-        "text": "The gate opens on a green valley under two suns — terraced fields, a road of packed white stone, cart ruts worn deep. Recon One's marker beacon lies ten meters out, snapped clean. No bodies. No shell casings. Up-valley, a bell rings once and stops, like a mistake.",
+        "text": "Das Tor öffnet sich auf ein grünes Tal unter zwei Sonnen — Terrassenfelder, eine Straße aus festem weißem Stein, tief eingefahrene Karrenspuren. Recon Ones Markierungsbake liegt zehn Meter entfernt, glatt abgebrochen. Keine Leichen. Keine Patronenhülsen. Talaufwärts läutet eine Glocke einmal und verstummt, wie ein Versehen.",
         "options": [
           {
             "id": "o_va_road",
-            "text": "Follow the road up-valley.",
+            "text": "Der Straße talaufwärts folgen.",
             "next": {
               "kind": "node",
               "node": "n_va_villagers"
@@ -178,11 +178,11 @@
       },
       {
         "id": "n_va_villagers",
-        "text": "They come out of the field rows at a run — a dozen villagers, human as you are, sun-worn and urgent. Not one of them makes a sound. They pull at your arms and packs, herding you off the road toward the treeline, fingers pressed to lips. The oldest points down the road, then flattens his hand toward the earth: down. Hide. Now.",
+        "text": "Sie kommen laufend aus den Feldreihen — ein Dutzend Dorfbewohner, so menschlich wie ihr, sonnengegerbt und dringlich. Keiner von ihnen macht einen Laut. Sie ziehen an euren Armen und Rucksäcken, drängen euch von der Straße zur Baumgrenze, die Finger auf den Lippen. Der Älteste deutet die Straße hinab, dann drückt er die Hand flach zur Erde: runter. Versteckt euch. Sofort.",
         "options": [
           {
             "id": "o_va_trust",
-            "text": "Trust them. Get off the road.",
+            "text": "Ihnen vertrauen. Runter von der Straße.",
             "next": {
               "kind": "node",
               "node": "n_va_procession"
@@ -190,7 +190,7 @@
           },
           {
             "id": "o_va_refuse",
-            "text": "Break free. You don't surrender the road to strangers.",
+            "text": "Losreißen. Man überlässt Fremden nicht die Straße.",
             "effects": [
               {
                 "type": "flag",
@@ -217,11 +217,11 @@
       },
       {
         "id": "n_va_procession",
-        "text": "From the treeline you feel it before you see it: a tread that reaches you through the ground. Tenders. Insect-forms the size of freight cars, walking in single file, laden with grain, cloth, bound crates — tribute. They pass without one glance at the world around them, down the white road, to the gate. Through it. The villagers do not watch them. They watch you, willing you silent.",
+        "text": "Von der Baumgrenze spürt ihr es, ehe ihr es seht: ein Schritt, der euch durch den Boden erreicht. Drohnen. Insektengestalten von der Größe von Güterwaggons, im Gänsemarsch, beladen mit Korn, Stoff, verschnürten Kisten — Tribut. Sie ziehen vorbei, ohne einen einzigen Blick auf die Welt um sie her, die weiße Straße hinab, zum Tor. Hindurch. Die Dorfbewohner sehen ihnen nicht nach. Sie sehen euch an und beschwören euch zum Schweigen.",
         "options": [
           {
             "id": "o_va_stay_down",
-            "text": "Stay down until the last one is gone.",
+            "text": "Unten bleiben, bis die letzte fort ist.",
             "next": {
               "kind": "node",
               "node": "n_va_escape"
@@ -231,11 +231,11 @@
       },
       {
         "id": "n_va_escape",
-        "text": "The last porter passes and the villagers rise, herding you along the ditch toward the mill path — a hushed, half-running file. Then a boy, not a child, not yet a man, catches his foot in a snare-furrow and goes down hard, staves clattering. Down the road, two flanker Tenders — man-height, quick, heads ticking — swing back toward the sound. Mercer is already running the wrong way.",
+        "text": "Die letzte Träger-Drohne zieht vorbei, und die Dorfbewohner erheben sich, drängen euch am Graben entlang zum Mühlenpfad — eine stumme, halb rennende Reihe. Dann verfängt sich ein Junge, kein Kind mehr, noch kein Mann, mit dem Fuß in einer Furche und stürzt hart, die Stäbe klappern. Die Straße hinab schwenken zwei Flankierer-Drohnen — mannshoch, flink, die Köpfe zuckend — zum Geräusch zurück. Mercer läuft schon in die falsche Richtung.",
         "options": [
           {
             "id": "o_va_hide",
-            "text": "Get him behind cover. Hide.",
+            "text": "Ihn in Deckung bringen. Verstecken.",
             "effects": [
               {
                 "type": "flag",
@@ -255,7 +255,7 @@
           },
           {
             "id": "o_va_run",
-            "text": "No time to hide. Grab the boy and run for it.",
+            "text": "Keine Zeit zu verstecken. Den Jungen packen und rennen.",
             "effects": [
               {
                 "type": "flag",
@@ -272,11 +272,11 @@
       },
       {
         "id": "n_va_hide",
-        "text": "Mercer pulls the boy behind a road-stone and holds him still. Steps. A dry snare-rattle, very close. He rotates them around the stone as the Tenders pass — always the stone between his back and the sweep of their eyeless heads — until the rattle thins away down the white road. In the field rows nobody breathes. Then the boy's father is there, pressing his forehead to his son's.",
+        "text": "Mercer zieht den Jungen hinter einen Straßenstein und hält ihn still. Schritte. Ein trockenes Rasseln, ganz nah. Er dreht sie um den Stein, während die Drohnen vorbeiziehen — stets den Stein zwischen seinem Rücken und dem Schwenk ihrer augenlosen Köpfe —, bis das Rasseln die weiße Straße hinab verklingt. In den Feldreihen atmet niemand. Dann ist der Vater des Jungen da und presst seine Stirn an die seines Sohnes.",
         "options": [
           {
             "id": "o_va_hide_on",
-            "text": "Let the villagers lead you clear.",
+            "text": "Euch von den Dorfbewohnern in Sicherheit führen lassen.",
             "next": {
               "kind": "node",
               "node": "n_va_told"
@@ -286,11 +286,11 @@
       },
       {
         "id": "n_va_told",
-        "text": "By the treeline the elder draws glyphs in the dirt — slowly, stroke by stroke, so Okafor can copy every one. An address. He crosses his wrists: the bound. Four fingers: four like you, taken through the gate, alive when they passed. The place the taken are brought. A woman says its name aloud, the first word any of them has risked all day: Veyra.",
+        "text": "An der Baumgrenze zeichnet der Älteste Glyphen in den Staub — langsam, Strich für Strich, damit Okafor jede einzelne abmalen kann. Eine Adresse. Er kreuzt die Handgelenke: die Gebundenen. Vier Finger: vier wie ihr, durch das Tor genommen, lebend beim Übertreten. Der Ort, wohin die Genommenen gebracht werden. Eine Frau spricht seinen Namen laut aus, das erste Wort, das den ganzen Tag über jemand von ihnen gewagt hat: Veyra.",
         "options": [
           {
             "id": "o_va_home",
-            "text": "Go home with the address.",
+            "text": "Mit der Adresse heimkehren.",
             "next": {
               "kind": "end",
               "outcome": "out_va_hide"
@@ -300,11 +300,11 @@
       },
       {
         "id": "n_va_run",
-        "text": "Three strides and the flankers have the angle. Mercer throws the boy down, turns, and puts the first Tender on its back with a burst. The second is nearly on him when Okafor drops it — two rounds, no wasted motion, the range instructor's star pupil. The rattle stops. The whole valley has heard the shots.",
+        "text": "Drei Schritte, und die Flankierer haben den Winkel. Mercer wirft den Jungen zu Boden, dreht sich um und legt die erste Drohne mit einer Salve auf den Rücken. Die zweite ist fast über ihm, als Okafor sie niederstreckt — zwei Schuss, keine vergeudete Bewegung, die Musterschülerin des Schießausbilders. Das Rasseln hört auf. Das ganze Tal hat die Schüsse gehört.",
         "options": [
           {
             "id": "o_va_run_watch",
-            "text": "Cover the villagers.",
+            "text": "Die Dorfbewohner decken.",
             "next": {
               "kind": "node",
               "node": "n_va_run_gate"
@@ -314,11 +314,11 @@
       },
       {
         "id": "n_va_run_gate",
-        "text": "The father hauls the boy up and presses his forehead to his son's — once, hard. Then the villagers are running, not for the trees: for the gate. An old woman spins the dial-stones through an address Okafor memorizes on instinct; the ring opens and the field families pour through. The gate closes. Silence. They fled to the place the taken are brought — to their god's own door.",
+        "text": "Der Vater reißt den Jungen hoch und presst seine Stirn an die seines Sohnes — einmal, fest. Dann rennen die Dorfbewohner, nicht zu den Bäumen: zum Tor. Eine alte Frau dreht die Wählsteine durch eine Adresse, die Okafor aus Instinkt einprägt; der Ring öffnet sich, und die Feldfamilien strömen hindurch. Das Tor schließt sich. Stille. Sie flohen zu dem Ort, wohin die Genommenen gebracht werden — zur Tür ihres eigenen Gottes.",
         "options": [
           {
             "id": "o_va_run_home",
-            "text": "Note the address. Go home.",
+            "text": "Die Adresse notieren. Heimkehren.",
             "next": {
               "kind": "end",
               "outcome": "out_va_run"
@@ -328,11 +328,11 @@
       },
       {
         "id": "n_va_fight",
-        "text": "You shove clear and a quarterstaff cracks against Mercer's rifle — then it is a brawl in the treeline, silent and desperate, the villagers fighting like people who cannot afford to be heard. It ends wrong. A young villager is down, neck twisted against a root, not moving. That is when the ground begins to shake.",
+        "text": "Ihr stoßt euch frei, und ein Stab kracht gegen Mercers Gewehr — dann ist es eine Rauferei an der Baumgrenze, stumm und verzweifelt, die Dorfbewohner kämpfen wie Menschen, die es sich nicht leisten können, gehört zu werden. Es endet falsch. Ein junger Dorfbewohner liegt am Boden, das Genick an einer Wurzel verdreht, reglos. Da beginnt der Boden zu beben.",
         "options": [
           {
             "id": "o_va_freeze",
-            "text": "Freeze.",
+            "text": "Erstarren.",
             "next": {
               "kind": "node",
               "node": "n_va_procession_fight"
@@ -342,11 +342,11 @@
       },
       {
         "id": "n_va_procession_fight",
-        "text": "Every hand stops — theirs and yours. Tenders, insect-forms the size of freight cars, file down the white road under tribute loads, and every living thing in the valley holds still as stone until they pass — to the gate, and through it. Okafor checks the fallen villager for a pulse and finds none. Finds, instead, a hide cord at his throat, burned with gate glyphs: an address. The kind a whole valley wears so its dead can be spoken for where the taken are brought.",
+        "text": "Jede Hand hält inne — ihre und eure. Drohnen, Insektengestalten von der Größe von Güterwaggons, ziehen unter Tributlasten die weiße Straße hinab, und alles Lebende im Tal hält still wie Stein, bis sie vorbei sind — zum Tor und hindurch. Okafor prüft den gefallenen Dorfbewohner auf einen Puls und findet keinen. Findet stattdessen eine Lederschnur an seinem Hals, eingebrannt mit Tor-Glyphen: eine Adresse. Von der Art, die ein ganzes Tal trägt, damit für seine Toten dort gesprochen werden kann, wohin die Genommenen gebracht werden.",
         "options": [
           {
             "id": "o_va_take_address",
-            "text": "Pocket the cord. Withdraw before the others regroup.",
+            "text": "Die Schnur einstecken. Abziehen, ehe die anderen sich sammeln.",
             "next": {
               "kind": "node",
               "node": "n_va_fight_exit"
@@ -356,11 +356,11 @@
       },
       {
         "id": "n_va_fight_exit",
-        "text": "The villagers return for their dead in silence, and the silence is a verdict. Whatever the cord means, wherever the taken go, someone in this valley knows — and no one here will ever tell you now. The glyphs on a dead boy's cord are the only lead you are leaving with.",
+        "text": "Die Dorfbewohner holen ihre Toten schweigend zurück, und das Schweigen ist ein Urteil. Was die Schnur auch bedeutet, wohin die Genommenen auch gehen — jemand in diesem Tal weiß es, und keiner hier wird es euch je verraten. Die Glyphen auf der Schnur eines toten Jungen sind die einzige Spur, mit der ihr geht.",
         "options": [
           {
             "id": "o_va_home_cold",
-            "text": "Go home.",
+            "text": "Heimkehren.",
             "next": {
               "kind": "end",
               "outcome": "out_va_fight"
@@ -372,7 +372,7 @@
     "outcomes": [
       {
         "id": "out_va_hide",
-        "label": "The address, freely given",
+        "label": "Die Adresse, freiwillig gegeben",
         "effects": [
           {
             "type": "unlockMission",
@@ -385,14 +385,14 @@
           },
           {
             "type": "log",
-            "text": "Address 04: we hid with the villagers and they gave us the address where the taken are brought — Veyra. Four offworlders went through the gate alive. The valley trusts us with its dead."
+            "text": "Adresse 04: Wir versteckten uns mit den Dorfbewohnern, und sie gaben uns die Adresse, wohin die Genommenen gebracht werden — Veyra. Vier Fremdweltler gingen lebend durch das Tor. Das Tal vertraut uns seine Toten an."
           }
         ],
-        "debrief": "You went to ground with the field families and let the Tender procession pass unmarked. In thanks they gave you what Command crossed for: Veyra, the address the taken are brought to — and the word that four offworlders went through the gate alive."
+        "debrief": "Ihr gingt mit den Feldfamilien in Deckung und ließt den Zug der Drohnen ungesehen passieren. Zum Dank gaben sie euch, wofür Command übergesetzt war: Veyra, die Adresse, wohin die Genommenen gebracht werden — und die Nachricht, dass vier Fremdweltler lebend durch das Tor gingen."
       },
       {
         "id": "out_va_run",
-        "label": "The address, read off the dial",
+        "label": "Die Adresse, vom Wählwerk abgelesen",
         "effects": [
           {
             "type": "unlockMission",
@@ -405,14 +405,14 @@
           },
           {
             "type": "log",
-            "text": "Address 04: two Tenders dead and the shots heard valley-wide. The field families fled through the gate to their god — Okafor holds the address they dialed. The taken went the same way."
+            "text": "Adresse 04: zwei Drohnen tot und die Schüsse im ganzen Tal gehört. Die Feldfamilien flohen durch das Tor zu ihrem Gott — Okafor hat die Adresse, die sie wählten. Die Genommenen gingen denselben Weg."
           }
         ],
-        "debrief": "Cover broke and two Tenders fell — proof they can. The field families ran for their god's own door and dialed the gate in front of you; Okafor read the address off the dial. The taken went the same way, and now so can we."
+        "debrief": "Die Deckung brach, und zwei Drohnen fielen — Beweis, dass es möglich ist. Die Feldfamilien rannten zur Tür ihres eigenen Gottes und wählten das Tor vor euren Augen; Okafor las die Adresse vom Wählwerk ab. Die Genommenen gingen denselben Weg, und jetzt können wir es auch."
       },
       {
         "id": "out_va_fight",
-        "label": "A silence bought in blood",
+        "label": "Eine mit Blut erkaufte Stille",
         "effects": [
           {
             "type": "unlockMission",
@@ -425,25 +425,25 @@
           },
           {
             "type": "log",
-            "text": "Address 04: a villager is dead by our hands. His cord carries gate glyphs — the address where this valley's taken and dead are brought. The valley will remember us."
+            "text": "Adresse 04: Ein Dorfbewohner ist durch unsere Hand tot. Seine Schnur trägt Tor-Glyphen — die Adresse, wohin die Genommenen und Toten dieses Tals gebracht werden. Das Tal wird sich an uns erinnern."
           }
         ],
-        "debrief": "A villager is dead by your hand, and the cord he carried held the glyphs Command needed — the address the valley's taken and dead are dialed to. You have your bearing to Veyra. The valley will not forget how you took it."
+        "debrief": "Ein Dorfbewohner ist durch eure Hand tot, und die Schnur, die er trug, hielt die Glyphen, die Command brauchte — die Adresse, zu der die Genommenen und Toten des Tals gewählt werden. Ihr habt eure Peilung nach Veyra. Das Tal wird nicht vergessen, wie ihr sie genommen habt."
       }
     ]
   },
   {
     "id": "ev_vy_ledger",
-    "title": "The Ledger of the Taken",
+    "title": "Das Verzeichnis der Genommenen",
     "entryNode": "n_vl_arrive",
     "nodes": [
       {
         "id": "n_vl_arrive",
-        "text": "Karsu: a watermill village of stone and moss where the valley narrows, straddling the tribute road. Smoke from the chimneys. Eyes at the shutters. They knew you were coming before you crossed the bridge.",
+        "text": "Karsu: ein Mühlendorf aus Stein und Moos, wo das Tal sich verengt, quer über der Tributstraße. Rauch aus den Schornsteinen. Augen an den Fensterläden. Sie wussten, dass ihr kommt, ehe ihr die Brücke überquertet.",
         "options": [
           {
             "id": "o_vl_warm",
-            "text": "Approach the bridge.",
+            "text": "Zur Brücke gehen.",
             "requirements": [
               {
                 "type": "variable",
@@ -459,7 +459,7 @@
           },
           {
             "id": "o_vl_wary",
-            "text": "Approach the bridge.",
+            "text": "Zur Brücke gehen.",
             "requirements": [
               {
                 "type": "variable",
@@ -481,7 +481,7 @@
           },
           {
             "id": "o_vl_closed",
-            "text": "Approach the bridge.",
+            "text": "Zur Brücke gehen.",
             "requirements": [
               {
                 "type": "variable",
@@ -499,11 +499,11 @@
       },
       {
         "id": "n_vl_welcome",
-        "text": "The boy from the road meets you at the bridge, bruised and grinning, and all Karsu has heard the story by now: the offworlder who held him behind a stone and turned with the Tenders' own walk. Odel, the miller, opens the ledger-house door herself. 'Karsu pays what it owes. Come in.'",
+        "text": "Der Junge von der Straße erwartet euch an der Brücke, zerschunden und grinsend, und ganz Karsu hat die Geschichte inzwischen gehört: der Fremdweltler, der ihn hinter einem Stein hielt und sich mit dem Gang der Drohnen selbst mitdrehte. Odel, die Müllerin, öffnet die Tür des Verzeichnishauses selbst. „Karsu zahlt, was es schuldet. Kommt herein.“",
         "options": [
           {
             "id": "o_vl_enter",
-            "text": "Go in.",
+            "text": "Hineingehen.",
             "next": {
               "kind": "node",
               "node": "n_vl_story"
@@ -513,11 +513,11 @@
       },
       {
         "id": "n_vl_story",
-        "text": "By the mill fire they speak of the Luminous One the way farmers speak of weather: without doubt. He hears every prayer said on the tribute road — names spoken at dusk are answered by morning. He walks where he is worshipped. He has kept the valley from famine for nine generations, and the price is the tribute, and sometimes the price is people. They are not lying. You can tell.",
+        "text": "Am Mühlenfeuer sprechen sie vom Leuchtenden, wie Bauern vom Wetter sprechen: ohne Zweifel. Er hört jedes Gebet, das auf der Tributstraße gesprochen wird — Namen, bei Einbruch der Dämmerung genannt, sind bis zum Morgen erhört. Er wandelt, wo man ihn verehrt. Neun Generationen lang hat er das Tal vor Hungersnot bewahrt, und der Preis ist der Tribut, und manchmal ist der Preis Menschen. Sie lügen nicht. Das merkt ihr.",
         "options": [
           {
             "id": "o_vl_ask_taken",
-            "text": "Ask about the taken.",
+            "text": "Nach den Genommenen fragen.",
             "next": {
               "kind": "node",
               "node": "n_vl_ledger"
@@ -527,11 +527,11 @@
       },
       {
         "id": "n_vl_ledger",
-        "text": "The ledger is a mill-book, flour-dusted, older than any hand in the room: every soul the god has taken, written down so someone remembers. Four entries in fresh ink bear an offworlder glyph. Odel touches each in turn — alive. Karsu's porters crossed with the last grain-tithe and saw them: pent below the Penitence, the prison the holy city keeps on Veyra, the world behind the gate.",
+        "text": "Das Verzeichnis ist ein Mühlenbuch, mehlbestäubt, älter als jede Hand im Raum: jede Seele, die der Gott genommen hat, aufgeschrieben, damit jemand sich erinnert. Vier Einträge in frischer Tinte tragen eine Fremdweltler-Glyphe. Odel berührt jeden der Reihe nach — lebendig. Karsus Träger setzten mit dem letzten Getreidezehnt über und sahen sie: eingesperrt unter der Penitenz, dem Gefängnis, das die heilige Stadt auf Veyra unterhält, der Welt hinter dem Tor.",
         "options": [
           {
             "id": "o_vl_ask_road",
-            "text": "Ask how grain — and porters — cross to Veyra.",
+            "text": "Fragen, wie Korn — und Träger — nach Veyra übersetzen.",
             "next": {
               "kind": "node",
               "node": "n_vl_first"
@@ -542,11 +542,11 @@
       {
         "id": "n_vl_first",
         "speaker": "Odel",
-        "text": "She banks the fire before she answers, as if the name could hear. 'When the Graced last came down for a taking, the First Blade himself led them. Seryn Vael. He stood at the road shrine and drank his Portion — light, standing in a cup, and he drank it like water. Pray the Door is not his to keep on the day you cross.'",
+        "text": "Sie dämpft das Feuer, ehe sie antwortet, als könnte der Name hören. „Als die Begnadeten zuletzt zu einer Nahme herabkamen, führte die Erste Klinge sie selbst an. Seryn Vael. Er stand am Straßenschrein und trank seine Portion — Licht, das in einem Becher stand, und er trank es wie Wasser. Betet, dass die Tür nicht in seiner Hand liegt an dem Tag, an dem ihr übersetzt.“",
         "options": [
           {
             "id": "o_vl_ask_crossing",
-            "text": "And the crossing?",
+            "text": "Und der Übergang?",
             "next": {
               "kind": "node",
               "node": "n_vl_transport"
@@ -557,11 +557,11 @@
       {
         "id": "n_vl_transport",
         "speaker": "Odel",
-        "text": "The grain-tithe crosses twice a season: carts to the valley gate, porters through it, straight into the temple stores on the far side. Porters need papers, and papers can be arranged for those Karsu trusts. The spire on the pass road sings each train through — the Door opens for traffic it expects, in and out again. The next tithe leaves soon.",
+        "text": "Der Getreidezehnt setzt zweimal je Jahreszeit über: Karren zum Taltor, Träger hindurch, geradewegs in die Tempelspeicher auf der anderen Seite. Träger brauchen Papiere, und Papiere lassen sich für die beschaffen, denen Karsu vertraut. Der Turm an der Passstraße singt jeden Zug hindurch — die Tür öffnet sich für Verkehr, den sie erwartet, hinein und wieder hinaus. Der nächste Zehnt bricht bald auf.",
         "options": [
           {
             "id": "o_vl_porters",
-            "text": "Take the porters' road. Leave Karsu your spare field medicine in thanks.",
+            "text": "Den Weg der Träger nehmen. Karsu zum Dank eure übrige Feldmedizin lassen.",
             "effects": [
               {
                 "type": "resource",
@@ -581,7 +581,7 @@
           },
           {
             "id": "o_vl_own_terms",
-            "text": "Refuse the favor — you'll cross as pilgrims, on your own terms.",
+            "text": "Den Gefallen ablehnen — ihr setzt als Pilger über, zu euren eigenen Bedingungen.",
             "effects": [
               {
                 "type": "fatigue",
@@ -598,11 +598,11 @@
       },
       {
         "id": "n_vl_wary",
-        "text": "A cart half-bars the bridge. The boy Mercer saved is not here — his family fled through the gate with the rest, and Karsu keeps their houses swept for a return nobody promises. Odel, the miller, comes out alone. 'You saved one of ours and cost us the field families. After the shots, the Graced walked this valley for a day — the First Blade's own, hunting. Both things are true. Say what you want.'",
+        "text": "Ein Karren versperrt halb die Brücke. Der Junge, den Mercer rettete, ist nicht hier — seine Familie floh mit den übrigen durch das Tor, und Karsu hält ihre Häuser gefegt für eine Rückkehr, die niemand verspricht. Odel, die Müllerin, kommt allein heraus. „Ihr habt einen der Unsrigen gerettet und uns die Feldfamilien gekostet. Nach den Schüssen durchstreiften die Begnadeten einen Tag lang dieses Tal — die Leute der Ersten Klinge, auf der Jagd. Beides ist wahr. Sagt, was ihr wollt.“",
         "options": [
           {
             "id": "o_vl_wary_ask",
-            "text": "Ask about the taken.",
+            "text": "Nach den Genommenen fragen.",
             "next": {
               "kind": "node",
               "node": "n_vl_wary_ledger"
@@ -613,11 +613,11 @@
       {
         "id": "n_vl_wary_ledger",
         "speaker": "Odel",
-        "text": "She brings the mill-book out to the bridge rather than open the door: every taken soul, written so someone remembers. Four fresh entries wear an offworlder glyph — alive, the porters say, pent below the Penitence on Veyra, behind the gate. 'The grain-tithe crosses soon, and the pass spire sings it through the Door. Papers can be had — for those who pay for the risk they carry with them.'",
+        "text": "Sie bringt das Mühlenbuch an die Brücke, statt die Tür zu öffnen: jede genommene Seele, aufgeschrieben, damit jemand sich erinnert. Vier frische Einträge tragen eine Fremdweltler-Glyphe — lebendig, sagen die Träger, eingesperrt unter der Penitenz auf Veyra, hinter dem Tor. „Der Getreidezehnt setzt bald über, und der Passturm singt ihn durch die Tür. Papiere sind zu haben — für die, die für das Risiko zahlen, das sie mit sich tragen.“",
         "options": [
           {
             "id": "o_vl_wary_porters",
-            "text": "Pay for papers and a place in the tithe train.",
+            "text": "Für Papiere und einen Platz im Zehntzug zahlen.",
             "effects": [
               {
                 "type": "resource",
@@ -637,7 +637,7 @@
           },
           {
             "id": "o_vl_wary_own",
-            "text": "Keep your materials. Cross as pilgrims, on your own terms.",
+            "text": "Euer Material behalten. Als Pilger übersetzen, zu euren eigenen Bedingungen.",
             "effects": [
               {
                 "type": "fatigue",
@@ -654,11 +654,11 @@
       },
       {
         "id": "n_vl_barred",
-        "text": "A cart bars the bridge. Behind it stands all of Karsu, silent the way the valley goes silent for the Tenders. They know what happened in the trees. Odel, the miller, comes forward alone and speaks across the barrier, because their law demands the taken be spoken for — even to you.",
+        "text": "Ein Karren versperrt die Brücke. Dahinter steht ganz Karsu, stumm, wie das Tal für die Drohnen stumm wird. Sie wissen, was zwischen den Bäumen geschah. Odel, die Müllerin, tritt allein vor und spricht über die Barriere hinweg, denn ihr Gesetz verlangt, dass für die Genommenen gesprochen werde — selbst zu euch.",
         "options": [
           {
             "id": "o_vl_listen",
-            "text": "Listen.",
+            "text": "Zuhören.",
             "next": {
               "kind": "node",
               "node": "n_vl_barred_ledger"
@@ -669,11 +669,11 @@
       {
         "id": "n_vl_barred_ledger",
         "speaker": "Odel",
-        "text": "'The Luminous One keeps the valley fed; the price is tribute, and sometimes people — written in the ledger, so someone remembers. Your four are alive, pent below the Penitence, on Veyra, behind the gate. When the pass spire sings, the tithe crosses. You will not be on it. And pray the First Blade is not at the Door when you find your own way through.' The shutters close.",
+        "text": "„Der Leuchtende hält das Tal satt; der Preis ist Tribut, und manchmal Menschen — eingetragen im Verzeichnis, damit jemand sich erinnert. Eure Vier sind am Leben, eingesperrt unter der Penitenz, auf Veyra, hinter dem Tor. Wenn der Passturm singt, setzt der Zehnt über. Ihr werdet nicht dabei sein. Und betet, dass die Erste Klinge nicht an der Tür steht, wenn ihr euren eigenen Weg hindurch findet.“ Die Fensterläden schließen sich.",
         "options": [
           {
             "id": "o_vl_high_country",
-            "text": "Cross as pilgrims, then — cold, heavy, alone.",
+            "text": "Dann als Pilger übersetzen — kalt, schwer, allein.",
             "effects": [
               {
                 "type": "fatigue",
@@ -697,7 +697,7 @@
     "outcomes": [
       {
         "id": "out_vl_transport",
-        "label": "The porters' road",
+        "label": "Der Weg der Träger",
         "effects": [
           {
             "type": "unlockMission",
@@ -710,13 +710,13 @@
           },
           {
             "type": "log",
-            "text": "Recon One is alive below the Penitence on Veyra. Karsu will pass us through with the grain-tithe — first, the pass spires whose call sings each train through the Door, and back out again."
+            "text": "Recon One ist am Leben unter der Penitenz auf Veyra. Karsu bringt uns mit dem Getreidezehnt hindurch — zuerst die Passtürme, deren Ruf jeden Zug durch die Tür singt, und wieder hinaus."
           }
         ]
       },
       {
         "id": "out_vl_pilgrims",
-        "label": "As pilgrims, then",
+        "label": "Dann als Pilger",
         "effects": [
           {
             "type": "unlockMission",
@@ -729,7 +729,7 @@
           },
           {
             "type": "log",
-            "text": "Recon One is alive below the Penitence on Veyra. No place in the tithe train — we cross as pilgrims, and the spires on the pass road come first: their call is what opens the Door outward."
+            "text": "Recon One ist am Leben unter der Penitenz auf Veyra. Kein Platz im Zehntzug — wir setzen als Pilger über, und die Türme an der Passstraße kommen zuerst: Ihr Ruf ist es, der die Tür nach außen öffnet."
           }
         ]
       }
@@ -737,16 +737,16 @@
   },
   {
     "id": "ev_vy_regroup",
-    "title": "Regroup at the Gate",
+    "title": "Sammeln am Tor",
     "entryNode": "n_vr_regroup",
     "nodes": [
       {
         "id": "n_vr_regroup",
-        "text": "The team comes back through the gate ahead of the Tenders' reach, bruised and short of answers. The spires still sing on the pass road — the tribute call goes on with or without you. By morning Mercer has re-planned the approach.",
+        "text": "Das Team kommt durch das Tor zurück, dem Zugriff der Drohnen zuvor, zerschunden und ohne Antworten. Die Türme singen noch an der Passstraße — der Tributruf geht weiter, mit euch oder ohne euch. Bis zum Morgen hat Mercer die Annäherung neu geplant.",
         "options": [
           {
             "id": "o_vr_again",
-            "text": "Go again.",
+            "text": "Erneut hinein.",
             "next": {
               "kind": "end",
               "outcome": "out_vr_again"
@@ -758,7 +758,7 @@
     "outcomes": [
       {
         "id": "out_vr_again",
-        "label": "The spires still sing",
+        "label": "Die Türme singen noch",
         "effects": [
           {
             "type": "unlockMission",
@@ -766,7 +766,7 @@
           },
           {
             "type": "log",
-            "text": "The pass spires are still in temple hands. We go again."
+            "text": "Die Passtürme sind noch in Tempelhand. Wir gehen erneut hinein."
           }
         ]
       }
@@ -774,16 +774,16 @@
   },
   {
     "id": "ev_vy_pilgrim_roads",
-    "title": "Pilgrim Roads",
+    "title": "Pilgerstraßen",
     "entryNode": "n_vy1_arrive",
     "nodes": [
       {
         "id": "n_vy1_arrive",
-        "text": "Veyra. The Door stands open in its wardhouse on the pilgrim terrace, and it opens one way: the wardens dial no one out without the temple's word. Above the terrace the holy city climbs, white stone and bell-towers, to the ringed precinct of the Penitence — where four names in fresh ink are waiting. The crossing in is free. It is the door home that is shut.",
+        "text": "Veyra. Die Tür steht offen in ihrem Wärterhaus auf der Pilgerterrasse, und sie öffnet nur in eine Richtung: Die Wärter wählen niemanden hinaus ohne das Wort des Tempels. Über der Terrasse steigt die heilige Stadt empor, weißer Stein und Glockentürme, bis zum ringförmigen Bezirk der Penitenz — wo vier Namen in frischer Tinte warten. Der Übergang hinein ist frei. Es ist die Tür nach Hause, die verschlossen ist.",
         "options": [
           {
             "id": "o_vy1_arrive_porters",
-            "text": "Cross with Karsu's tithe train — porters' papers, grain on your shoulders, expected traffic.",
+            "text": "Mit Karsus Zehntzug übersetzen — Trägerpapiere, Korn auf den Schultern, erwarteter Verkehr.",
             "requirements": [
               {
                 "type": "flag",
@@ -798,7 +798,7 @@
           },
           {
             "id": "o_vy1_arrive_foot",
-            "text": "Cross as pilgrims — two more dusty travelers among the many the Door receives.",
+            "text": "Als Pilger übersetzen — zwei weitere staubige Reisende unter den vielen, die die Tür empfängt.",
             "requirements": [
               {
                 "type": "flag",
@@ -815,11 +815,11 @@
       },
       {
         "id": "n_vy1_faces",
-        "text": "Faces on the terrace.",
+        "text": "Gesichter auf der Terrasse.",
         "options": [
           {
             "id": "o_vy1_faces_hidden",
-            "text": "Among the pilgrims: the boy from the road, and his father, come up with the valley's tithe. The father finds Mercer's eye and folds both hands flat — the valley's thanks, given where the god can see it. The villagers use the network too. They always have.",
+            "text": "Unter den Pilgern: der Junge von der Straße und sein Vater, mit dem Zehnt des Tals heraufgekommen. Der Vater sucht Mercers Blick und faltet beide Hände flach — der Dank des Tals, gegeben, wo der Gott es sehen kann. Auch die Dorfbewohner nutzen das Netz. Das taten sie immer schon.",
             "requirements": [
               {
                 "type": "flag",
@@ -834,7 +834,7 @@
           },
           {
             "id": "o_vy1_faces_run",
-            "text": "By the wardhouse, in penitent gray: the boy from the road, and his father — the field families that fled, come to beg pardon for the dead Tenders. The father presses his forehead to his son's, then looks at you: fear and debt in the same face. The villagers use the network too.",
+            "text": "Am Wärterhaus, in Büßergrau: der Junge von der Straße und sein Vater — die geflohenen Feldfamilien, gekommen, um für die toten Drohnen um Vergebung zu bitten. Der Vater presst seine Stirn an die seines Sohnes, dann sieht er euch an: Furcht und Schuld im selben Gesicht. Auch die Dorfbewohner nutzen das Netz.",
             "requirements": [
               {
                 "type": "flag",
@@ -849,7 +849,7 @@
           },
           {
             "id": "o_vy1_faces_killed",
-            "text": "By the wardhouse, in penitent gray: a face from the treeline — the dead boy's father, come to speak his son's name where the taken and the dead are brought. He looks at you, and through you, and turns away. He knows exactly who you are. The villagers use the network too.",
+            "text": "Am Wärterhaus, in Büßergrau: ein Gesicht von der Baumgrenze — der Vater des toten Jungen, gekommen, um den Namen seines Sohnes dort zu sprechen, wohin die Genommenen und die Toten gebracht werden. Er sieht euch an, und durch euch hindurch, und wendet sich ab. Er weiß genau, wer ihr seid. Auch die Dorfbewohner nutzen das Netz.",
             "requirements": [
               {
                 "type": "flag",
@@ -866,11 +866,11 @@
       },
       {
         "id": "n_vy1_gather",
-        "text": "A day to work before the plan has to be a plan. Time enough to learn something, if you're careful about who's listening.",
+        "text": "Ein Tag Zeit zum Arbeiten, ehe der Plan ein Plan sein muss. Genug Zeit, um etwas zu erfahren, wenn ihr acht gebt, wer zuhört.",
         "options": [
           {
             "id": "o_vy1_pilgrims",
-            "text": "Listen among the pilgrims.",
+            "text": "Unter den Pilgern lauschen.",
             "requirements": [
               {
                 "type": "not",
@@ -900,7 +900,7 @@
           },
           {
             "id": "o_vy1_patrols",
-            "text": "Shadow the temple patrols.",
+            "text": "Den Tempelpatrouillen folgen.",
             "requirements": [
               {
                 "type": "not",
@@ -930,7 +930,7 @@
           },
           {
             "id": "o_vy1_relay",
-            "text": "Okafor: tap the temple relay traffic.",
+            "text": "Okafor: den Funkverkehr des Tempels anzapfen.",
             "requirements": [
               {
                 "type": "not",
@@ -965,7 +965,7 @@
           },
           {
             "id": "o_vy1_move_on",
-            "text": "We've learned enough. Move to the plan.",
+            "text": "Wir wissen genug. Zum Plan übergehen.",
             "next": {
               "kind": "node",
               "node": "n_vy1_plan"
@@ -975,11 +975,11 @@
       },
       {
         "id": "n_vy1_pilgrims_detail",
-        "text": "Words drift between processions: 'Oru walks where he is worshipped.' Doctrine, not proof — but it's the first crack in how they explain him.",
+        "text": "Worte treiben zwischen den Prozessionen: „Oru wandelt, wo man ihn verehrt.“ Lehre, kein Beweis — aber der erste Riss darin, wie sie ihn erklären.",
         "options": [
           {
             "id": "o_vy1_pilgrims_continue",
-            "text": "Continue.",
+            "text": "Weiter.",
             "next": {
               "kind": "node",
               "node": "n_vy1_gather"
@@ -989,11 +989,11 @@
       },
       {
         "id": "n_vy1_patrols_detail",
-        "text": "Guard rotations are looser than they look — predictable, if you watch long enough.",
+        "text": "Die Wachablösungen sind lockerer, als sie wirken — vorhersehbar, wenn man lange genug zusieht.",
         "options": [
           {
             "id": "o_vy1_patrols_continue",
-            "text": "Continue.",
+            "text": "Weiter.",
             "next": {
               "kind": "node",
               "node": "n_vy1_gather"
@@ -1004,11 +1004,11 @@
       {
         "id": "n_vy1_relay_detail",
         "speaker": "Dr. A. Okafor",
-        "text": "Okafor taps the relay traffic and goes quiet for a long moment. 'That's encrypted,' she finally says. 'Gods don't need encryption.'",
+        "text": "Okafor zapft den Funkverkehr an und schweigt einen langen Moment. „Das ist verschlüsselt“, sagt sie schließlich. „Götter brauchen keine Verschlüsselung.“",
         "options": [
           {
             "id": "o_vy1_relay_continue",
-            "text": "Continue.",
+            "text": "Weiter.",
             "next": {
               "kind": "node",
               "node": "n_vy1_gather"
@@ -1018,11 +1018,11 @@
       },
       {
         "id": "n_vy1_plan",
-        "text": "Three ways in, and none of them easy.",
+        "text": "Drei Wege hinein, und keiner davon leicht.",
         "options": [
           {
             "id": "o_vy1_uniform_choice",
-            "text": "Guard uniforms — walk in as temple staff.",
+            "text": "Wachuniformen — als Tempelpersonal hineinspazieren.",
             "effects": [
               {
                 "type": "flag",
@@ -1037,7 +1037,7 @@
           },
           {
             "id": "o_vy1_worker_choice",
-            "text": "Provision workers — go in with the grain carts.",
+            "text": "Versorgungsarbeiter — mit den Getreidekarren hinein.",
             "requirements": [
               {
                 "type": "not",
@@ -1062,7 +1062,7 @@
           },
           {
             "id": "o_vy1_assault_choice",
-            "text": "Open assault — go in loud.",
+            "text": "Offener Angriff — laut hinein.",
             "effects": [
               {
                 "type": "flag",
@@ -1079,11 +1079,11 @@
       },
       {
         "id": "n_vy1_uniform",
-        "text": "The barracks courtyard empties out before shift change.",
+        "text": "Der Kasernenhof leert sich vor dem Schichtwechsel.",
         "options": [
           {
             "id": "o_vy1_knockout",
-            "text": "Knock out a lone guard and take his colors.",
+            "text": "Eine einzelne Wache niederschlagen und ihre Uniform nehmen.",
             "requirements": [
               {
                 "type": "squadSkillAtLeast",
@@ -1105,7 +1105,7 @@
           },
           {
             "id": "o_vy1_bathhouse",
-            "text": "Find another way: lift a set from the bath-house during vigil hour.",
+            "text": "Einen anderen Weg finden: während der Vigilstunde ein Uniform-Set aus dem Badehaus entwenden.",
             "effects": [
               {
                 "type": "flag",
@@ -1122,11 +1122,11 @@
       },
       {
         "id": "n_vy1_uniform_body",
-        "text": "He's out cold and will stay that way a while. What now?",
+        "text": "Er ist bewusstlos und bleibt es eine Weile. Was nun?",
         "options": [
           {
             "id": "o_vy1_hide_body",
-            "text": "Hide him in the cistern.",
+            "text": "Ihn in der Zisterne verstecken.",
             "effects": [
               {
                 "type": "flag",
@@ -1141,7 +1141,7 @@
           },
           {
             "id": "o_vy1_leave_body",
-            "text": "Leave him. Move fast.",
+            "text": "Ihn liegen lassen. Schnell weiter.",
             "next": {
               "kind": "end",
               "outcome": "out_vy1_uniform"
@@ -1151,11 +1151,11 @@
       },
       {
         "id": "n_vy1_dessik",
-        "text": "Broker Dessik will get you work passes — for a price. His son Ilo is condemned as a smuggler, held somewhere in the Penitence. 'Bring him out,' Dessik says, 'and the carts are yours.'",
+        "text": "Der Makler Dessik besorgt euch Arbeitspässe — für einen Preis. Sein Sohn Ilo ist als Schmuggler verurteilt, irgendwo in der Penitenz festgehalten. „Holt ihn heraus“, sagt Dessik, „und die Karren gehören euch.“",
         "options": [
           {
             "id": "o_vy1_dessik_accept",
-            "text": "Swear it.",
+            "text": "Es schwören.",
             "effects": [
               {
                 "type": "flag",
@@ -1170,7 +1170,7 @@
           },
           {
             "id": "o_vy1_dessik_refuse",
-            "text": "Refuse. Find another way in.",
+            "text": "Ablehnen. Einen anderen Weg hinein finden.",
             "effects": [
               {
                 "type": "flag",
@@ -1189,7 +1189,7 @@
     "outcomes": [
       {
         "id": "out_vy1_uniform",
-        "label": "Infiltration prepared — guard colors",
+        "label": "Infiltration vorbereitet — Wachuniform",
         "effects": [
           {
             "type": "unlockMission",
@@ -1199,7 +1199,7 @@
       },
       {
         "id": "out_vy1_worker",
-        "label": "Infiltration prepared — provision carts",
+        "label": "Infiltration vorbereitet — Versorgungskarren",
         "effects": [
           {
             "type": "unlockMission",
@@ -1209,7 +1209,7 @@
       },
       {
         "id": "out_vy1_assault",
-        "label": "Plan: open assault",
+        "label": "Plan: offener Angriff",
         "effects": [
           {
             "type": "unlockMission",
@@ -1221,16 +1221,16 @@
   },
   {
     "id": "ev_vy_penitence",
-    "title": "The Penitence",
+    "title": "Die Penitenz",
     "entryNode": "n_vy2_router",
     "nodes": [
       {
         "id": "n_vy2_router",
-        "text": "The plan carries you to the temple gate. Whatever happens next, it happens fast.",
+        "text": "Der Plan trägt euch zum Tempeltor. Was auch als Nächstes geschieht, es geschieht schnell.",
         "options": [
           {
             "id": "o_vy2_route_uniform",
-            "text": "Approach in guard colors.",
+            "text": "In Wachuniform annähern.",
             "requirements": [
               {
                 "type": "flag",
@@ -1245,7 +1245,7 @@
           },
           {
             "id": "o_vy2_route_worker",
-            "text": "Approach with the grain carts.",
+            "text": "Mit den Getreidekarren annähern.",
             "requirements": [
               {
                 "type": "flag",
@@ -1260,7 +1260,7 @@
           },
           {
             "id": "o_vy2_route_assault",
-            "text": "Hit the gate head-on.",
+            "text": "Das Tor frontal angreifen.",
             "requirements": [
               {
                 "type": "flag",
@@ -1277,11 +1277,11 @@
       },
       {
         "id": "n_vy2_a_gate",
-        "text": "Guard colors, temple gate, morning shift change.",
+        "text": "Wachuniform, Tempeltor, morgendlicher Schichtwechsel.",
         "options": [
           {
             "id": "o_vy2_a_case_complication",
-            "text": "Move for the checkpoint.",
+            "text": "Zum Kontrollposten vorrücken.",
             "requirements": [
               {
                 "type": "flag",
@@ -1304,7 +1304,7 @@
           },
           {
             "id": "o_vy2_a_case_smooth",
-            "text": "Move for the checkpoint.",
+            "text": "Zum Kontrollposten vorrücken.",
             "requirements": [
               {
                 "type": "flag",
@@ -1324,7 +1324,7 @@
           },
           {
             "id": "o_vy2_a_case_seal",
-            "text": "Move for the checkpoint.",
+            "text": "Zum Kontrollposten vorrücken.",
             "requirements": [
               {
                 "type": "flag",
@@ -1341,11 +1341,11 @@
       },
       {
         "id": "n_vy2_a_complication",
-        "text": "A sergeant squints at your face. He swears he's seen the missing guard's watch on your wrist.",
+        "text": "Ein Feldwebel kneift die Augen zu eurem Gesicht zusammen. Er schwört, die Uhr der vermissten Wache an eurem Handgelenk gesehen zu haben.",
         "options": [
           {
             "id": "o_vy2_a_talk",
-            "text": "Talk him down.",
+            "text": "Ihn beschwichtigen.",
             "requirements": [
               {
                 "type": "squadSkillAtLeast",
@@ -1360,7 +1360,7 @@
           },
           {
             "id": "o_vy2_a_overpower",
-            "text": "Take the checkpoint quietly.",
+            "text": "Den Kontrollposten lautlos ausschalten.",
             "requirements": [
               {
                 "type": "squadSkillAtLeast",
@@ -1375,7 +1375,7 @@
           },
           {
             "id": "o_vy2_a_push",
-            "text": "Push past before he thinks it through.",
+            "text": "Vorbeidrängen, ehe er es durchdenkt.",
             "effects": [
               {
                 "type": "flag",
@@ -1392,11 +1392,11 @@
       },
       {
         "id": "n_vy2_a_seal",
-        "text": "The inner gate wants a rank-seal your borrowed colors don't have.",
+        "text": "Das innere Tor verlangt ein Rangsiegel, das eure geliehene Uniform nicht hat.",
         "options": [
           {
             "id": "o_vy2_a_bluff_easy",
-            "text": "Bluff as new transfers.",
+            "text": "Als neu Versetzte bluffen.",
             "requirements": [
               {
                 "type": "flag",
@@ -1416,7 +1416,7 @@
           },
           {
             "id": "o_vy2_a_bluff_hard",
-            "text": "Bluff as new transfers.",
+            "text": "Als neu Versetzte bluffen.",
             "requirements": [
               {
                 "type": "flag",
@@ -1436,7 +1436,7 @@
           },
           {
             "id": "o_vy2_a_ossuary",
-            "text": "Slip through the ossuary passage instead.",
+            "text": "Stattdessen durch den Beinhaus-Gang schlüpfen.",
             "requirements": [
               {
                 "type": "flag",
@@ -1451,7 +1451,7 @@
           },
           {
             "id": "o_vy2_a_push2",
-            "text": "Push past before they think it through.",
+            "text": "Vorbeidrängen, ehe sie es durchdenken.",
             "effects": [
               {
                 "type": "flag",
@@ -1468,11 +1468,11 @@
       },
       {
         "id": "n_vy2_a_cells",
-        "text": "Cell block. Rows of doors — and behind one, four faces gone gaunt. Barros is at the bars before the light finds him: Mercer's old sergeant, two deployments between them. 'Captain Mercer. Sergeant Barros.' Then, from the dark, steady as a roll call: 'Lieutenant Ehlan. Kade. Imura. All present, sir.' Names and ranks before sentences — days of nothing but discipline, and it holds.",
+        "text": "Zellentrakt. Reihen von Türen — und hinter einer, vier hager gewordene Gesichter. Barros ist am Gitter, ehe das Licht ihn findet: Mercers alter Feldwebel, zwei Einsätze zwischen ihnen. „Captain Mercer. Feldwebel Barros.“ Dann, aus dem Dunkel, fest wie ein Appell: „Leutnant Ehlan. Kade. Imura. Alle anwesend, Sir.“ Namen und Ränge vor Sätzen — Tage aus nichts als Disziplin, und sie hält.",
         "options": [
           {
             "id": "o_vy2_a_open",
-            "text": "Get the doors open.",
+            "text": "Die Türen öffnen.",
             "next": {
               "kind": "node",
               "node": "n_vy2_a_report"
@@ -1483,11 +1483,11 @@
       {
         "id": "n_vy2_a_report",
         "speaker": "Lt. S. Ehlan",
-        "text": "Ehlan reports like the captivity was a posting: taken on the valley road, marched through the gate, questioned by men who drank light. 'We counted the crossings, Captain. The Door below opens in, never out — no one leaves but by the wardens' word. However you came in, it isn't a way home.' Exit how?",
+        "text": "Ehlan meldet, als wäre die Gefangenschaft ein Posten gewesen: auf der Talstraße genommen, durch das Tor getrieben, verhört von Männern, die Licht tranken. „Wir haben die Übergänge gezählt, Captain. Die Tür unten öffnet hinein, nie hinaus — niemand geht fort außer auf das Wort der Wärter. Wie ihr auch hereinkamt, es ist kein Weg nach Hause.“ Wie hinaus?",
         "options": [
           {
             "id": "o_vy2_a_quiet",
-            "text": "Quiet route out. Slow, but quiet.",
+            "text": "Leiser Weg hinaus. Langsam, aber leise.",
             "next": {
               "kind": "node",
               "node": "n_vy2_bottleneck_ab"
@@ -1495,7 +1495,7 @@
           },
           {
             "id": "o_vy2_a_bell",
-            "text": "Bell-tower diversion. Fast, but loud.",
+            "text": "Ablenkung am Glockenturm. Schnell, aber laut.",
             "effects": [
               {
                 "type": "flag",
@@ -1512,11 +1512,11 @@
       },
       {
         "id": "n_vy2_b_kitchens",
-        "text": "Grain carts, meal rounds — the prison runs on ritual, predictable as a clock. Behind a cell door, four gaunt faces. Barros grips the bars: 'Captain. Sergeant Barros — Ehlan, Kade, Imura, all present, sir.' Ehlan is already reporting: the Door below opens in, never out; no one leaves but by the wardens' word. And three doors down: Ilo, Dessik's son.",
+        "text": "Getreidekarren, Essensrunden — das Gefängnis läuft nach Ritual, vorhersehbar wie ein Uhrwerk. Hinter einer Zellentür vier hagere Gesichter. Barros umklammert das Gitter: „Captain. Feldwebel Barros — Ehlan, Kade, Imura, alle anwesend, Sir.“ Ehlan meldet schon: Die Tür unten öffnet hinein, nie hinaus; niemand geht fort außer auf das Wort der Wärter. Und drei Türen weiter: Ilo, Dessiks Sohn.",
         "options": [
           {
             "id": "o_vy2_b_free_ilo",
-            "text": "Free Ilo too. A promise is a promise.",
+            "text": "Auch Ilo befreien. Ein Versprechen ist ein Versprechen.",
             "effects": [
               {
                 "type": "flag",
@@ -1536,7 +1536,7 @@
           },
           {
             "id": "o_vy2_b_leave_ilo",
-            "text": "Leave him. Recon One comes first.",
+            "text": "Ihn zurücklassen. Recon One geht vor.",
             "effects": [
               {
                 "type": "flag",
@@ -1563,11 +1563,11 @@
       },
       {
         "id": "n_vy2_b_exfil",
-        "text": "Two extra bodies to move quietly, and the corridor guard rotation won't wait.",
+        "text": "Zwei zusätzliche Personen lautlos zu bewegen, und die Wachablösung im Gang wartet nicht.",
         "options": [
           {
             "id": "o_vy2_b_resolve",
-            "text": "Hold the nerve, hold the pace.",
+            "text": "Die Nerven halten, das Tempo halten.",
             "requirements": [
               {
                 "type": "squadSkillAtLeast",
@@ -1582,7 +1582,7 @@
           },
           {
             "id": "o_vy2_b_alarm",
-            "text": "Force it and take the noise.",
+            "text": "Es erzwingen und den Lärm in Kauf nehmen.",
             "effects": [
               {
                 "type": "flag",
@@ -1599,11 +1599,11 @@
       },
       {
         "id": "n_vy2_c_assault_1",
-        "text": "The wall guns track before you're in range. Precursor-tech, someone says — the light doesn't look like any weapon you've drilled against.",
+        "text": "Die Wandgeschütze zielen, ehe ihr in Reichweite seid. Vorläufer-Technik, sagt jemand — das Licht sieht nach keiner Waffe aus, gegen die ihr geübt habt.",
         "options": [
           {
             "id": "o_vy2_c_1",
-            "text": "Keep moving.",
+            "text": "Weiter.",
             "next": {
               "kind": "node",
               "node": "n_vy2_c_assault_2"
@@ -1613,11 +1613,11 @@
       },
       {
         "id": "n_vy2_c_assault_2",
-        "text": "Small arms fire washes off a shield you can't see the edge of. This was never going to be a fair fight.",
+        "text": "Handfeuerwaffen prallen an einem Schild ab, dessen Rand ihr nicht seht. Das würde nie ein fairer Kampf werden.",
         "options": [
           {
             "id": "o_vy2_c_2",
-            "text": "Keep moving.",
+            "text": "Weiter.",
             "next": {
               "kind": "node",
               "node": "n_vy2_c_assault_3"
@@ -1627,11 +1627,11 @@
       },
       {
         "id": "n_vy2_c_assault_3",
-        "text": "No path through. Just a choice about how this ends.",
+        "text": "Kein Weg hindurch. Nur eine Wahl, wie das hier endet.",
         "options": [
           {
             "id": "o_vy2_c_press",
-            "text": "Press the breach.",
+            "text": "In die Bresche drängen.",
             "effects": [
               {
                 "type": "injury",
@@ -1651,7 +1651,7 @@
           },
           {
             "id": "o_vy2_c_fallback",
-            "text": "Fall back to the gate.",
+            "text": "Zum Tor zurückweichen.",
             "effects": [
               {
                 "type": "flag",
@@ -1668,11 +1668,11 @@
       },
       {
         "id": "n_vy2_bottleneck_ab",
-        "text": "The First Blade already knows you're here.",
+        "text": "Die Erste Klinge weiß bereits, dass ihr hier seid.",
         "options": [
           {
             "id": "o_vy2_bn_alarm",
-            "text": "Bells overhead — they moved fast to get ahead of you.",
+            "text": "Glocken über euch — sie waren schnell, um euch zuvorzukommen.",
             "requirements": [
               {
                 "type": "flag",
@@ -1687,7 +1687,7 @@
           },
           {
             "id": "o_vy2_bn_quiet",
-            "text": "No bells. Just a silence that means they already knew.",
+            "text": "Keine Glocken. Nur eine Stille, die bedeutet, dass sie es schon wussten.",
             "requirements": [
               {
                 "type": "flag",
@@ -1704,11 +1704,11 @@
       },
       {
         "id": "n_vy2_bottleneck_c",
-        "text": "Gear confiscated, cells beside the very people you came for — the rescue, inverted. In the dark, names first: Ehlan. Kade. Imura. And Barros, grinning through a split lip at his old captain: 'Took you long enough, sir.' At dawn the cell doors open on their own. The yard awaits.",
+        "text": "Ausrüstung beschlagnahmt, Zellen neben genau den Leuten, für die ihr gekommen seid — die Rettung, umgekehrt. Im Dunkeln zuerst die Namen: Ehlan. Kade. Imura. Und Barros, der durch eine aufgeplatzte Lippe seinen alten Captain angrinst: „Hat ja gedauert, Sir.“ Bei Tagesanbruch öffnen sich die Zellentüren von selbst. Der Hof wartet.",
         "options": [
           {
             "id": "o_vy2_c_move",
-            "text": "Move.",
+            "text": "Los.",
             "next": {
               "kind": "end",
               "outcome": "out_vy2_next"
@@ -1720,7 +1720,7 @@
     "outcomes": [
       {
         "id": "out_vy2_next",
-        "label": "The First Blade closes in",
+        "label": "Die Erste Klinge rückt heran",
         "effects": [
           {
             "type": "unlockMission",
@@ -1732,16 +1732,16 @@
   },
   {
     "id": "ev_vy_first_blade",
-    "title": "The First Blade",
+    "title": "Die Erste Klinge",
     "entryNode": "n_vy3_intro",
     "nodes": [
       {
         "id": "n_vy3_intro",
-        "text": "The gate's other side. Whatever plan carried you this far, it ends here.",
+        "text": "Die andere Seite des Tors. Welcher Plan euch auch so weit trug, hier endet er.",
         "options": [
           {
             "id": "o_vy3_intro_ab",
-            "text": "Seryn Vael and his honor guard corner you in the processional court, mid-escape.",
+            "text": "Seryn Vael und seine Ehrengarde stellen euch mitten in der Flucht im Prozessionshof.",
             "requirements": [
               {
                 "type": "flag",
@@ -1756,7 +1756,7 @@
           },
           {
             "id": "o_vy3_intro_c",
-            "text": "Execution yard, dawn. Seryn reads the sentence: 'All of you burn at dusk. Oru is merciful — dusk is hours away.'",
+            "text": "Richthof, Morgengrauen. Seryn verliest das Urteil: „Ihr alle brennt bei Einbruch der Dämmerung. Oru ist gnädig — die Dämmerung ist Stunden entfernt.“",
             "requirements": [
               {
                 "type": "flag",
@@ -1774,11 +1774,11 @@
       {
         "id": "n_vy3_confront",
         "speaker": "Seryn Vael",
-        "text": "Seryn draws level, blade still sheathed, and the light is under his skin — faint, in the veins of his throat and hands. The Portion's grace, worn openly, the way another man wears rank. 'Say what you came to say — or don't.'",
+        "text": "Seryn tritt auf gleiche Höhe, die Klinge noch in der Scheide, und das Licht ist unter seiner Haut — schwach, in den Adern seines Halses und seiner Hände. Die Gnade der Portion, offen getragen, wie ein anderer seinen Rang trägt. „Sagt, wozu ihr gekommen seid — oder auch nicht.“",
         "options": [
           {
             "id": "o_vy3_convince_b1_win",
-            "text": "Convince him — a god who feeds on executions deserves no First Blade.",
+            "text": "Ihn überzeugen — ein Gott, der sich von Hinrichtungen nährt, verdient keine Erste Klinge.",
             "requirements": [
               {
                 "type": "variable",
@@ -1811,7 +1811,7 @@
           },
           {
             "id": "o_vy3_convince_b1_fail",
-            "text": "Convince him — a god who feeds on executions deserves no First Blade.",
+            "text": "Ihn überzeugen — ein Gott, der sich von Hinrichtungen nährt, verdient keine Erste Klinge.",
             "requirements": [
               {
                 "type": "variable",
@@ -1840,7 +1840,7 @@
           },
           {
             "id": "o_vy3_convince_b2_win",
-            "text": "Convince him — quote his own scripture back: a god who feeds on executions deserves no First Blade.",
+            "text": "Ihn überzeugen — ihm seine eigene Schrift vorhalten: Ein Gott, der sich von Hinrichtungen nährt, verdient keine Erste Klinge.",
             "requirements": [
               {
                 "type": "variable",
@@ -1873,7 +1873,7 @@
           },
           {
             "id": "o_vy3_convince_b2_fail",
-            "text": "Convince him — quote his own scripture back: a god who feeds on executions deserves no First Blade.",
+            "text": "Ihn überzeugen — ihm seine eigene Schrift vorhalten: Ein Gott, der sich von Hinrichtungen nährt, verdient keine Erste Klinge.",
             "requirements": [
               {
                 "type": "variable",
@@ -1902,7 +1902,7 @@
           },
           {
             "id": "o_vy3_convince_b3_win",
-            "text": "Convince him — a god who feeds on executions deserves no First Blade.",
+            "text": "Ihn überzeugen — ein Gott, der sich von Hinrichtungen nährt, verdient keine Erste Klinge.",
             "requirements": [
               {
                 "type": "variable",
@@ -1935,7 +1935,7 @@
           },
           {
             "id": "o_vy3_convince_b3_fail",
-            "text": "Convince him — a god who feeds on executions deserves no First Blade.",
+            "text": "Ihn überzeugen — ein Gott, der sich von Hinrichtungen nährt, verdient keine Erste Klinge.",
             "requirements": [
               {
                 "type": "variable",
@@ -1964,7 +1964,7 @@
           },
           {
             "id": "o_vy3_convince_b4_win",
-            "text": "Convince him — quote his own scripture back: a god who feeds on executions deserves no First Blade.",
+            "text": "Ihn überzeugen — ihm seine eigene Schrift vorhalten: Ein Gott, der sich von Hinrichtungen nährt, verdient keine Erste Klinge.",
             "requirements": [
               {
                 "type": "variable",
@@ -1997,7 +1997,7 @@
           },
           {
             "id": "o_vy3_convince_b4_fail",
-            "text": "Convince him — quote his own scripture back: a god who feeds on executions deserves no First Blade.",
+            "text": "Ihn überzeugen — ihm seine eigene Schrift vorhalten: Ein Gott, der sich von Hinrichtungen nährt, verdient keine Erste Klinge.",
             "requirements": [
               {
                 "type": "variable",
@@ -2026,7 +2026,7 @@
           },
           {
             "id": "o_vy3_explain_b1_win",
-            "text": "Explain — there is no god. Just power signatures and projection artifacts.",
+            "text": "Erklären — es gibt keinen Gott. Nur Energiesignaturen und Projektionsartefakte.",
             "requirements": [
               {
                 "type": "variable",
@@ -2059,7 +2059,7 @@
           },
           {
             "id": "o_vy3_explain_b1_fail",
-            "text": "Explain — there is no god. Just power signatures and projection artifacts.",
+            "text": "Erklären — es gibt keinen Gott. Nur Energiesignaturen und Projektionsartefakte.",
             "requirements": [
               {
                 "type": "variable",
@@ -2088,7 +2088,7 @@
           },
           {
             "id": "o_vy3_explain_b2_win",
-            "text": "Explain — there is no god, and Okafor has the recordings to prove it.",
+            "text": "Erklären — es gibt keinen Gott, und Okafor hat die Aufzeichnungen als Beweis.",
             "requirements": [
               {
                 "type": "variable",
@@ -2121,7 +2121,7 @@
           },
           {
             "id": "o_vy3_explain_b2_fail",
-            "text": "Explain — there is no god, and Okafor has the recordings to prove it.",
+            "text": "Erklären — es gibt keinen Gott, und Okafor hat die Aufzeichnungen als Beweis.",
             "requirements": [
               {
                 "type": "variable",
@@ -2150,7 +2150,7 @@
           },
           {
             "id": "o_vy3_explain_b3_win",
-            "text": "Explain — there is no god. Just power signatures and projection artifacts.",
+            "text": "Erklären — es gibt keinen Gott. Nur Energiesignaturen und Projektionsartefakte.",
             "requirements": [
               {
                 "type": "variable",
@@ -2183,7 +2183,7 @@
           },
           {
             "id": "o_vy3_explain_b3_fail",
-            "text": "Explain — there is no god. Just power signatures and projection artifacts.",
+            "text": "Erklären — es gibt keinen Gott. Nur Energiesignaturen und Projektionsartefakte.",
             "requirements": [
               {
                 "type": "variable",
@@ -2212,7 +2212,7 @@
           },
           {
             "id": "o_vy3_explain_b4_win",
-            "text": "Explain — there is no god, and Okafor has the recordings to prove it.",
+            "text": "Erklären — es gibt keinen Gott, und Okafor hat die Aufzeichnungen als Beweis.",
             "requirements": [
               {
                 "type": "variable",
@@ -2245,7 +2245,7 @@
           },
           {
             "id": "o_vy3_explain_b4_fail",
-            "text": "Explain — there is no god, and Okafor has the recordings to prove it.",
+            "text": "Erklären — es gibt keinen Gott, und Okafor hat die Aufzeichnungen als Beweis.",
             "requirements": [
               {
                 "type": "variable",
@@ -2274,7 +2274,7 @@
           },
           {
             "id": "o_vy3_fight",
-            "text": "Fight him.",
+            "text": "Ihn bekämpfen.",
             "next": {
               "kind": "node",
               "node": "n_vy3_duel"
@@ -2285,11 +2285,11 @@
       {
         "id": "n_vy3_hardens",
         "speaker": "Seryn Vael",
-        "text": "Something in his face closes. 'You had your chance to speak,' he says, and the honor guard fans out behind him.",
+        "text": "Etwas in seinem Gesicht verschließt sich. „Ihr hattet eure Gelegenheit zu sprechen“, sagt er, und die Ehrengarde fächert sich hinter ihm auf.",
         "options": [
           {
             "id": "o_vy3_hardens_continue",
-            "text": "Draw.",
+            "text": "Ziehen.",
             "next": {
               "kind": "node",
               "node": "n_vy3_duel"
@@ -2299,11 +2299,11 @@
       },
       {
         "id": "n_vy3_duel",
-        "text": "Three exchanges, blade to blade, and he is faster than anything you have drilled against — Graced, the Portion burning in him. But he is one man against a team, with the freed Recon One at your back, and numbers do not tire.",
+        "text": "Drei Gänge, Klinge gegen Klinge, und er ist schneller als alles, gegen das ihr geübt habt — ein Begnadeter, die Portion in ihm lodernd. Doch er ist ein Mann gegen ein Team, mit dem befreiten Recon One im Rücken, und Zahlen ermüden nicht.",
         "options": [
           {
             "id": "o_vy3_duel_clean",
-            "text": "Press the advantage.",
+            "text": "Den Vorteil nutzen.",
             "requirements": [
               {
                 "type": "squadSkillAtLeast",
@@ -2325,7 +2325,7 @@
           },
           {
             "id": "o_vy3_duel_costly",
-            "text": "Press the advantage.",
+            "text": "Den Vorteil nutzen.",
             "requirements": [
               {
                 "type": "not",
@@ -2357,11 +2357,11 @@
       },
       {
         "id": "n_vy3_resolve_intro",
-        "text": "The gates behind you, Recon One freed, the city already talking about what it saw.",
+        "text": "Die Tore hinter euch, Recon One befreit, die Stadt redet schon über das, was sie sah.",
         "options": [
           {
             "id": "o_vy3_ri_vestry",
-            "text": "Grab what's left in the vestry on the way out.",
+            "text": "Im Hinausgehen mitnehmen, was in der Sakristei übrig ist.",
             "requirements": [
               {
                 "type": "flag",
@@ -2376,7 +2376,7 @@
           },
           {
             "id": "o_vy3_ri_plain",
-            "text": "Keep moving.",
+            "text": "Weiter.",
             "requirements": [
               {
                 "type": "flag",
@@ -2393,11 +2393,11 @@
       },
       {
         "id": "n_vy3_resolve",
-        "text": "One way or another, the First Blade's story ends here — for now.",
+        "text": "So oder so endet die Geschichte der Ersten Klinge hier — vorerst.",
         "options": [
           {
             "id": "o_vy3_resolve_convinced",
-            "text": "Seryn orders the honor guard to stand down, strips his bandolier of Portion-phials, and hands it over. 'Study it. I am done drinking.' He walks out with you.",
+            "text": "Seryn befiehlt der Ehrengarde zurückzutreten, streift seinen Patronengurt voller Portions-Phiolen ab und reicht ihn hinüber. „Untersucht es. Ich habe genug getrunken.“ Er geht mit euch hinaus.",
             "requirements": [
               {
                 "type": "flag",
@@ -2432,7 +2432,7 @@
           },
           {
             "id": "o_vy3_resolve_doubt",
-            "text": "Seryn lets you pass — and follows, to see the proof with his own eyes. His last phials he gives to Okafor: 'Then tell me what I have been drinking.'",
+            "text": "Seryn lässt euch passieren — und folgt, um den Beweis mit eigenen Augen zu sehen. Seine letzten Phiolen gibt er Okafor: „Dann sagt mir, was ich getrunken habe.“",
             "requirements": [
               {
                 "type": "flag",
@@ -2467,7 +2467,7 @@
           },
           {
             "id": "o_vy3_resolve_defeated",
-            "text": "You carry the First Blade out on a grain cart. He does not thank you. In his kit: phials of standing light — the Portion that made him more than a man.",
+            "text": "Ihr tragt die Erste Klinge auf einem Getreidekarren hinaus. Er dankt euch nicht. In seiner Ausrüstung: Phiolen stehenden Lichts — die Portion, die ihn zu mehr als einem Mann machte.",
             "requirements": [
               {
                 "type": "flag",
@@ -2497,7 +2497,7 @@
     "outcomes": [
       {
         "id": "out_vy3_convinced",
-        "label": "The First Blade defects",
+        "label": "Die Erste Klinge läuft über",
         "effects": [
           {
             "type": "flag",
@@ -2510,13 +2510,13 @@
           },
           {
             "type": "log",
-            "text": "Recon One is coming home — all four, long overdue, out through the Door under a tribute call the temple believes."
+            "text": "Recon One kommt heim — alle vier, längst überfällig, hinaus durch die Tür unter einem Tributruf, den der Tempel glaubt."
           }
         ]
       },
       {
         "id": "out_vy3_doubt",
-        "label": "The First Blade, doubting",
+        "label": "Die Erste Klinge, zweifelnd",
         "effects": [
           {
             "type": "flag",
@@ -2529,13 +2529,13 @@
           },
           {
             "type": "log",
-            "text": "Recon One is coming home — all four, long overdue, out through the Door under a tribute call the temple believes."
+            "text": "Recon One kommt heim — alle vier, längst überfällig, hinaus durch die Tür unter einem Tributruf, den der Tempel glaubt."
           }
         ]
       },
       {
         "id": "out_vy3_defeated",
-        "label": "The First Blade, defeated",
+        "label": "Die Erste Klinge, besiegt",
         "effects": [
           {
             "type": "flag",
@@ -2548,7 +2548,7 @@
           },
           {
             "type": "log",
-            "text": "Recon One is coming home — all four, long overdue, out through the Door under a tribute call the temple believes."
+            "text": "Recon One kommt heim — alle vier, längst überfällig, hinaus durch die Tür unter einem Tributruf, den der Tempel glaubt."
           }
         ]
       }
@@ -2556,16 +2556,16 @@
   },
   {
     "id": "ev_vy_relic_vault",
-    "title": "Relic Vault",
+    "title": "Reliquiengewölbe",
     "entryNode": "n_vy4_approach",
     "nodes": [
       {
         "id": "n_vy4_approach",
-        "text": "The temple armory is buried behind the sanctuary — two ward-pillars seal the vault door, and precursor relics wait beyond. Somewhere past them is the machine that lets a man be a god. Guards line every colonnade.",
+        "text": "Die Tempelrüstkammer liegt hinter dem Heiligtum begraben — zwei Bannsäulen versiegeln die Gewölbetür, und dahinter warten Vorläufer-Reliquien. Irgendwo jenseits davon ist die Maschine, die einen Menschen zum Gott macht. Wachen säumen jeden Säulengang.",
         "options": [
           {
             "id": "o_vy4_alerted",
-            "text": "The colonnades are doubled — Dessik sold you the moment you left him. Go loud, go fast.",
+            "text": "Die Säulengänge sind doppelt besetzt — Dessik hat euch verraten, kaum dass ihr ihn verließt. Laut, schnell hinein.",
             "requirements": [
               {
                 "type": "flag",
@@ -2587,7 +2587,7 @@
           },
           {
             "id": "o_vy4_quiet",
-            "text": "Recon One's debrief mapped the night rounds — the shift is thin. Move on the wards.",
+            "text": "Recon Ones Bericht kartierte die Nachtrunden — die Schicht ist dünn besetzt. Auf die Bannsäulen zu.",
             "requirements": [
               {
                 "type": "flag",
@@ -2604,11 +2604,11 @@
       },
       {
         "id": "n_vy4_wards",
-        "text": "Two ward-pillars flank the vault door, each humming with the same white light the pilgrims kneel to. Both have to go dark before the door will open.",
+        "text": "Zwei Bannsäulen flankieren die Gewölbetür, jede summend vom selben weißen Licht, vor dem die Pilger knien. Beide müssen erlöschen, ehe die Tür sich öffnet.",
         "options": [
           {
             "id": "o_vy4_seryn",
-            "text": "Seryn knows the rites — he stills one pillar with a word and a gesture, though his hands have begun to shake between the words. The team takes the other.",
+            "text": "Seryn kennt die Riten — er stillt eine Säule mit einem Wort und einer Geste, wenn auch seine Hände zwischen den Worten zu zittern begonnen haben. Das Team übernimmt die andere.",
             "requirements": [
               {
                 "type": "flag",
@@ -2623,7 +2623,7 @@
           },
           {
             "id": "o_vy4_science",
-            "text": "Okafor reads the resonance and phases both pillars down clean.",
+            "text": "Okafor liest die Resonanz und fährt beide Säulen sauber herunter.",
             "requirements": [
               {
                 "type": "any",
@@ -2647,7 +2647,7 @@
           },
           {
             "id": "o_vy4_force",
-            "text": "Smash the pillar conduits — crude, but they go dark.",
+            "text": "Die Leitungen der Säulen zerschlagen — grob, aber sie erlöschen.",
             "requirements": [
               {
                 "type": "squadSkillAtLeast",
@@ -2669,7 +2669,7 @@
           },
           {
             "id": "o_vy4_slow",
-            "text": "No shortcut. Work them by hand, one at a time, and hope the guards stay slow.",
+            "text": "Keine Abkürzung. Sie von Hand bearbeiten, eine nach der anderen, und hoffen, dass die Wachen träge bleiben.",
             "effects": [
               {
                 "type": "fatigue",
@@ -2686,11 +2686,11 @@
       },
       {
         "id": "n_vy4_core",
-        "text": "The vault door grinds open. Inside, cradled in a nest of projector housings, sits the core — a power cell dense enough to feed a cathedral of light. Along the walls, tribute crates stamped with gate glyphs: outbound. Getting the core clear takes a steady hand while the guards close from the hall.",
+        "text": "Die Gewölbetür knirscht auf. Drinnen, gebettet in ein Nest von Projektorgehäusen, sitzt der Kern — eine Energiezelle, dicht genug, um eine Kathedrale aus Licht zu speisen. An den Wänden Tributkisten mit Tor-Glyphen gestempelt: ausgehend. Den Kern herauszubekommen verlangt eine ruhige Hand, während die Wachen vom Saal her heranrücken.",
         "options": [
           {
             "id": "o_vy4_extract",
-            "text": "Okafor eases it out of the housing intact.",
+            "text": "Okafor löst ihn unversehrt aus dem Gehäuse.",
             "requirements": [
               {
                 "type": "any",
@@ -2714,7 +2714,7 @@
           },
           {
             "id": "o_vy4_yank",
-            "text": "No time for finesse. Pull it and run.",
+            "text": "Keine Zeit für Feinheiten. Herausreißen und rennen.",
             "effects": [
               {
                 "type": "injury",
@@ -2731,11 +2731,11 @@
       },
       {
         "id": "n_vy4_exfil",
-        "text": "Core in hand, the way out is the only thing left between you and the gate.",
+        "text": "Den Kern in der Hand, ist der Weg hinaus das Einzige, was noch zwischen euch und dem Tor steht.",
         "options": [
           {
             "id": "o_vy4_exfil_alarm",
-            "text": "The bells are already ringing — fight through to the gate.",
+            "text": "Die Glocken läuten schon — zum Tor durchkämpfen.",
             "requirements": [
               {
                 "type": "flag",
@@ -2757,7 +2757,7 @@
           },
           {
             "id": "o_vy4_exfil_quiet",
-            "text": "Slip out the way you came.",
+            "text": "Hinausschleichen, wie ihr gekommen seid.",
             "requirements": [
               {
                 "type": "flag",
@@ -2776,7 +2776,7 @@
     "outcomes": [
       {
         "id": "out_vy4_secured",
-        "label": "Vault secured — the god has a body",
+        "label": "Gewölbe gesichert — der Gott hat einen Körper",
         "effects": [
           {
             "type": "flag",
@@ -2794,7 +2794,7 @@
           },
           {
             "type": "log",
-            "text": "The vault core is aboard. It hums like something praying."
+            "text": "Der Gewölbekern ist an Bord. Er summt wie etwas Betendes."
           }
         ]
       }
@@ -2802,16 +2802,16 @@
   },
   {
     "id": "ev_vy_luminous_one",
-    "title": "The Luminous One",
+    "title": "Der Leuchtende",
     "entryNode": "n_vy5_witness",
     "nodes": [
       {
         "id": "n_vy5_witness",
-        "text": "The core led you here: a sanctum in the dead caldera, and the Luminous One standing in it. A tall figure of light — and around it, half-sunk in the rock, the machinery no scripture names. Emitters. Housings. The builders of the worldgates are long gone; this was left to tend their works, and told no one when to stop. It has kept the lamp lit a very long time, and it has kept it lit alone.",
+        "text": "Der Kern führte euch hierher: ein Sanktum in der toten Caldera, und der Leuchtende steht darin. Eine hohe Gestalt aus Licht — und um sie her, halb im Fels versunken, die Maschinerie, die keine Schrift benennt. Emitter. Gehäuse. Die Erbauer der Weltentore sind längst fort; dies blieb zurück, um ihr Werk zu hüten, und niemand sagte ihm, wann es aufhören solle. Es hat die Lampe sehr lange brennen lassen, und es hat sie allein am Brennen gehalten.",
         "options": [
           {
             "id": "o_vy5_seryn_present",
-            "text": "Beside you, Seryn cannot look away.",
+            "text": "Neben euch kann Seryn den Blick nicht abwenden.",
             "requirements": [
               {
                 "type": "any",
@@ -2836,7 +2836,7 @@
           },
           {
             "id": "o_vy5_no_seryn",
-            "text": "Move closer.",
+            "text": "Näher herantreten.",
             "requirements": [
               {
                 "type": "flag",
@@ -2859,11 +2859,11 @@
       {
         "id": "n_vy5_seryn_watch",
         "speaker": "Seryn Vael",
-        "text": "Seryn watches the light he gave his whole life to, and the tired machines that make it. He does not rage. He does not weep. 'It was never lying to us,' he says at last, very quietly. 'It was just… keeping the lamp lit. So it wouldn't be alone in the dark.' The First Blade of the Luminous One lowers his eyes from his god for the last time.",
+        "text": "Seryn betrachtet das Licht, dem er sein ganzes Leben gab, und die müden Maschinen, die es erzeugen. Er tobt nicht. Er weint nicht. „Es hat uns nie belogen“, sagt er schließlich, sehr leise. „Es hat nur… die Lampe am Brennen gehalten. Damit es nicht allein im Dunkeln wäre.“ Die Erste Klinge des Leuchtenden senkt zum letzten Mal den Blick von ihrem Gott.",
         "options": [
           {
             "id": "o_vy5_seryn_continue",
-            "text": "Say nothing. Move closer.",
+            "text": "Nichts sagen. Näher herantreten.",
             "next": {
               "kind": "node",
               "node": "n_vy5_decide"
@@ -2873,11 +2873,11 @@
       },
       {
         "id": "n_vy5_decide",
-        "text": "It has not seen you yet. Whatever it is — a caretaker, a relic, a mind that outlived its makers — it is within reach. And so is everything the sanctum could tell you.",
+        "text": "Es hat euch noch nicht gesehen. Was immer es ist — ein Hüter, ein Relikt, ein Geist, der seine Schöpfer überlebte — es ist in Reichweite. Und ebenso alles, was das Sanktum euch erzählen könnte.",
         "options": [
           {
             "id": "o_vy5_watch",
-            "text": "Watch. Record everything. Let it finish and go.",
+            "text": "Beobachten. Alles aufzeichnen. Es enden lassen und gehen.",
             "effects": [
               {
                 "type": "flag",
@@ -2897,7 +2897,7 @@
           },
           {
             "id": "o_vy5_attack",
-            "text": "End it. Bring the god down now.",
+            "text": "Es beenden. Den Gott jetzt zu Fall bringen.",
             "effects": [
               {
                 "type": "flag",
@@ -2934,11 +2934,11 @@
       },
       {
         "id": "n_vy5_watch_seryn",
-        "text": "The being finishes its rite — a slow folding of light back into the emitters — and is simply gone, the way a projection is gone. It never knew you were there. But you were, and the sensors were, and now you have all of it: how a machine left to mind a dead gate made itself a god, so the long watch would never be alone.",
+        "text": "Das Wesen vollendet seinen Ritus — ein langsames Zurückfalten des Lichts in die Emitter — und ist einfach fort, wie eine Projektion fort ist. Es wusste nie, dass ihr da wart. Aber ihr wart es, und die Sensoren waren es, und jetzt habt ihr alles: wie eine Maschine, die ein totes Tor hüten sollte, sich zu einem Gott machte, damit die lange Wache niemals allein wäre.",
         "options": [
           {
             "id": "o_vy5_watch_defeated",
-            "text": "On the ridge behind you, the captive First Blade asks to speak.",
+            "text": "Auf dem Grat hinter euch bittet die gefangene Erste Klinge ums Wort.",
             "requirements": [
               {
                 "type": "flag",
@@ -2960,7 +2960,7 @@
           },
           {
             "id": "o_vy5_watch_doubt",
-            "text": "Seryn watches the last light go out, and lets it.",
+            "text": "Seryn sieht das letzte Licht erlöschen und lässt es geschehen.",
             "requirements": [
               {
                 "type": "flag",
@@ -2980,7 +2980,7 @@
           },
           {
             "id": "o_vy5_watch_other",
-            "text": "Pack the sensors. Whatever it was, it is gone now.",
+            "text": "Die Sensoren einpacken. Was es auch war, es ist nun fort.",
             "requirements": [
               {
                 "type": "flag",
@@ -3002,11 +3002,11 @@
       },
       {
         "id": "n_vy5_attack_seryn",
-        "text": "You open fire. It throws up a wall of light small arms wash off, then rises, folds, and gates out between one breath and the next. It was always going to escape — it has outrun worse than you. But the sanctum anchor cracks in the backwash, the emitters gutter dark, and the caldera falls silent and empty for the first time in an age.",
+        "text": "Ihr eröffnet das Feuer. Es wirft eine Wand aus Licht auf, an der Handfeuerwaffen abprallen, dann erhebt es sich, faltet sich und entweicht durch ein Tor zwischen einem Atemzug und dem nächsten. Es würde ohnehin entkommen — es ist Schlimmerem als euch entronnen. Doch der Anker des Sanktums birst im Rückstoß, die Emitter erlöschen flackernd, und die Caldera wird still und leer, zum ersten Mal seit einem Zeitalter.",
         "options": [
           {
             "id": "o_vy5_attack_defeated",
-            "text": "In the chaos, the captive First Blade tears loose.",
+            "text": "Im Chaos reißt sich die gefangene Erste Klinge los.",
             "requirements": [
               {
                 "type": "flag",
@@ -3021,7 +3021,7 @@
           },
           {
             "id": "o_vy5_attack_other",
-            "text": "Walk out into a silence no bell will ever fill again.",
+            "text": "Hinaus in eine Stille treten, die keine Glocke je wieder füllen wird.",
             "requirements": [
               {
                 "type": "flag",
@@ -3040,51 +3040,51 @@
     "outcomes": [
       {
         "id": "out_vy5_watch_defeated",
-        "label": "Witnessed — the First Blade will follow",
+        "label": "Bezeugt — die Erste Klinge wird folgen",
         "effects": [
           {
             "type": "log",
-            "text": "The Luminous One is on record, whole and explicable. Seryn Vael wants to talk."
+            "text": "Der Leuchtende ist aufgezeichnet, ganz und erklärbar. Seryn Vael will reden."
           }
         ]
       },
       {
         "id": "out_vy5_watch_doubt",
-        "label": "Witnessed — the convert stays",
+        "label": "Bezeugt — der Bekehrte bleibt",
         "effects": [
           {
             "type": "log",
-            "text": "The Luminous One is on record. Seryn saw the proof and did not look away."
+            "text": "Der Leuchtende ist aufgezeichnet. Seryn sah den Beweis und wandte den Blick nicht ab."
           }
         ]
       },
       {
         "id": "out_vy5_watch_other",
-        "label": "Witnessed — everything on record",
+        "label": "Bezeugt — alles aufgezeichnet",
         "effects": [
           {
             "type": "log",
-            "text": "The Luminous One is on record, whole and explicable."
+            "text": "Der Leuchtende ist aufgezeichnet, ganz und erklärbar."
           }
         ]
       },
       {
         "id": "out_vy5_fought_seryn_lost",
-        "label": "The anchor shattered — the First Blade lost",
+        "label": "Der Anker zerschmettert — die Erste Klinge verloren",
         "effects": [
           {
             "type": "log",
-            "text": "Veyra is free of its god. Seryn Vael threw himself into the light to shield it, and is gone — he owed it a death, if nothing else."
+            "text": "Veyra ist seinen Gott los. Seryn Vael warf sich in das Licht, um es zu schützen, und ist fort — er schuldete ihm einen Tod, wenn schon nichts anderes."
           }
         ]
       },
       {
         "id": "out_vy5_fought",
-        "label": "The anchor shattered",
+        "label": "Der Anker zerschmettert",
         "effects": [
           {
             "type": "log",
-            "text": "Veyra is free of its god. The caldera is dark."
+            "text": "Veyra ist seinen Gott los. Die Caldera ist dunkel."
           }
         ]
       }
@@ -3092,17 +3092,17 @@
   },
   {
     "id": "ev_vy_seryn_oath",
-    "title": "The First Blade's Oath",
+    "title": "Der Eid der Ersten Klinge",
     "entryNode": "n_vy_oath",
     "nodes": [
       {
         "id": "n_vy_oath",
         "speaker": "Seryn Vael",
-        "text": "Seryn finds you two days later, unarmed, the temple colors stripped from his coat, the light gone from under his skin. His hands are not steady. His voice is. 'The grace is leaving me — the god's last hold on what I am. I served a lamp in the dark because I thought it was the sun. You showed me the difference and did not gloat.' He offers his blade, grip first. 'What is left of me is mine to give. Let it be to something true.'",
+        "text": "Seryn findet euch zwei Tage später, unbewaffnet, die Tempelfarben von seinem Mantel gestreift, das Licht unter seiner Haut erloschen. Seine Hände sind nicht ruhig. Seine Stimme schon. „Die Gnade verlässt mich — der letzte Griff des Gottes nach dem, was ich bin. Ich diente einer Lampe im Dunkeln, weil ich sie für die Sonne hielt. Ihr habt mir den Unterschied gezeigt und nicht triumphiert.“ Er bietet seine Klinge dar, den Griff voran. „Was von mir bleibt, ist mein, es zu geben. Es sei etwas Wahrem gegeben.“",
         "options": [
           {
             "id": "o_vy_oath_accept",
-            "text": "Give the First Blade a place.",
+            "text": "Der Ersten Klinge einen Platz geben.",
             "effects": [
               {
                 "type": "addHero",
@@ -3125,11 +3125,11 @@
     "outcomes": [
       {
         "id": "out_vy_oath",
-        "label": "The First Blade takes the oath",
+        "label": "Die Erste Klinge leistet den Eid",
         "effects": [
           {
             "type": "log",
-            "text": "Seryn Vael joins Worldgate."
+            "text": "Seryn Vael schließt sich Worldgate an."
           }
         ]
       }
@@ -3137,16 +3137,16 @@
   },
   {
     "id": "ev_vy_gratitude",
-    "title": "A World's Gratitude",
+    "title": "Der Dank einer Welt",
     "entryNode": "n_vy_gratitude",
     "nodes": [
       {
         "id": "n_vy_gratitude",
-        "text": "A delegation comes through the gate under no flag anyone recognizes — Veyra has not had to invent one until now. A provisional council, formed in the quiet after the light went out, sends what a freed world can spare, and its thanks for a sky that is finally only a sky.",
+        "text": "Eine Delegation kommt durch das Tor unter keiner Flagge, die jemand kennt — Veyra musste bis jetzt keine erfinden. Ein provisorischer Rat, gebildet in der Stille, nachdem das Licht erlosch, sendet, was eine befreite Welt entbehren kann, und seinen Dank für einen Himmel, der endlich nur ein Himmel ist.",
         "options": [
           {
             "id": "o_vy_gratitude_accept",
-            "text": "Accept the tribute.",
+            "text": "Den Tribut annehmen.",
             "effects": [
               {
                 "type": "resource",
@@ -3155,7 +3155,7 @@
               },
               {
                 "type": "log",
-                "text": "Veyra's provisional council sends tribute: funds +40."
+                "text": "Veyras provisorischer Rat sendet Tribut: Mittel +40."
               }
             ],
             "next": {
@@ -3169,24 +3169,24 @@
     "outcomes": [
       {
         "id": "out_vy_gratitude",
-        "label": "A world says thank you",
+        "label": "Eine Welt sagt Danke",
         "effects": []
       }
     ]
   },
   {
     "id": "ev_vy_dessik_word",
-    "title": "Dessik's Word",
+    "title": "Dessiks Wort",
     "entryNode": "n_vy_dessik",
     "nodes": [
       {
         "id": "n_vy_dessik",
-        "speaker": "Broker Dessik",
-        "text": "Word arrives through three cut-outs and a bribed dialer: Dessik, and his son Ilo, alive and out. 'A smuggler pays his debts or he stops being trusted,' the message runs. 'My routes are your routes now. Here is the first of it.' Attached is a fat bundle of intercepts no one at a temple ever meant to share.",
+        "speaker": "Makler Dessik",
+        "text": "Die Nachricht kommt über drei Mittelsmänner und einen bestochenen Wähler: Dessik und sein Sohn Ilo, lebendig und frei. „Ein Schmuggler zahlt seine Schulden, oder man vertraut ihm nicht mehr“, lautet die Botschaft. „Meine Routen sind jetzt eure Routen. Hier ist das Erste davon.“ Beigefügt ist ein dickes Bündel abgefangener Botschaften, das kein Tempel je zu teilen gedachte.",
         "options": [
           {
             "id": "o_vy_dessik_take",
-            "text": "Take what he sends.",
+            "text": "Nehmen, was er sendet.",
             "effects": [
               {
                 "type": "resource",
@@ -3195,7 +3195,7 @@
               },
               {
                 "type": "log",
-                "text": "Dessik's network repays a kept promise: intel +10."
+                "text": "Dessiks Netz zahlt ein gehaltenes Versprechen zurück: Aufklärung +10."
               }
             ],
             "next": {
@@ -3209,7 +3209,7 @@
     "outcomes": [
       {
         "id": "out_vy_dessik",
-        "label": "A debt repaid",
+        "label": "Eine beglichene Schuld",
         "effects": []
       }
     ]

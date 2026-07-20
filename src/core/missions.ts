@@ -42,37 +42,37 @@ function validateLaunch(
   squad: readonly string[],
 ): { ok: true; def: MissionDefT } | { ok: false; code: string; message: string } {
   if (state.activeMission !== null) {
-    return { ok: false, code: "mission_active", message: "A mission is already in progress." };
+    return { ok: false, code: "mission_active", message: "Es läuft bereits eine Mission." };
   }
   if (!state.missions.available.includes(mission)) {
-    return { ok: false, code: "mission_unavailable", message: `Mission '${mission}' is not available.` };
+    return { ok: false, code: "mission_unavailable", message: `Mission '${mission}' ist nicht verfügbar.` };
   }
   const def = content.missions.find((m) => m.id === mission);
   if (!def) {
-    return { ok: false, code: "mission_unknown", message: `Unknown mission '${mission}'.` };
+    return { ok: false, code: "mission_unknown", message: `Unbekannte Mission '${mission}'.` };
   }
   if (squad.length < def.squad.min || squad.length > def.squad.max) {
     return {
       ok: false,
       code: "squad_size",
-      message: `${def.name} requires a squad of ${def.squad.min}–${def.squad.max}.`,
+      message: `${def.name} erfordert einen Trupp von ${def.squad.min}–${def.squad.max}.`,
     };
   }
   const seen = new Set<string>();
   for (const heroId of squad) {
     if (seen.has(heroId)) {
-      return { ok: false, code: "squad_duplicate", message: `Duplicate squad member '${heroId}'.` };
+      return { ok: false, code: "squad_duplicate", message: `Doppeltes Truppmitglied '${heroId}'.` };
     }
     seen.add(heroId);
     const heroState = state.heroes.find((h) => h.hero === heroId);
     if (!heroState) {
-      return { ok: false, code: "squad_unknown_hero", message: `Unknown hero '${heroId}'.` };
+      return { ok: false, code: "squad_unknown_hero", message: `Unbekannter Held '${heroId}'.` };
     }
     if (isExhausted(heroState)) {
       return {
         ok: false,
         code: "squad_exhausted",
-        message: `${heroId} is exhausted and cannot be deployed.`,
+        message: `${heroId} ist erschöpft und kann nicht entsandt werden.`,
       };
     }
   }
@@ -125,7 +125,7 @@ export function launchMission(
     if (state.resources.materials < launchCost) {
       throw new RuleError(
         "launchMission/insufficient_materials",
-        `${def.name} needs ${launchCost} materials to deploy.`,
+        `${def.name} benötigt ${launchCost} Material für den Einsatz.`,
       );
     }
     const draft = structuredClone(state);
@@ -140,7 +140,7 @@ export function launchMission(
   if (!script) {
     throw new RuleError(
       "launchMission/unknown_script",
-      `Mission '${mission}' references unknown event script '${scriptId}'.`,
+      `Mission '${mission}' verweist auf unbekanntes Ereignisskript '${scriptId}'.`,
     );
   }
 

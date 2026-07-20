@@ -12,6 +12,7 @@ import { canBeSelectedForSquad } from "../../core/roster.js";
 import type { Action } from "../../core/reducer.js";
 import type { ContentBundleT, GameStateT } from "../../data/schemas.js";
 import { ScreenHeader } from "../components/ScreenHeader.js";
+import { strings } from "../strings.js";
 import { buttonStyle, panelStyle, theme } from "../theme.js";
 
 export function WorldgateScreen({
@@ -45,7 +46,7 @@ export function WorldgateScreen({
     <div
       style={{ minHeight: "100dvh", background: theme.bg, color: theme.text, fontFamily: theme.fontFamily }}
     >
-      <ScreenHeader title="Worldgate" onBack={onBack} />
+      <ScreenHeader title={strings.worldgate.title} onBack={onBack} />
       <main
         style={{
           display: "flex",
@@ -57,7 +58,7 @@ export function WorldgateScreen({
         }}
       >
         {/* Squad selection */}
-        <section style={panelStyle} aria-label="Squad">
+        <section style={panelStyle} aria-label={strings.worldgate.squad}>
           <header
             style={{
               display: "flex",
@@ -66,8 +67,10 @@ export function WorldgateScreen({
               marginBottom: "0.5rem",
             }}
           >
-            <h2 style={{ margin: 0, fontSize: "1.05rem" }}>Squad</h2>
-            <span style={{ color: theme.textDim, fontSize: "0.85rem" }}>{squad.length} selected</span>
+            <h2 style={{ margin: 0, fontSize: "1.05rem" }}>{strings.worldgate.squad}</h2>
+            <span style={{ color: theme.textDim, fontSize: "0.85rem" }}>
+              {strings.worldgate.selectedCount(squad.length)}
+            </span>
           </header>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
             {state.heroes.map((hero) => {
@@ -96,7 +99,7 @@ export function WorldgateScreen({
                 >
                   <span style={{ fontWeight: 600 }}>{def?.name ?? hero.hero}</span>
                   <span style={{ fontSize: "0.7rem", opacity: 0.85 }}>
-                    {selectable ? `Lv ${hero.level}` : "Exhausted"}
+                    {selectable ? strings.common.level(hero.level) : strings.common.exhausted}
                   </span>
                 </button>
               );
@@ -106,7 +109,7 @@ export function WorldgateScreen({
 
         {/* Mission list */}
         {missions.length === 0 ? (
-          <p style={{ color: theme.textDim }}>No missions available. Advance research to open new fronts.</p>
+          <p style={{ color: theme.textDim }}>{strings.worldgate.noMissions}</p>
         ) : (
           missions.map((mission) => {
             const isTactical = mission.payload.kind === "tactical";
@@ -124,15 +127,14 @@ export function WorldgateScreen({
                       color: isTactical ? "#f0b45e" : theme.accent,
                     }}
                   >
-                    {isTactical ? "Tactical" : "Narrative"}
+                    {isTactical ? strings.common.tactical : strings.common.narrative}
                   </span>
                 </header>
                 <p style={{ margin: "0.35rem 0", fontSize: "0.85rem", color: theme.textDim }}>
                   {mission.description}
                 </p>
                 <div style={{ fontSize: "0.8rem", color: theme.textDim }}>
-                  Squad: {mission.squad.min}
-                  {mission.squad.max !== mission.squad.min ? `–${mission.squad.max}` : ""} operatives
+                  {strings.worldgate.squadRange(mission.squad.min, mission.squad.max)}
                 </div>
 
                 <button
@@ -148,11 +150,9 @@ export function WorldgateScreen({
                 >
                   {canLaunch
                     ? isTactical
-                      ? "Deploy squad"
-                      : "Launch mission"
-                    : `Select ${mission.squad.min}${
-                        mission.squad.max !== mission.squad.min ? `–${mission.squad.max}` : ""
-                      } fit operatives`}
+                      ? strings.worldgate.deploySquad
+                      : strings.worldgate.launchMission
+                    : strings.worldgate.selectFit(mission.squad.min, mission.squad.max)}
                 </button>
               </section>
             );

@@ -146,18 +146,18 @@ describe("BattleScreen HUD", () => {
 
   it("shows the round banner, turn state, and the objective", () => {
     renderBattle(launched());
-    expect(container.textContent).toContain("Round 1");
-    expect(container.textContent).toContain("Your turn");
-    expect(container.textContent).toContain("Consoles 0/2");
+    expect(container.textContent).toContain("Runde 1");
+    expect(container.textContent).toContain("Dein Zug");
+    expect(container.textContent).toContain("Konsolen 0/2");
   });
 
   it("renders the ability bar for the auto-selected unit with AP state", () => {
     renderBattle(launched());
     // Mercer is auto-selected (first in squad order); his bar shows Move + Shot.
-    expect(container.textContent).toContain("Move");
-    expect(container.textContent).toContain("Shot");
+    expect(container.textContent).toContain("Bewegen");
+    expect(container.textContent).toContain("Schuss");
     expect(container.textContent).toContain("1 AP");
-    expect(container.textContent).toContain("End Turn");
+    expect(container.textContent).toContain("Zug beenden");
   });
 
   it("ends the turn immediately, with no confirmation, when all AP is spent", () => {
@@ -165,37 +165,37 @@ describe("BattleScreen HUD", () => {
     if (s.activeMission?.kind !== "tactical") throw new Error("no battle");
     for (const u of s.activeMission.battle.units) if (u.side === "player") u.ap = 0;
     renderBattle(s);
-    click("End Turn");
+    click("Zug beenden");
     expect(dispatched).toContainEqual({ type: "battleEndTurn" });
-    expect((container.textContent ?? "").toLowerCase()).not.toContain("end turn anyway");
+    expect((container.textContent ?? "").toLowerCase()).not.toContain("zug trotzdem beenden");
   });
 
   it("confirms before ending the turn while units can still act, then resolves identically", () => {
     renderBattle(launched()); // both heroes have 2 AP
-    click("End Turn");
+    click("Zug beenden");
     // The button opens the confirmation instead of ending the turn outright.
     expect(dispatched).not.toContainEqual({ type: "battleEndTurn" });
-    expect(container.textContent).toContain("can still act — end turn anyway?");
-    expect(container.textContent).toContain("2 units");
+    expect(container.textContent).toContain("können noch handeln — Zug trotzdem beenden?");
+    expect(container.textContent).toContain("2 Einheiten");
     // Confirming dispatches the exact same action as the no-dialog path.
-    click("End turn anyway");
+    click("Zug trotzdem beenden");
     expect(dispatched).toContainEqual({ type: "battleEndTurn" });
   });
 
   it("cancels the end-turn confirmation without dispatching", () => {
     renderBattle(launched());
-    click("End Turn");
-    click("Cancel");
+    click("Zug beenden");
+    click("Abbrechen");
     expect(dispatched).not.toContainEqual({ type: "battleEndTurn" });
-    expect((container.textContent ?? "").toLowerCase()).not.toContain("end turn anyway");
+    expect((container.textContent ?? "").toLowerCase()).not.toContain("zug trotzdem beenden");
   });
 
   it("toggles the scrolling log open", () => {
     renderBattle(launched());
-    click("Log");
+    click("Protokoll");
     // The log panel is present (empty at battle start, but the toggle flipped).
     const hideBtn = [...container.querySelectorAll("button")].some((b) =>
-      (b.textContent ?? "").includes("Hide log"),
+      (b.textContent ?? "").includes("Protokoll verbergen"),
     );
     expect(hideBtn).toBe(true);
   });

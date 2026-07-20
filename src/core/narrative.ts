@@ -221,11 +221,11 @@ export function chooseEventOption(state: GameStateT, ctx: ReducerCtx, optionId: 
   if (!option) {
     throw new RuleError(
       "chooseEventOption/unknown_option",
-      `Option '${optionId}' is not on the current node.`,
+      `Option '${optionId}' gehört nicht zum aktuellen Knoten.`,
     );
   }
   if (!optionEligible(state, ctx.content, am.squad, option)) {
-    throw new RuleError("chooseEventOption/ineligible", `Option '${optionId}' is not available.`);
+    throw new RuleError("chooseEventOption/ineligible", `Option '${optionId}' ist nicht verfügbar.`);
   }
 
   // §5.2: if any option of this node is squad-gated, the debrief hint arms —
@@ -277,7 +277,7 @@ function completeNarrative(
   if (am.gatedSeen && !draft.settings.showLockedOptions) {
     draft.journal.push({
       day,
-      text: "Debrief: a different team composition might have opened other approaches.",
+      text: "Debrief: Eine andere Teamzusammenstellung hätte vielleicht andere Wege eröffnet.",
     });
   }
 

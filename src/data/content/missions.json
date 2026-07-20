@@ -1,8 +1,8 @@
 [
   {
     "id": "m_vy_arrival",
-    "name": "The Silent Valley",
-    "description": "Address 04. Recon One's last known position, nine days silent. Cross, find the trail, bring back anything that says where they went.",
+    "name": "Das stille Tal",
+    "description": "Adresse 04. Recon Ones letzte bekannte Position, seit neun Tagen still. Setzt über, findet die Spur, bringt alles zurück, das sagt, wohin sie gegangen sind.",
     "availability": [],
     "squad": {
       "min": 2,
@@ -15,8 +15,8 @@
   },
   {
     "id": "m_vy_ledger",
-    "name": "The Ledger of the Taken",
-    "description": "Return to the valley. Karsu keeps the ledger of the taken — and knows whether four offworlders are still alive behind the gate.",
+    "name": "Das Verzeichnis der Genommenen",
+    "description": "Zurück ins Tal. Karsu führt das Verzeichnis der Genommenen — und weiß, ob vier Fremdweltler hinter dem Tor noch am Leben sind.",
     "availability": [],
     "squad": {
       "min": 2,
@@ -29,8 +29,8 @@
   },
   {
     "id": "m_vy_intercept",
-    "name": "The Tribute Call",
-    "description": "Signal spires on the pass road sing each tribute train through the Door on Veyra — and sing the emptied trains back out. Take the spires in sequence and Command's hand is on the only call that opens the way home.",
+    "name": "Der Tributruf",
+    "description": "Signaltürme an der Passstraße singen jeden Tributzug durch die Tür auf Veyra — und singen die geleerten Züge wieder hinaus. Nehmt die Türme der Reihe nach ein, und Commands Hand liegt auf dem einzigen Ruf, der den Weg nach Hause öffnet.",
     "availability": [],
     "squad": {
       "min": 2,
@@ -68,7 +68,7 @@
       },
       {
         "type": "log",
-        "text": "The tribute call is ours. The Door on Veyra opens for what the spires ask — and now the spires ask what Command wants. The way home exists again: narrow, borrowed, and ours."
+        "text": "Der Tributruf gehört uns. Die Tür auf Veyra öffnet sich für das, was die Türme verlangen — und jetzt verlangen die Türme, was Command will. Der Weg nach Hause existiert wieder: schmal, geliehen und unser."
       }
     ],
     "defeatEffects": [
@@ -83,12 +83,12 @@
         "delayDays": 1
       }
     ],
-    "debrief": "The spires answered in sequence and Command's hand closed over the tribute call. The Door on Veyra opens for what the spires ask — and now the spires ask what Command wants. The way home exists again: narrow, borrowed, and ours."
+    "debrief": "Die Türme antworteten der Reihe nach, und Commands Hand schloss sich über dem Tributruf. Die Tür auf Veyra öffnet sich für das, was die Türme verlangen — und jetzt verlangen die Türme, was Command will. Der Weg nach Hause existiert wieder: schmal, geliehen und unser."
   },
   {
     "id": "m_relay",
-    "name": "Secure the Relay",
-    "description": "Raiders hold a working relay station at a dead address. Take the consoles intact and Command owns a listening post on the network.",
+    "name": "Die Relaisstation sichern",
+    "description": "Plünderer halten eine funktionierende Relaisstation an einer toten Adresse. Nehmt die Konsolen unbeschädigt ein, und Command besitzt einen Horchposten im Netz.",
     "availability": [
       {
         "type": "techResearched",
@@ -130,8 +130,8 @@
   },
   {
     "id": "m_vy_1",
-    "name": "Pilgrim Roads",
-    "description": "The Door on Veyra opens one way. Cross to the god's seat and find a way into the Penitence before Recon One's trail goes cold.",
+    "name": "Pilgerwege",
+    "description": "Die Tür auf Veyra öffnet nur in eine Richtung. Setzt zum Sitz des Gottes über und findet einen Weg in die Penitenz, bevor Recon Ones Spur erkaltet.",
     "availability": [],
     "squad": {
       "min": 2,
@@ -144,8 +144,8 @@
   },
   {
     "id": "m_vy_2",
-    "name": "The Penitence",
-    "description": "The plan is set. Get inside the basilica-prison and find Recon One.",
+    "name": "Die Penitenz",
+    "description": "Der Plan steht. Dringt in das Basilika-Gefängnis ein und findet Recon One.",
     "availability": [],
     "squad": {
       "min": 2,
@@ -158,8 +158,8 @@
   },
   {
     "id": "m_vy_3",
-    "name": "The First Blade",
-    "description": "Seryn Vael, the Luminous One's champion, stands between you and the way out.",
+    "name": "Die Erste Klinge",
+    "description": "Seryn Vael, der Streiter des Leuchtenden, steht zwischen euch und dem Weg hinaus.",
     "availability": [],
     "squad": {
       "min": 2,
@@ -172,8 +172,8 @@
   },
   {
     "id": "m_vy_4",
-    "name": "Relic Vault",
-    "description": "Seize the precursor artifacts from the temple armory: arm the research, and find the god's sanctum.",
+    "name": "Das Reliquiengewölbe",
+    "description": "Erbeutet die Vorläufer-Artefakte aus der Tempelrüstkammer: rüstet die Forschung aus und findet das Sanktum des Gottes.",
     "availability": [],
     "squad": {
       "min": 2,
@@ -186,8 +186,8 @@
   },
   {
     "id": "m_vy_5",
-    "name": "The Luminous One",
-    "description": "The vault core resonates with a sanctum in the caldera. Track it, and meet the god face to face.",
+    "name": "Der Leuchtende",
+    "description": "Der Kern des Gewölbes schwingt im Gleichklang mit einem Sanktum in der Caldera. Verfolgt es und tretet dem Gott von Angesicht zu Angesicht gegenüber.",
     "availability": [],
     "squad": {
       "min": 2,

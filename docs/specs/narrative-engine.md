@@ -81,9 +81,10 @@ Reducer on chooseEventOption:
   (no mission id) get no completed entry.
 - Journal entry: `"<script title>: <outcome label>"`.
 - Debrief hint (D-1 mitigation): if `gatedSeen` and
-  `settings.showLockedOptions` is false, append journal entry exactly:
-  `"Debrief: a different team composition might have opened other
-  approaches."` At most once per mission.
+  `settings.showLockedOptions` is false, append journal entry exactly
+  (D-12: player-visible strings are German):
+  `"Debrief: Eine andere Teamzusammenstellung hätte vielleicht andere Wege
+  eröffnet."` At most once per mission.
 - Clear activeMission.
 
 ## 7. Queued-event firing (replaces the Phase 1 TODO in endDay step 6)

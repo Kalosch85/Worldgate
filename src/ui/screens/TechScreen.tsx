@@ -9,6 +9,7 @@ import { canStartResearch, techVisible } from "../../core/economy.js";
 import type { ContentBundleT, GameStateT } from "../../data/schemas.js";
 import type { Action } from "../../core/reducer.js";
 import { ScreenHeader } from "../components/ScreenHeader.js";
+import { strings } from "../strings.js";
 import { buttonStyle, panelStyle, theme } from "../theme.js";
 
 type TechDefT = ContentBundleT["techs"][number];
@@ -21,10 +22,10 @@ function statusOf(state: GameStateT, tech: TechDefT, content: ContentBundleT): T
 }
 
 const STATUS_META: Record<TechStatus, { label: string; color: string }> = {
-  completed: { label: "Researched", color: theme.good },
-  inProgress: { label: "In progress", color: theme.accent },
-  available: { label: "Available", color: theme.text },
-  locked: { label: "Locked", color: theme.textDim },
+  completed: { label: strings.tech.status.completed, color: theme.good },
+  inProgress: { label: strings.tech.status.inProgress, color: theme.accent },
+  available: { label: strings.tech.status.available, color: theme.text },
+  locked: { label: strings.tech.status.locked, color: theme.textDim },
 };
 
 export function TechScreen({
@@ -45,7 +46,7 @@ export function TechScreen({
     <div
       style={{ minHeight: "100dvh", background: theme.bg, color: theme.text, fontFamily: theme.fontFamily }}
     >
-      <ScreenHeader title="Research" onBack={onBack} />
+      <ScreenHeader title={strings.tech.title} onBack={onBack} />
       <main
         style={{
           display: "flex",
@@ -56,14 +57,14 @@ export function TechScreen({
           margin: "0 auto",
         }}
       >
-        <section style={panelStyle} aria-label="Current research">
-          <h2 style={{ margin: "0 0 0.4rem", fontSize: "1rem" }}>Current research</h2>
+        <section style={panelStyle} aria-label={strings.tech.currentResearch}>
+          <h2 style={{ margin: "0 0 0.4rem", fontSize: "1rem" }}>{strings.tech.currentResearch}</h2>
           {current && currentDef ? (
             <>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
                 <span style={{ fontWeight: 600 }}>{currentDef.name}</span>
                 <span style={{ color: theme.textDim, fontVariantNumeric: "tabular-nums" }}>
-                  {Math.floor(current.progress)} / {currentDef.cost} RP
+                  {strings.tech.rp(Math.floor(current.progress), currentDef.cost)}
                 </span>
               </div>
               <div
@@ -85,9 +86,7 @@ export function TechScreen({
               </div>
             </>
           ) : (
-            <p style={{ margin: 0, color: theme.textDim }}>
-              Nothing under research. Pick a tech below to begin.
-            </p>
+            <p style={{ margin: 0, color: theme.textDim }}>{strings.tech.nothingUnderResearch}</p>
           )}
         </section>
 
@@ -112,10 +111,12 @@ export function TechScreen({
                   {tech.description}
                 </p>
                 <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", alignItems: "center" }}>
-                  <span style={{ fontSize: "0.8rem", color: theme.textDim }}>{tech.cost} RP</span>
+                  <span style={{ fontSize: "0.8rem", color: theme.textDim }}>
+                    {strings.tech.costRp(tech.cost)}
+                  </span>
                   {tech.prerequisites.length > 0 && (
                     <span style={{ fontSize: "0.8rem", color: theme.textDim }}>
-                      · Requires:{" "}
+                      {strings.tech.requires}
                       {tech.prerequisites
                         .map((p) => {
                           const pdef = content.techs.find((t) => t.id === p);
@@ -139,10 +140,10 @@ export function TechScreen({
                     onClick={() => dispatch({ type: "startResearch", tech: tech.id })}
                   >
                     {status === "inProgress"
-                      ? "Researching…"
+                      ? strings.tech.researching
                       : willDiscard
-                        ? "Switch research (discards progress)"
-                        : "Start research"}
+                        ? strings.tech.switchResearch
+                        : strings.tech.startResearch}
                   </button>
                 )}
               </section>

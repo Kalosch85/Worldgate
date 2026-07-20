@@ -7,14 +7,15 @@ import type { CSSProperties } from "react";
 import { canAssignPersonnel, type PersonnelAssignments } from "../../core/economy.js";
 import type { GameStateT } from "../../data/schemas.js";
 import type { Action } from "../../core/reducer.js";
+import { strings } from "../strings.js";
 import { buttonStyle, panelStyle, theme } from "../theme.js";
 
 type Track = keyof PersonnelAssignments;
 
 const TRACKS: { key: Track; label: string; drives: string }[] = [
-  { key: "logistics", label: "Logistics", drives: "funds income" },
-  { key: "research", label: "Research", drives: "research points / day" },
-  { key: "infirmary", label: "Infirmary", drives: "fatigue & injury recovery" },
+  { key: "logistics", ...strings.personnel.tracks.logistics },
+  { key: "research", ...strings.personnel.tracks.research },
+  { key: "infirmary", ...strings.personnel.tracks.infirmary },
 ];
 
 const stepBtn: CSSProperties = {
@@ -42,7 +43,7 @@ export function PersonnelPanel({
   };
 
   return (
-    <section style={panelStyle} aria-label="Personnel">
+    <section style={panelStyle} aria-label={strings.personnel.title}>
       <header
         style={{
           display: "flex",
@@ -51,9 +52,9 @@ export function PersonnelPanel({
           marginBottom: "0.75rem",
         }}
       >
-        <h2 style={{ margin: 0, fontSize: "1.05rem" }}>Personnel</h2>
+        <h2 style={{ margin: 0, fontSize: "1.05rem" }}>{strings.personnel.title}</h2>
         <span style={{ color: idle > 0 ? theme.good : theme.textDim, fontSize: "0.9rem" }}>
-          {idle} idle / {state.personnel.total}
+          {strings.personnel.idle(idle, state.personnel.total)}
         </span>
       </header>
 
@@ -68,7 +69,7 @@ export function PersonnelPanel({
               </div>
               <button
                 type="button"
-                aria-label={`Remove one from ${label}`}
+                aria-label={strings.personnel.removeFrom(label)}
                 style={{ ...stepBtn, opacity: value <= 0 ? 0.4 : 1 }}
                 disabled={value <= 0}
                 onClick={() => set(key, -1)}
@@ -80,7 +81,7 @@ export function PersonnelPanel({
               </span>
               <button
                 type="button"
-                aria-label={`Add one to ${label}`}
+                aria-label={strings.personnel.addTo(label)}
                 style={{ ...stepBtn, opacity: idle <= 0 ? 0.4 : 1 }}
                 disabled={idle <= 0}
                 onClick={() => set(key, 1)}

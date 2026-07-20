@@ -13,8 +13,9 @@
  */
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Action } from "../core/reducer.js";
-import type { ContentBundleT, Effect, GameStateT, ResourceIdT } from "../data/schemas.js";
+import type { ContentBundleT, Effect, GameStateT } from "../data/schemas.js";
 import { NextMissions } from "../ui/components/NextMissions.js";
+import { RESOURCE_LABELS, strings, variableLabel } from "../ui/strings.js";
 import { buttonStyle, panelStyle, theme } from "../ui/theme.js";
 import { BattleCanvas } from "./BattleCanvas.js";
 import {
@@ -26,13 +27,6 @@ import {
   type TapResult,
 } from "./battleModel.js";
 import { buildReplay, type ReplayFrame, type ReplayUnit } from "./replay.js";
-
-const RESOURCE_LABELS: Record<ResourceIdT, string> = {
-  funds: "Funds",
-  materials: "Materials",
-  intel: "Intel",
-  exotics: "Exotics",
-};
 
 /** Ability-bar icons, keyed by ability id and served from `public/assets/`
  * under the Vite base ("/Worldgate/" in production). Abilities without an entry
@@ -57,11 +51,6 @@ interface Summary {
   deltas: { label: string; delta: number }[];
   /** Optional authored recap line from the MissionDef (schema `debrief`). */
   debriefText?: string;
-}
-
-function variableLabel(name: string): string {
-  const spaced = name.replace(/_/g, " ");
-  return spaced.charAt(0).toUpperCase() + spaced.slice(1);
 }
 
 /** Player-visible deltas of the mission's victory/defeat effects (mirrors the
@@ -352,13 +341,13 @@ export function BattleScreen({
     return (
       <Shell>
         <section style={{ ...panelStyle, margin: "1rem" }}>
-          <p style={{ margin: 0, color: theme.textDim }}>No active battle.</p>
+          <p style={{ margin: 0, color: theme.textDim }}>{strings.battle.noActiveBattle}</p>
           <button
             type="button"
             style={{ ...buttonStyle("primary"), width: "100%", marginTop: "1rem" }}
             onClick={onExit}
           >
-            Return to base
+            {strings.common.returnToBase}
           </button>
         </section>
       </Shell>
@@ -397,7 +386,7 @@ export function BattleScreen({
             color: replaying ? theme.danger : theme.good,
           }}
         >
-          {replaying ? "Enemy phase" : "Your turn"}
+          {replaying ? strings.battle.enemyPhase : strings.battle.yourTurn}
         </span>
         <span style={{ marginLeft: "auto", fontSize: "0.8rem", color: theme.textDim }}>{view.objective}</span>
       </header>
@@ -445,8 +434,8 @@ export function BattleScreen({
         }}
       >
         <BarButton
-          label="Move"
-          hint={view.selectedUnit ? "" : "select a unit"}
+          label={strings.battle.move}
+          hint={view.selectedUnit ? "" : strings.battle.selectAUnit}
           active={mode.kind === "move"}
           disabled={replaying || !view.selectedUnit}
           onClick={() => setMode({ kind: "move" })}
@@ -456,15 +445,15 @@ export function BattleScreen({
             key={ab.id}
             label={ab.name}
             icon={ABILITY_ICONS[ab.id]}
-            hint={ab.cooldown > 0 ? `CD ${ab.cooldown}` : `${ab.apCost} AP`}
+            hint={ab.cooldown > 0 ? strings.battle.cooldown(ab.cooldown) : strings.battle.ap(ab.apCost)}
             active={ab.active}
             disabled={replaying || !ab.ready}
             onClick={() => setMode({ kind: "ability", ability: ab.id })}
           />
         ))}
         <BarButton
-          label="Interact"
-          hint={interactConsole ? "1 AP" : "—"}
+          label={strings.battle.interact}
+          hint={interactConsole ? strings.battle.ap(1) : "—"}
           active={mode.kind === "interact"}
           // §11: a feedback affordance, not a silent disabled no-op. Enabled
           // whenever a console still needs activating; press surfaces the reason.
@@ -477,7 +466,7 @@ export function BattleScreen({
           onClick={() => setShowLog((s) => !s)}
           aria-pressed={showLog}
         >
-          {showLog ? "Hide log" : "Log"}
+          {showLog ? strings.battle.hideLog : strings.battle.log}
         </button>
         <button
           type="button"
@@ -485,7 +474,7 @@ export function BattleScreen({
           disabled={replaying}
           onClick={requestEndTurn}
         >
-          End Turn
+          {strings.battle.endTurn}
         </button>
       </footer>
 
@@ -555,16 +544,14 @@ function EndTurnConfirm({
       onClick={onCancel}
     >
       <section style={{ ...panelStyle, maxWidth: 360, width: "100%" }} onClick={(e) => e.stopPropagation()}>
-        <p style={{ margin: "0 0 0.6rem", fontWeight: 600 }}>
-          {count} unit{count === 1 ? "" : "s"} can still act — end turn anyway?
-        </p>
+        <p style={{ margin: "0 0 0.6rem", fontWeight: 600 }}>{strings.battle.stillActPrompt(count)}</p>
         <p style={{ margin: "0 0 1rem", fontSize: "0.85rem", color: theme.textDim }}>{names.join(", ")}</p>
         <div style={{ display: "flex", gap: "0.5rem" }}>
           <button type="button" style={{ ...buttonStyle("ghost"), flex: 1 }} onClick={onCancel}>
-            Cancel
+            {strings.battle.cancel}
           </button>
           <button type="button" style={{ ...buttonStyle("primary"), flex: 1 }} onClick={onConfirm}>
-            End turn anyway
+            {strings.battle.endTurnAnyway}
           </button>
         </div>
       </section>
@@ -672,7 +659,7 @@ function SummaryScreen({
               color: win ? theme.good : theme.danger,
             }}
           >
-            {win ? "Victory" : "Defeat"}
+            {win ? strings.battle.victory : strings.battle.defeat}
           </div>
           <h2 style={{ margin: "0.35rem 0 0.75rem", fontSize: "1.3rem" }}>{summary.missionName}</h2>
 
@@ -680,7 +667,9 @@ function SummaryScreen({
             <p style={{ margin: "0 0 0.75rem", lineHeight: 1.5, color: theme.text }}>{summary.debriefText}</p>
           )}
 
-          <h3 style={{ margin: "0.5rem 0 0.4rem", fontSize: "0.95rem", color: theme.textDim }}>Squad</h3>
+          <h3 style={{ margin: "0.5rem 0 0.4rem", fontSize: "0.95rem", color: theme.textDim }}>
+            {strings.battle.squad}
+          </h3>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
             {summary.heroes.map((h) => (
               <div
@@ -697,9 +686,11 @@ function SummaryScreen({
               >
                 <span style={{ fontWeight: 600, flex: 1 }}>{h.name}</span>
                 {h.downed ? (
-                  <span style={{ color: theme.danger, fontSize: "0.8rem", fontWeight: 700 }}>Wounded</span>
+                  <span style={{ color: theme.danger, fontSize: "0.8rem", fontWeight: 700 }}>
+                    {strings.battle.wounded}
+                  </span>
                 ) : (
-                  <span style={{ display: "flex", gap: 2 }} aria-label={`${h.hp} of ${h.maxHp} HP`}>
+                  <span style={{ display: "flex", gap: 2 }} aria-label={strings.battle.hpAria(h.hp, h.maxHp)}>
                     {Array.from({ length: h.maxHp }, (_, i) => (
                       <span
                         key={i}
@@ -720,7 +711,7 @@ function SummaryScreen({
           {summary.deltas.length > 0 && (
             <>
               <h3 style={{ margin: "0.9rem 0 0.4rem", fontSize: "0.95rem", color: theme.textDim }}>
-                Results
+                {strings.battle.results}
               </h3>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
                 {summary.deltas.map((d, i) => (
@@ -750,7 +741,7 @@ function SummaryScreen({
             style={{ ...buttonStyle("primary"), width: "100%", marginTop: "1rem" }}
             onClick={onExit}
           >
-            Return to base
+            {strings.common.returnToBase}
           </button>
         </section>
       </main>

@@ -26,20 +26,20 @@ function rejectReason(
   facility: string,
 ): { code: string; message: string } | null {
   const def = content.facilities.find((f) => f.id === facility);
-  if (!def) return { code: "unknown", message: `Unknown facility '${facility}'.` };
+  if (!def) return { code: "unknown", message: `Unbekannte Einrichtung '${facility}'.` };
   if (state.construction.built.includes(facility)) {
-    return { code: "already_built", message: `${def.name} is already built.` };
+    return { code: "already_built", message: `${def.name} ist bereits gebaut.` };
   }
   if (state.construction.current !== null) {
-    return { code: "in_progress", message: "Another facility is already under construction." };
+    return { code: "in_progress", message: "Es wird bereits eine andere Einrichtung gebaut." };
   }
   if (!def.prerequisites.every((c) => evalCondition(state, content, [], c))) {
-    return { code: "prerequisites", message: `${def.name}'s prerequisites are not met.` };
+    return { code: "prerequisites", message: `Die Voraussetzungen für ${def.name} sind nicht erfüllt.` };
   }
   if (state.resources.funds < def.cost.funds || state.resources.materials < def.cost.materials) {
     return {
       code: "insufficient",
-      message: `${def.name} needs ${def.cost.funds} funds and ${def.cost.materials} materials.`,
+      message: `${def.name} benötigt ${def.cost.funds} Mittel und ${def.cost.materials} Material.`,
     };
   }
   return null;
@@ -89,7 +89,7 @@ export function advanceConstruction(state: GameStateT, ctx: ReducerCtx): GameSta
   // Effects apply in array order (ARCHITECTURE §5); applyEffects returns a
   // fresh draft, so the journal line is appended to that result.
   draft = applyEffects(draft, def.effects, ctx);
-  draft.journal.push({ day: draft.campaign.day, text: `${def.name} completed.` });
+  draft.journal.push({ day: draft.campaign.day, text: `${def.name} fertiggestellt.` });
   return draft;
 }
 

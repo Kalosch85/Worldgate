@@ -21,7 +21,7 @@ export function newCampaign(seed: number, content?: ContentBundleT): GameStateT 
     campaign: { day: 1, seed },
     settings: { showLockedOptions: false },
     resources: { funds: 100, materials: 40, intel: 0, exotics: 0 },
-    variables: { support: 5, trust_rival: 0 },
+    variables: { support: 5, trust_andara: 0 },
     flags: {},
     journal: [],
     modifiers: {},

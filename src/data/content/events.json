@@ -25,6 +25,13 @@
           {
             "id": "o_in_science",
             "text": "Start with the science. Okafor first.",
+            "effects": [
+              {
+                "type": "resource",
+                "resource": "intel",
+                "delta": 4
+              }
+            ],
             "next": {
               "kind": "node",
               "node": "n_in_okafor"
@@ -33,6 +40,13 @@
           {
             "id": "o_in_threats",
             "text": "Start with the threats. Mercer first.",
+            "effects": [
+              {
+                "type": "resource",
+                "resource": "materials",
+                "delta": 4
+              }
+            ],
             "next": {
               "kind": "node",
               "node": "n_in_mercer"
@@ -42,12 +56,39 @@
       },
       {
         "id": "n_in_okafor",
-        "speaker": "Dr. A. Okafor",
-        "text": "Fifty-one addresses in the ledger, one dialed. Address 04 — Recon One went through eleven days ago, before your appointment cleared. Two check-ins: breathable air, terraced fields, a city. Then nothing. Nine days of nothing. The gate holds, the address holds — whatever stopped them, it isn't the physics. That's what frightens me, Director. The physics was supposed to be the hard part.",
+        "text": "Okafor decoded the address notation in six weeks. My predecessor's notes call her indispensable and exhausting. I can work with both. She hands me the brief she prepared before I asked for one: fifty-one addresses, one dialed. Recon One went through to Address 04 eleven days ago. Two check-ins — breathable air, terraced fields, a village on a white road — then nine days of nothing. 'The gate holds,' she says. 'That's what frightens me.'",
         "options": [
           {
-            "id": "o_in_okafor_go",
-            "text": "Show me the dialing floor.",
+            "id": "o_in_okafor_then",
+            "text": "Now the threats. Mercer.",
+            "next": {
+              "kind": "node",
+              "node": "n_in_mercer_2"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_in_mercer",
+        "text": "Mercer. I read the file — a decade of deployments, some so classified even I wasn't cleared to know we'd been there. By the book: fast, efficient, no loose ends. Good. I'll need the book today. His requisitions were signed before I sat down. 'Recon One. Four people, two check-ins, nine days of silence. Somebody stopped them checking in. Plan for that, and you get to be wrong in the good direction.'",
+        "options": [
+          {
+            "id": "o_in_mercer_then",
+            "text": "Now the science. Okafor.",
+            "next": {
+              "kind": "node",
+              "node": "n_in_okafor_2"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_in_mercer_2",
+        "text": "Mercer finds me before I send for him. I read the file — a decade of deployments, some so classified even I wasn't cleared to know we'd been there. By the book: fast, efficient, no loose ends. Good. I'll need the book today. He hears Okafor's brief in silence, then: 'Somebody stopped them checking in. Plan for that, and you get to be wrong in the good direction.'",
+        "options": [
+          {
+            "id": "o_in_mercer2_go",
+            "text": "To the dialing floor.",
             "next": {
               "kind": "node",
               "node": "n_in_decide"
@@ -56,13 +97,12 @@
         ]
       },
       {
-        "id": "n_in_mercer",
-        "speaker": "Cpt. D. Mercer",
-        "text": "Four people. Recon One went through to Address 04 before you got the chair — checked in twice, by the book, then went dark. Nine days now. My manifest says small arms and two crates of optimism, so I'll say what the reports won't: somebody stopped them checking in. Plan for that. Assume the worst and you get to be wrong in the good direction.",
+        "id": "n_in_okafor_2",
+        "text": "Okafor decoded the address notation in six weeks. My predecessor's notes call her indispensable and exhausting. I can work with both. She confirms Mercer's count without softening it: fifty-one addresses, one dialed, Recon One nine days dark on Address 04. 'The gate holds. The address holds. Whatever stopped them checking in, Director — it isn't the physics.'",
         "options": [
           {
-            "id": "o_in_mercer_go",
-            "text": "Show me the dialing floor.",
+            "id": "o_in_okafor2_go",
+            "text": "To the dialing floor.",
             "next": {
               "kind": "node",
               "node": "n_in_decide"
@@ -118,159 +158,6 @@
     ]
   },
   {
-    "id": "ev_first_contact",
-    "title": "The Stranded Survey Team",
-    "entryNode": "n_intro",
-    "nodes": [
-      {
-        "id": "n_intro",
-        "text": "A rival bloc's survey team is stranded among the bones of a dead gate site, their return address burned out. Their leader lowers her weapon first.",
-        "options": [
-          {
-            "id": "o_help",
-            "text": "Offer them passage through our gate.",
-            "effects": [
-              {
-                "type": "resource",
-                "resource": "materials",
-                "delta": -5
-              },
-              {
-                "type": "variable",
-                "variable": "trust_rival",
-                "delta": 2
-              },
-              {
-                "type": "flag",
-                "flag": "helped_rivals",
-                "value": true
-              },
-              {
-                "type": "queueEvent",
-                "event": "ev_first_contact",
-                "delayDays": 30
-              }
-            ],
-            "next": {
-              "kind": "node",
-              "node": "n_help"
-            }
-          },
-          {
-            "id": "o_interrogate",
-            "text": "[Diplomat] Trade passage for what they know.",
-            "requirements": [
-              {
-                "type": "squadHasArchetype",
-                "tag": "diplomat"
-              }
-            ],
-            "effects": [
-              {
-                "type": "resource",
-                "resource": "intel",
-                "delta": 8
-              }
-            ],
-            "next": {
-              "kind": "node",
-              "node": "n_help"
-            }
-          },
-          {
-            "id": "o_data",
-            "text": "[Science 5+] Decode their burned-out address instead.",
-            "requirements": [
-              {
-                "type": "squadSkillAtLeast",
-                "skill": "science",
-                "min": 5
-              }
-            ],
-            "effects": [
-              {
-                "type": "resource",
-                "resource": "exotics",
-                "delta": 2
-              }
-            ],
-            "next": {
-              "kind": "node",
-              "node": "n_help"
-            }
-          },
-          {
-            "id": "o_leave",
-            "text": "Leave them. Not our problem.",
-            "effects": [
-              {
-                "type": "flag",
-                "flag": "abandoned_rivals",
-                "value": true
-              },
-              {
-                "type": "variable",
-                "variable": "trust_rival",
-                "delta": -3
-              },
-              {
-                "type": "fatigue",
-                "scope": "squad",
-                "delta": 5
-              }
-            ],
-            "next": {
-              "kind": "end",
-              "outcome": "out_cold"
-            }
-          }
-        ]
-      },
-      {
-        "id": "n_help",
-        "text": "The crossing is tense but quiet. Their leader memorizes every face on your team before stepping through.",
-        "options": [
-          {
-            "id": "o_return",
-            "text": "Return home.",
-            "next": {
-              "kind": "end",
-              "outcome": "out_contact"
-            }
-          }
-        ]
-      }
-    ],
-    "outcomes": [
-      {
-        "id": "out_contact",
-        "label": "Contact established",
-        "effects": [
-          {
-            "type": "xp",
-            "scope": "squad",
-            "amount": 10
-          },
-          {
-            "type": "log",
-            "text": "Someone on the other side owes us. Or knows us."
-          }
-        ]
-      },
-      {
-        "id": "out_cold",
-        "label": "Walked away",
-        "effects": [
-          {
-            "type": "xp",
-            "scope": "squad",
-            "amount": 5
-          }
-        ]
-      }
-    ]
-  },
-  {
     "id": "ev_vy_arrival",
     "title": "The Silent Valley",
     "entryNode": "n_va_gate",
@@ -311,6 +198,11 @@
                 "value": true
               },
               {
+                "type": "variable",
+                "variable": "trust_andara",
+                "delta": -3
+              },
+              {
                 "type": "fatigue",
                 "scope": "squad",
                 "delta": 10
@@ -332,21 +224,104 @@
             "text": "Stay down until the last one is gone.",
             "next": {
               "kind": "node",
-              "node": "n_va_lead"
+              "node": "n_va_escape"
             }
           }
         ]
       },
       {
-        "id": "n_va_lead",
-        "text": "When the road is empty the old man draws in the dirt: the road, the valley, and high above it a ringed compound — a temple. He touches the crates' shapes, then his own wrists, crossed as if bound. Those the god takes go up the road. He looks at your gear, your offworld faces, and holds up four fingers. Four like you. Taken. Alive when they passed.",
+        "id": "n_va_escape",
+        "text": "The last porter passes and the villagers rise, herding you along the ditch toward the mill path — a hushed, half-running file. Then a boy, not a child, not yet a man, catches his foot in a snare-furrow and goes down hard, staves clattering. Down the road, two flanker Tenders — man-height, quick, heads ticking — swing back toward the sound. Mercer is already running the wrong way.",
+        "options": [
+          {
+            "id": "o_va_hide",
+            "text": "Get him behind cover. Hide.",
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_boy_hidden",
+                "value": true
+              },
+              {
+                "type": "variable",
+                "variable": "trust_andara",
+                "delta": 2
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_va_hide"
+            }
+          },
+          {
+            "id": "o_va_run",
+            "text": "No time to hide. Grab the boy and run for it.",
+            "effects": [
+              {
+                "type": "flag",
+                "flag": "f_vy_boy_run",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_va_run"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_va_hide",
+        "text": "Mercer pulls the boy behind a road-stone and holds him still. Steps. A dry snare-rattle, very close. He rotates them around the stone as the Tenders pass — always the stone between his back and the sweep of their eyeless heads — until the rattle thins away down the white road. In the field rows nobody breathes. Then the boy's father is there, pressing his forehead to his son's.",
+        "options": [
+          {
+            "id": "o_va_hide_on",
+            "text": "Let the villagers lead you clear.",
+            "next": {
+              "kind": "node",
+              "node": "n_va_told"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_va_told",
+        "text": "By the treeline the elder draws glyphs in the dirt — slowly, stroke by stroke, so Okafor can copy every one. An address. He crosses his wrists: the bound. Four fingers: four like you, taken through the gate, alive when they passed. The place the taken are brought. A woman says its name aloud, the first word any of them has risked all day: Veyra.",
         "options": [
           {
             "id": "o_va_home",
-            "text": "Go home with the lead.",
+            "text": "Go home with the address.",
             "next": {
               "kind": "end",
-              "outcome": "out_va_quiet"
+              "outcome": "out_va_hide"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_va_run",
+        "text": "Three strides and the flankers have the angle. Mercer throws the boy down, turns, and puts the first Tender on its back with a burst. The second is nearly on him when Okafor drops it — two rounds, no wasted motion, the range instructor's star pupil. The rattle stops. The whole valley has heard the shots.",
+        "options": [
+          {
+            "id": "o_va_run_watch",
+            "text": "Cover the villagers.",
+            "next": {
+              "kind": "node",
+              "node": "n_va_run_gate"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_va_run_gate",
+        "text": "The father hauls the boy up and presses his forehead to his son's — once, hard. Then the villagers are running, not for the trees: for the gate. An old woman spins the dial-stones through an address Okafor memorizes on instinct; the ring opens and the field families pour through. The gate closes. Silence. They fled to the place the taken are brought — to their god's own door.",
+        "options": [
+          {
+            "id": "o_va_run_home",
+            "text": "Note the address. Go home.",
+            "next": {
+              "kind": "end",
+              "outcome": "out_va_run"
             }
           }
         ]
@@ -367,18 +342,11 @@
       },
       {
         "id": "n_va_procession_fight",
-        "text": "Every hand stops — theirs and yours. Tenders, insect-forms the size of freight cars, file down the white road under tribute loads, and every living thing in the valley holds still as stone until they pass — to the gate, and through it. Okafor checks the fallen villager for a pulse and finds none. Finds, instead, a hide cord at his neck, burned with gate glyphs. An address.",
+        "text": "Every hand stops — theirs and yours. Tenders, insect-forms the size of freight cars, file down the white road under tribute loads, and every living thing in the valley holds still as stone until they pass — to the gate, and through it. Okafor checks the fallen villager for a pulse and finds none. Finds, instead, a hide cord at his throat, burned with gate glyphs: an address. The kind a whole valley wears so its dead can be spoken for where the taken are brought.",
         "options": [
           {
             "id": "o_va_take_address",
             "text": "Pocket the cord. Withdraw before the others regroup.",
-            "effects": [
-              {
-                "type": "flag",
-                "flag": "vy_spare_address",
-                "value": true
-              }
-            ],
             "next": {
               "kind": "node",
               "node": "n_va_fight_exit"
@@ -388,7 +356,7 @@
       },
       {
         "id": "n_va_fight_exit",
-        "text": "The villagers return for their dead in silence, and the silence is a verdict. Whatever the crates were, wherever the taken go, someone in this valley knows — and no one here will ever tell you now. The road runs up toward a ringed compound in the high pass. It is the only lead you are leaving with.",
+        "text": "The villagers return for their dead in silence, and the silence is a verdict. Whatever the cord means, wherever the taken go, someone in this valley knows — and no one here will ever tell you now. The glyphs on a dead boy's cord are the only lead you are leaving with.",
         "options": [
           {
             "id": "o_va_home_cold",
@@ -403,8 +371,8 @@
     ],
     "outcomes": [
       {
-        "id": "out_va_quiet",
-        "label": "The taken go up the road",
+        "id": "out_va_hide",
+        "label": "The address, freely given",
         "effects": [
           {
             "type": "unlockMission",
@@ -417,7 +385,26 @@
           },
           {
             "type": "log",
-            "text": "Address 04: villagers confirmed four offworlders taken alive to a temple compound. The valley pays tribute through the gate."
+            "text": "Address 04: we hid with the villagers and they gave us the address where the taken are brought — Veyra. Four offworlders went through the gate alive. The valley trusts us with its dead."
+          }
+        ]
+      },
+      {
+        "id": "out_va_run",
+        "label": "The address, read off the dial",
+        "effects": [
+          {
+            "type": "unlockMission",
+            "mission": "m_vy_ledger"
+          },
+          {
+            "type": "xp",
+            "scope": "squad",
+            "amount": 10
+          },
+          {
+            "type": "log",
+            "text": "Address 04: two Tenders dead and the shots heard valley-wide. The field families fled through the gate to their god — Okafor holds the address they dialed. The taken went the same way."
           }
         ]
       },
@@ -436,7 +423,7 @@
           },
           {
             "type": "log",
-            "text": "Address 04: a villager is dead by our hands. The taken are marched to a temple compound in the high pass. The valley will remember us."
+            "text": "Address 04: a villager is dead by our hands. His cord carries gate glyphs — the address where this valley's taken and dead are brought. The valley will remember us."
           }
         ]
       }
@@ -452,18 +439,41 @@
         "text": "Karsu: a watermill village of stone and moss where the valley narrows, straddling the tribute road. Smoke from the chimneys. Eyes at the shutters. They knew you were coming before you crossed the bridge.",
         "options": [
           {
-            "id": "o_vl_open",
+            "id": "o_vl_warm",
             "text": "Approach the bridge.",
             "requirements": [
               {
-                "type": "flag",
-                "flag": "vy_villager_killed",
-                "value": false
+                "type": "variable",
+                "variable": "trust_andara",
+                "op": ">=",
+                "value": 2
               }
             ],
             "next": {
               "kind": "node",
-              "node": "n_vl_recognized"
+              "node": "n_vl_welcome"
+            }
+          },
+          {
+            "id": "o_vl_wary",
+            "text": "Approach the bridge.",
+            "requirements": [
+              {
+                "type": "variable",
+                "variable": "trust_andara",
+                "op": ">=",
+                "value": 0
+              },
+              {
+                "type": "variable",
+                "variable": "trust_andara",
+                "op": "<",
+                "value": 2
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vl_wary"
             }
           },
           {
@@ -471,9 +481,10 @@
             "text": "Approach the bridge.",
             "requirements": [
               {
-                "type": "flag",
-                "flag": "vy_villager_killed",
-                "value": true
+                "type": "variable",
+                "variable": "trust_andara",
+                "op": "<",
+                "value": 0
               }
             ],
             "next": {
@@ -484,9 +495,8 @@
         ]
       },
       {
-        "id": "n_vl_recognized",
-        "speaker": "Cpt. D. Mercer",
-        "text": "A miller woman meets you at the bridge — and Mercer stops dead. He has seen her before: Recon One's second check-in, one blurred frame, this same face passing bread across a fence. 'They fed them,' he says quietly. 'Before the god took them, this village fed my people.' The woman — Odel — nods once. The doors of Karsu open.",
+        "id": "n_vl_welcome",
+        "text": "The boy from the road meets you at the bridge, bruised and grinning, and all Karsu has heard the story by now: the offworlder who held him behind a stone and turned with the Tenders' own walk. Odel, the miller, opens the ledger-house door herself. 'Karsu pays what it owes. Come in.'",
         "options": [
           {
             "id": "o_vl_enter",
@@ -514,11 +524,26 @@
       },
       {
         "id": "n_vl_ledger",
-        "text": "The ledger is a mill-book, flour-dusted, older than any hand in the room: every soul the god has taken, written down so someone remembers. On the last page, four entries in fresh ink, marked with an offworlder glyph. Odel touches each name in turn — alive, alive, alive, alive. Held in the temple precinct, where the road becomes a prison. The Penitence.",
+        "text": "The ledger is a mill-book, flour-dusted, older than any hand in the room: every soul the god has taken, written down so someone remembers. Four entries in fresh ink bear an offworlder glyph. Odel touches each in turn — alive. Karsu's porters crossed with the last grain-tithe and saw them: pent below the Penitence, the prison the holy city keeps on Veyra, the world behind the gate.",
         "options": [
           {
             "id": "o_vl_ask_road",
-            "text": "Ask how tribute reaches the temple.",
+            "text": "Ask how grain — and porters — cross to Veyra.",
+            "next": {
+              "kind": "node",
+              "node": "n_vl_first"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_vl_first",
+        "speaker": "Odel",
+        "text": "She banks the fire before she answers, as if the name could hear. 'When the Graced last came down for a taking, the First Blade himself led them. Seryn Vael. He stood at the road shrine and drank his Portion — light, standing in a cup, and he drank it like water. Pray the Door is not his to keep on the day you cross.'",
+        "options": [
+          {
+            "id": "o_vl_ask_crossing",
+            "text": "And the crossing?",
             "next": {
               "kind": "node",
               "node": "n_vl_transport"
@@ -529,7 +554,7 @@
       {
         "id": "n_vl_transport",
         "speaker": "Odel",
-        "text": "Grain goes up the mountain twice a season: carts to the first shrine, then porters to the temple gate. Porters need papers, and papers can be arranged for those Karsu trusts. She looks at Mercer a long moment. 'They fed yours. Karsu pays its debts.' The carts leave soon — and a signal spire on the pass road calls each tribute train through.",
+        "text": "The grain-tithe crosses twice a season: carts to the valley gate, porters through it, straight into the temple stores on the far side. Porters need papers, and papers can be arranged for those Karsu trusts. The spire on the pass road sings each train through — the Door opens for traffic it expects, in and out again. The next tithe leaves soon.",
         "options": [
           {
             "id": "o_vl_porters",
@@ -553,7 +578,7 @@
           },
           {
             "id": "o_vl_own_terms",
-            "text": "Refuse the favor — go overland, on your own terms.",
+            "text": "Refuse the favor — you'll cross as pilgrims, on your own terms.",
             "effects": [
               {
                 "type": "fatigue",
@@ -563,14 +588,70 @@
             ],
             "next": {
               "kind": "end",
-              "outcome": "out_vl_overland"
+              "outcome": "out_vl_pilgrims"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_vl_wary",
+        "text": "A cart half-bars the bridge. The boy Mercer saved is not here — his family fled through the gate with the rest, and Karsu keeps their houses swept for a return nobody promises. Odel, the miller, comes out alone. 'You saved one of ours and cost us the field families. After the shots, the Graced walked this valley for a day — the First Blade's own, hunting. Both things are true. Say what you want.'",
+        "options": [
+          {
+            "id": "o_vl_wary_ask",
+            "text": "Ask about the taken.",
+            "next": {
+              "kind": "node",
+              "node": "n_vl_wary_ledger"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_vl_wary_ledger",
+        "speaker": "Odel",
+        "text": "She brings the mill-book out to the bridge rather than open the door: every taken soul, written so someone remembers. Four fresh entries wear an offworlder glyph — alive, the porters say, pent below the Penitence on Veyra, behind the gate. 'The grain-tithe crosses soon, and the pass spire sings it through the Door. Papers can be had — for those who pay for the risk they carry with them.'",
+        "options": [
+          {
+            "id": "o_vl_wary_porters",
+            "text": "Pay for papers and a place in the tithe train.",
+            "effects": [
+              {
+                "type": "resource",
+                "resource": "materials",
+                "delta": -8
+              },
+              {
+                "type": "flag",
+                "flag": "f_vy_transport",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "end",
+              "outcome": "out_vl_transport"
+            }
+          },
+          {
+            "id": "o_vl_wary_own",
+            "text": "Keep your materials. Cross as pilgrims, on your own terms.",
+            "effects": [
+              {
+                "type": "fatigue",
+                "scope": "squad",
+                "delta": 10
+              }
+            ],
+            "next": {
+              "kind": "end",
+              "outcome": "out_vl_pilgrims"
             }
           }
         ]
       },
       {
         "id": "n_vl_barred",
-        "text": "A cart bars the bridge. Behind it stands all of Karsu, silent the way the valley goes silent for the Tenders. They know what happened in the trees. An old miller woman comes forward alone and speaks across the barrier, because their law demands the taken be spoken for — even to you.",
+        "text": "A cart bars the bridge. Behind it stands all of Karsu, silent the way the valley goes silent for the Tenders. They know what happened in the trees. Odel, the miller, comes forward alone and speaks across the barrier, because their law demands the taken be spoken for — even to you.",
         "options": [
           {
             "id": "o_vl_listen",
@@ -585,11 +666,11 @@
       {
         "id": "n_vl_barred_ledger",
         "speaker": "Odel",
-        "text": "The Luminous One hears every prayer on this road. He keeps the valley fed; the price is tribute, and sometimes the price is people — written in the ledger, so someone remembers. Four offworlders, fresh ink, alive, held where the road becomes a prison: the Penitence. When the spire on the pass sings, the tribute carts go up. You will not be on them. The shutters close.",
+        "text": "'The Luminous One keeps the valley fed; the price is tribute, and sometimes people — written in the ledger, so someone remembers. Your four are alive, pent below the Penitence, on Veyra, behind the gate. When the pass spire sings, the tithe crosses. You will not be on it. And pray the First Blade is not at the Door when you find your own way through.' The shutters close.",
         "options": [
           {
             "id": "o_vl_high_country",
-            "text": "Take the high country alone.",
+            "text": "Cross as pilgrims, then — cold, heavy, alone.",
             "effects": [
               {
                 "type": "fatigue",
@@ -604,7 +685,7 @@
             ],
             "next": {
               "kind": "end",
-              "outcome": "out_vl_overland"
+              "outcome": "out_vl_pilgrims"
             }
           }
         ]
@@ -626,13 +707,13 @@
           },
           {
             "type": "log",
-            "text": "Recon One is alive in the Penitence. Karsu will pass us up the mountain as tribute porters — first, the signal spires that call the carts through."
+            "text": "Recon One is alive below the Penitence on Veyra. Karsu will pass us through with the grain-tithe — first, the pass spires whose call sings each train through the Door, and back out again."
           }
         ]
       },
       {
-        "id": "out_vl_overland",
-        "label": "The long way up",
+        "id": "out_vl_pilgrims",
+        "label": "As pilgrims, then",
         "effects": [
           {
             "type": "unlockMission",
@@ -645,7 +726,7 @@
           },
           {
             "type": "log",
-            "text": "Recon One is alive in the Penitence. No help from Karsu — the climb to the pass spires goes overland, cold and heavy."
+            "text": "Recon One is alive below the Penitence on Veyra. No place in the tithe train — we cross as pilgrims, and the spires on the pass road come first: their call is what opens the Door outward."
           }
         ]
       }
@@ -695,11 +776,11 @@
     "nodes": [
       {
         "id": "n_vy1_arrive",
-        "text": "The holy city crowns the mountain: white stone terraces and bell-towers under two suns, and above them the ringed precinct of the Penitence, where four names in fresh ink are waiting. Pilgrim chatter in the processional market says heretics await 'the Penitence's mercy' — whatever that means, it isn't good.",
+        "text": "Veyra. The Door stands open in its wardhouse on the pilgrim terrace, and it opens one way: the wardens dial no one out without the temple's word. Above the terrace the holy city climbs, white stone and bell-towers, to the ringed precinct of the Penitence — where four names in fresh ink are waiting. The crossing in is free. It is the door home that is shut.",
         "options": [
           {
             "id": "o_vy1_arrive_porters",
-            "text": "Come up with the grain — Karsu's porter papers hold to the first shrine, and feet do the rest.",
+            "text": "Cross with Karsu's tithe train — porters' papers, grain on your shoulders, expected traffic.",
             "requirements": [
               {
                 "type": "flag",
@@ -709,17 +790,68 @@
             ],
             "next": {
               "kind": "node",
-              "node": "n_vy1_gather"
+              "node": "n_vy1_faces"
             }
           },
           {
             "id": "o_vy1_arrive_foot",
-            "text": "Come up the pilgrim road on foot — two more dusty travelers among thousands.",
+            "text": "Cross as pilgrims — two more dusty travelers among the many the Door receives.",
             "requirements": [
               {
                 "type": "flag",
                 "flag": "f_vy_transport",
                 "value": false
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy1_faces"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_vy1_faces",
+        "text": "Faces on the terrace.",
+        "options": [
+          {
+            "id": "o_vy1_faces_hidden",
+            "text": "Among the pilgrims: the boy from the road, and his father, come up with the valley's tithe. The father finds Mercer's eye and folds both hands flat — the valley's thanks, given where the god can see it. The villagers use the network too. They always have.",
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_boy_hidden",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy1_gather"
+            }
+          },
+          {
+            "id": "o_vy1_faces_run",
+            "text": "By the wardhouse, in penitent gray: the boy from the road, and his father — the field families that fled, come to beg pardon for the dead Tenders. The father presses his forehead to his son's, then looks at you: fear and debt in the same face. The villagers use the network too.",
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_boy_run",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy1_gather"
+            }
+          },
+          {
+            "id": "o_vy1_faces_killed",
+            "text": "By the wardhouse, in penitent gray: a face from the treeline — the dead boy's father, come to speak his son's name where the taken and the dead are brought. He looks at you, and through you, and turns away. He knows exactly who you are. The villagers use the network too.",
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "vy_villager_killed",
+                "value": true
               }
             ],
             "next": {
@@ -1333,7 +1465,22 @@
       },
       {
         "id": "n_vy2_a_cells",
-        "text": "Cell block. Rows of doors, and behind one of them, Recon One — four faces Mercer knows from the check-in files, thinner now, alive.",
+        "text": "Cell block. Rows of doors — and behind one, four faces gone gaunt. Barros is at the bars before the light finds him: Mercer's old sergeant, two deployments between them. 'Captain Mercer. Sergeant Barros.' Then, from the dark, steady as a roll call: 'Lieutenant Ehlan. Kade. Imura. All present, sir.' Names and ranks before sentences — days of nothing but discipline, and it holds.",
+        "options": [
+          {
+            "id": "o_vy2_a_open",
+            "text": "Get the doors open.",
+            "next": {
+              "kind": "node",
+              "node": "n_vy2_a_report"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_vy2_a_report",
+        "speaker": "Lt. S. Ehlan",
+        "text": "Ehlan reports like the captivity was a posting: taken on the valley road, marched through the gate, questioned by men who drank light. 'We counted the crossings, Captain. The Door below opens in, never out — no one leaves but by the wardens' word. However you came in, it isn't a way home.' Exit how?",
         "options": [
           {
             "id": "o_vy2_a_quiet",
@@ -1362,7 +1509,7 @@
       },
       {
         "id": "n_vy2_b_kitchens",
-        "text": "Grain carts, meal rounds — the prison runs on ritual, predictable as a clock. You find the cell block, and Recon One behind one door: four of them, alive. And you find Ilo, Dessik's son, three doors down.",
+        "text": "Grain carts, meal rounds — the prison runs on ritual, predictable as a clock. Behind a cell door, four gaunt faces. Barros grips the bars: 'Captain. Sergeant Barros — Ehlan, Kade, Imura, all present, sir.' Ehlan is already reporting: the Door below opens in, never out; no one leaves but by the wardens' word. And three doors down: Ilo, Dessik's son.",
         "options": [
           {
             "id": "o_vy2_b_free_ilo",
@@ -1554,7 +1701,7 @@
       },
       {
         "id": "n_vy2_bottleneck_c",
-        "text": "Gear confiscated, cells beside the very people you came for — the rescue, inverted. At dawn, the cell doors open on their own. The yard awaits.",
+        "text": "Gear confiscated, cells beside the very people you came for — the rescue, inverted. In the dark, names first: Ehlan. Kade. Imura. And Barros, grinning through a split lip at his old captain: 'Took you long enough, sir.' At dawn the cell doors open on their own. The yard awaits.",
         "options": [
           {
             "id": "o_vy2_c_move",
@@ -1624,7 +1771,7 @@
       {
         "id": "n_vy3_confront",
         "speaker": "Seryn Vael",
-        "text": "Seryn draws level, blade still sheathed. 'Say what you came to say — or don't.'",
+        "text": "Seryn draws level, blade still sheathed, and the light is under his skin — faint, in the veins of his throat and hands. The Portion's grace, worn openly, the way another man wears rank. 'Say what you came to say — or don't.'",
         "options": [
           {
             "id": "o_vy3_convince_b1_win",
@@ -2149,7 +2296,7 @@
       },
       {
         "id": "n_vy3_duel",
-        "text": "Three exchanges, blade to blade. He is good — trained since childhood for exactly this — but he is one man against a team, with the freed Recon One at your back.",
+        "text": "Three exchanges, blade to blade, and he is faster than anything you have drilled against — Graced, the Portion burning in him. But he is one man against a team, with the freed Recon One at your back, and numbers do not tire.",
         "options": [
           {
             "id": "o_vy3_duel_clean",
@@ -2247,7 +2394,7 @@
         "options": [
           {
             "id": "o_vy3_resolve_convinced",
-            "text": "Seryn orders the honor guard to stand down. He walks out with you.",
+            "text": "Seryn orders the honor guard to stand down, strips his bandolier of Portion-phials, and hands it over. 'Study it. I am done drinking.' He walks out with you.",
             "requirements": [
               {
                 "type": "flag",
@@ -2282,7 +2429,7 @@
           },
           {
             "id": "o_vy3_resolve_doubt",
-            "text": "Seryn lets you pass — and follows, to see the proof with his own eyes.",
+            "text": "Seryn lets you pass — and follows, to see the proof with his own eyes. His last phials he gives to Okafor: 'Then tell me what I have been drinking.'",
             "requirements": [
               {
                 "type": "flag",
@@ -2317,7 +2464,7 @@
           },
           {
             "id": "o_vy3_resolve_defeated",
-            "text": "You carry the First Blade out on a grain cart. He does not thank you.",
+            "text": "You carry the First Blade out on a grain cart. He does not thank you. In his kit: phials of standing light — the Portion that made him more than a man.",
             "requirements": [
               {
                 "type": "flag",
@@ -2350,12 +2497,17 @@
         "label": "The First Blade defects",
         "effects": [
           {
+            "type": "flag",
+            "flag": "f_vy_sacrament_dose",
+            "value": true
+          },
+          {
             "type": "unlockMission",
             "mission": "m_vy_4"
           },
           {
             "type": "log",
-            "text": "Recon One is coming home — all four, long overdue, walking out the front gate."
+            "text": "Recon One is coming home — all four, long overdue, out through the Door under a tribute call the temple believes."
           }
         ]
       },
@@ -2364,12 +2516,17 @@
         "label": "The First Blade, doubting",
         "effects": [
           {
+            "type": "flag",
+            "flag": "f_vy_sacrament_dose",
+            "value": true
+          },
+          {
             "type": "unlockMission",
             "mission": "m_vy_4"
           },
           {
             "type": "log",
-            "text": "Recon One is coming home — all four, long overdue, walking out the front gate."
+            "text": "Recon One is coming home — all four, long overdue, out through the Door under a tribute call the temple believes."
           }
         ]
       },
@@ -2378,12 +2535,17 @@
         "label": "The First Blade, defeated",
         "effects": [
           {
+            "type": "flag",
+            "flag": "f_vy_sacrament_dose",
+            "value": true
+          },
+          {
             "type": "unlockMission",
             "mission": "m_vy_4"
           },
           {
             "type": "log",
-            "text": "Recon One is coming home — all four, long overdue, walking out the front gate."
+            "text": "Recon One is coming home — all four, long overdue, out through the Door under a tribute call the temple believes."
           }
         ]
       }
@@ -2443,7 +2605,7 @@
         "options": [
           {
             "id": "o_vy4_seryn",
-            "text": "Seryn knows the rites — he stills one pillar with a word and a gesture. The team takes the other.",
+            "text": "Seryn knows the rites — he stills one pillar with a word and a gesture, though his hands have begun to shake between the words. The team takes the other.",
             "requirements": [
               {
                 "type": "flag",
@@ -2933,7 +3095,7 @@
       {
         "id": "n_vy_oath",
         "speaker": "Seryn Vael",
-        "text": "Seryn finds you two days later, unarmed, the temple colors stripped from his coat. 'I served a lamp in the dark because I thought it was the sun,' he says. 'You showed me the difference and did not gloat. That is more than the god ever gave me.' He offers the hilt of his blade, grip first. 'I have one loyalty left to spend. Let it be to something true.'",
+        "text": "Seryn finds you two days later, unarmed, the temple colors stripped from his coat, the light gone from under his skin. His hands are not steady. His voice is. 'The grace is leaving me — the god's last hold on what I am. I served a lamp in the dark because I thought it was the sun. You showed me the difference and did not gloat.' He offers his blade, grip first. 'What is left of me is mine to give. Let it be to something true.'",
         "options": [
           {
             "id": "o_vy_oath_accept",

@@ -43,7 +43,8 @@ describe("App shell", () => {
     click("New Campaign");
     click("Go down.");
     click("Start with the science");
-    click("Show me the dialing floor");
+    click("Now the threats. Mercer.");
+    click("To the dialing floor.");
     click("Assemble the team. We bring them home.");
     click("Return to base");
   };
@@ -62,7 +63,8 @@ describe("App shell", () => {
     click("Go down.");
     click("Start with the threats");
     expect(container!.textContent).toContain("Recon One");
-    click("Show me the dialing floor");
+    click("Now the science. Okafor.");
+    click("To the dialing floor.");
     click("Assemble the team — but at the first sign of trouble, they come back.");
     expect(container!.textContent).toContain("Rescue crossing authorized");
     click("Return to base");
@@ -128,9 +130,11 @@ describe("App shell", () => {
     click("Trust them. Get off the road.");
     expect(container!.textContent).toContain("Tenders");
     click("Stay down until the last one is gone");
-    click("Go home with the lead");
+    click("Get him behind cover. Hide.");
+    click("Let the villagers lead you clear.");
+    click("Go home with the address.");
     // Completion panel shows the outcome and a return control.
-    expect(container!.textContent).toContain("The taken go up the road");
+    expect(container!.textContent).toContain("The address, freely given");
     click("Return to base");
     // Back on the base screen; the mission is resolved.
     expect(container!.textContent).toContain("Personnel");

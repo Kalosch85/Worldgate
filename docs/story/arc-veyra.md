@@ -31,6 +31,35 @@ reproduced verbatim.
      labels + journal lines (the engine has no conditional-text concatenation).
    - ev_vy_dessik_word's queue is wired into M2's free-Ilo option (+5 days),
      the kept-promise symmetry §5 calls for.
+6. D-10 ("The Shut Door" restructure, Fable session) further supersedes
+   parts of this spec; the spec below stays verbatim as history. What
+   changed:
+   - **Two worlds.** The premise's single planet is split: the valley
+     (arrival/ledger/intercept) is **Andara**, Address 04; **Veyra**
+     (Address 09) is the god's seat, one crossing beyond, holding every
+     m_vy_1..5 location. Bible §10–§11 are now the geography authority.
+   - **The Shut Door.** Veyra's gate is warded — inbound free, outbound
+     only by the temple's word. This is the canonical reason Recon One
+     went silent; the tribute call (m_vy_intercept) is the stolen way
+     home. All Veyra-side text assumes it. The mechanical deployment lock
+     ships in a later session (f_vy_call_intercepted is its hook).
+   - **The Portion / the Graced.** Seryn is sacrament-sustained (bible
+     §3); M3 now yields a captured dose on every branch
+     (`f_vy_sacrament_dose`), and t_radiance_cell's visibleIf gates on
+     any(dose, f_vy_godtech) — the §2.2 f_vy_godtech-only gate is
+     superseded. His defection carries a withdrawal arc (text-only).
+   - **No rival gate program exists.** ev_first_contact, m_rival_stranded,
+     trust_rival, and the +30d re-fire are deleted entirely (bible §4
+     reduced to a dormant Act 2 seed; backlog B-1/B-3 deleted, B-8
+     reserved). §1's "Legal note" stands.
+   - **Valley drama + convergence.** The arrival mission's escape gained
+     the falling-boy choice (HIDE/RUN, `trust_andara` +2/0, flags
+     f_vy_boy_hidden/f_vy_boy_run) beside the existing violent branch
+     (trust_andara −3, vy_villager_killed kept; vy_spare_address folded
+     out). All three routes converge on the same Veyra address, and the
+     boy and his father are recognized on Veyra in m_vy_1 (three
+     variants). The M2/M3 rescue is written as a reunion (Recon One
+     roster named, bible §10).
 5. D-9 (early-campaign restructure, Fable session) supersedes parts of this
    spec; the spec below is kept verbatim as history. What changed:
    - "Second Expedition" is renamed **Recon One** everywhere (story-bible

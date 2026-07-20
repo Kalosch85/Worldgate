@@ -110,6 +110,24 @@ ARCHITECTURE.md  DEVELOPMENT_PLAN.md
     campaign). Bible §10 + §7.7 + B-6/B-7 added. Verified green (format,
     typecheck, lint, tests, validate-content, build) plus an adversarial
     4-lens review workflow over the final diff.
+  - **6.2-A5 [F] Restructure 2 — "The Shut Door" (D-10).** ✅ DONE. Content
+    and prose only. Two-world split (Andara / Veyra, bible §10–§11
+    gazetteer); the warded Door (inbound free, outbound temple-held —
+    canon for Recon One's silence; deployment lock deferred, hook
+    `f_vy_call_intercepted`); valley-mission drama rewrite (falling boy:
+    HIDE/RUN beside the violent branch, `trust_andara` +2/0/−3, three-way
+    convergence on the Veyra address, vy_spare_address folded out);
+    Veyra-side recognition of the boy and father (three trust variants);
+    Recon One rescue rewritten as a reunion (roster named, Barros–Mercer
+    connection); the Portion/Graced sacrament + Seryn withdrawal arc
+    (t_radiance_cell now visible on any(f_vy_sacrament_dose,
+    f_vy_godtech)); intro voice pass with the approved Mercer/Okafor
+    lines + order-only fork (science first +4 intel / threats first +4
+    materials); ev_first_contact, m_rival_stranded, and trust_rival
+    deleted end-to-end (bible §4 reduced to a dormant seed; B-1/B-3
+    deleted, B-7 retired, B-8 reserved); bible §7 rule 8
+    (mission-earns-its-slot); `docs/story/gap-list.md` committed. Tests
+    ported off deleted content per narrative-engine §9 (D-10 note).
 - **6.3 [O] Balance pass.** Headless simulated campaign runs; tune income, XP curve, fatigue rates. **Carry-in:** M1–M3 unreachable-diplomacy dead content (confirmed real, resolution D) is deferred here, not fixed in 6.2-A3.
 - **6.4 [S] Squad-composition tutorial.** Contextual, first narrative mission: show how archetypes/skills open paths (uses a one-off scripted reveal, not the global display flag). Includes the post-mission debrief hint hook.
 
@@ -147,4 +165,24 @@ content?)` (the intro reuses the existing incident shape);
   into a spine that can no longer progress). Interactable kind stays
   `"console"` for the spires (renaming the enum is schema churn; flavored
   via mission/journal text instead). New canon in story-bible §10.
+- **D-10 (Fable): Restructure 2 — "The Shut Door."** Player-locked canon:
+  two worlds (**Andara**, Address 04, the valley; **Veyra**, Address 09,
+  the god's seat where tribute flows and the taken are held); Veyra's gate
+  (**the Door**) warded — inbound free, outbound only by the temple's word
+  — as the canonical reason Recon One went silent and the way home is shut
+  (mechanical deployment lock ships separately; `f_vy_call_intercepted`
+  reserved as its hook); Seryn one of the **Graced**, sustained by **the
+  Portion** (refined gate-light), his defection a withdrawal arc; a
+  captured dose (`f_vy_sacrament_dose`, set on every M3 branch) joins
+  `f_vy_godtech` in t_radiance_cell's visibleIf; **no rival gate program
+  exists** — ev_first_contact and m_rival_stranded deleted with every
+  trust_rival read/write (campaign seed now `trust_andara: 0`), Rival Bloc
+  reduced to a dormant Act 2 seed, backlog B-1/B-3 deleted, B-8 reserved
+  ("the weapon lowered first / memorizing every face"); valley mission
+  rewritten around the falling boy (HIDE `trust_andara +2` / RUN 0 /
+  violent −3) with all three routes converging on the one Veyra address
+  (vy_spare_address folded out, B-7 retired); the rescue is a reunion —
+  Recon One named (Ehlan, Barros, Kade, Imura; Barros served under
+  Mercer); bible §7 rule 8: every mission must earn its slot. Story-gap
+  list committed at `docs/story/gap-list.md`.
 - **D-8 RESOLVED (user veto):** Base construction restored to prototype scope, reversing the earlier cut (see "Cut from prototype"). Facilities are content (`FacilityDef` + `facilities.json`) reusing the universal Effect/Condition vocabulary; one build at a time, costs paid on the `build` action, effects applied on completion during the endDay construction step (between Research and Recovery); no upkeep in v1 (revisit in 6.3). Spec: `docs/specs/facilities.md`.

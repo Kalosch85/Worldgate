@@ -17,6 +17,7 @@ import { useMemo, useState, type ReactNode } from "react";
 import { eligibleOptions } from "../../core/narrative.js";
 import type { Action } from "../../core/reducer.js";
 import type { ContentBundleT, Effect, GameStateT, ResourceIdT } from "../../data/schemas.js";
+import { NextMissions } from "../components/NextMissions.js";
 import { buttonStyle, panelStyle, theme } from "../theme.js";
 
 const RESOURCE_LABELS: Record<ResourceIdT, string> = {
@@ -34,7 +35,10 @@ interface Delta {
 interface Completion {
   label: string;
   deltas: Delta[];
-  debrief: boolean;
+  /** The D-1 team-composition hint (an anonymous one-liner, not authored). */
+  hint: boolean;
+  /** Optional authored recap line from the outcome (schema `debrief`). */
+  debriefText?: string;
 }
 
 /** Prettify a variable id for display: `trust_andara` → "Trust andara". */
@@ -65,11 +69,13 @@ export function EventScreen({
   state,
   content,
   dispatch,
+  newlyUnlocked,
   onDone,
 }: {
   state: GameStateT;
   content: ContentBundleT;
   dispatch: (action: Action) => void;
+  newlyUnlocked: readonly string[];
   onDone: () => void;
 }) {
   const [completion, setCompletion] = useState<Completion | null>(null);
@@ -99,11 +105,12 @@ export function EventScreen({
       // The debrief hint arms if this node has a squad-gated option now, or
       // gatedSeen was already set on a prior node (mirrors reducer §5.2/§6).
       const nodeGated = node.options.some((o) => eligibility.get(o.id)?.gatedBySquad);
-      const debrief = (active.gatedSeen || nodeGated) && !state.settings.showLockedOptions;
+      const hint = (active.gatedSeen || nodeGated) && !state.settings.showLockedOptions;
       setCompletion({
         label: outcome?.label ?? "",
         deltas: visibleDeltas([...option.effects, ...(outcome?.effects ?? [])]),
-        debrief,
+        hint,
+        debriefText: outcome?.debrief,
       });
       setToast(null);
     } else {
@@ -147,8 +154,14 @@ export function EventScreen({
           Mission complete
         </div>
         <h2 style={{ margin: "0.35rem 0 0.75rem", fontSize: "1.3rem" }}>{completion.label}</h2>
+        {completion.debriefText && (
+          <p style={{ margin: "0 0 0.75rem", lineHeight: 1.5, color: theme.text }}>
+            {completion.debriefText}
+          </p>
+        )}
         <DeltaList deltas={completion.deltas} emptyText="No immediate change." />
-        {completion.debrief && (
+        <NextMissions missionIds={newlyUnlocked} content={content} />
+        {completion.hint && (
           <p
             style={{
               margin: "0.9rem 0 0",

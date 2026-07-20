@@ -135,6 +135,11 @@ describe("App shell", () => {
     click("Go home with the address.");
     // Completion panel shows the outcome and a return control.
     expect(container!.textContent).toContain("The address, freely given");
+    // Authored debrief (schema `debrief`) is shown on the summary.
+    expect(container!.textContent).toContain("You went to ground with the field families");
+    // Auto-derived "Next:" section lists the mission this outcome unlocked.
+    expect(container!.textContent).toContain("Next");
+    expect(container!.textContent).toContain("The Ledger of the Taken");
     click("Return to base");
     // Back on the base screen; the mission is resolved.
     expect(container!.textContent).toContain("Personnel");
@@ -157,6 +162,28 @@ describe("App shell", () => {
     expect(container!.textContent).toContain("A silence bought in blood");
     click("Return to base");
     expect(container!.textContent).toContain("Personnel");
+  });
+
+  it("pulses the worldgate nav for a new mission and clears it once looked at", () => {
+    render();
+    startCampaign();
+    // The intro unlocked The Silent Valley — the worldgate nav draws attention.
+    expect(container!.querySelector('[aria-label="New mission available"]')).not.toBeNull();
+    // Opening the worldgate marks it seen; back at base the pulse is gone.
+    click("Worldgate");
+    click("Base");
+    expect(container!.querySelector('[aria-label="New mission available"]')).toBeNull();
+  });
+
+  it("pulses the research nav while idle and clears it once research starts", () => {
+    render();
+    startCampaign();
+    // Nothing under research yet, and Gate Stabilizer is available → pulse.
+    expect(container!.querySelector('[aria-label="No research in progress"]')).not.toBeNull();
+    click("Research");
+    click("Start research");
+    click("Base");
+    expect(container!.querySelector('[aria-label="No research in progress"]')).toBeNull();
   });
 
   it("builds a facility from the base screen and shows the progress row", () => {

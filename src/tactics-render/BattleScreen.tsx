@@ -14,6 +14,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Action } from "../core/reducer.js";
 import type { ContentBundleT, Effect, GameStateT, ResourceIdT } from "../data/schemas.js";
+import { NextMissions } from "../ui/components/NextMissions.js";
 import { buttonStyle, panelStyle, theme } from "../ui/theme.js";
 import { BattleCanvas } from "./BattleCanvas.js";
 import {
@@ -54,6 +55,8 @@ interface Summary {
   missionName: string;
   heroes: HeroResult[];
   deltas: { label: string; delta: number }[];
+  /** Optional authored recap line from the MissionDef (schema `debrief`). */
+  debriefText?: string;
 }
 
 function variableLabel(name: string): string {
@@ -80,11 +83,13 @@ export function BattleScreen({
   state,
   content,
   dispatch,
+  newlyUnlocked,
   onExit,
 }: {
   state: GameStateT;
   content: ContentBundleT;
   dispatch: (action: Action) => void;
+  newlyUnlocked: readonly string[];
   onExit: () => void;
 }) {
   const active = state.activeMission?.kind === "tactical" ? state.activeMission : null;
@@ -322,12 +327,18 @@ export function BattleScreen({
       missionName: def?.name ?? ref.id,
       heroes,
       deltas: visibleDeltas(effects),
+      // A MissionDef carries a single recap line — the mission's success
+      // debrief. A defeat is already communicated by the outcome banner and
+      // effects, so the authored recap only shows on victory.
+      debriefText: outcome === "victory" ? def?.debrief : undefined,
     };
   }
 
   // ------------------------------------------------------------------ summary
   if (summary) {
-    return <SummaryScreen summary={summary} onExit={onExit} />;
+    return (
+      <SummaryScreen summary={summary} newlyUnlocked={newlyUnlocked} content={content} onExit={onExit} />
+    );
   }
 
   // A battle just resolved but the summary effect hasn't committed yet — render
@@ -625,7 +636,17 @@ function BarButton({
   );
 }
 
-function SummaryScreen({ summary, onExit }: { summary: Summary; onExit: () => void }) {
+function SummaryScreen({
+  summary,
+  newlyUnlocked,
+  content,
+  onExit,
+}: {
+  summary: Summary;
+  newlyUnlocked: readonly string[];
+  content: ContentBundleT;
+  onExit: () => void;
+}) {
   const win = summary.outcome === "victory";
   return (
     <Shell>
@@ -654,6 +675,10 @@ function SummaryScreen({ summary, onExit }: { summary: Summary; onExit: () => vo
             {win ? "Victory" : "Defeat"}
           </div>
           <h2 style={{ margin: "0.35rem 0 0.75rem", fontSize: "1.3rem" }}>{summary.missionName}</h2>
+
+          {summary.debriefText && (
+            <p style={{ margin: "0 0 0.75rem", lineHeight: 1.5, color: theme.text }}>{summary.debriefText}</p>
+          )}
 
           <h3 style={{ margin: "0.5rem 0 0.4rem", fontSize: "0.95rem", color: theme.textDim }}>Squad</h3>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
@@ -717,6 +742,8 @@ function SummaryScreen({ summary, onExit }: { summary: Summary; onExit: () => vo
               </div>
             </>
           )}
+
+          <NextMissions missionIds={newlyUnlocked} content={content} />
 
           <button
             type="button"

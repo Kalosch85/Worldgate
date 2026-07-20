@@ -5,6 +5,7 @@
  */
 import type { Action } from "../../core/reducer.js";
 import type { ContentBundleT, GameStateT } from "../../data/schemas.js";
+import { AttentionDot } from "../components/AttentionDot.js";
 import { ResourceBar } from "../components/ResourceBar.js";
 import { PersonnelPanel } from "../components/PersonnelPanel.js";
 import { FacilitiesPanel } from "../components/FacilitiesPanel.js";
@@ -17,12 +18,16 @@ export function BaseScreen({
   dispatch,
   onOpenMenu,
   onNavigate,
+  researchAttention,
+  worldgateAttention,
 }: {
   state: GameStateT;
   content: ContentBundleT;
   dispatch: (action: Action) => void;
   onOpenMenu: () => void;
   onNavigate: (screen: "tech" | "roster" | "worldgate") => void;
+  researchAttention: boolean;
+  worldgateAttention: boolean;
 }) {
   const missionActive = state.activeMission !== null;
 
@@ -72,14 +77,24 @@ export function BaseScreen({
         )}
 
         <nav style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.5rem" }}>
-          <button type="button" style={buttonStyle("ghost")} onClick={() => onNavigate("worldgate")}>
+          <button
+            type="button"
+            style={{ ...buttonStyle("ghost"), position: "relative" }}
+            onClick={() => onNavigate("worldgate")}
+          >
             🌐 Worldgate
+            {worldgateAttention && <AttentionDot label="New mission available" />}
           </button>
           <button type="button" style={buttonStyle("ghost")} onClick={() => onNavigate("roster")}>
             👥 Roster
           </button>
-          <button type="button" style={buttonStyle("ghost")} onClick={() => onNavigate("tech")}>
+          <button
+            type="button"
+            style={{ ...buttonStyle("ghost"), position: "relative" }}
+            onClick={() => onNavigate("tech")}
+          >
             🔬 Research
+            {researchAttention && <AttentionDot label="No research in progress" />}
           </button>
         </nav>
 

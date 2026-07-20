@@ -69,7 +69,7 @@ describe("App shell", () => {
     click("Jetzt die Wissenschaft. Okafor.");
     click("Zur Wählebene.");
     click("beim ersten Zeichen von Ärger");
-    expect(container!.textContent).toContain("Rettungsübergang genehmigt");
+    expect(container!.textContent).toContain("Rettungssprung genehmigt");
     click("Zurück zur Basis");
     expect(container!.textContent).toContain("Mittel");
     expect(container!.textContent).toContain("Personal");

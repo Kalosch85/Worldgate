@@ -43,7 +43,7 @@ verloren geht; die Arc-Spezifikation unten ist wortwörtlich reproduziert.
    wortwörtlich als Historie erhalten. Was sich geändert hat:
    - **Zwei Welten.** Der einzelne Planet der Prämisse ist aufgeteilt: Das
      Tal (Ankunft/Verzeichnis/Abfangen) ist **Andara**, Adresse 04; **Veyra**
-     (Adresse 09) ist der Sitz des Gottes, einen Übergang weiter, und
+     (Adresse 09) ist der Sitz des Gottes, einen Sprung weiter, und
      beherbergt jeden Schauplatz von m_vy_1..5. Bibel §10–§11 sind nun die
      Geographie-Autorität.
    - **Die verschlossene Tür.** Veyras Tor ist verwahrt — hinein frei, hinaus
@@ -52,7 +52,7 @@ verloren geht; die Arc-Spezifikation unten ist wortwörtlich reproduziert.
      nach Hause. Aller Text auf der Veyra-Seite setzt dies voraus. Die
      mechanische Einsatzsperre wird in einer späteren Session ausgeliefert
      (f_vy_call_intercepted ist ihr Aufhänger).
-   - **Die Portion / die Begnadeten.** Seryn wird durch das Sakrament am
+   - **Die Portion / die Begnadeten.** Seryn wird durch die Segnung am
      Leben gehalten (Bibel §3); M3 liefert nun auf jedem Zweig eine erbeutete
      Dosis (`f_vy_sacrament_dose`), und das visibleIf von t_radiance_cell
      koppelt an any(dose, f_vy_godtech) — die reine f_vy_godtech-Kopplung aus
@@ -84,14 +84,14 @@ verloren geht; die Arc-Spezifikation unten ist wortwörtlich reproduziert.
      ev_intro (automatischer Start bei newCampaign) → m_vy_arrival →
      m_vy_ledger → m_vy_intercept (taktisch) → m_vy_1.
    - M1s Eintrittsknoten ist neu geschrieben (der Spieler ist zu diesem
-     Zeitpunkt bereits dreimal nach Veyra übergesetzt — Ankunft, Verzeichnis,
+     Zeitpunkt bereits dreimal nach Veyra gesprungen — Ankunft, Verzeichnis,
      Abfangen; mehr bei Wiederholungen des Abfangens) und verzweigt auf
      f_vy_transport (Trägerpapiere von Karsu).
    - ev_first_contact vom Kampagnen-Hauptstrang zu m_rival_stranded verschoben
      („Notruf: Adresse 11"), freigeschaltet durch den Sieg bei m_vy_intercept.
 -->
 
-# Arc: Der Leuchtende (Veyra) — Content-Spezifikation
+# Arc: Der Erleuchtete (Veyra) — Content-Spezifikation
 
 Status: FABLE-VERFASST, bereit für die Content-Eingabe. Zieldateien: `src/data/content/events.json`, `missions.json`, `heroes.json`, `techs.json`, `maps.json` (+ kleine Schema-Ergänzung, §8).
 Passt zu: D-3 (Verletzungen, kein Permadeath), D-5 (deterministische Erzählung), D-6 (Verzweigung-und-Engstelle), D-1 (versteckte gesperrte Optionen + Debrief-Hinweis).
@@ -108,7 +108,7 @@ Passt zu: D-3 (Verletzungen, kein Permadeath), D-5 (deterministische Erzählung)
 
 ## 1. Prämisse
 
-Planet **Veyra**: eine theokratische Gesellschaft, die **den Leuchtenden (Oru)** verehrt — in Wahrheit ein Überlebender einer Vorläuferspezies, der Projektions-/Exo-Schalen-Technologie nutzt, um göttlich zu erscheinen. Die **Zweite Expedition** von Worldgate (generisches Personal, keine Helden) wurde bei der Ankunft gefangen genommen und wird in der **Penitenz** festgehalten, einem Basilika-Gefängnis. Der Vorkämpfer des Gottes ist **Seryn Vael, „die Erste Klinge"** — ein wahrer Gläubiger, kein Zyniker. Arc-Thema: Glaube vs. Beweise; jeder Pfad erschüttert die veyranische Orthodoxie auf andere Weise.
+Planet **Veyra**: eine theokratische Gesellschaft, die **den Erleuchteten (Oru)** verehrt — in Wahrheit ein Überlebender einer Vorläuferspezies, der Projektions-/Exo-Schalen-Technologie nutzt, um göttlich zu erscheinen. Die **Zweite Expedition** von Worldgate (generisches Personal, keine Helden) wurde bei der Ankunft gefangen genommen und wird in der **Bußstätte** festgehalten, einem Basilika-Gefängnis. Der Vorkämpfer des Gottes ist **Seryn Vael, „die Erste Klinge"** — ein wahrer Gläubiger, kein Zyniker. Arc-Thema: Glaube vs. Beweise; jeder Pfad erschüttert die veyranische Orthodoxie auf andere Weise.
 
 Rechtlicher Hinweis: alle Namen sind original; Ähnlichkeit nur auf Prämissen-/Genre-Ebene.
 
@@ -204,7 +204,7 @@ Missionslisten-Eintrag: Der Arc schaltet jeweils eine sichtbare Mission auf einm
 ### M1 — `m_vy_1` „Pilgerwege" (narrativ)
 
 Freischaltung: Arc-Auslöser (bestehender Kampagnen-Aufhänger oder unmittelbar nach dem aktuellen Content; Implementierende: an das anhängen, was derzeit neue Missionen koppelt).
-**Eintritt `n_arrive`:** Das Tor öffnet sich auf eine terrassierte heilige Stadt. Briefing-Text: die letzte Übertragung der Zweiten Expedition, seit 9 Tagen verstummt; das lokale Geraune sagt „Ketzer erwarten die Gnade der Penitenz".
+**Eintritt `n_arrive`:** Das Tor öffnet sich auf eine terrassierte heilige Stadt. Briefing-Text: die letzte Übertragung der Zweiten Expedition, seit 9 Tagen verstummt; das lokale Geraune sagt „Ketzer erwarten die Gnade der Bußstätte".
 **`n_gather` (Hub, bis zu 2 von 3 wählen — als wieder aufsuchbarer Hub mit Einmal-Flags je Option umsetzen):**
 
 - Unter den Pilgern lauschen [diplomacy ≥ 4] → f_vy_intel_pilgrims, doubt +0, Text sät Doktrin („Oru wandelt, wo er verehrt wird").
@@ -225,7 +225,7 @@ Freischaltung: Arc-Auslöser (bestehender Kampagnen-Aufhänger oder unmittelbar 
 
 ---
 
-### M2 — `m_vy_2` „Die Penitenz" (narrativ, Router)
+### M2 — `m_vy_2` „Die Bußstätte" (narrativ, Router)
 
 **`n_router`:** Bedingungen auf den approach-Flags → drei Zweige. Engstellen-Ziel: Endzustand = Konfrontation mit dem Ersten steht bevor, Expedition lokalisiert.
 
@@ -238,7 +238,7 @@ Freischaltung: Arc-Auslöser (bestehender Kampagnen-Aufhänger oder unmittelbar 
 **Zweig B (Arbeiter), `b1_kitchens`:** mit den Getreidekarren eintreten; die Essensrunden gewähren Zugang zum Zellenblock (Text: das Gefängnis läuft nach Ritual — vorhersehbar). Expedition ausfindig machen. **Ilo-Entscheidung** (nur falls f_vy_owe_ilo, was auf diesem Zweig stets wahr ist):
 
 - Auch Ilo befreien → f_vy_ilo_freed; schwierigere Exfiltration: eine zusätzliche Probe [resolve ≥ 5] oder f_vy_alarm hinnehmen.
-- Ihn zurücklassen → f_vy_ilo_abandoned → **unmittelbare Folge:** Dessik, der das Tor beobachtet, verrät es den Wärtern; der Ausgang wird zu einem laufenden Gefecht: ein erforderlicher Held erhält inj_shaken, f_vy_alarm. (Gebrochene Versprechen beißen jetzt, nicht erst später.)
+- Ihn zurücklassen → f_vy_ilo_abandoned → **unmittelbare Folge:** Dessik, der das Tor beobachtet, verrät es den Wachen; der Ausgang wird zu einem laufenden Gefecht: ein erforderlicher Held erhält inj_shaken, f_vy_alarm. (Gebrochene Versprechen beißen jetzt, nicht erst später.)
   → `n_bottleneck`.
 
 **Zweig C (Sturm), `c1_assault` (ARC-D1 — geskriptet, nicht taktisch):** Drei Beats eskalierenden Textes; die Mauergeschütze sind Vorläufer-Tech, Schilde ignorieren Handfeuerwaffen. Es wird keine gewinnbare Option präsentiert; die beiden angebotenen Wahlmöglichkeiten („die Bresche stürmen" / „zum Tor zurückfallen") enden beide in Gefangennahme — die Rückfall-Variante erspart Verletzungen, die Sturm-Variante fügt einem Helden inj_wounded hinzu. Effekte: f_vy_captured, Text bestätigt beschlagnahmte Ausrüstung. Erwacht in den Zellen neben der Zweiten Expedition — die Rettung umgekehrt. → `n_bottleneck`.
@@ -283,14 +283,14 @@ Ergebnis: f_vy_godtech, exotics +3, Freischaltung t_radiance_cell (sichtbar), un
 
 ---
 
-### M5 — `m_vy_5` „Der Leuchtende" (narrativ)
+### M5 — `m_vy_5` „Der Erleuchtete" (narrativ)
 
 Eintritt: Der Gewölbekern resoniert mit einem Sanktum in der Caldera; das Team verfolgt es. **`n_witness`:** Der Gott manifestiert sich — eine hohe Gestalt aus Licht, umgeben von Maschinerie, die die Texte nie erwähnen. Falls Seryn anwesend (jeder Rekrutierungszustand inkl. als Zeuge mitgebrachter Gefangener — Implementierende: Bedingung auf f_vy_seryn_recruited ODER f_vy_first_defeated): ein Absatz, in dem er zusieht.
 
 **`n_decide`:**
 
 1. **Beobachten und aufzeichnen.** Effekte: f_vy_watched_god, Freischaltung t_projection_theory, intel +20. Das Wesen beendet seinen Ritus und geht; Ihr habt alles auf den Sensoren. Falls f_vy_first_doubt: Seryns Wandlung vollzieht sich (Text). Falls f_vy_first_defeated: Seryn, der vom Grat aus zusieht, bittet um ein Wort — **queueEvent ev_vy_seryn_oath, fireOnDay +2** → jenes Event: addHero h_seryn, f_vy_seryn_recruited.
-2. **Angreifen.** Geskriptet: Das Wesen schirmt sich ab, steigt auf, wechselt durch ein Tor hinüber — **entkommt in jedem Fall** (festgelegt). Doch der Anker des Sanktums zerbirst im Schlagabtausch: f_vy_fought_god, f_vy_anchor_destroyed, Variable support +2, queueEvent ev_vy_gratitude (fireOnDay +3: der veyranische Übergangsrat sendet Tribut — funds +40, Log). Kosten: ein erforderlicher Held inj_shaken (vom Blick in jenes Licht), **kein t_projection_theory**, und falls f_vy_first_defeated: Seryn reißt sich im Chaos los, um seinen Gott zu schützen, und ist fort — Rekrut dauerhaft verloren (Text: er schuldete ihm einen Tod, wenn schon nichts anderes).
+2. **Angreifen.** Geskriptet: Das Wesen schirmt sich ab, steigt auf, springt durch ein Tor — **entkommt in jedem Fall** (festgelegt). Doch der Anker des Sanktums zerbirst im Schlagabtausch: f_vy_fought_god, f_vy_anchor_destroyed, Variable support +2, queueEvent ev_vy_gratitude (fireOnDay +3: der veyranische Übergangsrat sendet Tribut — funds +40, Log). Kosten: ein erforderlicher Held inj_shaken (vom Blick in jenes Licht), **kein t_projection_theory**, und falls f_vy_first_defeated: Seryn reißt sich im Chaos los, um seinen Gott zu schützen, und ist fort — Rekrut dauerhaft verloren (Text: er schuldete ihm einen Tod, wenn schon nichts anderes).
    Der Zielkonflikt ist ausdrücklich und exklusiv: **Wissenschaft (Tech + Seryn-auf-allen-Pfaden) vs. Politik (support + funds + eine befreite Welt)**.
 
 **Epilog-Knoten:** variiert auf 4 Achsen (Vorgehen, Ilo, Seryn-Zustand, beobachten/kämpfen). Schreibe 1 kurzen Absatz je Achse, per Bedingung verkettet — keine kombinatorische Explosion (4 Slots, je 2–3 Varianten ≈ 10 Absätze).

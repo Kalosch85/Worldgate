@@ -16,7 +16,7 @@
   {
     "id": "m_vy_ledger",
     "name": "Das Verzeichnis der Genommenen",
-    "description": "Zurück ins Tal. Karsu führt das Verzeichnis der Genommenen — und weiß, ob vier Fremdweltler hinter dem Tor noch am Leben sind.",
+    "description": "Zurück ins Tal. Karsu führt das Verzeichnis der Genommenen — und weiß, ob vier Außenweltler hinter dem Tor noch am Leben sind.",
     "availability": [],
     "squad": {
       "min": 2,
@@ -131,7 +131,7 @@
   {
     "id": "m_vy_1",
     "name": "Pilgerwege",
-    "description": "Die Tür auf Veyra öffnet nur in eine Richtung. Setzt zum Sitz des Gottes über und findet einen Weg in die Penitenz, bevor Recon Ones Spur erkaltet.",
+    "description": "Die Tür auf Veyra öffnet nur in eine Richtung. Springt zum Sitz des Gottes und findet einen Weg in die Bußstätte, bevor Recon Ones Spur erkaltet.",
     "availability": [],
     "squad": {
       "min": 2,
@@ -144,7 +144,7 @@
   },
   {
     "id": "m_vy_2",
-    "name": "Die Penitenz",
+    "name": "Die Bußstätte",
     "description": "Der Plan steht. Dringt in das Basilika-Gefängnis ein und findet Recon One.",
     "availability": [],
     "squad": {
@@ -159,7 +159,7 @@
   {
     "id": "m_vy_3",
     "name": "Die Erste Klinge",
-    "description": "Seryn Vael, der Streiter des Leuchtenden, steht zwischen euch und dem Weg hinaus.",
+    "description": "Seryn Vael, der Streiter des Erleuchteten, steht zwischen euch und dem Weg hinaus.",
     "availability": [],
     "squad": {
       "min": 2,
@@ -186,7 +186,7 @@
   },
   {
     "id": "m_vy_5",
-    "name": "Der Leuchtende",
+    "name": "Der Erleuchtete",
     "description": "Der Kern des Gewölbes schwingt im Gleichklang mit einem Sanktum in der Caldera. Verfolgt es und tretet dem Gott von Angesicht zu Angesicht gegenüber.",
     "availability": [],
     "squad": {

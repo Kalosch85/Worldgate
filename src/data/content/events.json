@@ -6,7 +6,7 @@
     "nodes": [
       {
         "id": "n_in_sign",
-        "text": "Ich wusste nicht, was mich erwartete, als ich unterschrieb. „Geheime Versetzung. Annehmen oder ablehnen.“ Kein Briefing, keine Einzelheiten — nur eine Unterschriftszeile und ein wartender Wagen. Eigentlich nichts Neues. Und doch schien etwas anders. Womit ich sicher nicht gerechnet hatte: mitten in einen Science-Fiction-Comic geworfen zu werden. Interstellare Reisen durch einen leuchtenden Ring. Nun. Das ist neu. Funktionsweise? Unklar. Herkunft? Unbekannt. Egal — seit Cassy fort ist, weiß ich ohnehin nicht, wohin mit mir. Da kann ich die Arbeit gebrauchen. Vielleicht mehr noch den Abstand.",
+        "text": "Ich wusste nicht, was mich erwartete, als ich unterschrieb. „Geheime Versetzung. Annehmen oder ablehnen.“ Kein Briefing, keine Einzelheiten — nur eine Unterschriftszeile und ein wartender Wagen. Eigentlich nichts Neues. Und doch schien etwas anders. & Womit ich sicher nicht gerechnet hatte: mitten in einen Science-Fiction-Comic geworfen zu werden. Interstellare Reisen durch einen leuchtenden Ring. & Nun. Das ist neu. Funktionsweise? Unklar. Herkunft? Unbekannt. && Egal — seit Cassy fort ist, weiß ich ohnehin nicht, wohin mit mir. Da kann ich die Arbeit gebrauchen. Vielleicht mehr noch den Abstand.",
         "options": [
           {
             "id": "o_in_down",
@@ -20,7 +20,7 @@
       },
       {
         "id": "n_in_ring",
-        "text": "Vierhundert Meter tief in einem verlassenen Bergwerk hängt der Ring in seiner Halterung, als hielte er den Atem an. Keine Bewegung — und doch das Gefühl, jeden Moment müsse etwas geschehen. Seit heute Morgen unter meinem Kommando, samt einem Budget, das seinesgleichen sucht. Im Briefingraum warten zwei Soldaten: Dr. Okafor und Captain Mercer, sichtlich ungeduldig. Sieht aus, als bliebe keine Zeit zum Auspacken. Wen ich zuerst anhöre, wird bemerkt werden. Alle Entscheidungen haben Konsequenzen — manche positiv, manche negativ. Manche beides, andere liegen im Auge des Betrachters …",
+        "text": "Vierhundert Meter tief in einem verlassenen Bergwerk hängt der Ring in seiner Halterung, als hielte er den Atem an. Keine Bewegung — und doch das Gefühl, jeden Moment müsse etwas geschehen. Seit heute Morgen unter meinem Kommando, samt einem Budget, das seinesgleichen sucht. Im Briefingraum warten zwei Soldaten: Dr. Okafor und Captain Mercer, sichtlich ungeduldig. Sieht aus, als bliebe keine Zeit zum Auspacken. Wen ich zuerst anhöre, wird bemerkt werden. && Alle Entscheidungen haben Konsequenzen — manche positiv, manche negativ. Manche beides, andere liegen im Auge des Betrachters …",
         "options": [
           {
             "id": "o_in_science",
@@ -56,7 +56,7 @@
       },
       {
         "id": "n_in_okafor",
-        "text": "Dr. Okafor entschlüsselte die Adressnotation in sechs Wochen. Die Akte nennt sie unentbehrlich, unermüdlich und anstrengend. Mit zwei davon komme ich klar. Sie reicht mir das Briefing, fertig, ehe ich darum bat: einundfünfzig Adressen entschlüsselt, eine einzige je gewählt. Recon One war das erste Team, das je hindurchging — ein Test, kaum mehr. Vor drei Tagen gesprungen zu Adresse 04. Zwei Meldungen: atembare Luft, Terrassenfelder, ein Dorf an einer weißen Straße. Dann, seit zwei Tagen, nichts. „Das Tor hält. Die Adresse hält, die Verbindung ist stabil. Was auch immer sie an ihren Meldungen gehindert hat, Direktor — es ist nicht die Physik. Und genau das macht mir Angst.“",
+        "text": "Dr. Okafor entschlüsselte die Adressnotation in sechs Wochen. Die Akte nennt sie unentbehrlich, unermüdlich und anstrengend. Mit zwei davon komme ich klar. Sie reicht mir das Briefing, fertig, ehe ich darum bat: einundfünfzig Adressen entschlüsselt, eine einzige je gewählt. Recon One war das erste Team, das je hindurchging — ein Test, kaum mehr. Vor drei Tagen gesprungen zu Adresse 04. Zwei Meldungen: atembare Luft, Terrassenfelder, ein Dorf an einer weißen Straße. & Dann, seit zwei Tagen, nichts. && „Das Tor hält. Die Adresse hält, die Verbindung ist stabil. Was auch immer sie an ihren Meldungen gehindert hat, Direktor — es ist nicht die Physik. Und genau das macht mir Angst.“",
         "options": [
           {
             "id": "o_in_okafor_then",
@@ -112,7 +112,7 @@
       },
       {
         "id": "n_in_decide",
-        "text": "Wir können binnen einer Stunde wählen. Was auch immer Recon One aufgehalten hat, hat bereits zwei Tage Vorsprung.",
+        "text": "Wir können binnen einer Stunde wählen. & Was auch immer Recon One aufgehalten hat, hat bereits zwei Tage Vorsprung.",
         "options": [
           {
             "id": "o_in_commit",
@@ -164,7 +164,7 @@
     "nodes": [
       {
         "id": "n_va_gate",
-        "text": "Mercer: „Genau wie Chris es beschrieben hat — als führe man Karussell, während dir jemand in den Magen boxt.“ Der Übergang auf den Planeten ist wie ein kalter Ruck, der Geruch von nassem Stein hängt in der Nase, dazu eine gewisse Orientierungslosigkeit. Dann Andara: ein Tal in Terrassen, grün gestuft soweit das Auge reicht, eine weiße Straße, die sich zwischen Feldern hinabzieht. Am Ende ein Dorf — Karsu. Genau wie in Recon Ones zweiter Meldung. Irgendwo dort unten verstummten sie.",
+        "text": "Mercer: „Genau wie Chris es beschrieben hat — als führe man Karussell, während dir jemand in den Magen boxt.“ Der Übergang auf den Planeten ist wie ein kalter Ruck, der Geruch von nassem Stein hängt in der Nase, dazu eine gewisse Orientierungslosigkeit. & Dann Andara: ein Tal in Terrassen, grün gestuft soweit das Auge reicht, eine weiße Straße, die sich zwischen Feldern hinabzieht. Am Ende ein Dorf — Karsu. Genau wie in Recon Ones zweiter Meldung. Irgendwo dort unten verstummten sie.",
         "options": [
           {
             "id": "o_va_road",
@@ -217,7 +217,7 @@
       },
       {
         "id": "n_va_procession",
-        "text": "Auf der weißen Straße kommen sie. Drohnen — insektenhaft, größer als ein Mensch, gepanzert in mattem Chitin, die Gelenke im Gehen knirschend. Jede schleppt Tribut: verschnürte Kisten, Körbe, Ballen, hinauf zum Tor und hindurch. Vier von ihnen tragen eine Art Stab — zwei voran, zwei zuletzt, wie eine Prozession. Niemand treibt sie. Sie brauchen niemanden. Sie tun das eine, wofür man sie gemacht hat, und sehen nichts als den Weg.",
+        "text": "Auf der weißen Straße kommen sie. Drohnen — insektenhaft, größer als ein Mensch, gepanzert in mattem Chitin, die Gelenke im Gehen knirschend. Jede schleppt Tribut: verschnürte Kisten, Körbe, Ballen, hinauf zum Tor und hindurch. Vier von ihnen tragen eine Art Stab — zwei voran, zwei zuletzt, wie eine Prozession. Niemand treibt sie. & Sie brauchen niemanden. Sie tun das eine, wofür man sie gemacht hat, und sehen nichts als den Weg.",
         "options": [
           {
             "id": "o_va_stay_down",
@@ -272,7 +272,7 @@
       },
       {
         "id": "n_va_hide",
-        "text": "Mercer presst den Jungen hinter einen Fels und sich dazu. Schritte, schwer, und dazwischen ein trockenes Schnarren, wie Chitin auf Chitin. Er dreht sich langsam um den Stein, Zentimeter um Zentimeter, immer den Fels zwischen sich und der Sicht der Drohne, während sie vorbeizieht. Ihr Schnarren entfernt sich. Dann Stille. Der Junge atmet zum ersten Mal wieder.",
+        "text": "Mercer presst den Jungen hinter einen Fels und sich dazu. Schritte, schwer, und dazwischen ein trockenes Schnarren, wie Chitin auf Chitin. Er dreht sich langsam um den Stein, Zentimeter um Zentimeter, immer den Fels zwischen sich und der Sicht der Drohne, während sie vorbeizieht. & Ihr Schnarren entfernt sich. Dann Stille. Der Junge atmet zum ersten Mal wieder.",
         "options": [
           {
             "id": "o_va_hide_on",
@@ -300,7 +300,7 @@
       },
       {
         "id": "n_va_run",
-        "text": "Mercer packt den Jungen und reißt ihn hoch — zu spät. Eine Wächter-Drohne dreht den Kopf, der Stab senkt sich. Mercer wirft den Jungen zu Boden, hinter sich, und feuert. Die erste Drohne bricht im Schritt zusammen. Die zweite ist schon heran — dann fällt auch sie: Okafor, in Deckung, hat sauber nachgezogen. Feldzertifiziert, sagt die Akte. Sie hat die halbe Wachmannschaft ausgeschossen.",
+        "text": "Mercer packt den Jungen und reißt ihn hoch — zu spät. Eine Wächter-Drohne dreht den Kopf, der Stab senkt sich. Mercer wirft den Jungen zu Boden, hinter sich, und feuert. Die erste Drohne bricht im Schritt zusammen. Die zweite ist schon heran — & dann fällt auch sie: Okafor, in Deckung, hat sauber nachgezogen. Feldzertifiziert, sagt die Akte. Sie hat die halbe Wachmannschaft ausgeschossen.",
         "options": [
           {
             "id": "o_va_run_watch",
@@ -314,7 +314,7 @@
       },
       {
         "id": "n_va_run_gate",
-        "text": "Danach ist alles Chaos. Dorfbewohner rennen, Vater und Sohn pressen die Stirnen aneinander, ein Blick, den ihr nicht lesen könnt. Dann laufen sie — zum Tor, wählen eine Adresse, die ihr nicht kennt, und sind hindurch, ehe ihr rufen könnt. Das Tor schließt. Stille. Was ihr habt, ist die Adresse, die ihre Hände wählten. Wohin sie flohen, dorthin fließt der Tribut.",
+        "text": "Danach ist alles Chaos. Dorfbewohner rennen, Vater und Sohn pressen die Stirnen aneinander, ein Blick, den ihr nicht lesen könnt. Dann laufen sie — zum Tor, wählen eine Adresse, die ihr nicht kennt, und sind hindurch, ehe ihr rufen könnt. Das Tor schließt. Stille. & Was ihr habt, ist die Adresse, die ihre Hände wählten. Wohin sie flohen, dorthin fließt der Tribut.",
         "options": [
           {
             "id": "o_va_run_home",
@@ -527,7 +527,7 @@
       },
       {
         "id": "n_vl_ledger",
-        "text": "Das Verzeichnis ist ein Mühlenbuch, mehlbestäubt, älter als jede Hand im Raum: jede Seele, die der Gott genommen hat, aufgeschrieben, damit jemand sich erinnert. Vier Einträge in frischer Tinte tragen eine Außenweltler-Glyphe. Odel berührt jeden der Reihe nach — lebendig. Karsus Träger sprangen mit dem letzten Getreidezehnt und sahen sie: eingesperrt unter der Bußstätte, dem Gefängnis, das die heilige Stadt auf Veyra unterhält, der Welt hinter dem Tor.",
+        "text": "Das Verzeichnis ist ein Mühlenbuch, mehlbestäubt, älter als jede Hand im Raum: jede Seele, die der Gott genommen hat, aufgeschrieben, damit jemand sich erinnert. Vier Einträge in frischer Tinte tragen eine Außenweltler-Glyphe. Odel berührt jeden der Reihe nach — lebendig. Karsus Träger sprangen mit dem letzten Getreidezehnt und sahen sie: eingesperrt unter der Bußstätte, dem Gefängnis, das die heilige Stadt auf Veyra unterhält, der Welt hinter dem Tor. Sie leben. & Noch.",
         "options": [
           {
             "id": "o_vl_ask_road",
@@ -1488,7 +1488,7 @@
       },
       {
         "id": "n_vy2_a_cells",
-        "text": "Zellentrakt. Reihen von Türen — und hinter einer, vier hager gewordene Gesichter. Einer ist am Gitter, ehe das Licht ihn findet: Chris Barros, Mercers alter Feldwebel, zwei Einsätze zwischen ihnen. „Captain Mercer.“ — „Chris.“ Dann, aus dem Dunkel, fest wie ein Appell: „Leutnant Ehlan. Kade. Imura. Alle anwesend, Sir.“ Namen und Ränge vor Sätzen — Tage aus nichts als Disziplin, und sie hält. Barros senkt die Stimme. „Eins noch, Captain. Manche der Wachen trinken eine leuchtende Flüssigkeit — es macht sie schneller, stärker. Nicht menschlich schnell. Sie nennen es die Portion. Und die, die am hellsten leuchten, gehorchen keinem Befehl mehr außer dem des Lichts.“",
+        "text": "Zellentrakt. Reihen von Türen — und hinter einer, vier hager gewordene Gesichter. Einer ist am Gitter, ehe das Licht ihn findet: Chris Barros, Mercers alter Feldwebel, zwei Einsätze zwischen ihnen. & „Captain Mercer.“ — „Chris.“ Dann, aus dem Dunkel, fest wie ein Appell: „Leutnant Ehlan. Kade. Imura. Alle anwesend, Sir.“ Namen und Ränge vor Sätzen — Tage aus nichts als Disziplin, und sie hält. && Barros senkt die Stimme. „Eins noch, Captain. Manche der Wachen trinken eine leuchtende Flüssigkeit — es macht sie schneller, stärker. Nicht menschlich schnell. Sie nennen es die Portion. Und die, die am hellsten leuchten, gehorchen keinem Befehl mehr außer dem des Lichts.“",
         "options": [
           {
             "id": "o_vy2_a_open",
@@ -1532,7 +1532,7 @@
       },
       {
         "id": "n_vy2_b_kitchens",
-        "text": "Getreidekarren, Essensrunden — das Gefängnis läuft nach Ritual, vorhersehbar wie ein Uhrwerk. Hinter einer Zellentür vier hagere Gesichter. Barros umklammert das Gitter: „Captain. Feldwebel Barros — Ehlan, Kade, Imura, alle anwesend, Sir.“ Leise fügt er hinzu: „Manche Wachen trinken ein leuchtendes Zeug — die Portion, nennen sie's. Macht sie schneller, stärker als jeder Mensch.“ Und drei Türen weiter ein Gesicht aus Andara: ein Dorfbewohner, den die Drohnen von der Talstraße holten. Er erkennt euch. Er hofft.",
+        "text": "Getreidekarren, Essensrunden — das Gefängnis läuft nach Ritual, vorhersehbar wie ein Uhrwerk. Hinter einer Zellentür vier hagere Gesichter. Barros umklammert das Gitter: „Captain. Feldwebel Barros — Ehlan, Kade, Imura, alle anwesend, Sir.“ Leise fügt er hinzu: „Manche Wachen trinken ein leuchtendes Zeug — die Portion, nennen sie's. Macht sie schneller, stärker als jeder Mensch.“ & Und drei Türen weiter ein Gesicht aus Andara: ein Dorfbewohner, den die Drohnen von der Talstraße holten. Er erkennt euch. Er hofft.",
         "options": [
           {
             "id": "o_vy2_b_free_ilo",
@@ -1724,7 +1724,7 @@
       },
       {
         "id": "n_vy2_bottleneck_c",
-        "text": "Ausrüstung beschlagnahmt, Zellen neben genau den Leuten, für die ihr gekommen seid — die Rettung, umgekehrt. Im Dunkeln zuerst die Namen: Ehlan. Kade. Imura. Und Chris Barros, der durch eine aufgeplatzte Lippe seinen alten Captain angrinst: „Hat ja gedauert, Sir.“ Dann leiser: „Die hellen Wachen — sie trinken die Portion. Schneller und stärker als menschenmöglich. Vergesst das nicht.“ Bei Tagesanbruch öffnen sich die Zellentüren von selbst. Der Hof wartet.",
+        "text": "Ausrüstung beschlagnahmt, Zellen neben genau den Leuten, für die ihr gekommen seid — die Rettung, umgekehrt. Im Dunkeln zuerst die Namen: Ehlan. Kade. Imura. Und Chris Barros, der durch eine aufgeplatzte Lippe seinen alten Captain angrinst: „Hat ja gedauert, Sir.“ Dann leiser: „Die hellen Wachen — sie trinken die Portion. Schneller und stärker als menschenmöglich. Vergesst das nicht.“ & Bei Tagesanbruch öffnen sich die Zellentüren von selbst. Der Hof wartet.",
         "options": [
           {
             "id": "o_vy2_c_move",
@@ -1794,7 +1794,7 @@
       {
         "id": "n_vy3_confront",
         "speaker": "Seryn Vael",
-        "text": "Seryn tritt auf gleiche Höhe, die Klinge in der Scheide. Das Licht ist unter seiner Haut — schwach, in den Adern von Hals und Händen. Die Gnade der Portion, offen getragen, wie ein anderer seinen Rang trägt. Er mustert euch ohne Hass, ohne Furcht. „Sagt, wozu ihr gekommen seid. Oder auch nicht. Ich habe schon andere durch dieses Tor kommen sehen — aber nie zugelassen, dass jemand wieder geht, wie unser Gott es befahl.“",
+        "text": "Seryn tritt auf gleiche Höhe, die Klinge in der Scheide. Das Licht ist unter seiner Haut — schwach, in den Adern von Hals und Händen. Die Gnade der Portion, offen getragen, wie ein anderer seinen Rang trägt. Er mustert euch ohne Hass, ohne Furcht. „Sagt, wozu ihr gekommen seid. & Oder auch nicht. Ich habe schon andere durch dieses Tor kommen sehen — aber nie zugelassen, dass jemand wieder geht, wie unser Gott es befahl.“",
         "options": [
           {
             "id": "o_vy3_convince_b1_win",
@@ -2529,7 +2529,7 @@
       },
       {
         "id": "n_vy3_exfil_end",
-        "text": "Der Übergang, ein letztes Mal — der kalte Ruck, der Geruch nach nassem Stein, und dann die vertraute Enge des Gewölbes vierhundert Meter unter der Erde. Recon One ist heim. Vier, längst überfällig. Und einer mehr, den keine Akte je verzeichnet hat. Was ihr auf Veyra zurückließt, wird warten. Es wartet gut.",
+        "text": "Der Übergang, ein letztes Mal — der kalte Ruck, der Geruch nach nassem Stein, und dann die vertraute Enge des Gewölbes vierhundert Meter unter der Erde. Recon One ist heim. Vier, längst überfällig. Und einer mehr, den keine Akte je verzeichnet hat. & Was ihr auf Veyra zurückließt, wird warten. Es wartet gut.",
         "options": [
           {
             "id": "o_vy3_end_convinced",

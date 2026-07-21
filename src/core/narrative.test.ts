@@ -203,7 +203,7 @@ describe("chooseEventOption — golden paths (§5, §6)", () => {
     // for HIDDEN locks, so it only fires when showLockedOptions is false — which
     // is no longer the campaign default (D-15), so this test sets it explicitly.
     const state = launched("m_vy_4", ["h_mercer", "h_okafor"], {
-      settings: { showLockedOptions: false },
+      settings: { showLockedOptions: false, textAnimation: "on" },
     });
     let s = chooseEventOption(state, ctx(), "o_vy4_quiet");
     const solo = structuredClone(s);
@@ -221,7 +221,7 @@ describe("chooseEventOption — golden paths (§5, §6)", () => {
 
   it("suppresses the debrief hint when settings.showLockedOptions is true", () => {
     const state = launched("m_vy_4", ["h_mercer", "h_okafor"], {
-      settings: { showLockedOptions: true },
+      settings: { showLockedOptions: true, textAnimation: "on" },
     });
     let s = chooseEventOption(state, ctx(), "o_vy4_quiet");
     const solo = structuredClone(s);

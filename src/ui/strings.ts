@@ -199,6 +199,10 @@ export const strings = {
     narrativeAriaLabel: "Erzählung",
     // D-15: fallback shown on a locked option that carries no authored lockedReason.
     lockedGenericReason: "Gesperrt: Voraussetzung nicht erfüllt.",
+    // D-13: word-by-word narration controls.
+    textSpeedLabel: "Texttempo",
+    textSpeedMode: { on: "An", fast: "Schnell", off: "Aus" } as Record<"on" | "fast" | "off", string>,
+    skipHint: "Tippen, um den Text zu überspringen",
   },
 
   battle: {

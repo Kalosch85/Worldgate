@@ -24,7 +24,7 @@ function baseState(): GameStateT {
   return {
     version: 2,
     campaign: { day: 3, seed: 1 },
-    settings: { showLockedOptions: false },
+    settings: { showLockedOptions: false, textAnimation: "on" },
     resources: { funds: 10, materials: 10, intel: 0, exotics: 0 },
     variables: { support: 5 },
     flags: {},

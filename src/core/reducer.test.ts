@@ -25,7 +25,7 @@ function baseState(): GameStateT {
   return {
     version: 2,
     campaign: { day: 1, seed: 42 },
-    settings: { showLockedOptions: false },
+    settings: { showLockedOptions: false, textAnimation: "on" },
     resources: { funds: 100, materials: 50, intel: 0, exotics: 0 },
     variables: { support: 50 },
     flags: {},
@@ -54,6 +54,15 @@ describe("apply (reducer skeleton)", () => {
     const snapshot = serialize(state);
     apply(state, { type: "noop" }, CTX);
     expect(serialize(state)).toBe(snapshot);
+  });
+
+  it("updateSettings patches settings without touching the rest of the state", () => {
+    const state = baseState();
+    const next = apply(state, { type: "updateSettings", patch: { textAnimation: "off" } }, CTX);
+    expect(next.settings).toEqual({ showLockedOptions: false, textAnimation: "off" });
+    // Only settings changed; the input is untouched (pure reducer).
+    expect(state.settings.textAnimation).toBe("on");
+    expect({ ...next, settings: state.settings }).toEqual(state);
   });
 });
 

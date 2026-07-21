@@ -15,9 +15,9 @@
 import type { TextAnimationT } from "../../data/schemas.js";
 
 /** Base reveal cadence: ms between words at normal speed (T — tunable).
- * Playtest-tuned up from the D-13 start value of 180 (that read ~2× too fast),
- * then a further ~25% slower per playtest (340 → 425). */
-export const BASE_WORD_MS = 425;
+ * Playtest-tuned from the D-13 start value of 180 (that read ~2× too fast) up
+ * to 425, then 20% faster again to 340. */
+export const BASE_WORD_MS = 340;
 /** Extra dwell for a " & " short-pause mark, in ms (T — tunable). */
 export const SHORT_PAUSE_MS = 600;
 /** Extra dwell for a " && " long-pause mark, in ms (T — tunable). */

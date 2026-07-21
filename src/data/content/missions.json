@@ -172,6 +172,7 @@
   },
   {
     "id": "m_vy_4",
+    "_comment": "D-16: für Akt 2 zurückgestellt. Bleibt im Content, wird aber von nichts mehr freigeschaltet (der M3-Bogen endet nach n_vy3_exfil_end). Reaktivierung ist eine Akt-2-Entscheidung.",
     "name": "Das Reliquiengewölbe",
     "description": "Erbeutet die Vorläufer-Artefakte aus der Tempelrüstkammer: rüstet die Forschung aus und findet das Sanktum des Gottes.",
     "availability": [],
@@ -186,6 +187,7 @@
   },
   {
     "id": "m_vy_5",
+    "_comment": "D-16: für Akt 2 zurückgestellt. Wird nur von m_vy_4 freigeschaltet, das seinerseits nicht mehr freigeschaltet wird — daher in Akt 1 unerreichbar. Reaktivierung ist eine Akt-2-Entscheidung.",
     "name": "Der Erleuchtete",
     "description": "Der Kern des Gewölbes schwingt im Gleichklang mit einem Sanktum in der Caldera. Verfolgt es und tretet dem Gott von Angesicht zu Angesicht gegenüber.",
     "availability": [],

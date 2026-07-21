@@ -966,9 +966,31 @@
           {
             "id": "o_vy1_move_on",
             "text": "Wir wissen genug. Zum Plan übergehen.",
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "vy_villager_killed",
+                "value": false
+              }
+            ],
             "next": {
               "kind": "node",
               "node": "n_vy1_plan"
+            }
+          },
+          {
+            "id": "o_vy1_move_on_closed",
+            "text": "Wir wissen genug. Zum Plan übergehen.",
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "vy_villager_killed",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "node",
+              "node": "n_vy1_plan_closed"
             }
           }
         ]
@@ -1017,6 +1039,20 @@
         ]
       },
       {
+        "id": "n_vy1_plan_closed",
+        "text": "Kein Gesicht hier schuldet euch etwas — nicht nach Andara. Die Pilger weichen euren Blicken aus, der Tribut zieht an euch vorbei, und keine Hand öffnet sich. Was ihr über das Gefängnis erfahrt, erkämpft ihr euch selbst: eine Uniform vom Leib einer Wache, oder das Tor im Sturm. Ein leiser Weg bleibt euch nicht.",
+        "options": [
+          {
+            "id": "o_vy1_plan_closed_continue",
+            "text": "Weiter.",
+            "next": {
+              "kind": "node",
+              "node": "n_vy1_plan"
+            }
+          }
+        ]
+      },
+      {
         "id": "n_vy1_plan",
         "text": "Drei Wege hinein, und keiner davon leicht.",
         "options": [
@@ -1040,14 +1076,12 @@
             "text": "Versorgungsarbeiter — mit den Getreidekarren hinein.",
             "requirements": [
               {
-                "type": "not",
-                "condition": {
-                  "type": "flag",
-                  "flag": "f_vy_dessik_refused",
-                  "value": true
-                }
+                "type": "flag",
+                "flag": "vy_villager_killed",
+                "value": false
               }
             ],
+            "lockedReason": "Verschlossen: In Andara floss Blut. Der Alte schuldet euch nichts mehr.",
             "effects": [
               {
                 "type": "flag",
@@ -1151,18 +1185,11 @@
       },
       {
         "id": "n_vy1_dessik",
-        "text": "Der Alte aus Andara besorgt euch Arbeitspässe — für einen Preis. Sein Sohn ist als Schmuggler verurteilt, irgendwo in der Bußstätte festgehalten. „Holt ihn heraus“, sagt er, „und die Karren gehören euch.“",
+        "text": "Der alte Mann aus Andara, der Vater des Jungen, kennt die Getreidekarren, die täglich zur Bußstätte rollen. ‚Ein Platz zwischen den Säcken, und die Wachen winken euch durch. Für den Fremden, der meinen Sohn hinter einen Fels zog — das schulde ich.' Er verlangt nichts. Das macht es schwerer, nicht leichter.",
         "options": [
           {
-            "id": "o_vy1_dessik_accept",
-            "text": "Es schwören.",
-            "effects": [
-              {
-                "type": "flag",
-                "flag": "f_vy_owe_ilo",
-                "value": true
-              }
-            ],
+            "id": "o_vy1_dessik_take",
+            "text": "Den Platz zwischen den Säcken nehmen.",
             "next": {
               "kind": "end",
               "outcome": "out_vy1_worker"
@@ -1171,13 +1198,6 @@
           {
             "id": "o_vy1_dessik_refuse",
             "text": "Ablehnen. Einen anderen Weg hinein finden.",
-            "effects": [
-              {
-                "type": "flag",
-                "flag": "f_vy_dessik_refused",
-                "value": true
-              }
-            ],
             "next": {
               "kind": "node",
               "node": "n_vy1_plan"
@@ -2426,8 +2446,8 @@
               }
             ],
             "next": {
-              "kind": "end",
-              "outcome": "out_vy3_convinced"
+              "kind": "node",
+              "node": "n_vy3_exfil"
             }
           },
           {
@@ -2461,8 +2481,8 @@
               }
             ],
             "next": {
-              "kind": "end",
-              "outcome": "out_vy3_doubt"
+              "kind": "node",
+              "node": "n_vy3_exfil"
             }
           },
           {
@@ -2487,6 +2507,71 @@
               }
             ],
             "next": {
+              "kind": "node",
+              "node": "n_vy3_exfil"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_vy3_exfil",
+        "text": "Die Tore der Bußstätte hinter euch, Recon One frei, die Erste Klinge bei euch — willig oder gefesselt. Die Stadt redet schon über das, was sie sah. Kein Weg zurück außer dem einen: hinab zum Tor, die Adresse der Erde gewählt, ehe der Tempel begreift, was ihm genommen wurde.",
+        "options": [
+          {
+            "id": "o_vy3_exfil_continue",
+            "text": "Hinab zum Tor.",
+            "next": {
+              "kind": "node",
+              "node": "n_vy3_exfil_end"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_vy3_exfil_end",
+        "text": "Der Übergang, ein letztes Mal — der kalte Ruck, der Geruch nach nassem Stein, und dann die vertraute Enge des Gewölbes vierhundert Meter unter der Erde. Recon One ist heim. Vier, längst überfällig. Und einer mehr, den keine Akte je verzeichnet hat. Was ihr auf Veyra zurückließt, wird warten. Es wartet gut.",
+        "options": [
+          {
+            "id": "o_vy3_end_convinced",
+            "text": "Der Bogen schließt sich.",
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_first_convinced",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy3_convinced"
+            }
+          },
+          {
+            "id": "o_vy3_end_doubt",
+            "text": "Der Bogen schließt sich.",
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_first_doubt",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy3_doubt"
+            }
+          },
+          {
+            "id": "o_vy3_end_defeated",
+            "text": "Der Bogen schließt sich.",
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_first_defeated",
+                "value": true
+              }
+            ],
+            "next": {
               "kind": "end",
               "outcome": "out_vy3_defeated"
             }
@@ -2497,16 +2582,13 @@
     "outcomes": [
       {
         "id": "out_vy3_convinced",
+        "_comment": "D-16: Bogenende in Akt 1 — schaltet m_vy_4 nicht mehr frei (m_vy_4/m_vy_5 für Akt 2 zurückgestellt).",
         "label": "Die Erste Klinge läuft über",
         "effects": [
           {
             "type": "flag",
             "flag": "f_vy_sacrament_dose",
             "value": true
-          },
-          {
-            "type": "unlockMission",
-            "mission": "m_vy_4"
           },
           {
             "type": "log",
@@ -2516,16 +2598,13 @@
       },
       {
         "id": "out_vy3_doubt",
+        "_comment": "D-16: Bogenende in Akt 1 — schaltet m_vy_4 nicht mehr frei (m_vy_4/m_vy_5 für Akt 2 zurückgestellt).",
         "label": "Die Erste Klinge, zweifelnd",
         "effects": [
           {
             "type": "flag",
             "flag": "f_vy_sacrament_dose",
             "value": true
-          },
-          {
-            "type": "unlockMission",
-            "mission": "m_vy_4"
           },
           {
             "type": "log",
@@ -2535,16 +2614,13 @@
       },
       {
         "id": "out_vy3_defeated",
+        "_comment": "D-16: Bogenende in Akt 1 — schaltet m_vy_4 nicht mehr frei (m_vy_4/m_vy_5 für Akt 2 zurückgestellt).",
         "label": "Die Erste Klinge, besiegt",
         "effects": [
           {
             "type": "flag",
             "flag": "f_vy_sacrament_dose",
             "value": true
-          },
-          {
-            "type": "unlockMission",
-            "mission": "m_vy_4"
           },
           {
             "type": "log",

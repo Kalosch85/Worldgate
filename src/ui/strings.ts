@@ -197,6 +197,8 @@ export const strings = {
     noActiveMission: "Keine aktive Mission.",
     outcomeAriaLabel: "Missionsausgang",
     narrativeAriaLabel: "Erzählung",
+    // D-15: fallback shown on a locked option that carries no authored lockedReason.
+    lockedGenericReason: "Gesperrt: Voraussetzung nicht erfüllt.",
   },
 
   battle: {

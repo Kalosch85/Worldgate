@@ -225,7 +225,12 @@ export function EventScreen({
         {node.options.map((option) => {
           const status = eligibility.get(option.id);
           const eligible = status?.eligible ?? false;
-          if (!eligible && !showLocked) return null; // D-1: hide ineligible by default
+          if (!eligible && !showLocked) return null; // hide ineligible when D-15 off
+          // D-15: a locked option is greyed out with its authored reason, or a
+          // generic hint when the option carries none.
+          const lockedReason = eligible
+            ? undefined
+            : (option.lockedReason ?? strings.event.lockedGenericReason);
           return (
             <button
               key={option.id}
@@ -234,6 +239,9 @@ export function EventScreen({
               onClick={() => choose(option.id)}
               style={{
                 ...buttonStyle("ghost"),
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.2rem",
                 width: "100%",
                 height: "auto",
                 minHeight: theme.touch,
@@ -242,7 +250,12 @@ export function EventScreen({
                 opacity: eligible ? 1 : 0.4,
               }}
             >
-              {eligible ? option.text : `🔒 ${option.text}`}
+              <span>{eligible ? option.text : `🔒 ${option.text}`}</span>
+              {lockedReason && (
+                <span style={{ fontSize: "0.8rem", color: theme.textDim, fontStyle: "italic" }}>
+                  {lockedReason}
+                </span>
+              )}
             </button>
           );
         })}

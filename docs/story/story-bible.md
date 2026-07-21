@@ -169,6 +169,35 @@ sperren nie den Hauptstrang. Hauptstrang-Missionen sind die Engpässe.
 | the Graced                                        | die Begnadeten                                          |
 | flanker / porter (Tender castes) (D-10 additions) | Flankierer / Träger (Drohnen-Kasten) (D-10-Ergänzungen) |
 
+### 8.1 Kanon-Kurzreferenz Veyra-Bogen (Struktur-Session)
+
+Verbindliche Kurzfassung der wiederkehrenden Veyra-Begriffe. Wo §3/§10 eine
+ausführliche Kanonfassung führen, gewinnt jene; die etablierten Termini bleiben
+maßgeblich, damit der Kanon nicht durch Synonyme zerfasert.
+
+- **Drohnen** — halblebendige Wartungsorganismen des Verwalters, in zwei Rollen:
+  **Träger** (unbewaffnet, güterwaggongroß, tragen die Tributzüge) und
+  **Flankierer** (mannshoch, schnell, gehen mit dem Stab an den Rändern der
+  Prozession, nehmen die Genommenen und kämpfen — der taktische `ut_tender`;
+  „Wächter mit Stab" ist ihr Erscheinungsbild). Ausführlich: §3.
+- **Die Begnadeten** — die menschlichen Verbesserten des Gottes, sein
+  verbesserter Kader (nicht „Gesegnete" — der Kanon-Terminus ist **Begnadete**,
+  §3). Seryn Vael ist der Vorderste unter ihnen.
+- **Die Portion** — Veyras Segnung, ein leuchtendes Kraft-Sakrament aus
+  veredeltem Tor-Licht; getrunken macht sie schneller und stärker als jeden
+  Menschen. Die Hellsten gehorchen am Ende nur noch dem Licht. Eine Leine, kein
+  Geschenk: ohne Nachschub versiegt die Gnade über Tage (§3).
+- **Die Genommenen** — die Menschen, die der Gott durch die Drohnenprozessionen
+  fortführen lässt, die Tributstraße hinab, durch die Tür, zur Bußstätte auf
+  Veyra. Recon One war unter ihnen.
+- **Andara** (Adresse 04) — die Talwelt, das Stille Tal; **Karsu** ist ihr
+  Mühlendorf an der Tributstraße (§10–§11).
+- **Recon One** — Commands erste bemannte Erkundung, gefangen und auf Veyra
+  festgehalten, bis zum Ende von M3 befreit: **Feldwebel Chris Barros**
+  (Sicherheit; „Chris", wo Mercer persönlich spricht, sonst „Barros"),
+  **Leutnant Ehlan** (Erkundungsleitung), **Kade** (Tor-Ingenieur) und **Imura**
+  (Sanitäter). Ränge/Namen ausführlich: §10.
+
 ## 9. Backlog (Content-Keime, keine Zusagen)
 
 - **B-1:** GELÖSCHT (D-10). Kein rivalisierendes Tor-Programm existiert;
@@ -210,8 +239,10 @@ sperren nie den Hauptstrang. Hauptstrang-Missionen sind die Engpässe.
   getrieben und unter der Bußstätte eingesperrt; im Zellenblock von M2
   lokalisiert, bis zum Ende von M3 befreit (das `addPersonnel +4` des Arcs ist
   die Rückkehr von Recon One in den Dienst). Besatzung (D-10): **Lt. S. Ehlan**
-  (Erkundungsleitung), **Sgt. J. Barros** (Sicherheit — diente zwei Einsätze
-  unter Mercer; das Wiedersehen ist persönlich), **Spc. N. Kade**
+  (Erkundungsleitung), **Sgt. Chris Barros** (Sicherheit — diente zwei Einsätze
+  unter Mercer; das Wiedersehen ist persönlich; Anrede kontextabhängig: „Chris",
+  wo Mercer persönlich spricht — Intro, Wiedererkennung —, sonst „Barros" /
+  „Feldwebel Barros"), **Spc. N. Kade**
   (Tor-Ingenieur), **Spc. R. Imura** (Sanitäter). Die Rettung ist ein
   Wiedersehen von Soldaten, die einander kennen: Namen und Ränge vor Sätzen,
   Disziplin, die sich wieder durchsetzt. Keine Fremden-Beats, kein

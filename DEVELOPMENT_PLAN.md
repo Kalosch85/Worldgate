@@ -188,3 +188,43 @@ content?)` (the intro reuses the existing incident shape);
 - **D-8 RESOLVED (user veto):** Base construction restored to prototype scope, reversing the earlier cut (see "Cut from prototype"). Facilities are content (`FacilityDef` + `facilities.json`) reusing the universal Effect/Condition vocabulary; one build at a time, costs paid on the `build` action, effects applied on completion during the endDay construction step (between Research and Recovery); no upkeep in v1 (revisit in 6.3). Spec: `docs/specs/facilities.md`.
 - **D-12 (Opus): Spielsprache Deutsch.** Player-facing language is German; code stays English. Rules: (1) all player-visible UI strings live in one module `src/ui/strings.ts` (imported by `src/ui` and `src/tactics-render`) — no i18n framework, a future language is a file swap; (2) the player-visible strings the pure core writes (journal lines, banner-surfaced `RuleError` messages, the localized tactical outcome word) are German literals inside `src/core`, since ARCHITECTURE §1 forbids `core` importing from `ui`; (3) `src/data/content/*.json` remains a single-language German master — IDs/flags/variables/schemas unchanged; (4) technical docs (`ARCHITECTURE.md`, `docs/specs/*`) stay English, but spec-pinned canonical strings ("Zahltag verpasst.", the debrief line, etc.) are updated to their German canon together with the golden tests that assert them; (5) story docs under `docs/story/` are translated (structure, §-numbers, code tokens, and Mermaid node IDs preserved). Out of scope, documented: the low-level tactical combat log (a monospace debug readout using raw unit IDs, machine-parsed by `replay.ts`) and the unreachable battle-action `RuleError` diagnostics in `tactics.ts` stay English. Glossary: `docs/story/glossary-de.md`.
   - **D-12 follow-up (player terminology calls):** the Vault glossary was revised per player review — crossing → **Sprung/springen** (jump; incl. `Rettungsübergang` → `Rettungssprung`), the Luminous One → **der Erleuchtete** (was der Leuchtende; the lowercase adjective "leuchtend…" is untouched), sacrament → **die Segnung**, wardhouse/wardens → **das Wachhaus / die Wachen** (sing. die Wache), offworlder → **Außenweltler**, the Penitence → **die Bußstätte**. Applied across content JSON and story docs; the affected pinned test string (`Rettungssprung genehmigt`) updated with its golden tests.
+- **D-15 (Struktur-Session): sichtbare Sperren.** `settings.showLockedOptions`
+  default flipped `false → true` (supersedes the D-1 default; the flag itself and
+  the D-1 debrief-hint hook stay). Sanctioned minimal schema addition:
+  `EventOption.lockedReason?: string` (schemas.ts) — the event UI renders an
+  ineligible option greyed out with this authored reason, or a generic
+  "Voraussetzung nicht erfüllt" hint when absent. Consequence-lock shipped: with
+  `vy_villager_killed == true`, M1's `o_vy1_worker_choice` (transport path) is
+  visibly locked with `lockedReason` "Verschlossen: In Andara floss Blut. Der
+  Alte schuldet euch nichts mehr."; the worker path is now gated solely on
+  `vy_villager_killed == false`. Consequence of the default flip: router-style
+  nodes whose sibling options were mutually-exclusive flag variants (e.g.
+  `n_vy1_faces`, `n_vy2_router`) now show the non-matching siblings as locked —
+  accepted for the prototype; the D-1 debrief hint is suppressed whenever locks
+  are visible (its intended trade-off).
+  - **Schwur-Streichung (mit D-15):** M1's oath removed. The "Es schwören" option
+    and flag `f_vy_owe_ilo` deleted (all read/write sites, incl. one test line);
+    `n_vy1_dessik` reframed — the old man from Andara offers the grain-cart ride
+    without asking anything. `f_vy_dessik_refused` retired with it (its only gate
+    was the worker path, now gated on not-killed). M2/M4 `f_vy_ilo_freed` /
+    `f_vy_ilo_abandoned` verified unaffected (branch B still reached via
+    `f_vy_approach_worker`). The unrouted `n_vy1_closed` patch is folded in as a
+    gated pre-plan node `n_vy1_plan_closed` (killed route only); `n_vy1_plan`
+    stays the single shared plan node.
+- **D-16 (Struktur-Session): Bogenende in Akt 1.** The three M3 outcomes
+  (`out_vy3_convinced` / `out_vy3_doubt` / `out_vy3_defeated` in
+  `ev_vy_first_blade`) no longer unlock `m_vy_4`. All three resolve paths now
+  route through two new nodes after `n_vy3_resolve` — `n_vy3_exfil`
+  (Exfil-Übergang) → `n_vy3_exfil_end` (Bogenabschluss) — before re-branching to
+  their respective outcome (by the `f_vy_first_*` flag). `m_vy_4` and `m_vy_5`
+  remain in content but are unlocked by nothing (deferred to Act 2; JSON
+  `_comment` on both mission defs and on the three outcomes). Reactivating them
+  is an Act-2 decision.
+- **Barros-Kanon (Struktur-Session, D-10-Korrektur):** the player-level decision
+  "Chris = Barros" supersedes the older session-canon initial "J." from bible
+  §10. bible §10 updated to **Sgt. Chris Barros**; bible §8 canon reference added
+  per the session brief (Chris Barros / Ehlan / Kade / Imura, drones' two roles,
+  the Begnadeten, the Portion, the Genommenen, Andara/Karsu). In-content address
+  stays context-dependent ("Chris" where Mercer speaks personally, "Barros" /
+  "Feldwebel Barros" in service register) — the already-merged patch texts
+  already handle this and were left untouched.

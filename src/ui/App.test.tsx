@@ -132,7 +132,7 @@ describe("App shell", () => {
     click("Der Straße talaufwärts folgen");
     click("Ihnen vertrauen.");
     // The alien-procession reveal node (n_va_procession).
-    expect(container!.textContent).toContain("Insekten wenigstens zweineinhalb Meter groß");
+    expect(container!.textContent).toContain("Drohnen wenigstens zweineinhalb Meter groß");
     click("Unten bleiben, bis die letzte fort ist");
     click("Ihn in Deckung bringen");
     click("in Sicherheit führen lassen");

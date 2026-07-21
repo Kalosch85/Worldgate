@@ -52,7 +52,7 @@ verloren geht; die Arc-Spezifikation unten ist wortwörtlich reproduziert.
      nach Hause. Aller Text auf der Veyra-Seite setzt dies voraus. Die
      mechanische Einsatzsperre wird in einer späteren Session ausgeliefert
      (f_vy_call_intercepted ist ihr Aufhänger).
-   - **Die Portion / die Begnadeten.** Seryn wird durch die Segnung am
+   - **Die Portion / die Gesegneten.** Seryn wird durch die Segnung am
      Leben gehalten (Bibel §3); M3 liefert nun auf jedem Zweig eine erbeutete
      Dosis (`f_vy_sacrament_dose`), und das visibleIf von t_radiance_cell
      koppelt an any(dose, f_vy_godtech) — die reine f_vy_godtech-Kopplung aus

@@ -188,6 +188,20 @@ content?)` (the intro reuses the existing incident shape);
 - **D-8 RESOLVED (user veto):** Base construction restored to prototype scope, reversing the earlier cut (see "Cut from prototype"). Facilities are content (`FacilityDef` + `facilities.json`) reusing the universal Effect/Condition vocabulary; one build at a time, costs paid on the `build` action, effects applied on completion during the endDay construction step (between Research and Recovery); no upkeep in v1 (revisit in 6.3). Spec: `docs/specs/facilities.md`.
 - **D-12 (Opus): Spielsprache Deutsch.** Player-facing language is German; code stays English. Rules: (1) all player-visible UI strings live in one module `src/ui/strings.ts` (imported by `src/ui` and `src/tactics-render`) — no i18n framework, a future language is a file swap; (2) the player-visible strings the pure core writes (journal lines, banner-surfaced `RuleError` messages, the localized tactical outcome word) are German literals inside `src/core`, since ARCHITECTURE §1 forbids `core` importing from `ui`; (3) `src/data/content/*.json` remains a single-language German master — IDs/flags/variables/schemas unchanged; (4) technical docs (`ARCHITECTURE.md`, `docs/specs/*`) stay English, but spec-pinned canonical strings ("Zahltag verpasst.", the debrief line, etc.) are updated to their German canon together with the golden tests that assert them; (5) story docs under `docs/story/` are translated (structure, §-numbers, code tokens, and Mermaid node IDs preserved). Out of scope, documented: the low-level tactical combat log (a monospace debug readout using raw unit IDs, machine-parsed by `replay.ts`) and the unreachable battle-action `RuleError` diagnostics in `tactics.ts` stay English. Glossary: `docs/story/glossary-de.md`.
   - **D-12 follow-up (player terminology calls):** the Vault glossary was revised per player review — crossing → **Sprung/springen** (jump; incl. `Rettungsübergang` → `Rettungssprung`), the Luminous One → **der Erleuchtete** (was der Leuchtende; the lowercase adjective "leuchtend…" is untouched), sacrament → **die Segnung**, wardhouse/wardens → **das Wachhaus / die Wachen** (sing. die Wache), offworlder → **Außenweltler**, the Penitence → **die Bußstätte**. Applied across content JSON and story docs; the affected pinned test string (`Rettungssprung genehmigt`) updated with its golden tests.
+- **D-14 (Spieler-Entscheidung): Kanon-Terminologie.** Zwei Begriffe aus der
+  D-10-Fassung sind vollständig abgelöst — sie gelten **nirgends mehr** als
+  gültiger Kanon:
+  - die menschlichen Verbesserten des Gottes heißen **die Gesegneten**
+    (Einzahl: ein Gesegneter); der frühere Begriff „Begnadete" ist gestrichen.
+  - die Drohnen haben zwei Rollen: **Träger-Drohnen** (unbewaffnet, Tribut) und
+    **Wächter-Drohnen** (mit Stab); der frühere Kastenname „Flankierer" ist
+    gestrichen.
+    Durchgesetzt in der Struktur-Session: `events.json`-Prosa nutzte die neuen
+    Begriffe bereits durchgehend; die verbliebene Content-Fundstelle
+    (`heroes.json`), die Bibel (§3, §5, §8, §10), `glossary-de.md`, `arc-veyra.md`,
+    `gap-list.md` und die Design-/Review-Docs wurden angeglichen. Repo-weite
+    Prüfung: keine „Begnadete"/„Flankierer"-Vorkommen mehr außer diesem
+    Protokolleintrag (dem einzigen autoritativen Nachweis der Ablösung).
 - **D-15 (Struktur-Session): sichtbare Sperren.** `settings.showLockedOptions`
   default flipped `false → true` (supersedes the D-1 default; the flag itself and
   the D-1 debrief-hint hook stay). Sanctioned minimal schema addition:
@@ -224,7 +238,7 @@ content?)` (the intro reuses the existing incident shape);
   "Chris = Barros" supersedes the older session-canon initial "J." from bible
   §10. bible §10 updated to **Sgt. Chris Barros**; bible §8 canon reference added
   per the session brief (Chris Barros / Ehlan / Kade / Imura, drones' two roles,
-  the Begnadeten, the Portion, the Genommenen, Andara/Karsu). In-content address
+  the Gesegneten, the Portion, the Genommenen, Andara/Karsu). In-content address
   stays context-dependent ("Chris" where Mercer speaks personally, "Barros" /
   "Feldwebel Barros" in service register) — the already-merged patch texts
   already handle this and were left untouched.

@@ -46,9 +46,10 @@ Schurkenspezies.
 
 **Drohnen**: halblebendige Wartungsorganismen, die Verwalter für Stättenarbeit
 züchten — die insektoide Fauna (Sprite-Kanon). Für Aufgaben gezüchtet, in
-Kasten (D-10): **Träger**, güterwaggongroß, die die Tributzüge tragen; und
-**Flankierer**, mannshoch und schnell, die an den Rändern einer Prozession
-gehen, die Genommenen nehmen und kämpfen (der taktische `ut_tender`). An Tor-
+Kasten (D-10, Rollennamen nach D-14): **Träger-Drohnen**, güterwaggongroß,
+unbewaffnet, die die Tributzüge tragen; und **Wächter-Drohnen**, mannshoch und
+schnell, die mit dem Stab an den Rändern einer Prozession gehen, die Genommenen
+nehmen und kämpfen (der taktische `ut_tender`). An Tor-
 Stätten auf vielen Welten zu finden; unsere wiederverwendbare feindliche
 Ökologie. **Plünderer**: menschliche Nachkommen von Bevölkerungen, die vor
 langer Zeit durch das Netzwerk bewegt wurden, jetzt tote Stätten ausplündernd
@@ -57,10 +58,10 @@ langer Zeit durch das Netzwerk bewegt wurden, jetzt tote Stätten ausplündernd
 **Die Portion** (D-10): Veyras Segnung — Tor-Licht, im Wachhaus der Tür zu
 einer Flüssigkeit veredelt, die still hält, in Phiolen abgefüllt, getrunken.
 Eine stetige Ration macht einen Menschen mehr als menschlich: die
-**Begnadeten**, der verbesserte Kader des Gottes, Licht schwach unter ihrer
+**Gesegneten**, der verbesserte Kader des Gottes, Licht schwach unter ihrer
 Haut, Seryn Vael der Vorderste unter ihnen. Die Gnade ist eine Leine — ohne die
 Portion versiegt sie über Tage (Zittern, Verblassen, schwindende Kraft), sodass
-jeder Begnadete auch ein Abhängiger ist. Nur eigene Bildsprache: Licht, das in
+jeder Gesegnete auch ein Abhängiger ist. Nur eigene Bildsprache: Licht, das in
 einem Becher steht; niemals „Naniten", niemals geliehene Segnungen.
 
 ## 4. Fraktionen auf Erdseite
@@ -83,7 +84,7 @@ einem Becher steht; niemals „Naniten", niemals geliehene Segnungen.
 - **Dr. A. Okafor** (Wissenschaftler) — entschlüsselte die Adressnotation;
   vermutet, die Tore seien das Unwichtigste, was die Erbauer hinterließen.
 - **Seryn Vael** (Archetypen: Soldat, Diplomat — erster Held mit doppeltem
-  Archetyp) — der Erste des Erleuchteten, Vorderster der Begnadeten,
+  Archetyp) — der Erste des Erleuchteten, Vorderster der Gesegneten,
   übergelaufen. Kanon-These: ein Verräter an seinem Volk, der es verrät, um es
   von einem falschen Gott zu befreien. Sein Überlaufen schließt den Verlust der
   Gnade des Gottes ein — der Portions-Entzugs-Arc (D-10): übermenschlich, wenn
@@ -147,42 +148,42 @@ sperren nie den Hauptstrang. Hauptstrang-Missionen sind die Engpässe.
 
 ## 8. Vokabular
 
-| Englisch                                          | Deutsch                                                 |
-| ------------------------------------------------- | ------------------------------------------------------- |
-| worldgate                                         | das Weltentor                                           |
-| address (numbered)                                | die Adresse (nummeriert)                                |
-| the Vault (Earth site)                            | das Gewölbe (Erde-Standort)                             |
-| Command                                           | Command                                                 |
-| Steward                                           | der Verwalter                                           |
-| Tender                                            | die Drohne                                              |
-| the First (Veyran title)                          | der Erste (veyranischer Titel)                          |
-| dial / crossing                                   | wählen / der Sprung                                     |
-| "the program" (Earth-side euphemism)              | „das Programm" (Euphemismus auf Erdseite)               |
-| Recon One                                         | Recon One                                               |
-| the taken                                         | die Genommenen                                          |
-| tribute road (D-9 additions)                      | die Tributstraße (D-9-Ergänzungen)                      |
-| Andara                                            | Andara                                                  |
-| the Door / the Shut Door                          | die Tür / die verschlossene Tür                         |
-| the wardhouse                                     | das Wachhaus                                            |
-| the grain-tithe                                   | der Getreidezehnt                                       |
-| the Portion                                       | die Portion                                             |
-| the Graced                                        | die Begnadeten                                          |
-| flanker / porter (Tender castes) (D-10 additions) | Flankierer / Träger (Drohnen-Kasten) (D-10-Ergänzungen) |
+| Englisch                                  | Deutsch                                           |
+| ----------------------------------------- | ------------------------------------------------- |
+| worldgate                                 | das Weltentor                                     |
+| address (numbered)                        | die Adresse (nummeriert)                          |
+| the Vault (Earth site)                    | das Gewölbe (Erde-Standort)                       |
+| Command                                   | Command                                           |
+| Steward                                   | der Verwalter                                     |
+| Tender                                    | die Drohne                                        |
+| the First (Veyran title)                  | der Erste (veyranischer Titel)                    |
+| dial / crossing                           | wählen / der Sprung                               |
+| "the program" (Earth-side euphemism)      | „das Programm" (Euphemismus auf Erdseite)         |
+| Recon One                                 | Recon One                                         |
+| the taken                                 | die Genommenen                                    |
+| tribute road (D-9 additions)              | die Tributstraße (D-9-Ergänzungen)                |
+| Andara                                    | Andara                                            |
+| the Door / the Shut Door                  | die Tür / die verschlossene Tür                   |
+| the wardhouse                             | das Wachhaus                                      |
+| the grain-tithe                           | der Getreidezehnt                                 |
+| the Portion                               | die Portion                                       |
+| the Graced                                | die Gesegneten (D-14)                             |
+| guard / porter (drone roles) (D-10, D-14) | Wächter-Drohnen / Träger-Drohnen (Drohnen-Rollen) |
 
 ### 8.1 Kanon-Kurzreferenz Veyra-Bogen (Struktur-Session)
 
 Verbindliche Kurzfassung der wiederkehrenden Veyra-Begriffe. Wo §3/§10 eine
-ausführliche Kanonfassung führen, gewinnt jene; die etablierten Termini bleiben
-maßgeblich, damit der Kanon nicht durch Synonyme zerfasert.
+ausführliche Kanonfassung führen, gewinnt jene. Terminologie nach **D-14**
+(Spieler-Entscheidung; die abgelösten Begriffe sind im DEVELOPMENT_PLAN-
+Entscheidungsprotokoll unter D-14 vermerkt).
 
 - **Drohnen** — halblebendige Wartungsorganismen des Verwalters, in zwei Rollen:
-  **Träger** (unbewaffnet, güterwaggongroß, tragen die Tributzüge) und
-  **Flankierer** (mannshoch, schnell, gehen mit dem Stab an den Rändern der
-  Prozession, nehmen die Genommenen und kämpfen — der taktische `ut_tender`;
-  „Wächter mit Stab" ist ihr Erscheinungsbild). Ausführlich: §3.
-- **Die Begnadeten** — die menschlichen Verbesserten des Gottes, sein
-  verbesserter Kader (nicht „Gesegnete" — der Kanon-Terminus ist **Begnadete**,
-  §3). Seryn Vael ist der Vorderste unter ihnen.
+  **Träger-Drohnen** (unbewaffnet, güterwaggongroß, tragen die Tributzüge) und
+  **Wächter-Drohnen** (mannshoch, schnell, gehen mit dem Stab an den Rändern der
+  Prozession, nehmen die Genommenen und kämpfen — der taktische `ut_tender`).
+  Ausführlich: §3.
+- **Die Gesegneten** — die menschlichen Verbesserten des Gottes, sein
+  verbesserter Kader (D-14). Seryn Vael ist der Vorderste unter ihnen.
 - **Die Portion** — Veyras Segnung, ein leuchtendes Kraft-Sakrament aus
   veredeltem Tor-Licht; getrunken macht sie schneller und stärker als jeden
   Menschen. Die Hellsten gehorchen am Ende nur noch dem Licht. Eine Leine, kein
@@ -268,7 +269,7 @@ maßgeblich, damit der Kanon nicht durch Synonyme zerfasert.
   das haben sie immer getan.
 - **Drohnenprozessionen.** Träger-Drohnen tragen den Zehnt das Tal hinab _zum
   Tor und hindurch_ — versorgen den Sitz des Verwalters: der sichtbar gemachte
-  Wartungsvertrag. Flankierer-Drohnen gehen an den Rändern und nehmen die
+  Wartungsvertrag. Wächter-Drohnen gehen an den Rändern und nehmen die
   Genommenen. Eine Prozession ist das erste fremdartige Bild des Spiels — Grauen
   und Größe, niemals Kampf — und die Furcht der Dorfbewohner während einer
   solchen gilt dem _Gesehenwerden_, nicht dem Spieler. Die Genommenen werden

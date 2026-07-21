@@ -85,7 +85,7 @@ flowchart TD
     va_gate["n_va_gate<br/>grünes Tal, zwei Sonnen, geknicktes Signalfeuer"]
     va_vill["n_va_villagers<br/>stumme Dorfbewohner treiben euch von der Straße"]
     va_proc["n_va_procession<br/>Träger-Drohnen ziehen zum Tor"]
-    va_esc["n_va_escape<br/>der Junge stürzt; zwei Flankierer kehren um"]
+    va_esc["n_va_escape<br/>der Junge stürzt; zwei Wächter-Drohnen kehren um"]
     va_hide["n_va_hide"]
     va_told["n_va_told<br/>der Alte zeichnet die Adresse; ‚Veyra'"]
     va_run["n_va_run<br/>Mercer+Okafor töten zwei Drohnen"]
@@ -559,9 +559,9 @@ Freischaltregeln der Engine. **Hier wird nichts davon behoben.**
 8. **(H) Die Erzählung verwendet Kanon-Taxonomie, bevor die Fiktion sie
    lehrt.** Beim ersten Kontakt in `m_vy_arrival` benennt die Erzählung die
    Aliens bereits als „**Drohnen**" und unterscheidet Kasten — „Träger" und
-   „**Flankierer**-Drohnen — mannshoch, flink" — Vokabular, das das POV-Team
+   „**Wächter-Drohnen** — mannshoch, flink" — Vokabular, das das POV-Team
    unmöglich kennen kann (die Dorfbewohner sind stumm; niemand erklärt die
-   Wörter). „Drohne/Träger/Flankierer" sind D-10-Kanon-Begriffe (Bibel §8), die
+   Wörter). „Drohne/Träger-Drohne/Wächter-Drohne" sind Kanon-Begriffe (Bibel §8; Rollennamen nach D-14), die
    in der Autorenstimme vor jeder weltinternen Einführung auftauchen. (Im
    Gegensatz dazu _sind_ „Veyra", „der Erleuchtete", „die Portion", „Seryn Vael"
    verdient — von Dorfbewohnern/Odel gesprochen.)

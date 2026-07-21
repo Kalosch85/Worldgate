@@ -40,6 +40,7 @@ export type Action =
   | { type: "build"; facility: string }
   | { type: "launchMission"; mission: string; squad: string[] }
   | { type: "chooseEventOption"; option: string }
+  | { type: "updateSettings"; patch: Partial<GameStateT["settings"]> }
   | BattleAction;
 
 /**
@@ -64,6 +65,10 @@ export function apply(state: GameStateT, action: Action, ctx: ReducerCtx): GameS
       return launchMission(state, ctx.content, action.mission, action.squad);
     case "chooseEventOption":
       return chooseEventOption(state, ctx, action.option);
+    case "updateSettings":
+      // Player preference toggle (D-13 text animation, D-15 locked options).
+      // Pure UI/display state persisted on GameState.settings — no sim effect.
+      return { ...state, settings: { ...state.settings, ...action.patch } };
     case "battleMove":
     case "battleAbility":
     case "battleInteract":

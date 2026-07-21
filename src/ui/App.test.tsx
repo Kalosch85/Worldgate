@@ -32,8 +32,20 @@ describe("App shell", () => {
 
   const render = () => act(() => root!.render(<App />));
 
+  /**
+   * D-13: node text now reveals word-by-word and options stay hidden until it
+   * finishes. Tapping the narration box fills the text at once and unlocks the
+   * options. A no-op when there's no narration box (menu, base, completion).
+   */
+  const skip = () => {
+    const box = container!.querySelector('[aria-label="Erzählung"]');
+    if (box) act(() => box.dispatchEvent(new MouseEvent("click", { bubbles: true })));
+  };
+
   /** Click the first button whose text or aria-label contains `label`. */
   const click = (label: string) => {
+    // Reveal any options still gated behind an in-progress narration (D-13).
+    skip();
     const btn = [...container!.querySelectorAll("button")].find(
       (b) => (b.textContent ?? "").includes(label) || (b.getAttribute("aria-label") ?? "").includes(label),
     );
@@ -62,9 +74,11 @@ describe("App shell", () => {
     render();
     click("Neue Kampagne");
     // The intro incident takes over before any base screen.
+    skip(); // reveal the animated node text before asserting on it (D-13)
     expect(container!.textContent).toContain("Ich wusste nicht, was mich erwartete, als ich unterschrieb");
     click("Hinunter.");
     click("Mit den Bedrohungen beginnen");
+    skip();
     expect(container!.textContent).toContain("Recon One");
     click("Jetzt die Wissenschaft. Okafor.");
     click("Zur Wählebene.");
@@ -128,10 +142,12 @@ describe("App shell", () => {
     click("Okafor");
     click("Mission starten");
     // The event screen takes over with the arrival node's body text.
+    skip();
     expect(container!.textContent).toContain("Recon Ones zweiter Meldung");
     click("Der Straße talaufwärts folgen");
     click("Ihnen vertrauen.");
     // The alien-procession reveal node (n_va_procession).
+    skip();
     expect(container!.textContent).toContain("gepanzert in mattem Chitin");
     click("Unten bleiben, bis die letzte fort ist");
     click("Ihn in Deckung bringen");
@@ -157,6 +173,7 @@ describe("App shell", () => {
     click("Mercer");
     click("Okafor");
     click("Mission starten");
+    skip();
     expect(container!.textContent).toContain("Recon Ones zweiter Meldung");
     click("Der Straße talaufwärts folgen");
     click("Losreißen");

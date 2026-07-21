@@ -321,13 +321,23 @@ export const BattleState = z.object({
   log: z.array(z.string()),
 });
 
+// D-13: narration playback mode for the event screen (presentation only).
+export const TextAnimation = z.enum(["on", "fast", "off"]);
+export type TextAnimationT = z.infer<typeof TextAnimation>;
+
 export const GameState = z.object({
   // Save-format version; prototype policy: bump = new campaign. Bumped 1 → 2
   // by D-9: the early-campaign restructure retires m_survey and re-anchors the
   // arc unlock chain, so pre-D-9 saves could no longer progress the spine.
   version: z.literal(2),
   campaign: z.object({ day: z.number().int().min(1), seed: z.number().int() }),
-  settings: z.object({ showLockedOptions: z.boolean() }), // D-15: default true (was D-1 false)
+  settings: z.object({
+    showLockedOptions: z.boolean(), // D-15: default true (was D-1 false)
+    // D-13: word-by-word narration in the event screen. "on" = animate,
+    // "fast" = halved timings, "off" = show instantly. Defaulted so pre-D-13
+    // saves load without a version bump (an absent field reads as "on").
+    textAnimation: TextAnimation.default("on"),
+  }),
   resources: ResourceAmounts,
   variables: z.record(Id, z.number()), // must contain "support"; numeric stance tracks
   flags: z.record(Id, z.boolean()),

@@ -246,7 +246,7 @@ function newHeroState(): GameStateT {
   return {
     version: 2,
     campaign: { day: 1, seed: 1 },
-    settings: { showLockedOptions: false },
+    settings: { showLockedOptions: false, textAnimation: "on" },
     resources: { funds: 0, materials: 0, intel: 0, exotics: 0 },
     variables: { support: 0 },
     flags: {},

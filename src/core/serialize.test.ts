@@ -50,7 +50,10 @@ function genGameState(rng: Rng, activeKind?: ActiveKind): GameStateT {
   const state: GameStateT = {
     version: 2,
     campaign: { day: rng.int(1, 5000), seed: rng.int(-2_000_000, 2_000_000) },
-    settings: { showLockedOptions: bool(rng) },
+    settings: {
+      showLockedOptions: bool(rng),
+      textAnimation: pick(rng, ["on", "fast", "off"] as const),
+    },
     resources: {
       funds: num(rng),
       materials: num(rng),

@@ -19,7 +19,7 @@ export function newCampaign(seed: number, content?: ContentBundleT): GameStateT 
   const state: GameStateT = {
     version: 2,
     campaign: { day: 1, seed },
-    settings: { showLockedOptions: true }, // D-15: visible locks by default
+    settings: { showLockedOptions: true, textAnimation: "on" }, // D-15 visible locks; D-13 narration on
     resources: { funds: 100, materials: 40, intel: 0, exotics: 0 },
     variables: { support: 5, trust_andara: 0 },
     flags: {},

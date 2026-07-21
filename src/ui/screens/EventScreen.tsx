@@ -16,10 +16,14 @@
 import { useMemo, useState, type ReactNode } from "react";
 import { eligibleOptions } from "../../core/narrative.js";
 import type { Action } from "../../core/reducer.js";
-import type { ContentBundleT, Effect, GameStateT } from "../../data/schemas.js";
+import type { ContentBundleT, Effect, GameStateT, TextAnimationT } from "../../data/schemas.js";
 import { NextMissions } from "../components/NextMissions.js";
+import { useNarration } from "../narration/useNarration.js";
 import { RESOURCE_LABELS, strings, variableLabel } from "../strings.js";
 import { buttonStyle, panelStyle, theme } from "../theme.js";
+
+/** Cycle order for the text-speed toggle (D-13.4). */
+const TEXT_MODES: readonly TextAnimationT[] = ["on", "fast", "off"];
 
 interface Delta {
   label: string;
@@ -81,6 +85,17 @@ export function EventScreen({
     }
     return map;
   }, [state, content]);
+
+  // D-13: node text animates word-by-word in the UI layer (never the reducer).
+  // Only the narrative node body animates — the completion summary, option
+  // labels, and journal appear at once (D-13.5).
+  const mode = state.settings.textAnimation;
+  const narration = useNarration(node?.text ?? "", mode);
+
+  const cycleTextAnimation = () => {
+    const next = TEXT_MODES[(TEXT_MODES.indexOf(mode) + 1) % TEXT_MODES.length] ?? "on";
+    dispatch({ type: "updateSettings", patch: { textAnimation: next } });
+  };
 
   const choose = (optionId: string) => {
     if (!node || !script || !active) return;
@@ -195,11 +210,26 @@ export function EventScreen({
 
   return shell(
     <>
-      <section style={panelStyle} aria-label={strings.event.narrativeAriaLabel}>
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <TextSpeedToggle mode={mode} onCycle={cycleTextAnimation} />
+      </div>
+
+      {/* D-13: tapping the box during the reveal fills the rest of the text and
+          unlocks the options; a tap once complete does nothing destructive. */}
+      <section
+        style={{ ...panelStyle, cursor: narration.complete ? "default" : "pointer" }}
+        aria-label={strings.event.narrativeAriaLabel}
+        onClick={narration.complete ? undefined : narration.skip}
+      >
         {node.speaker && (
           <div style={{ fontWeight: 700, color: theme.accent, marginBottom: "0.35rem" }}>{node.speaker}</div>
         )}
-        <p style={{ margin: 0, lineHeight: 1.5 }}>{node.text}</p>
+        <p style={{ margin: 0, lineHeight: 1.5 }}>{narration.text}</p>
+        {!narration.complete && (
+          <p style={{ margin: "0.6rem 0 0", fontSize: "0.8rem", color: theme.textDim, fontStyle: "italic" }}>
+            {strings.event.skipHint}
+          </p>
+        )}
       </section>
 
       {toast && toast.length > 0 && (
@@ -221,46 +251,69 @@ export function EventScreen({
         </div>
       )}
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-        {node.options.map((option) => {
-          const status = eligibility.get(option.id);
-          const eligible = status?.eligible ?? false;
-          if (!eligible && !showLocked) return null; // hide ineligible when D-15 off
-          // D-15: a locked option is greyed out with its authored reason, or a
-          // generic hint when the option carries none.
-          const lockedReason = eligible
-            ? undefined
-            : (option.lockedReason ?? strings.event.lockedGenericReason);
-          return (
-            <button
-              key={option.id}
-              type="button"
-              disabled={!eligible}
-              onClick={() => choose(option.id)}
-              style={{
-                ...buttonStyle("ghost"),
-                display: "flex",
-                flexDirection: "column",
-                gap: "0.2rem",
-                width: "100%",
-                height: "auto",
-                minHeight: theme.touch,
-                padding: "0.6rem 0.8rem",
-                textAlign: "left",
-                opacity: eligible ? 1 : 0.4,
-              }}
-            >
-              <span>{eligible ? option.text : `🔒 ${option.text}`}</span>
-              {lockedReason && (
-                <span style={{ fontSize: "0.8rem", color: theme.textDim, fontStyle: "italic" }}>
-                  {lockedReason}
-                </span>
-              )}
-            </button>
-          );
-        })}
-      </div>
+      {/* D-13.1: options only appear once the node text is fully revealed
+          (animation finished, mode "off", or skipped). */}
+      {narration.complete && (
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+          {node.options.map((option) => {
+            const status = eligibility.get(option.id);
+            const eligible = status?.eligible ?? false;
+            if (!eligible && !showLocked) return null; // hide ineligible when D-15 off
+            // D-15: a locked option is greyed out with its authored reason, or a
+            // generic hint when the option carries none.
+            const lockedReason = eligible
+              ? undefined
+              : (option.lockedReason ?? strings.event.lockedGenericReason);
+            return (
+              <button
+                key={option.id}
+                type="button"
+                disabled={!eligible}
+                onClick={() => choose(option.id)}
+                style={{
+                  ...buttonStyle("ghost"),
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.2rem",
+                  width: "100%",
+                  height: "auto",
+                  minHeight: theme.touch,
+                  padding: "0.6rem 0.8rem",
+                  textAlign: "left",
+                  opacity: eligible ? 1 : 0.4,
+                }}
+              >
+                <span>{eligible ? option.text : `🔒 ${option.text}`}</span>
+                {lockedReason && (
+                  <span style={{ fontSize: "0.8rem", color: theme.textDim, fontStyle: "italic" }}>
+                    {lockedReason}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      )}
     </>,
+  );
+}
+
+/** D-13.4: a compact toggle cycling narration speed on → fast → off. */
+function TextSpeedToggle({ mode, onCycle }: { mode: TextAnimationT; onCycle: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onCycle}
+      aria-label={`${strings.event.textSpeedLabel}: ${strings.event.textSpeedMode[mode]}`}
+      style={{
+        ...buttonStyle("ghost"),
+        padding: "0 0.8rem",
+        fontSize: "0.85rem",
+        color: theme.textDim,
+      }}
+    >
+      {strings.event.textSpeedLabel}: {strings.event.textSpeedMode[mode]}
+    </button>
   );
 }
 

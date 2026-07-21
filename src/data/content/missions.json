@@ -4,9 +4,10 @@
     "name": "Das stille Tal",
     "description": "Adresse 04. Recon Ones letzte bekannte Position, seit neun Tagen still. Setzt über, findet die Spur, bringt alles zurück, das sagt, wohin sie gegangen sind.",
     "availability": [],
+    "operation": "vy",
     "squad": {
       "min": 2,
-      "max": 2
+      "max": 4
     },
     "payload": {
       "kind": "narrative",
@@ -18,9 +19,10 @@
     "name": "Das Verzeichnis der Genommenen",
     "description": "Zurück ins Tal. Karsu führt das Verzeichnis der Genommenen — und weiß, ob vier Außenweltler hinter dem Tor noch am Leben sind.",
     "availability": [],
+    "operation": "vy",
     "squad": {
       "min": 2,
-      "max": 2
+      "max": 4
     },
     "payload": {
       "kind": "narrative",
@@ -29,12 +31,14 @@
   },
   {
     "id": "m_vy_intercept",
-    "name": "Der Tributruf",
-    "description": "Signaltürme an der Passstraße singen jeden Tributzug durch die Tür auf Veyra — und singen die geleerten Züge wieder hinaus. Nehmt die Türme der Reihe nach ein, und Commands Hand liegt auf dem einzigen Ruf, der den Weg nach Hause öffnet.",
+    "name": "Die Signaltürme",
+    "description": "Der Tempel meldet jede Störung über seine Signaltürme durch das Tor. Bevor ihr die Bußstätte betretet, muss der Tributruf schweigen.",
     "availability": [],
+    "operation": "vy",
+    "retryOnDefeat": true,
     "squad": {
       "min": 2,
-      "max": 3
+      "max": 4
     },
     "launchCost": 0,
     "payload": {
@@ -43,11 +47,6 @@
     },
     "victoryEffects": [
       {
-        "type": "resource",
-        "resource": "intel",
-        "delta": 5
-      },
-      {
         "type": "xp",
         "scope": "squad",
         "amount": 15
@@ -55,11 +54,11 @@
       {
         "type": "fatigue",
         "scope": "squad",
-        "delta": 20
+        "delta": 15
       },
       {
         "type": "flag",
-        "flag": "f_vy_call_intercepted",
+        "flag": "f_vy_signal_jammed",
         "value": true
       },
       {
@@ -68,22 +67,21 @@
       },
       {
         "type": "log",
-        "text": "Der Tributruf gehört uns. Die Tür auf Veyra öffnet sich für das, was die Türme verlangen — und jetzt verlangen die Türme, was Command will. Der Weg nach Hause existiert wieder: schmal, geliehen und unser."
+        "text": "Okafor, über den offenen Tributruf: ‚Keine Verschlüsselung. Götter brauchen keine Verschlüsselung.'"
       }
     ],
     "defeatEffects": [
       {
-        "type": "variable",
-        "variable": "support",
-        "delta": -1
+        "type": "fatigue",
+        "scope": "squad",
+        "delta": 20
       },
       {
-        "type": "queueEvent",
-        "event": "ev_vy_regroup",
-        "delayDays": 1
+        "type": "log",
+        "text": "Rückzug von den Türmen."
       }
     ],
-    "debrief": "Die Türme antworteten der Reihe nach, und Commands Hand schloss sich über dem Tributruf. Die Tür auf Veyra öffnet sich für das, was die Türme verlangen — und jetzt verlangen die Türme, was Command will. Der Weg nach Hause existiert wieder: schmal, geliehen und unser."
+    "debrief": "Die Türme antworteten der Reihe nach, und Commands Hand schloss sich über dem Tributruf. Die Tür auf Veyra öffnet sich für das, was die Türme verlangen — und jetzt verlangen die Türme, was Command will."
   },
   {
     "id": "m_relay",
@@ -133,9 +131,10 @@
     "name": "Pilgerwege",
     "description": "Die Tür auf Veyra öffnet nur in eine Richtung. Springt zum Sitz des Gottes und findet einen Weg in die Bußstätte, bevor Recon Ones Spur erkaltet.",
     "availability": [],
+    "operation": "vy",
     "squad": {
       "min": 2,
-      "max": 2
+      "max": 4
     },
     "payload": {
       "kind": "narrative",
@@ -147,9 +146,10 @@
     "name": "Die Bußstätte",
     "description": "Der Plan steht. Dringt in das Basilika-Gefängnis ein und findet Recon One.",
     "availability": [],
+    "operation": "vy",
     "squad": {
       "min": 2,
-      "max": 2
+      "max": 4
     },
     "payload": {
       "kind": "narrative",
@@ -161,9 +161,10 @@
     "name": "Die Erste Klinge",
     "description": "Seryn Vael, der Streiter des Erleuchteten, steht zwischen euch und dem Weg hinaus.",
     "availability": [],
+    "operation": "vy",
     "squad": {
       "min": 2,
-      "max": 2
+      "max": 4
     },
     "payload": {
       "kind": "narrative",
@@ -171,8 +172,73 @@
     }
   },
   {
+    "id": "m_vy_breakout",
+    "name": "Der Ausbruch",
+    "description": "Die menschlichen Wachen weichen zurück — manche fliehen, manche zögern. Nur die Drohnen kommen. Drohnen kennen keinen Zweifel.",
+    "availability": [],
+    "operation": "vy",
+    "retryOnDefeat": true,
+    "squad": {
+      "min": 2,
+      "max": 4
+    },
+    "launchCost": 0,
+    "payload": {
+      "kind": "tactical",
+      "map": "map_vy_breakout"
+    },
+    "victoryEffects": [
+      {
+        "type": "xp",
+        "scope": "squad",
+        "amount": 20
+      },
+      {
+        "type": "fatigue",
+        "scope": "squad",
+        "delta": 20
+      },
+      {
+        "type": "unlockMission",
+        "mission": "m_vy_home"
+      }
+    ],
+    "defeatEffects": [
+      {
+        "type": "fatigue",
+        "scope": "squad",
+        "delta": 20
+      },
+      {
+        "type": "injury",
+        "scope": "randomSquadMember",
+        "injury": "inj_shaken"
+      },
+      {
+        "type": "log",
+        "text": "Zurückgeschlagen in die Zellen."
+      }
+    ],
+    "debrief": "Der Torhof ist genommen. Die Drohnen liegen still, und der letzte Ruf der Türme hält die Tür offen — gerade lang genug."
+  },
+  {
+    "id": "m_vy_home",
+    "name": "Heimkehr",
+    "description": "Recon One ist frei, der Torhof genommen, die Erste Klinge — willig oder gefesselt — bei euch. Ein letzter Sprung trennt euch von zuhause.",
+    "availability": [],
+    "operation": "vy",
+    "squad": {
+      "min": 2,
+      "max": 4
+    },
+    "payload": {
+      "kind": "narrative",
+      "eventScript": "ev_vy_homecoming"
+    }
+  },
+  {
     "id": "m_vy_4",
-    "_comment": "D-16: für Akt 2 zurückgestellt. Bleibt im Content, wird aber von nichts mehr freigeschaltet (der M3-Bogen endet nach n_vy3_exfil_end). Reaktivierung ist eine Akt-2-Entscheidung.",
+    "_comment": "D-16: für Akt 2 zurückgestellt. Bleibt im Content, wird aber von nichts mehr freigeschaltet (der M3-Bogen führt jetzt über m_vy_breakout und m_vy_home, nicht m_vy_4). Reaktivierung ist eine Akt-2-Entscheidung.",
     "name": "Das Reliquiengewölbe",
     "description": "Erbeutet die Vorläufer-Artefakte aus der Tempelrüstkammer: rüstet die Forschung aus und findet das Sanktum des Gottes.",
     "availability": [],

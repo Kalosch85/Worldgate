@@ -18,6 +18,7 @@ import { eligibleOptions } from "../../core/narrative.js";
 import type { Action } from "../../core/reducer.js";
 import type { ContentBundleT, Effect, GameStateT, TextAnimationT } from "../../data/schemas.js";
 import { NextMissions } from "../components/NextMissions.js";
+import { SummaryActions } from "../components/SummaryActions.js";
 import { WORD_FADE_MS } from "../narration/parseNarration.js";
 import { useNarration } from "../narration/useNarration.js";
 import { RESOURCE_LABELS, strings, variableLabel } from "../strings.js";
@@ -191,13 +192,19 @@ export function EventScreen({
             {strings.event.teamCompositionHint}
           </p>
         )}
-        <button
-          type="button"
-          style={{ ...buttonStyle("primary"), width: "100%", marginTop: "1rem" }}
-          onClick={onDone}
-        >
-          {strings.common.returnToBase}
-        </button>
+        <SummaryActions
+          state={state}
+          content={content}
+          newlyUnlocked={newlyUnlocked}
+          onContinue={(missionId) => {
+            // §2a: launch the operation's next mission directly. Clear the local
+            // completion so the freshly-launched mission renders (a narrative→
+            // narrative hop keeps this screen mounted).
+            setCompletion(null);
+            dispatch({ type: "launchMission", mission: missionId, squad: state.deployment?.squad ?? [] });
+          }}
+          onReturn={onDone}
+        />
       </section>,
     );
   }

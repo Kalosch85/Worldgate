@@ -29,18 +29,50 @@ export function newlyUnlockedMissions(before: GameStateT, after: GameStateT): st
 }
 
 /**
+ * The single next mission of the running operation, for the post-mission
+ * summary's "Weiter" button (veyra-kaempfe spec §2a). Returns a mission id only
+ * when (a) a deployment is active and (b) exactly ONE of the just-unlocked
+ * missions belongs to that operation. Otherwise null — the summary falls back to
+ * returning to base. Pure; `newlyUnlocked` is the `newlyUnlockedMissions` diff.
+ */
+export function deploymentNextMission(
+  state: GameStateT,
+  content: ContentBundleT,
+  newlyUnlocked: readonly string[],
+): string | null {
+  const deployment = state.deployment;
+  if (deployment === null) return null;
+  const ofOperation = newlyUnlocked.filter((id) => {
+    const def = content.missions.find((m) => m.id === id);
+    return def?.operation === deployment.operation;
+  });
+  return ofOperation.length === 1 ? ofOperation[0]! : null;
+}
+
+/**
  * Shared validation for the guards that apply to EVERY mission, regardless of
  * payload kind (§3): the mission is available, no mission is active, the squad
  * size fits the MissionDef, and every squad id is a known, non-duplicate,
  * non-exhausted hero. Returns the resolved MissionDef, or a RuleError-ready
  * failure reason. Injured-but-not-exhausted heroes may launch.
  */
+/**
+ * A mission continues a running operation when it is tagged with the same
+ * `operation` as the active deployment (veyra-kaempfe spec §2). Such a launch
+ * reuses `deployment.squad` and skips squad selection.
+ */
+function isDeploymentContinuation(state: GameStateT, def: MissionDefT): boolean {
+  return (
+    state.deployment !== null && def.operation !== undefined && def.operation === state.deployment.operation
+  );
+}
+
 function validateLaunch(
   state: GameStateT,
   content: ContentBundleT,
   mission: string,
   squad: readonly string[],
-): { ok: true; def: MissionDefT } | { ok: false; code: string; message: string } {
+): { ok: true; def: MissionDefT; squad: readonly string[] } | { ok: false; code: string; message: string } {
   if (state.activeMission !== null) {
     return { ok: false, code: "mission_active", message: "Es läuft bereits eine Mission." };
   }
@@ -51,7 +83,12 @@ function validateLaunch(
   if (!def) {
     return { ok: false, code: "mission_unknown", message: `Unbekannte Mission '${mission}'.` };
   }
-  if (squad.length < def.squad.min || squad.length > def.squad.max) {
+  // §2: within a running operation the squad is fixed — ignore the requested
+  // squad and reuse the locked one; the exhausted lock no longer applies (the
+  // team must see the operation through, tired or not).
+  const continuing = isDeploymentContinuation(state, def);
+  const effectiveSquad = continuing ? state.deployment!.squad : squad;
+  if (effectiveSquad.length < def.squad.min || effectiveSquad.length > def.squad.max) {
     return {
       ok: false,
       code: "squad_size",
@@ -59,7 +96,7 @@ function validateLaunch(
     };
   }
   const seen = new Set<string>();
-  for (const heroId of squad) {
+  for (const heroId of effectiveSquad) {
     if (seen.has(heroId)) {
       return { ok: false, code: "squad_duplicate", message: `Doppeltes Truppmitglied '${heroId}'.` };
     }
@@ -68,7 +105,7 @@ function validateLaunch(
     if (!heroState) {
       return { ok: false, code: "squad_unknown_hero", message: `Unbekannter Held '${heroId}'.` };
     }
-    if (isExhausted(heroState)) {
+    if (!continuing && isExhausted(heroState)) {
       return {
         ok: false,
         code: "squad_exhausted",
@@ -76,7 +113,7 @@ function validateLaunch(
       };
     }
   }
-  return { ok: true, def };
+  return { ok: true, def, squad: effectiveSquad };
 }
 
 /**
@@ -100,6 +137,15 @@ export function canLaunchMission(
 }
 
 /**
+ * True when the operation deployment must OPEN on this launch (veyra-kaempfe
+ * spec §2): the mission carries an `operation` and none is running yet. On a
+ * continuation the deployment already exists and is left untouched.
+ */
+function opensDeployment(state: GameStateT, def: MissionDefT): boolean {
+  return def.operation !== undefined && state.deployment === null;
+}
+
+/**
  * Launch a mission (§3). Re-validates every guard and throws RuleError on any
  * failure. On success:
  *  - narrative: opens `activeMission` at the event script's entry node.
@@ -118,6 +164,16 @@ export function launchMission(
     throw new RuleError(`launchMission/${result.code}`, result.message);
   }
   const def = result.def;
+  // §2: the effective squad is the requested one, or — within a running
+  // operation — the locked deployment squad.
+  const effectiveSquad = result.squad;
+
+  // §2: the first operation mission opens the deployment and locks its squad.
+  const openDeployment = (draft: GameStateT): void => {
+    if (opensDeployment(draft, def)) {
+      draft.deployment = { operation: def.operation!, squad: [...effectiveSquad] };
+    }
+  };
 
   if (def.payload.kind === "tactical") {
     // D-9: a MissionDef may override the default cost (0 = free spine battle).
@@ -130,8 +186,9 @@ export function launchMission(
     }
     const draft = structuredClone(state);
     draft.resources.materials -= launchCost;
-    const battle = createBattleState(draft, content, def, squad);
-    draft.activeMission = { kind: "tactical", mission, squad: [...squad], battle };
+    const battle = createBattleState(draft, content, def, effectiveSquad);
+    draft.activeMission = { kind: "tactical", mission, squad: [...effectiveSquad], battle };
+    openDeployment(draft);
     return draft;
   }
 
@@ -150,8 +207,9 @@ export function launchMission(
     mission,
     script: scriptId,
     node: script.entryNode,
-    squad: [...squad],
+    squad: [...effectiveSquad],
     gatedSeen: false,
   };
+  openDeployment(draft);
   return draft;
 }

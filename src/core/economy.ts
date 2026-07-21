@@ -145,7 +145,12 @@ export function endDay(state: GameStateT, ctx: ReducerCtx): GameStateT {
   const infirmary = draft.personnel.assignments.infirmary;
   const healRate = getModifier(draft.modifiers, "healRate");
   const recoveryAmount = 5 + 2 * infirmary + 5 * healRate;
+  // Veyra-kaempfe spec §2: heroes on a running operation get no rest — recovery
+  // (fatigue AND injuries) skips everyone in deployment.squad until the
+  // operation ends (the endDeployment effect clears it).
+  const onOperation = new Set(draft.deployment?.squad ?? []);
   for (const hero of draft.heroes) {
+    if (onOperation.has(hero.hero)) continue;
     hero.fatigue = Math.max(0, hero.fatigue - recoveryAmount);
     const remaining: typeof hero.injuries = [];
     for (const injury of hero.injuries) {

@@ -101,6 +101,9 @@ export const EffectSchema = z.union([
   // raises personnel.total (floor 0).
   z.object({ type: z.literal("addHero"), hero: Id }),
   z.object({ type: z.literal("addPersonnel"), amount: z.number().int() }),
+  // Deployment / operations (docs/specs/veyra-kaempfe.md §1d): clears
+  // GameState.deployment, ending a running operation so recovery resumes.
+  z.object({ type: z.literal("endDeployment") }),
   z.object({ type: z.literal("log"), text: z.string() }), // campaign journal / debrief line
 ]);
 export type Effect = z.infer<typeof EffectSchema>;
@@ -174,6 +177,19 @@ export const TacticalMapDef = z.object({
   squadSpawns: z.array(Pos).min(1),
   enemyGroups: z.array(z.object({ id: Id, unitType: Id, positions: z.array(Pos).min(1) })),
   interactables: z.array(z.object({ id: Id, pos: Pos, kind: z.enum(["console"]) })).default([]),
+  // Player-side allies spawned at battle init when their conditions pass
+  // (docs/specs/veyra-kaempfe.md §1a). Evaluated against (GameState, squad);
+  // empty conditions ⇒ always. Player-controlled like heroes, but stat-blocked
+  // by a UnitTypeDef rather than a hero. Defaults to none (map_relay et al.).
+  allyUnits: z
+    .array(
+      z.object({
+        unitType: Id,
+        pos: Pos,
+        conditions: z.array(ConditionSchema).default([]),
+      }),
+    )
+    .default([]),
   objectives: z
     .array(
       z.union([
@@ -237,6 +253,14 @@ export const MissionDef = z.object({
   name: z.string(),
   description: z.string(),
   availability: z.array(ConditionSchema).default([]),
+  // Operations / deployment (docs/specs/veyra-kaempfe.md §1b, §2). A mission
+  // tagged with an `operation` id joins a running deployment: the first such
+  // mission launched (with deployment == null) opens the deployment and locks
+  // its squad; later missions of the same operation reuse deployment.squad and
+  // ignore the exhausted lock. `retryOnDefeat` keeps a defeated tactical
+  // mission on the available list so it can be re-attempted.
+  operation: Id.optional(),
+  retryOnDefeat: z.boolean().default(false),
   squad: z.object({ min: z.number().int().min(1), max: z.number().int().min(1) }),
   // D-9 (Fable-sanctioned): per-mission override of the tactical launch cost
   // (TACTICAL_LAUNCH_COST when absent). 0 = Command underwrites the crossing —
@@ -367,6 +391,11 @@ export const GameState = z.object({
     completed: z.array(z.object({ mission: Id, outcome: Id.optional(), day: z.number().int() })),
     queuedEvents: z.array(z.object({ event: Id, fireOnDay: z.number().int() })),
   }),
+  // Active operation (docs/specs/veyra-kaempfe.md §1c, §2). null when no
+  // deployment is running; otherwise the operation id and the locked squad the
+  // whole operation fights with. Set by launchMission on the first operation
+  // mission, cleared by the `endDeployment` effect.
+  deployment: z.object({ operation: Id, squad: z.array(Id) }).nullable(),
   activeMission: z
     .union([
       // `mission` optional: queue-fired incidents have no MissionDef wrapper.

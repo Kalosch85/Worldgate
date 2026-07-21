@@ -128,8 +128,17 @@ function unitName(content: ContentBundleT, u: BattleUnitT): string {
 }
 
 function maxHpOf(content: ContentBundleT, u: BattleUnitT): number {
-  if (u.side === "player") return HERO_MAX_HP;
+  // Heroes use the flat hero maxHp; enemies AND player-side allies (spec §1a/§4)
+  // take theirs from the UnitTypeDef.
+  if (u.side === "player" && u.hero !== undefined) return HERO_MAX_HP;
   return content.unitTypes.find((t) => t.id === u.unitType)?.maxHp ?? u.hp;
+}
+
+/** The ability id list a selected player unit fights with: a hero's authored
+ * abilities, or — for a UnitTypeDef-blocked ally (spec §4) — the unit type's. */
+function abilityIdsFor(content: ContentBundleT, u: BattleUnitT): readonly string[] {
+  if (u.hero !== undefined) return content.heroes.find((h) => h.id === u.hero)?.abilities ?? [];
+  return content.unitTypes.find((t) => t.id === u.unitType)?.abilities ?? [];
 }
 
 const manhattan = (a: PosT, b: PosT): number => Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
@@ -250,11 +259,7 @@ export function buildBattleView(state: GameStateT, content: ContentBundleT, ui: 
 
   const abilities: AbilityBarItem[] = [];
   if (selectablePlayer) {
-    const heroDef =
-      selectablePlayer.hero !== undefined
-        ? content.heroes.find((h) => h.id === selectablePlayer.hero)
-        : undefined;
-    for (const abId of heroDef?.abilities ?? []) {
+    for (const abId of abilityIdsFor(content, selectablePlayer)) {
       const def = content.abilities.find((a) => a.id === abId);
       if (!def) continue;
       const cd = selectablePlayer.cooldowns[abId] ?? 0;

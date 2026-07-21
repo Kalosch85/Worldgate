@@ -130,6 +130,13 @@ function applyOne(
       state.personnel.total = Math.max(0, Math.floor(state.personnel.total + effect.amount));
       return state;
     }
+    case "endDeployment": {
+      // Veyra-kaempfe spec §1d/§2: close the running operation. Recovery
+      // (endDay) skips deployment.squad heroes, so ending the deployment is
+      // what lets them rest again. No-op when nothing is running.
+      state.deployment = null;
+      return state;
+    }
     case "log": {
       state.journal.push({ day: state.campaign.day, text: effect.text });
       return state;

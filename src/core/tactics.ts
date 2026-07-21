@@ -22,6 +22,7 @@ import type { ContentBundleT, GameStateT, PosT } from "../data/schemas.js";
 import { applyEffects } from "./effects.js";
 import { RuleError } from "./errors.js";
 import { deriveBattleSeed } from "./hash.js";
+import { evalCondition } from "./narrative.js";
 import type { ReducerCtx } from "./reducer.js";
 import { mulberry32, type Rng } from "./rng.js";
 import { effectiveSkills } from "./roster.js";
@@ -169,9 +170,12 @@ function unitById(battle: BattleStateT, id: string): BattleUnitT | undefined {
 }
 
 function statsOf(state: GameStateT, content: ContentBundleT, unit: BattleUnitT): UnitStats {
-  if (unit.side === "player") {
+  // A player-side unit is either a hero (hero id) or an allied combatant blocked
+  // out by a UnitTypeDef (veyra-kaempfe spec §1a/§4 — e.g. Seryn). Only the hero
+  // branch derives from campaign HeroState; the ally falls through to the shared
+  // UnitTypeDef lookup below, exactly like an enemy.
+  if (unit.side === "player" && unit.hero !== undefined) {
     const heroId = unit.hero;
-    if (heroId === undefined) throw new Error(`tactics: player unit '${unit.id}' has no hero`);
     const heroState = state.heroes.find((h) => h.hero === heroId);
     const def = content.heroes.find((h) => h.id === heroId);
     if (!heroState || !def) throw new Error(`tactics: unknown hero '${heroId}'`);
@@ -357,10 +361,15 @@ function updateReachZone(battle: BattleStateT, map: MapDefT): void {
   for (const o of map.objectives) {
     if (o.kind !== "reachZone") continue;
     if (battle.objectiveProgress[o.id] === true) continue;
-    const reached = battle.units.some(
-      (u) => u.side === "player" && u.hp > 0 && o.zone.some((z) => z.x === u.pos.x && z.y === u.pos.y),
-    );
-    if (reached) battle.objectiveProgress[o.id] = true;
+    // Veyra-kaempfe spec §6 (sanctioned semantics): a reachZone is complete when
+    // ALL living (non-downed) player units — squad heroes and any allies — stand
+    // in the zone. The latch requires at least one living player, so it can never
+    // fire on a wiped squad (which is a defeat, checked separately).
+    const livingPlayers = battle.units.filter((u) => u.side === "player" && u.hp > 0);
+    const inZone = (u: BattleUnitT): boolean => o.zone.some((z) => z.x === u.pos.x && z.y === u.pos.y);
+    if (livingPlayers.length > 0 && livingPlayers.every(inZone)) {
+      battle.objectiveProgress[o.id] = true;
+    }
   }
 }
 
@@ -728,7 +737,13 @@ function resolveBattle(draft: GameStateT, ctx: ReducerCtx, outcome: "victory" | 
   const effects = outcome === "victory" ? def.victoryEffects : def.defeatEffects;
   const next = applyEffects(draft, effects, ctx, squad);
 
-  next.missions.available = next.missions.available.filter((id) => id !== missionId);
+  // Veyra-kaempfe spec §2: a `retryOnDefeat` mission stays on the available list
+  // after a loss so it can be re-attempted; defeatEffects still apply and the
+  // attempt is recorded. Every other outcome removes the mission as usual.
+  const keepAvailable = outcome === "defeat" && def.retryOnDefeat === true;
+  if (!keepAvailable) {
+    next.missions.available = next.missions.available.filter((id) => id !== missionId);
+  }
   next.missions.completed.push({ mission: missionId, outcome, day });
   // The stored `outcome` stays an English identifier ("victory"/"defeat", read
   // by save/load and tests); only the player-visible journal line is localized.
@@ -787,6 +802,25 @@ export function createBattleState(
       });
     });
   }
+
+  // Veyra-kaempfe spec §1a/§4: player-side allies whose conditions pass at
+  // battle init (empty ⇒ always). Player-controlled like heroes, but stat-blocked
+  // by a UnitTypeDef; evaluated against (state, squad). Skipped for maps that
+  // declare none (map_relay et al.), so existing battles are unchanged.
+  map.allyUnits.forEach((ally, n) => {
+    if (!ally.conditions.every((cond) => evalCondition(state, content, squad, cond))) return;
+    const ut = content.unitTypes.find((u) => u.id === ally.unitType);
+    if (!ut) throw new Error(`createBattleState: unknown allyUnit unitType '${ally.unitType}'`);
+    units.push({
+      id: `u_ally_${ally.unitType}_${n}`,
+      side: "player",
+      unitType: ally.unitType,
+      pos: { x: ally.pos.x, y: ally.pos.y },
+      hp: ut.maxHp,
+      ap: AP_PER_TURN,
+      cooldowns: {},
+    });
+  });
 
   const objectiveProgress: Record<string, boolean | number> = {};
   for (const o of map.objectives) {

@@ -32,14 +32,21 @@ export function WorldgateScreen({
     setSquad((prev) => (prev.includes(heroId) ? prev.filter((h) => h !== heroId) : [...prev, heroId]));
   };
 
+  // veyra-kaempfe spec §2: during a running operation the squad is locked and
+  // only that operation's missions are on offer.
+  const deployment = state.deployment;
+  const launchSquad = deployment ? deployment.squad : squad;
+
   const missions = state.missions.available
     .map((id) => content.missions.find((m) => m.id === id))
-    .filter((m): m is ContentBundleT["missions"][number] => m !== undefined);
+    .filter((m): m is ContentBundleT["missions"][number] => m !== undefined)
+    .filter((m) => (deployment ? m.operation === deployment.operation : true));
 
   const launch = (missionId: string) => {
     // Pre-validated by the disabled state; dispatch runs the reducer's guard and
-    // (on success) App routes to the event screen where the mission is resolved.
-    dispatch({ type: "launchMission", mission: missionId, squad });
+    // (on success) App routes to the mission screen. Within a deployment the core
+    // reuses deployment.squad regardless of what is passed.
+    dispatch({ type: "launchMission", mission: missionId, squad: launchSquad });
   };
 
   return (
@@ -57,55 +64,75 @@ export function WorldgateScreen({
           margin: "0 auto",
         }}
       >
-        {/* Squad selection */}
-        <section style={panelStyle} aria-label={strings.worldgate.squad}>
-          <header
+        {/* Deployment banner (spec §2): squad is locked, only the running
+            operation's missions are offered. */}
+        {deployment && (
+          <section
             style={{
+              ...panelStyle,
+              borderColor: "#f0b45e",
               display: "flex",
-              justifyContent: "space-between",
-              alignItems: "baseline",
-              marginBottom: "0.5rem",
+              alignItems: "center",
+              gap: "0.5rem",
             }}
+            aria-label={strings.worldgate.deploymentActive}
           >
-            <h2 style={{ margin: 0, fontSize: "1.05rem" }}>{strings.worldgate.squad}</h2>
-            <span style={{ color: theme.textDim, fontSize: "0.85rem" }}>
-              {strings.worldgate.selectedCount(squad.length)}
-            </span>
-          </header>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-            {state.heroes.map((hero) => {
-              const def = content.heroes.find((h) => h.id === hero.hero);
-              const selectable = canBeSelectedForSquad(hero);
-              const selected = squad.includes(hero.hero);
-              return (
-                <button
-                  key={hero.hero}
-                  type="button"
-                  aria-pressed={selected}
-                  disabled={!selectable}
-                  onClick={() => toggle(hero.hero)}
-                  style={{
-                    ...buttonStyle(selected ? "primary" : "ghost"),
-                    opacity: selectable ? 1 : 0.4,
-                    flex: "1 1 45%",
-                    minWidth: 140,
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "flex-start",
-                    gap: 2,
-                    padding: "0.5rem 0.75rem",
-                    height: "auto",
-                  }}
-                >
-                  <span style={{ fontWeight: 600 }}>{def?.name ?? hero.hero}</span>
-                  <span style={{ fontSize: "0.7rem", opacity: 0.85 }}>
-                    {selectable ? strings.common.level(hero.level) : strings.common.exhausted}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </section>
+            <span aria-hidden="true">🚩</span>
+            <span style={{ fontWeight: 600 }}>{strings.worldgate.deploymentActive}</span>
+          </section>
+        )}
+
+        {/* Squad selection — hidden while a deployment locks the squad. */}
+        {!deployment && (
+          <section style={panelStyle} aria-label={strings.worldgate.squad}>
+            <header
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "baseline",
+                marginBottom: "0.5rem",
+              }}
+            >
+              <h2 style={{ margin: 0, fontSize: "1.05rem" }}>{strings.worldgate.squad}</h2>
+              <span style={{ color: theme.textDim, fontSize: "0.85rem" }}>
+                {strings.worldgate.selectedCount(squad.length)}
+              </span>
+            </header>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+              {state.heroes.map((hero) => {
+                const def = content.heroes.find((h) => h.id === hero.hero);
+                const selectable = canBeSelectedForSquad(hero);
+                const selected = squad.includes(hero.hero);
+                return (
+                  <button
+                    key={hero.hero}
+                    type="button"
+                    aria-pressed={selected}
+                    disabled={!selectable}
+                    onClick={() => toggle(hero.hero)}
+                    style={{
+                      ...buttonStyle(selected ? "primary" : "ghost"),
+                      opacity: selectable ? 1 : 0.4,
+                      flex: "1 1 45%",
+                      minWidth: 140,
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                      gap: 2,
+                      padding: "0.5rem 0.75rem",
+                      height: "auto",
+                    }}
+                  >
+                    <span style={{ fontWeight: 600 }}>{def?.name ?? hero.hero}</span>
+                    <span style={{ fontSize: "0.7rem", opacity: 0.85 }}>
+                      {selectable ? strings.common.level(hero.level) : strings.common.exhausted}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+        )}
 
         {/* Mission list */}
         {missions.length === 0 ? (
@@ -113,7 +140,7 @@ export function WorldgateScreen({
         ) : (
           missions.map((mission) => {
             const isTactical = mission.payload.kind === "tactical";
-            const canLaunch = canLaunchMission(state, content, mission.id, squad);
+            const canLaunch = canLaunchMission(state, content, mission.id, launchSquad);
             return (
               <section key={mission.id} style={panelStyle} aria-label={mission.name}>
                 <header style={{ display: "flex", alignItems: "baseline", gap: "0.5rem", flexWrap: "wrap" }}>

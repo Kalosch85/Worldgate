@@ -22,6 +22,8 @@ export const BASE_WORD_MS = 340;
 export const SHORT_PAUSE_MS = 600;
 /** Extra dwell for a " && " long-pause mark, in ms (T — tunable). */
 export const LONG_PAUSE_MS = 1400;
+/** Per-word fade-in duration, in ms (T — tunable). */
+export const WORD_FADE_MS = 260;
 
 export type PauseKind = "short" | "long";
 

@@ -12,8 +12,9 @@ import type { TextAnimationT } from "../../data/schemas.js";
 import { parseNarration, wordDelayMs } from "./parseNarration.js";
 
 export interface Narration {
-  /** The text to render right now — a prefix of `fullText` that grows to it. */
-  text: string;
+  /** The words revealed so far, in order — a growing prefix of the node text.
+   * Rendered as individual spans so each can fade in on its own (D-13 fade). */
+  words: string[];
   /** True once every word is shown (immediately so when the mode is "off"). */
   complete: boolean;
   /** Reveal the remaining text at once (tap-to-skip); a no-op once complete. */
@@ -21,7 +22,7 @@ export interface Narration {
 }
 
 export function useNarration(source: string, mode: TextAnimationT): Narration {
-  const { fullText, tokens } = useMemo(() => parseNarration(source), [source]);
+  const { tokens } = useMemo(() => parseNarration(source), [source]);
   const total = tokens.length;
 
   const [count, setCount] = useState(() => (mode === "off" ? total : 0));
@@ -47,12 +48,7 @@ export function useNarration(source: string, mode: TextAnimationT): Narration {
   }, [count, total, tokens, mode]);
 
   const complete = count >= total;
-  const text = complete
-    ? fullText
-    : tokens
-        .slice(0, count)
-        .map((t) => t.text)
-        .join(" ");
+  const words = tokens.slice(0, count).map((t) => t.text);
 
-  return { text, complete, skip: () => setCount(total) };
+  return { words, complete, skip: () => setCount(total) };
 }

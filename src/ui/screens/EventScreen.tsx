@@ -18,12 +18,24 @@ import { eligibleOptions } from "../../core/narrative.js";
 import type { Action } from "../../core/reducer.js";
 import type { ContentBundleT, Effect, GameStateT, TextAnimationT } from "../../data/schemas.js";
 import { NextMissions } from "../components/NextMissions.js";
+import { WORD_FADE_MS } from "../narration/parseNarration.js";
 import { useNarration } from "../narration/useNarration.js";
 import { RESOURCE_LABELS, strings, variableLabel } from "../strings.js";
 import { buttonStyle, panelStyle, theme } from "../theme.js";
 
 /** Cycle order for the text-speed toggle (D-13.4). */
 const TEXT_MODES: readonly TextAnimationT[] = ["on", "fast", "off"];
+
+/**
+ * D-13 fade: each revealed word fades in on mount. Injected once as a real
+ * stylesheet because the animation needs @keyframes (the app is otherwise
+ * inline-styled). prefers-reduced-motion drops the animation entirely.
+ */
+const NARRATION_CSS = `
+@keyframes wg-word-fade { from { opacity: 0; } to { opacity: 1; } }
+.wg-word-fade { animation: wg-word-fade ${WORD_FADE_MS}ms ease-out both; }
+@media (prefers-reduced-motion: reduce) { .wg-word-fade { animation: none; } }
+`;
 
 interface Delta {
   label: string;
@@ -210,6 +222,7 @@ export function EventScreen({
 
   return shell(
     <>
+      <style>{NARRATION_CSS}</style>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <TextSpeedToggle mode={mode} onCycle={cycleTextAnimation} />
       </div>
@@ -224,7 +237,16 @@ export function EventScreen({
         {node.speaker && (
           <div style={{ fontWeight: 700, color: theme.accent, marginBottom: "0.35rem" }}>{node.speaker}</div>
         )}
-        <p style={{ margin: 0, lineHeight: 1.5 }}>{narration.text}</p>
+        <p style={{ margin: 0, lineHeight: 1.5 }}>
+          {narration.words.map((word, i) => (
+            // Stable index key: already-mounted words don't re-animate on the
+            // next word's arrival — only the freshly added span fades in. A
+            // leading space (except the first) keeps rendered text === node text.
+            <span key={i} className={mode === "off" ? undefined : "wg-word-fade"}>
+              {(i > 0 ? " " : "") + word}
+            </span>
+          ))}
+        </p>
         {!narration.complete && (
           <p style={{ margin: "0.6rem 0 0", fontSize: "0.8rem", color: theme.textDim, fontStyle: "italic" }}>
             {strings.event.skipHint}

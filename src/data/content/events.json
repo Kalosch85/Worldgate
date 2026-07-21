@@ -6,7 +6,7 @@
     "nodes": [
       {
         "id": "n_in_sign",
-        "text": "Ich wusste nicht, was mich erwartete, als ich unterschrieb. „Geheime Versetzung. Annehmen oder ablehnen.“ Kein Briefing, keine Einzelheiten — nur eine Unterschriftszeile und ein wartender Wagen, eigentlich nichts neues, aber irgendwas schien anders.... Aber mitten in einen Science-Fiction-Comic geworfen zu werden, damit hatte ich sicherlich nicht gerechnet. Interstellare Reisen durch einen leuchtenden Ring? Nun, das ist neu. Funktionsweise? Unklar, Herkunft? Unbekannt. Egal, seit Cassy fort ist weiß ich ohnehin nicht was ich tun soll, da kann ich die Arbeit gebrauchen. Vielleicht mehr noch den Abstand.",
+        "text": "Ich wusste nicht, was mich erwartete, als ich unterschrieb. „Geheime Versetzung. Annehmen oder ablehnen.“ Kein Briefing, keine Einzelheiten — nur eine Unterschriftszeile und ein wartender Wagen. Eigentlich nichts Neues. Und doch schien etwas anders. Womit ich sicher nicht gerechnet hatte: mitten in einen Science-Fiction-Comic geworfen zu werden. Interstellare Reisen durch einen leuchtenden Ring. Nun. Das ist neu. Funktionsweise? Unklar. Herkunft? Unbekannt. Egal — seit Cassy fort ist, weiß ich ohnehin nicht, wohin mit mir. Da kann ich die Arbeit gebrauchen. Vielleicht mehr noch den Abstand.",
         "options": [
           {
             "id": "o_in_down",
@@ -20,7 +20,7 @@
       },
       {
         "id": "n_in_ring",
-        "text": "Vierhundert Meter tief in einen verlassen Bergwerk. Da hängt der Ring in seiner Halterung, also würde er den Atem anhalten. Keine Bewegung, und doch hat man das Gefühl, dass jeden Moment etwas passieren würde. Seit heute Morgen unter meinem Kommando — samt einem Budget das seines Gleichen sucht. Zwei Soldaten, Dr. Okafor und Captain Mercer warten sichtlich ungeduldig im Briefing Room, scheint als waere keine Zeit zum auspacken. Wen ich zuerst anhöre wird sicherlich bemerkt werden.",
+        "text": "Vierhundert Meter tief in einem verlassenen Bergwerk hängt der Ring in seiner Halterung, als hielte er den Atem an. Keine Bewegung — und doch das Gefühl, jeden Moment müsse etwas geschehen. Seit heute Morgen unter meinem Kommando, samt einem Budget, das seinesgleichen sucht. Im Briefingraum warten zwei Soldaten: Dr. Okafor und Captain Mercer, sichtlich ungeduldig. Sieht aus, als bliebe keine Zeit zum Auspacken. Wen ich zuerst anhöre, wird bemerkt werden. Alle Entscheidungen haben Konsequenzen — manche positiv, manche negativ. Manche beides, andere liegen im Auge des Betrachters …",
         "options": [
           {
             "id": "o_in_science",
@@ -56,7 +56,7 @@
       },
       {
         "id": "n_in_okafor",
-        "text": "Dr. Okafor entschlüsselte die Adressnotation in sechs Wochen. Das Essay nennt sie unentbehrlich, unermüdlich und anstrengend. Mit zwei davon komme ich klar. Sie reicht mir das Briefing, das sie fertig hatte, ehe ich darum bat: einundfünfzig Adressen, eine gewählt. Recon One sprang vor elf Tagen zu Adresse 04. Zwei Meldungen — atembare Luft, Terrassenfelder, ein Dorf an einer weißen Straße — dann neun Tage nichts.“",
+        "text": "Dr. Okafor entschlüsselte die Adressnotation in sechs Wochen. Die Akte nennt sie unentbehrlich, unermüdlich und anstrengend. Mit zwei davon komme ich klar. Sie reicht mir das Briefing, fertig, ehe ich darum bat: einundfünfzig Adressen entschlüsselt, eine einzige je gewählt. Recon One war das erste Team, das je hindurchging — ein Test, kaum mehr. Vor drei Tagen gesprungen zu Adresse 04. Zwei Meldungen: atembare Luft, Terrassenfelder, ein Dorf an einer weißen Straße. Dann, seit zwei Tagen, nichts. „Das Tor hält. Die Adresse hält, die Verbindung ist stabil. Was auch immer sie an ihren Meldungen gehindert hat, Direktor — es ist nicht die Physik. Und genau das macht mir Angst.“",
         "options": [
           {
             "id": "o_in_okafor_then",
@@ -70,7 +70,7 @@
       },
       {
         "id": "n_in_mercer",
-        "text": "Mercer. Ich las die Akte — ein Jahrzehnt an Einsätzen, manche so geheim, dass nicht einmal ich wusste, dass wir dort waren. Spezialeinheit wir aus dem Buch: schnell, effizient, keine losen Enden. Gut. Seine Fähigkeiten werde sicher brauchen. Seine Anforderungen waren unterschrieben, ehe ich mich setzte. „Recon One. Vier Leute, zwei Meldungen, neun Tage Funkstille. Gefangen genommen oder getötet. Gehen Sie vom schlimmsten aus, dann irren Sie sich höchstens in die richtige Richtung.“",
+        "text": "Mercer. Ich las die Akte — ein Jahrzehnt an Einsätzen, manche so geheim, dass nicht einmal ich wusste, dass wir dort waren. Nach Vorschrift: schnell, effizient, keine losen Enden. Gut. Eine Spezialeinheit werde ich sicher brauchen. Seine Anforderungen lagen unterschrieben da, ehe ich mich setzte. „Recon One. Vier Leute, erstes Team durch das Tor. Zwei Meldungen, dann zwei Tage Funkstille. Gefangen oder tot. Gehen Sie vom Schlimmsten aus, dann irren Sie sich höchstens in die richtige Richtung.“",
         "options": [
           {
             "id": "o_in_mercer_then",
@@ -84,7 +84,7 @@
       },
       {
         "id": "n_in_mercer_2",
-        "text": "Mercer findet mich, ehe ich nach ihm schicke. Ich las die Akte — ein Jahrzehnt an Einsätzen, manche so geheim, dass nicht einmal ich wissen durfte, dass wir dort waren. Nach Vorschrift: schnell, effizient, keine losen Enden. Gut. Die Vorschrift werde ich heute brauchen. Er hört Okafors Briefing schweigend an, dann: „Jemand hat sie an ihren Meldungen gehindert. Planen Sie damit, dann irren Sie sich höchstens in die richtige Richtung.“",
+        "text": "Mercer. Ich las die Akte — ein Jahrzehnt an Einsätzen, manche so geheim, dass nicht einmal ich wusste, dass wir dort waren. Nach Vorschrift: schnell, effizient, keine losen Enden. Gut. Eine Spezialeinheit werde ich sicher brauchen. „Sie sind das erste Team durch das Tor, und jemand hat sie an der dritten Meldung gehindert. Planen Sie damit, dann irren Sie sich höchstens in die richtige Richtung.“",
         "options": [
           {
             "id": "o_in_mercer2_go",
@@ -98,7 +98,7 @@
       },
       {
         "id": "n_in_okafor_2",
-        "text": "„Das Tor hält. Die Adresse hält, die Verbindung ist stabil. Was auch immer sie an ihren Meldungen gehindert hat, Direktor — es ist nicht die Physik, und genau das macht mir Angst“",
+        "text": "Dr. Okafor entschlüsselte die Adressnotation in sechs Wochen. Die Akte nennt sie unentbehrlich, unermüdlich und anstrengend. Mit zwei davon komme ich klar. „Das Tor hält. Die Adresse hält, die Verbindung ist stabil. Was auch immer sie an ihren Meldungen gehindert hat, Direktor — es ist nicht die Physik. Und genau das macht mir Angst.“",
         "options": [
           {
             "id": "o_in_okafor2_go",
@@ -112,7 +112,7 @@
       },
       {
         "id": "n_in_decide",
-        "text": "Wir können binnen einer Stunde wählen.",
+        "text": "Wir können binnen einer Stunde wählen. Was auch immer Recon One aufgehalten hat, hat bereits zwei Tage Vorsprung.",
         "options": [
           {
             "id": "o_in_commit",
@@ -217,7 +217,7 @@
       },
       {
         "id": "n_va_procession",
-        "text": "Von der Baumgrenze spürt ihr es, ehe ihr es seht: ein Karren und weitere Töne, fremdartig und doch bekannt. Dann Sichtkontakt. Insekten wenigstens zweineinhalb Meter groß, bewaffnet, dazu einige Menschen die einen Karren schieben, verschnürten Kisten, Korn, Obst — Tribut? Sie ziehen vorbei, ohne einen einzigen Blick auf die Welt um sie her, die weiße Straße hinab, zum Tor. Hindurch. Die Dorfbewohner sehen ihnen nicht nach. Sie sehen euch an und beschwören euch zum Schweigen.",
+        "text": "Von der Baumgrenze spürt ihr es, ehe ihr es seht: ein Karren und weitere Töne, fremdartig und doch bekannt. Dann Sichtkontakt. Drohnen wenigstens zweineinhalb Meter groß, bewaffnet, dazu einige Menschen die einen Karren schieben, verschnürten Kisten, Korn, Obst — Tribut? Sie ziehen vorbei, ohne einen einzigen Blick auf die Welt um sie her, die weiße Straße hinab, zum Tor. Hindurch. Die Dorfbewohner sehen ihnen nicht nach. Sie sehen euch an und beschwören euch zum Schweigen.",
         "options": [
           {
             "id": "o_va_stay_down",
@@ -231,7 +231,7 @@
       },
       {
         "id": "n_va_escape",
-        "text": "Die letzte Träger-Drohne zieht vorbei, und die Dorfbewohner erheben sich, drängen euch am Graben entlang zum Mühlenpfad — eine stumme, halb rennende Reihe, nahezu lautlos. Dann stolpert ein Junge, kein Kind, aber sicherlich noch kein Mann, vielleicht 13 Jahre alt. Offensichtlich verletzt, vielleicht nur eine Zerrung vielleicht ein gebrochenes Bein. Ein kaum hörbares wimmern und ein knacken von trockenen Ästen. Mercer sieht sofort, zwei der Drohnen blieben stehen, die Köpfe zucken hin und her. Sie haben etwas gehört und werden jeden Moment umdrehen. Mercer ist bereits auf dem Weg zu dem Jungen.",
+        "text": "Die letzte Drohne zieht vorbei, und die Dorfbewohner erheben sich, drängen euch am Graben entlang zum Mühlenpfad — eine stumme, halb rennende Reihe, nahezu lautlos. Dann stolpert ein Junge, kein Kind, aber sicherlich noch kein Mann, vielleicht 13 Jahre alt. Offensichtlich verletzt, vielleicht nur eine Zerrung vielleicht ein gebrochenes Bein. Ein kaum hörbares wimmern und ein knacken von trockenen Ästen. Mercer sieht sofort, zwei der Drohnen blieben stehen, die Köpfe zucken hin und her. Sie haben etwas gehört und werden jeden Moment umdrehen. Mercer ist bereits auf dem Weg zu dem Jungen.",
         "options": [
           {
             "id": "o_va_hide",
@@ -286,7 +286,7 @@
       },
       {
         "id": "n_va_told",
-        "text": "An der Baumgrenze zeichnet der Älteste Glyphen in den Staub — langsam, Strich für Strich, damit Okafor jede einzelne abmalen kann. Eine Adresse. Er kreuzt die Handgelenke: die Gebundenen. Vier Finger: vier wie ihr, durch das Tor genommen, lebend beim Übertreten. Der Ort, wohin die Genommenen gebracht werden. Eine Frau spricht seinen Namen laut aus, das erste Wort, das den ganzen Tag über jemand von ihnen gewagt hat: Veyra.",
+        "text": "An der Baumgrenze zeichnet der Älteste Glyphen in den Staub — langsam, Strich für Strich, damit Okafor jede einzelne abmalen kann. Eine Adresse. Er kreuzt die Handgelenke: die Genommenen. Vier Finger: vier wie ihr, durch das Tor genommen, lebend beim Übertreten. Der Ort, wohin die Genommenen gebracht werden. Eine Frau spricht seinen Namen laut aus, das erste Wort, das den ganzen Tag über jemand von ihnen gewagt hat: Veyra.",
         "options": [
           {
             "id": "o_va_home",
@@ -542,7 +542,7 @@
       {
         "id": "n_vl_first",
         "speaker": "Odel",
-        "text": "Sie dämpft das Feuer, ehe sie antwortet, als könnte der Name hören. „Als die Begnadeten zuletzt zu einer Nahme herabkamen, führte die Erste Klinge sie selbst an. Seryn Vael. Er stand am Straßenschrein und trank seine Portion — Licht, das in einem Becher stand, und er trank es wie Wasser. Betet, dass die Tür nicht in seiner Hand liegt an dem Tag, an dem ihr springt.“",
+        "text": "Sie dämpft das Feuer, ehe sie antwortet, als könnte der Name hören. „Als die Gesegneten zuletzt zu einer Nahme herabkamen, führte die Erste Klinge sie selbst an. Seryn Vael. Er stand am Straßenschrein und trank seine Portion — Licht, das in einem Becher stand, und er trank es wie Wasser. Betet, dass die Tür nicht in seiner Hand liegt an dem Tag, an dem ihr springt.“",
         "options": [
           {
             "id": "o_vl_ask_crossing",
@@ -598,7 +598,7 @@
       },
       {
         "id": "n_vl_wary",
-        "text": "Ein Karren versperrt halb die Brücke. Der Junge, den Mercer rettete, ist nicht hier — seine Familie floh mit den übrigen durch das Tor, und Karsu hält ihre Häuser gefegt für eine Rückkehr, die niemand verspricht. Odel, die Müllerin, kommt allein heraus. „Ihr habt einen der Unsrigen gerettet und uns die Feldfamilien gekostet. Nach den Schüssen durchstreiften die Begnadeten einen Tag lang dieses Tal — die Leute der Ersten Klinge, auf der Jagd. Beides ist wahr. Sagt, was ihr wollt.“",
+        "text": "Ein Karren versperrt halb die Brücke. Der Junge, den Mercer rettete, ist nicht hier — seine Familie floh mit den übrigen durch das Tor, und Karsu hält ihre Häuser gefegt für eine Rückkehr, die niemand verspricht. Odel, die Müllerin, kommt allein heraus. „Ihr habt einen der Unsrigen gerettet und uns die Feldfamilien gekostet. Nach den Schüssen durchstreiften die Gesegneten einen Tag lang dieses Tal — die Leute der Ersten Klinge, auf der Jagd. Beides ist wahr. Sagt, was ihr wollt.“",
         "options": [
           {
             "id": "o_vl_wary_ask",
@@ -1151,7 +1151,7 @@
       },
       {
         "id": "n_vy1_dessik",
-        "text": "Der Makler Dessik besorgt euch Arbeitspässe — für einen Preis. Sein Sohn Ilo ist als Schmuggler verurteilt, irgendwo in der Bußstätte festgehalten. „Holt ihn heraus“, sagt Dessik, „und die Karren gehören euch.“",
+        "text": "Der Alte aus Andara besorgt euch Arbeitspässe — für einen Preis. Sein Sohn ist als Schmuggler verurteilt, irgendwo in der Bußstätte festgehalten. „Holt ihn heraus“, sagt er, „und die Karren gehören euch.“",
         "options": [
           {
             "id": "o_vy1_dessik_accept",
@@ -1468,7 +1468,7 @@
       },
       {
         "id": "n_vy2_a_cells",
-        "text": "Zellentrakt. Reihen von Türen — und hinter einer, vier hager gewordene Gesichter. Barros ist am Gitter, ehe das Licht ihn findet: Mercers alter Feldwebel, zwei Einsätze zwischen ihnen. „Captain Mercer. Feldwebel Barros.“ Dann, aus dem Dunkel, fest wie ein Appell: „Leutnant Ehlan. Kade. Imura. Alle anwesend, Sir.“ Namen und Ränge vor Sätzen — Tage aus nichts als Disziplin, und sie hält.",
+        "text": "Zellentrakt. Reihen von Türen — und hinter einer, vier hager gewordene Gesichter. Einer ist am Gitter, ehe das Licht ihn findet: Chris Barros, Mercers alter Feldwebel, zwei Einsätze zwischen ihnen. „Captain Mercer.“ — „Chris.“ Dann, aus dem Dunkel, fest wie ein Appell: „Leutnant Ehlan. Kade. Imura. Alle anwesend, Sir.“ Namen und Ränge vor Sätzen — Tage aus nichts als Disziplin, und sie hält. Barros senkt die Stimme. „Eins noch, Captain. Manche der Wachen trinken eine leuchtende Flüssigkeit — es macht sie schneller, stärker. Nicht menschlich schnell. Sie nennen es die Portion. Und die, die am hellsten leuchten, gehorchen keinem Befehl mehr außer dem des Lichts.“",
         "options": [
           {
             "id": "o_vy2_a_open",
@@ -1483,7 +1483,7 @@
       {
         "id": "n_vy2_a_report",
         "speaker": "Lt. S. Ehlan",
-        "text": "Ehlan meldet, als wäre die Gefangenschaft ein Posten gewesen: auf der Talstraße genommen, durch das Tor getrieben, verhört von Männern, die Licht tranken. „Wir haben die Sprünge gezählt, Captain. Die Tür unten öffnet hinein, nie hinaus — niemand geht fort außer auf das Wort der Wachen. Wie ihr auch hereinkamt, es ist kein Weg nach Hause.“ Wie hinaus?",
+        "text": "Ehlan meldet, als wäre die Gefangenschaft ein Posten gewesen: auf der Talstraße genommen, durch das Tor getrieben, verhört von Männern, die Licht tranken. „Wir haben die Sprünge gezählt, Captain. Die Tür unten öffnet hinein, nie hinaus — niemand geht fort außer auf das Wort der Wachen. Wie ihr auch hereinkamt: Es ist kein Weg nach Hause.“ Wie hinaus?",
         "options": [
           {
             "id": "o_vy2_a_quiet",
@@ -1512,11 +1512,11 @@
       },
       {
         "id": "n_vy2_b_kitchens",
-        "text": "Getreidekarren, Essensrunden — das Gefängnis läuft nach Ritual, vorhersehbar wie ein Uhrwerk. Hinter einer Zellentür vier hagere Gesichter. Barros umklammert das Gitter: „Captain. Feldwebel Barros — Ehlan, Kade, Imura, alle anwesend, Sir.“ Ehlan meldet schon: Die Tür unten öffnet hinein, nie hinaus; niemand geht fort außer auf das Wort der Wachen. Und drei Türen weiter: Ilo, Dessiks Sohn.",
+        "text": "Getreidekarren, Essensrunden — das Gefängnis läuft nach Ritual, vorhersehbar wie ein Uhrwerk. Hinter einer Zellentür vier hagere Gesichter. Barros umklammert das Gitter: „Captain. Feldwebel Barros — Ehlan, Kade, Imura, alle anwesend, Sir.“ Leise fügt er hinzu: „Manche Wachen trinken ein leuchtendes Zeug — die Portion, nennen sie's. Macht sie schneller, stärker als jeder Mensch.“ Und drei Türen weiter ein Gesicht aus Andara: ein Dorfbewohner, den die Drohnen von der Talstraße holten. Er erkennt euch. Er hofft.",
         "options": [
           {
             "id": "o_vy2_b_free_ilo",
-            "text": "Auch Ilo befreien. Ein Versprechen ist ein Versprechen.",
+            "text": "Auch den Dorfbewohner befreien. Ein Versprechen ist ein Versprechen.",
             "effects": [
               {
                 "type": "flag",
@@ -1704,7 +1704,7 @@
       },
       {
         "id": "n_vy2_bottleneck_c",
-        "text": "Ausrüstung beschlagnahmt, Zellen neben genau den Leuten, für die ihr gekommen seid — die Rettung, umgekehrt. Im Dunkeln zuerst die Namen: Ehlan. Kade. Imura. Und Barros, der durch eine aufgeplatzte Lippe seinen alten Captain angrinst: „Hat ja gedauert, Sir.“ Bei Tagesanbruch öffnen sich die Zellentüren von selbst. Der Hof wartet.",
+        "text": "Ausrüstung beschlagnahmt, Zellen neben genau den Leuten, für die ihr gekommen seid — die Rettung, umgekehrt. Im Dunkeln zuerst die Namen: Ehlan. Kade. Imura. Und Chris Barros, der durch eine aufgeplatzte Lippe seinen alten Captain angrinst: „Hat ja gedauert, Sir.“ Dann leiser: „Die hellen Wachen — sie trinken die Portion. Schneller und stärker als menschenmöglich. Vergesst das nicht.“ Bei Tagesanbruch öffnen sich die Zellentüren von selbst. Der Hof wartet.",
         "options": [
           {
             "id": "o_vy2_c_move",
@@ -1774,7 +1774,7 @@
       {
         "id": "n_vy3_confront",
         "speaker": "Seryn Vael",
-        "text": "Seryn tritt auf gleiche Höhe, die Klinge noch in der Scheide, und das Licht ist unter seiner Haut — schwach, in den Adern seines Halses und seiner Hände. Die Gnade der Portion, offen getragen, wie ein anderer seinen Rang trägt. „Sagt, wozu ihr gekommen seid — oder auch nicht.“",
+        "text": "Seryn tritt auf gleiche Höhe, die Klinge in der Scheide. Das Licht ist unter seiner Haut — schwach, in den Adern von Hals und Händen. Die Gnade der Portion, offen getragen, wie ein anderer seinen Rang trägt. Er mustert euch ohne Hass, ohne Furcht. „Sagt, wozu ihr gekommen seid. Oder auch nicht. Ich habe schon andere durch dieses Tor kommen sehen — aber nie zugelassen, dass jemand wieder geht, wie unser Gott es befahl.“",
         "options": [
           {
             "id": "o_vy3_convince_b1_win",
@@ -2285,7 +2285,7 @@
       {
         "id": "n_vy3_hardens",
         "speaker": "Seryn Vael",
-        "text": "Etwas in seinem Gesicht verschließt sich. „Ihr hattet eure Gelegenheit zu sprechen“, sagt er, und die Ehrengarde fächert sich hinter ihm auf.",
+        "text": "Etwas in seinem Gesicht schließt sich, ruhig, wie eine Tür. „Ihr hattet eure Gelegenheit zu sprechen.“ Kein Zorn. Nur ein Mann, der eine Rechnung abschließt, und die Ehrengarde fächert sich hinter ihm auf.",
         "options": [
           {
             "id": "o_vy3_hardens_continue",
@@ -2299,7 +2299,7 @@
       },
       {
         "id": "n_vy3_duel",
-        "text": "Drei Gänge, Klinge gegen Klinge, und er ist schneller als alles, gegen das ihr geübt habt — ein Begnadeter, die Portion in ihm lodernd. Doch er ist ein Mann gegen ein Team, mit dem befreiten Recon One im Rücken, und Zahlen ermüden nicht.",
+        "text": "Drei Gänge, Klinge gegen Klinge, und er ist schneller als alles, gegen das ihr geübt habt — ein Gesegneter, die Portion in ihm lodernd. Doch er ist ein Mann gegen ein Team, mit dem befreiten Recon One im Rücken, und Zahlen ermüden nicht.",
         "options": [
           {
             "id": "o_vy3_duel_clean",
@@ -2397,7 +2397,7 @@
         "options": [
           {
             "id": "o_vy3_resolve_convinced",
-            "text": "Seryn befiehlt der Ehrengarde zurückzutreten, streift seinen Patronengurt voller Portions-Phiolen ab und reicht ihn hinüber. „Untersucht es. Ich habe genug getrunken.“ Er geht mit euch hinaus.",
+            "text": "Seryn befiehlt der Ehrengarde zurückzutreten, streift den Gurt voller Portions-Phiolen ab und reicht ihn hinüber. „Untersucht es. Ich habe genug getrunken.“ Seine Hand liegt einen Moment zu lang am leeren Gurt. Dann geht er mit euch hinaus.",
             "requirements": [
               {
                 "type": "flag",
@@ -2432,7 +2432,7 @@
           },
           {
             "id": "o_vy3_resolve_doubt",
-            "text": "Seryn lässt euch passieren — und folgt, um den Beweis mit eigenen Augen zu sehen. Seine letzten Phiolen gibt er Okafor: „Dann sagt mir, was ich getrunken habe.“",
+            "text": "Seryn lässt euch passieren — und folgt, um mit eigenen Augen zu sehen. Seine letzten Phiolen gibt er Okafor. „Dann sagt mir, was ich getrunken habe.“ Es klingt nicht wie Kapitulation. Eher wie ein Mann, der eine Frage stellt, die er seit Jahren mit sich trägt.",
             "requirements": [
               {
                 "type": "flag",
@@ -2467,7 +2467,7 @@
           },
           {
             "id": "o_vy3_resolve_defeated",
-            "text": "Ihr tragt die Erste Klinge auf einem Getreidekarren hinaus. Er dankt euch nicht. In seiner Ausrüstung: Phiolen stehenden Lichts — die Portion, die ihn zu mehr als einem Mann machte.",
+            "text": "Ihr tragt die Erste Klinge auf einem Getreidekarren hinaus. Er dankt euch nicht. In seiner Ausrüstung: Phiolen stehenden Lichts — die Portion, die ihn zu mehr als einem Mann machte. Er schweigt. Aber er sieht die Phiolen in Okafors Hand, und er sieht weg.",
             "requirements": [
               {
                 "type": "flag",
@@ -2565,7 +2565,7 @@
         "options": [
           {
             "id": "o_vy4_alerted",
-            "text": "Die Säulengänge sind doppelt besetzt — Dessik hat euch verraten, kaum dass ihr ihn verließt. Laut, schnell hinein.",
+            "text": "Die Säulengänge sind doppelt besetzt — der Alte aus Andara hat euch verraten, kaum dass ihr ihn verließt. Laut, schnell hinein.",
             "requirements": [
               {
                 "type": "flag",
@@ -3176,13 +3176,13 @@
   },
   {
     "id": "ev_vy_dessik_word",
-    "title": "Dessiks Wort",
+    "title": "Wort des Alten aus Andara",
     "entryNode": "n_vy_dessik",
     "nodes": [
       {
         "id": "n_vy_dessik",
-        "speaker": "Makler Dessik",
-        "text": "Die Nachricht kommt über drei Mittelsmänner und einen bestochenen Wähler: Dessik und sein Sohn Ilo, lebendig und frei. „Ein Schmuggler zahlt seine Schulden, oder man vertraut ihm nicht mehr“, lautet die Botschaft. „Meine Routen sind jetzt eure Routen. Hier ist das Erste davon.“ Beigefügt ist ein dickes Bündel abgefangener Botschaften, das kein Tempel je zu teilen gedachte.",
+        "speaker": "der Alte aus Andara",
+        "text": "Die Nachricht kommt über drei Mittelsmänner und einen bestochenen Wähler: der Alte aus Andara und sein Sohn, lebendig und frei. „Wer eine Schuld hat, zahlt sie, oder man vertraut ihm nie wieder“, lautet die Botschaft. „Meine Wege sind jetzt eure Wege. Hier ist der erste davon.“ Beigefügt ist ein dickes Bündel abgefangener Botschaften, das kein Tempel je zu teilen gedachte.",
         "options": [
           {
             "id": "o_vy_dessik_take",
@@ -3195,7 +3195,7 @@
               },
               {
                 "type": "log",
-                "text": "Dessiks Netz zahlt ein gehaltenes Versprechen zurück: Aufklärung +10."
+                "text": "Das Netz des Alten aus Andara zahlt ein gehaltenes Versprechen zurück: Aufklärung +10."
               }
             ],
             "next": {

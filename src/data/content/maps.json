@@ -30,29 +30,111 @@
   {
     "id": "map_vy_intercept",
     "name": "Passstraßen-Türme",
-    "width": 8,
-    "height": 6,
-    "tiles": ["........", ".-...#..", "...+.#..", ".#...-..", ".#......", "........"],
+    "width": 12,
+    "height": 10,
+    "tiles": [
+      "............",
+      "..-...##..++",
+      "......##....",
+      ".-........++",
+      "....##...-..",
+      "....##......",
+      "..+.......++",
+      "..........++",
+      "....-.......",
+      "............"
+    ],
     "squadSpawns": [
-      { "x": 0, "y": 0 },
-      { "x": 1, "y": 0 },
-      { "x": 0, "y": 1 },
-      { "x": 2, "y": 0 }
+      { "x": 0, "y": 7 },
+      { "x": 0, "y": 8 },
+      { "x": 0, "y": 9 },
+      { "x": 1, "y": 8 }
     ],
     "enemyGroups": [
       {
-        "id": "eg_tenders",
-        "unitType": "ut_tender",
+        "id": "eg_guards",
+        "unitType": "ut_tender_guard",
         "positions": [
-          { "x": 6, "y": 4 },
-          { "x": 7, "y": 5 }
+          { "x": 8, "y": 1 },
+          { "x": 8, "y": 3 },
+          { "x": 8, "y": 8 },
+          { "x": 8, "y": 6 }
         ]
       }
     ],
     "interactables": [
-      { "id": "spr_a", "pos": { "x": 7, "y": 0 }, "kind": "console" },
-      { "id": "spr_b", "pos": { "x": 7, "y": 4 }, "kind": "console" }
+      { "id": "con_spire_a", "pos": { "x": 10, "y": 2 }, "kind": "console" },
+      { "id": "con_spire_b", "pos": { "x": 10, "y": 8 }, "kind": "console" }
     ],
-    "objectives": [{ "id": "obj_spires", "kind": "interactSequence", "interactables": ["spr_a", "spr_b"] }]
+    "objectives": [
+      { "id": "obj_spires", "kind": "interactSequence", "interactables": ["con_spire_a", "con_spire_b"] }
+    ]
+  },
+  {
+    "id": "map_vy_breakout",
+    "name": "Torhof der Bußstätte",
+    "width": 12,
+    "height": 10,
+    "tiles": [
+      ".....#......",
+      ".....#..-...",
+      ".....#......",
+      "......+.....",
+      ".....#......",
+      ".....#......",
+      "..-..#......",
+      ".....##.#...",
+      "....-...#.+.",
+      "............"
+    ],
+    "squadSpawns": [
+      { "x": 1, "y": 1 },
+      { "x": 1, "y": 2 },
+      { "x": 1, "y": 3 },
+      { "x": 1, "y": 4 }
+    ],
+    "allyUnits": [
+      {
+        "unitType": "ut_seryn_blessed",
+        "pos": { "x": 2, "y": 2 },
+        "conditions": [
+          {
+            "type": "any",
+            "conditions": [
+              { "type": "flag", "flag": "f_vy_first_convinced", "value": true },
+              { "type": "flag", "flag": "f_vy_first_doubt", "value": true }
+            ]
+          }
+        ]
+      }
+    ],
+    "enemyGroups": [
+      {
+        "id": "eg_guards",
+        "unitType": "ut_tender_guard",
+        "positions": [
+          { "x": 7, "y": 3 },
+          { "x": 7, "y": 4 },
+          { "x": 9, "y": 6 },
+          { "x": 9, "y": 7 },
+          { "x": 9, "y": 3 },
+          { "x": 9, "y": 4 }
+        ]
+      }
+    ],
+    "objectives": [
+      {
+        "id": "obj_gatecourt",
+        "kind": "reachZone",
+        "zone": [
+          { "x": 10, "y": 3 },
+          { "x": 11, "y": 3 },
+          { "x": 10, "y": 4 },
+          { "x": 11, "y": 4 },
+          { "x": 10, "y": 5 },
+          { "x": 11, "y": 5 }
+        ]
+      }
+    ]
   }
 ]

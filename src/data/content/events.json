@@ -2515,25 +2515,11 @@
       },
       {
         "id": "n_vy3_exfil",
-        "text": "Die Tore der Bußstätte hinter euch, Recon One frei, die Erste Klinge bei euch — willig oder gefesselt. Die Stadt redet schon über das, was sie sah. Kein Weg zurück außer dem einen: hinab zum Tor, die Adresse der Erde gewählt, ehe der Tempel begreift, was ihm genommen wurde.",
+        "text": "Die Tore der Bußstätte hinter euch, Recon One frei, die Erste Klinge bei euch — willig oder gefesselt. Die Stadt redet schon über das, was sie sah. Kein Weg hinaus als der eine: hinab durch den Torhof zum Tor. Die menschlichen Wachen sind fort — geflohen, erstarrt. Aber der Torhof gehört noch immer dem Gott, und der Gott hat Drohnen.",
         "options": [
           {
-            "id": "o_vy3_exfil_continue",
-            "text": "Hinab zum Tor.",
-            "next": {
-              "kind": "node",
-              "node": "n_vy3_exfil_end"
-            }
-          }
-        ]
-      },
-      {
-        "id": "n_vy3_exfil_end",
-        "text": "Der Übergang, ein letztes Mal — der kalte Ruck, der Geruch nach nassem Stein, und dann die vertraute Enge des Gewölbes vierhundert Meter unter der Erde. Recon One ist heim. Vier, längst überfällig. Und einer mehr, den keine Akte je verzeichnet hat. & Was ihr auf Veyra zurückließt, wird warten. Es wartet gut.",
-        "options": [
-          {
-            "id": "o_vy3_end_convinced",
-            "text": "Der Bogen schließt sich.",
+            "id": "o_vy3_exfil_convinced",
+            "text": "Hinab in den Torhof.",
             "requirements": [
               {
                 "type": "flag",
@@ -2547,8 +2533,8 @@
             }
           },
           {
-            "id": "o_vy3_end_doubt",
-            "text": "Der Bogen schließt sich.",
+            "id": "o_vy3_exfil_doubt",
+            "text": "Hinab in den Torhof.",
             "requirements": [
               {
                 "type": "flag",
@@ -2562,8 +2548,8 @@
             }
           },
           {
-            "id": "o_vy3_end_defeated",
-            "text": "Der Bogen schließt sich.",
+            "id": "o_vy3_exfil_defeated",
+            "text": "Hinab in den Torhof.",
             "requirements": [
               {
                 "type": "flag",
@@ -2582,8 +2568,8 @@
     "outcomes": [
       {
         "id": "out_vy3_convinced",
-        "_comment": "D-16: Bogenende in Akt 1 — schaltet m_vy_4 nicht mehr frei (m_vy_4/m_vy_5 für Akt 2 zurückgestellt).",
-        "label": "Die Erste Klinge läuft über",
+        "_comment": "veyra-kaempfe §6: der Bogen führt nun über m_vy_breakout (Torhof) und m_vy_home (Heimkehr); m_vy_4/m_vy_5 bleiben für Akt 2 zurückgestellt.",
+        "label": "Die Erste Klinge läuft über — der Torhof wartet",
         "effects": [
           {
             "type": "flag",
@@ -2591,15 +2577,19 @@
             "value": true
           },
           {
+            "type": "unlockMission",
+            "mission": "m_vy_breakout"
+          },
+          {
             "type": "log",
-            "text": "Recon One kommt heim — alle vier, längst überfällig, hinaus durch die Tür unter einem Tributruf, den der Tempel glaubt."
+            "text": "Seryn geht mit, das Licht unter seiner Haut am Verlöschen. Zwischen euch und dem Tor liegt nur noch der Torhof — und die Drohnen des Gottes."
           }
         ]
       },
       {
         "id": "out_vy3_doubt",
-        "_comment": "D-16: Bogenende in Akt 1 — schaltet m_vy_4 nicht mehr frei (m_vy_4/m_vy_5 für Akt 2 zurückgestellt).",
-        "label": "Die Erste Klinge, zweifelnd",
+        "_comment": "veyra-kaempfe §6: der Bogen führt nun über m_vy_breakout (Torhof) und m_vy_home (Heimkehr); m_vy_4/m_vy_5 bleiben für Akt 2 zurückgestellt.",
+        "label": "Die Erste Klinge, zweifelnd — der Torhof wartet",
         "effects": [
           {
             "type": "flag",
@@ -2607,15 +2597,19 @@
             "value": true
           },
           {
+            "type": "unlockMission",
+            "mission": "m_vy_breakout"
+          },
+          {
             "type": "log",
-            "text": "Recon One kommt heim — alle vier, längst überfällig, hinaus durch die Tür unter einem Tributruf, den der Tempel glaubt."
+            "text": "Seryn folgt, um den Beweis mit eigenen Augen zu sehen. Zwischen euch und dem Tor liegt nur noch der Torhof — und die Drohnen des Gottes."
           }
         ]
       },
       {
         "id": "out_vy3_defeated",
-        "_comment": "D-16: Bogenende in Akt 1 — schaltet m_vy_4 nicht mehr frei (m_vy_4/m_vy_5 für Akt 2 zurückgestellt).",
-        "label": "Die Erste Klinge, besiegt",
+        "_comment": "veyra-kaempfe §6: der Bogen führt nun über m_vy_breakout (Torhof) und m_vy_home (Heimkehr); m_vy_4/m_vy_5 bleiben für Akt 2 zurückgestellt.",
+        "label": "Die Erste Klinge, besiegt — der Torhof wartet",
         "effects": [
           {
             "type": "flag",
@@ -2623,8 +2617,111 @@
             "value": true
           },
           {
+            "type": "unlockMission",
+            "mission": "m_vy_breakout"
+          },
+          {
             "type": "log",
-            "text": "Recon One kommt heim — alle vier, längst überfällig, hinaus durch die Tür unter einem Tributruf, den der Tempel glaubt."
+            "text": "Ihr tragt die gefesselte Erste Klinge hinaus. Zwischen euch und dem Tor liegt nur noch der Torhof — und die Drohnen des Gottes."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ev_vy_homecoming",
+    "title": "Heimkehr",
+    "entryNode": "n_vy_home",
+    "nodes": [
+      {
+        "id": "n_vy_home",
+        "text": "Der Übergang, ein letztes Mal — der kalte Ruck, der Geruch nach nassem Stein, und dann die vertraute Enge des Gewölbes vierhundert Meter unter der Erde. Recon One ist heim. Vier, längst überfällig. Und einer mehr, den keine Akte je verzeichnet hat. & Was ihr auf Veyra zurückließt, wird warten. Es wartet gut.",
+        "options": [
+          {
+            "id": "o_vy_home_convinced",
+            "text": "Der Bogen schließt sich.",
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_first_convinced",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy_home_convinced"
+            }
+          },
+          {
+            "id": "o_vy_home_doubt",
+            "text": "Der Bogen schließt sich.",
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_first_doubt",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy_home_doubt"
+            }
+          },
+          {
+            "id": "o_vy_home_defeated",
+            "text": "Der Bogen schließt sich.",
+            "requirements": [
+              {
+                "type": "flag",
+                "flag": "f_vy_first_defeated",
+                "value": true
+              }
+            ],
+            "next": {
+              "kind": "end",
+              "outcome": "out_vy_home_defeated"
+            }
+          }
+        ]
+      }
+    ],
+    "outcomes": [
+      {
+        "id": "out_vy_home_convinced",
+        "label": "Die Erste Klinge läuft über",
+        "effects": [
+          {
+            "type": "endDeployment"
+          },
+          {
+            "type": "log",
+            "text": "Recon One kommt heim — alle vier, längst überfällig, hinaus durch die Tür unter einem Tributruf, den der Tempel glaubt. Und Seryn Vael mit ihnen, das Licht erloschen, der Schwertarm sein eigener. Operation Veyra: abgeschlossen."
+          }
+        ]
+      },
+      {
+        "id": "out_vy_home_doubt",
+        "label": "Die Erste Klinge, zweifelnd",
+        "effects": [
+          {
+            "type": "endDeployment"
+          },
+          {
+            "type": "log",
+            "text": "Recon One kommt heim — alle vier, längst überfällig. Seryn folgt, um zu sehen, was er getrunken hat. Operation Veyra: abgeschlossen."
+          }
+        ]
+      },
+      {
+        "id": "out_vy_home_defeated",
+        "label": "Die Erste Klinge, besiegt",
+        "effects": [
+          {
+            "type": "endDeployment"
+          },
+          {
+            "type": "log",
+            "text": "Recon One kommt heim — alle vier, längst überfällig. Die gefesselte Erste Klinge im Lazarett, noch kein Held. Operation Veyra: abgeschlossen."
           }
         ]
       }

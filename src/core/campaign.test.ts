@@ -111,7 +111,7 @@ describe("D-9 unlock chain — static content walk", () => {
     return out;
   };
 
-  it("runs intro → arrival → ledger → intercept → m_vy_1..3 with no dead-end (D-16 arc end)", () => {
+  it("runs intro → arrival → ledger → intercept → m_vy_1..3 → breakout → home (veyra-kaempfe §6)", () => {
     // The intro (incident, not a mission) opens the spine.
     const intro = CONTENT.events.find((e) => e.id === INTRO_EVENT)!;
     const introUnlocks = intro.outcomes.flatMap((o) =>
@@ -121,13 +121,26 @@ describe("D-9 unlock chain — static content walk", () => {
 
     expect(unlocksOf("m_vy_arrival")).toContain("m_vy_ledger");
     expect(unlocksOf("m_vy_ledger")).toContain("m_vy_intercept");
-    const intercept = unlocksOf("m_vy_intercept");
-    expect(intercept).toContain("m_vy_1"); // victory
-    expect(intercept).toContain("m_vy_intercept"); // defeat → regroup retry
+    // veyra-kaempfe §2/§5: intercept keeps itself available on defeat via
+    // `retryOnDefeat` (no self-unlock effect); victory opens the penitence chain.
+    const intercept = CONTENT.missions.find((m) => m.id === "m_vy_intercept")!;
+    expect(intercept.retryOnDefeat).toBe(true);
+    expect(unlocksOf("m_vy_intercept")).toContain("m_vy_1"); // victory
     expect(unlocksOf("m_vy_1")).toContain("m_vy_2");
     expect(unlocksOf("m_vy_2")).toContain("m_vy_3");
-    // D-16: the Act-1 arc ends after M3's exfil close; M3 no longer unlocks m_vy_4.
+    // veyra-kaempfe §6: M3 now leads into the breakout battle, then homecoming.
+    expect(unlocksOf("m_vy_3")).toContain("m_vy_breakout");
     expect(unlocksOf("m_vy_3")).not.toContain("m_vy_4");
+    const breakout = CONTENT.missions.find((m) => m.id === "m_vy_breakout")!;
+    expect(breakout.retryOnDefeat).toBe(true);
+    expect(unlocksOf("m_vy_breakout")).toContain("m_vy_home");
+    // The whole arc is one operation; homecoming ends the deployment.
+    for (const id of ["m_vy_arrival", "m_vy_intercept", "m_vy_3", "m_vy_breakout", "m_vy_home"]) {
+      expect(CONTENT.missions.find((m) => m.id === id)!.operation).toBe("vy");
+    }
+    const home = CONTENT.events.find((e) => e.id === "ev_vy_homecoming")!;
+    const homeEffects = home.outcomes.flatMap((o) => o.effects.map((e) => e.type));
+    expect(homeEffects).toContain("endDeployment");
   });
 
   it("no M3 outcome unlocks m_vy_4 (D-16: m_vy_4/m_vy_5 deferred to Act 2)", () => {

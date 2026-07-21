@@ -93,6 +93,8 @@ function genGameState(rng: Rng, activeKind?: ActiveKind): GameStateT {
       }),
       queuedEvents: list(rng, 0, 3, () => ({ event: id(rng, "ev"), fireOnDay: rng.int(1, 5000) })),
     },
+    // Deployment: null, or a running operation with a locked squad (spec §1c).
+    deployment: bool(rng) ? { operation: id(rng, "op"), squad: list(rng, 1, 4, () => id(rng, "h")) } : null,
     activeMission: genActiveMission(rng, kind),
   };
   return state;

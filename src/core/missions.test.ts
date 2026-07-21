@@ -98,8 +98,9 @@ describe("launchMission — RuleError guards (§3)", () => {
   });
 
   it("rejects a squad larger than the mission maximum", () => {
-    // m_vy_arrival max is 2; feed three ids (size guard runs before hero lookup).
-    expect(launchError(stateWith(), "m_vy_arrival", ["h_mercer", "h_okafor", "h_x"]).code).toBe(
+    // m_vy_arrival max is 4 (veyra-kaempfe §7); feed five ids (size guard runs
+    // before hero lookup).
+    expect(launchError(stateWith(), "m_vy_arrival", ["h_mercer", "h_okafor", "h_x", "h_y", "h_z"]).code).toBe(
       "launchMission/squad_size",
     );
   });
@@ -208,8 +209,10 @@ describe("launchMission — tactical launch (§3)", () => {
     const battle = next.activeMission?.kind === "tactical" ? next.activeMission.battle : null;
     expect(battle?.map).toBe("map_vy_intercept");
     expect(battle?.units.filter((u) => u.side === "enemy").map((u) => u.unitType)).toEqual([
-      "ut_tender",
-      "ut_tender",
+      "ut_tender_guard",
+      "ut_tender_guard",
+      "ut_tender_guard",
+      "ut_tender_guard",
     ]);
   });
 });
@@ -224,10 +227,10 @@ describe("canLaunchMission — UI guard", () => {
   });
 
   it("false when the squad is the wrong size", () => {
-    // m_vy_arrival accepts exactly 2; a 3-hero squad exceeds the maximum.
-    expect(canLaunchMission(stateWith(), CONTENT, "m_vy_arrival", ["h_mercer", "h_okafor", "h_x"])).toBe(
-      false,
-    );
+    // m_vy_arrival accepts 2–4 (veyra-kaempfe §7); a 5-hero squad exceeds the max.
+    expect(
+      canLaunchMission(stateWith(), CONTENT, "m_vy_arrival", ["h_mercer", "h_okafor", "h_x", "h_y", "h_z"]),
+    ).toBe(false);
   });
 
   it("false when a squad member is exhausted", () => {

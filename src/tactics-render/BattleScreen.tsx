@@ -15,6 +15,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { Action } from "../core/reducer.js";
 import type { ContentBundleT, Effect, GameStateT } from "../data/schemas.js";
 import { NextMissions } from "../ui/components/NextMissions.js";
+import { SummaryActions } from "../ui/components/SummaryActions.js";
 import { RESOURCE_LABELS, strings, variableLabel } from "../ui/strings.js";
 import { buttonStyle, panelStyle, theme } from "../ui/theme.js";
 import { BattleCanvas } from "./BattleCanvas.js";
@@ -326,7 +327,23 @@ export function BattleScreen({
   // ------------------------------------------------------------------ summary
   if (summary) {
     return (
-      <SummaryScreen summary={summary} newlyUnlocked={newlyUnlocked} content={content} onExit={onExit} />
+      <SummaryScreen
+        summary={summary}
+        state={state}
+        newlyUnlocked={newlyUnlocked}
+        content={content}
+        onExit={onExit}
+        onContinue={(missionId) => {
+          // §2a: launch the operation's next mission directly with the locked
+          // squad. Reset the battle-capture refs so a fresh battle rebuilds
+          // cleanly; the screen unmounts for a tactical→narrative hop anyway.
+          setSummary(null);
+          missionRef.current = null;
+          startWoundsRef.current = null;
+          lastBattleRef.current = null;
+          dispatch({ type: "launchMission", mission: missionId, squad: state.deployment?.squad ?? [] });
+        }}
+      />
     );
   }
 
@@ -625,14 +642,18 @@ function BarButton({
 
 function SummaryScreen({
   summary,
+  state,
   newlyUnlocked,
   content,
   onExit,
+  onContinue,
 }: {
   summary: Summary;
+  state: GameStateT;
   newlyUnlocked: readonly string[];
   content: ContentBundleT;
   onExit: () => void;
+  onContinue: (missionId: string) => void;
 }) {
   const win = summary.outcome === "victory";
   return (
@@ -736,13 +757,13 @@ function SummaryScreen({
 
           <NextMissions missionIds={newlyUnlocked} content={content} />
 
-          <button
-            type="button"
-            style={{ ...buttonStyle("primary"), width: "100%", marginTop: "1rem" }}
-            onClick={onExit}
-          >
-            {strings.common.returnToBase}
-          </button>
+          <SummaryActions
+            state={state}
+            content={content}
+            newlyUnlocked={newlyUnlocked}
+            onContinue={onContinue}
+            onReturn={onExit}
+          />
         </section>
       </main>
     </Shell>

@@ -33,6 +33,7 @@ export function newCampaign(seed: number, content?: ContentBundleT): GameStateT 
     research: { current: null, completed: [] },
     construction: { current: null, built: [] },
     missions: { available: [], completed: [], queuedEvents: [] },
+    deployment: null, // no operation running (veyra-kaempfe spec §1c)
     activeMission: null,
   };
   if (!content) return state;

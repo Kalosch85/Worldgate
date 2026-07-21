@@ -16,5 +16,23 @@
     "mobility": 3,
     "damage": { "min": 1, "max": 2 },
     "abilities": ["ab_shot"]
+  },
+  {
+    "id": "ut_tender_guard",
+    "name": "Wächter-Drohne",
+    "maxHp": 4,
+    "aim": 48,
+    "mobility": 5,
+    "damage": { "min": 1, "max": 2 },
+    "abilities": ["ab_stab"]
+  },
+  {
+    "id": "ut_seryn_blessed",
+    "name": "Seryn",
+    "maxHp": 7,
+    "aim": 75,
+    "mobility": 5,
+    "damage": { "min": 1, "max": 2 },
+    "abilities": ["ab_blade"]
   }
 ]

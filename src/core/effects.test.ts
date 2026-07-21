@@ -38,6 +38,7 @@ function baseState(): GameStateT {
     research: { current: null, completed: [] },
     construction: { current: null, built: [] },
     missions: { available: ["m_existing"], completed: [], queuedEvents: [] },
+    deployment: null,
     activeMission: null,
   };
 }

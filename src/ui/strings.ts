@@ -67,6 +67,8 @@ export const strings = {
     narrative: "Erzählung",
     exhausted: "Erschöpft",
     level: (n: number) => `St. ${n}`,
+    // veyra-kaempfe spec §2a: direct next-mission button on a deployment summary.
+    continueTo: (name: string) => `Weiter: ${name}`,
   },
 
   resources: {
@@ -188,6 +190,10 @@ export const strings = {
     launchMission: "Mission starten",
     selectFit: (min: number, max: number) =>
       `${min}${max !== min ? `–${max}` : ""} einsatzfähige Kräfte wählen`,
+    // veyra-kaempfe spec §2: shown while an operation is running — the squad is
+    // locked and only that operation's missions are offered.
+    deploymentActive: "Team im Einsatz — Rückkehr erst nach Abschluss der Operation",
+    continueOperation: "Operation fortsetzen",
   },
 
   event: {

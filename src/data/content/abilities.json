@@ -16,5 +16,23 @@
     "targeting": "ally",
     "power": 2,
     "cooldown": 2
+  },
+  {
+    "id": "ab_stab",
+    "name": "Stich",
+    "apCost": 1,
+    "range": 1,
+    "targeting": "enemy",
+    "power": 2,
+    "cooldown": 0
+  },
+  {
+    "id": "ab_blade",
+    "name": "Klinge",
+    "apCost": 1,
+    "range": 1,
+    "targeting": "enemy",
+    "power": 3,
+    "cooldown": 0
   }
 ]

@@ -50,8 +50,8 @@ describe("canonical pause marks in content (D-13 regression guard)", () => {
     expect(parseNarration(text).fullText).not.toContain("&");
   });
 
-  it("keeps a SHORT pause in the homecoming node (n_vy3_exfil_end)", () => {
-    const text = nodeText("ev_vy_first_blade", "n_vy3_exfil_end");
+  it("keeps a SHORT pause in the homecoming node (n_vy_home, veyra-kaempfe §6)", () => {
+    const text = nodeText("ev_vy_homecoming", "n_vy_home");
     expect(text).toMatch(/hat\. & Was ihr auf Veyra/);
     expect(parseNarration(text).fullText).not.toContain("&");
   });

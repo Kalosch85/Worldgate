@@ -83,18 +83,29 @@ for (const m of c.maps) {
     for (const ch of row) if (!".#-+".includes(ch)) errors.push(`map ${m.id}: row ${y} illegal tile '${ch}'`);
   });
   const inBounds = (p: { x: number; y: number }) => p.x < m.width && p.y < m.height;
+  const unitTypeIds = new Set(c.unitTypes.map((u) => u.id));
   for (const p of m.squadSpawns) if (!inBounds(p)) errors.push(`map ${m.id}: spawn out of bounds`);
   for (const g of m.enemyGroups) {
-    if (!ids.abilities || !new Set(c.unitTypes.map((u) => u.id)).has(g.unitType))
-      errors.push(`map ${m.id}: unknown unitType '${g.unitType}'`);
+    if (!unitTypeIds.has(g.unitType)) errors.push(`map ${m.id}: unknown unitType '${g.unitType}'`);
     for (const p of g.positions) if (!inBounds(p)) errors.push(`map ${m.id}: enemy spawn out of bounds`);
   }
+  // Player-side allies (veyra-kaempfe spec §1a): unitType must resolve, spawn in
+  // bounds, and their spawn conditions reference only known content.
+  for (const a of m.allyUnits) {
+    if (!unitTypeIds.has(a.unitType)) errors.push(`map ${m.id}: unknown allyUnit unitType '${a.unitType}'`);
+    if (!inBounds(a.pos)) errors.push(`map ${m.id}: allyUnit spawn out of bounds`);
+    checkConditions(`map ${m.id} allyUnit ${a.unitType}`, a.conditions);
+  }
   const interactableIds = new Set(m.interactables.map((i) => i.id));
-  for (const o of m.objectives)
+  for (const o of m.objectives) {
     if (o.kind === "interactSequence")
       for (const i of o.interactables)
         if (!interactableIds.has(i))
           errors.push(`map ${m.id}: objective ${o.id} unknown interactable '${i}'`);
+    if (o.kind === "reachZone")
+      for (const p of o.zone)
+        if (!inBounds(p)) errors.push(`map ${m.id}: objective ${o.id} zone out of bounds`);
+  }
 }
 
 for (const ev of c.events) {

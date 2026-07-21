@@ -260,6 +260,7 @@ function newHeroState(): GameStateT {
     research: { current: null, completed: [] },
     construction: { current: null, built: [] },
     missions: { available: [], completed: [], queuedEvents: [] },
+    deployment: null,
     activeMission: null,
   };
 }

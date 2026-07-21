@@ -4,7 +4,7 @@ import { createRoot, type Root } from "react-dom/client";
 import { EventScreen } from "./EventScreen.js";
 import { newCampaign } from "../../core/campaign.js";
 import { loadTestContent } from "../../test/content.js";
-import { parseNarration } from "../narration/parseNarration.js";
+import { BASE_WORD_MS, parseNarration } from "../narration/parseNarration.js";
 import type { Action } from "../../core/reducer.js";
 import type { GameStateT, TextAnimationT } from "../../data/schemas.js";
 
@@ -88,7 +88,7 @@ describe("EventScreen narration (D-13)", () => {
     expect(optionButton()).toBeUndefined();
 
     // A single tick shows the first word but not the whole node, and still no option.
-    advance(200);
+    advance(BASE_WORD_MS + 20);
     const paragraph = narrationBox().querySelector("p")!;
     expect(paragraph.textContent).toContain(FIRST_WORD);
     expect(paragraph.textContent!.length).toBeLessThan(FULL.length);

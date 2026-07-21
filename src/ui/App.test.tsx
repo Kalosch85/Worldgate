@@ -128,11 +128,11 @@ describe("App shell", () => {
     click("Okafor");
     click("Mission starten");
     // The event screen takes over with the arrival node's body text.
-    expect(container!.textContent).toContain("Recon Ones Markierungsbake");
+    expect(container!.textContent).toContain("Recon Ones zweiter Meldung");
     click("Der Straße talaufwärts folgen");
     click("Ihnen vertrauen.");
     // The alien-procession reveal node (n_va_procession).
-    expect(container!.textContent).toContain("Drohnen wenigstens zweineinhalb Meter groß");
+    expect(container!.textContent).toContain("gepanzert in mattem Chitin");
     click("Unten bleiben, bis die letzte fort ist");
     click("Ihn in Deckung bringen");
     click("in Sicherheit führen lassen");
@@ -157,7 +157,7 @@ describe("App shell", () => {
     click("Mercer");
     click("Okafor");
     click("Mission starten");
-    expect(container!.textContent).toContain("Recon Ones Markierungsbake");
+    expect(container!.textContent).toContain("Recon Ones zweiter Meldung");
     click("Der Straße talaufwärts folgen");
     click("Losreißen");
     click("Erstarren.");

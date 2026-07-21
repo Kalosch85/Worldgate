@@ -164,7 +164,7 @@
     "nodes": [
       {
         "id": "n_va_gate",
-        "text": "Das Tor öffnet sich auf ein grünes Tal unter zwei Sonnen — Terrassenfelder, eine Straße aus festem weißem Stein, tief eingefahrene Karrenspuren. Recon Ones Markierungsbake liegt zehn Meter entfernt, glatt abgebrochen. Keine Leichen. Keine Patronenhülsen. Talaufwärts läutet eine Glocke einmal und verstummt, wie ein Versehen.",
+        "text": "Mercer: „Genau wie Chris es beschrieben hat — als führe man Karussell, während dir jemand in den Magen boxt.“ Der Übergang auf den Planeten ist wie ein kalter Ruck, der Geruch von nassem Stein hängt in der Nase, dazu eine gewisse Orientierungslosigkeit. Dann Andara: ein Tal in Terrassen, grün gestuft soweit das Auge reicht, eine weiße Straße, die sich zwischen Feldern hinabzieht. Am Ende ein Dorf — Karsu. Genau wie in Recon Ones zweiter Meldung. Irgendwo dort unten verstummten sie.",
         "options": [
           {
             "id": "o_va_road",
@@ -178,7 +178,7 @@
       },
       {
         "id": "n_va_villagers",
-        "text": "Sie kommen laufend aus den Feldreihen — ein Dutzend Dorfbewohner, so menschlich wie ihr, sonnengegerbt und hastig. Keiner von ihnen macht einen Laut. Sie ziehen an euren Armen und Rucksäcken, drängen euch von der Straße zur Baumgrenze, die Finger auf den Lippen. Der Älteste deutet die Straße hinab, dann drückt er die Hand flach zur Erde, die Botschaft ist klar: runter. Versteckt euch. Sofort.",
+        "text": "Die weiße Straße führt euch nach Karsu. Menschen — Menschen, hier — sehen euch kommen und erstarren. Kein Erstaunen über eure Ausrüstung, eher das Gegenteil. Ein alter Mann zeigt auf euch, dann kreuzt er die Handgelenke wie Gefesselte, und tippt sich an die Schläfe. Leute wie ihr — gefangen, und sie wissen, wo. Und dabei: kein Laut. Keiner von ihnen macht einen einzigen Ton.",
         "options": [
           {
             "id": "o_va_trust",
@@ -217,7 +217,7 @@
       },
       {
         "id": "n_va_procession",
-        "text": "Von der Baumgrenze spürt ihr es, ehe ihr es seht: ein Karren und weitere Töne, fremdartig und doch bekannt. Dann Sichtkontakt. Drohnen wenigstens zweineinhalb Meter groß, bewaffnet, dazu einige Menschen die einen Karren schieben, verschnürten Kisten, Korn, Obst — Tribut? Sie ziehen vorbei, ohne einen einzigen Blick auf die Welt um sie her, die weiße Straße hinab, zum Tor. Hindurch. Die Dorfbewohner sehen ihnen nicht nach. Sie sehen euch an und beschwören euch zum Schweigen.",
+        "text": "Auf der weißen Straße kommen sie. Drohnen — insektenhaft, größer als ein Mensch, gepanzert in mattem Chitin, die Gelenke im Gehen knirschend. Jede schleppt Tribut: verschnürte Kisten, Körbe, Ballen, hinauf zum Tor und hindurch. Vier von ihnen tragen eine Art Stab — zwei voran, zwei zuletzt, wie eine Prozession. Niemand treibt sie. Sie brauchen niemanden. Sie tun das eine, wofür man sie gemacht hat, und sehen nichts als den Weg.",
         "options": [
           {
             "id": "o_va_stay_down",
@@ -231,7 +231,7 @@
       },
       {
         "id": "n_va_escape",
-        "text": "Die letzte Drohne zieht vorbei, und die Dorfbewohner erheben sich, drängen euch am Graben entlang zum Mühlenpfad — eine stumme, halb rennende Reihe, nahezu lautlos. Dann stolpert ein Junge, kein Kind, aber sicherlich noch kein Mann, vielleicht 13 Jahre alt. Offensichtlich verletzt, vielleicht nur eine Zerrung vielleicht ein gebrochenes Bein. Ein kaum hörbares wimmern und ein knacken von trockenen Ästen. Mercer sieht sofort, zwei der Drohnen blieben stehen, die Köpfe zucken hin und her. Sie haben etwas gehört und werden jeden Moment umdrehen. Mercer ist bereits auf dem Weg zu dem Jungen.",
+        "text": "In der Deckung neben euch verliert ein junger Dorfbewohner den Halt — kein Kind mehr, aber noch lange kein Mann — und rutscht einen Steinabsatz hinab, mitten in die Sicht der Straße. Mercer ist schon in Bewegung, ehe jemand ihn halten kann.",
         "options": [
           {
             "id": "o_va_hide",
@@ -272,7 +272,7 @@
       },
       {
         "id": "n_va_hide",
-        "text": "Mercer zieht den Jungen hinter einen mannhohen Stein, zu schmal um sich hinzulegen, der Junge kann nicht alleine stehen. Mercer hält ihn,dann nähert sich ein trockenes Rasseln, ein Schnarren, ganz nah. Er zieht den jungen langsam, lautlos um den Stein herum, während die Drohnen vorbeiziehen — stets den Stein zwischen seinem Rücken und dem Schwenk ihrer augenlosen Köpfe —, bis das Rasseln die weiße Straße hinab verklingt. In den Feldreihen atmet niemand. Dann ist der Vater des Jungen, presst seine Stirn an die seines Sohnes, sein Blick gegenüber Mercer spricht Bände.",
+        "text": "Mercer presst den Jungen hinter einen Fels und sich dazu. Schritte, schwer, und dazwischen ein trockenes Schnarren, wie Chitin auf Chitin. Er dreht sich langsam um den Stein, Zentimeter um Zentimeter, immer den Fels zwischen sich und der Sicht der Drohne, während sie vorbeizieht. Ihr Schnarren entfernt sich. Dann Stille. Der Junge atmet zum ersten Mal wieder.",
         "options": [
           {
             "id": "o_va_hide_on",
@@ -286,7 +286,7 @@
       },
       {
         "id": "n_va_told",
-        "text": "An der Baumgrenze zeichnet der Älteste Glyphen in den Staub — langsam, Strich für Strich, damit Okafor jede einzelne abmalen kann. Eine Adresse. Er kreuzt die Handgelenke: die Genommenen. Vier Finger: vier wie ihr, durch das Tor genommen, lebend beim Übertreten. Der Ort, wohin die Genommenen gebracht werden. Eine Frau spricht seinen Namen laut aus, das erste Wort, das den ganzen Tag über jemand von ihnen gewagt hat: Veyra.",
+        "text": "Zurück im Dorf ist die Furcht gewichen — nicht ganz, aber genug. Der Alte spricht jetzt. Sie erzählen von den Genommenen: wer auf der Talstraße aufgegriffen wird, geht durch das Tor und kehrt nicht wieder. Auch eure Leute, sagen sie. Und sie geben euch, wonach ihr sucht: die Adresse, zu der der Tribut fließt.",
         "options": [
           {
             "id": "o_va_home",
@@ -300,7 +300,7 @@
       },
       {
         "id": "n_va_run",
-        "text": "Mercer sprintet zu dem Jungen und stößt ihn zu Boden, dreht sich um und erschießt die erste Drohne. Die zweite ist fast über ihm, als Okafor sie niederstreckt — zwei Schuss, keine vergeudete Bewegung, die Musterschülerin des Schießausbilders. Das Rasseln verstummt. Aber das ganze Tal hat die Schüsse gehört.",
+        "text": "Mercer packt den Jungen und reißt ihn hoch — zu spät. Eine Wächter-Drohne dreht den Kopf, der Stab senkt sich. Mercer wirft den Jungen zu Boden, hinter sich, und feuert. Die erste Drohne bricht im Schritt zusammen. Die zweite ist schon heran — dann fällt auch sie: Okafor, in Deckung, hat sauber nachgezogen. Feldzertifiziert, sagt die Akte. Sie hat die halbe Wachmannschaft ausgeschossen.",
         "options": [
           {
             "id": "o_va_run_watch",
@@ -314,7 +314,7 @@
       },
       {
         "id": "n_va_run_gate",
-        "text": "Der Vater reißt den Jungen hoch und presst seine Stirn an die seines Sohnes — einmal, fest. Dann rennen die Dorfbewohner, nicht zu den Bäumen: zum Tor. Eine alte Frau dreht die Wählsteine durch eine Adresse, die Okafor aus Instinkt einprägt; der Ring öffnet sich, und die Feldfamilien strömen hindurch. Das Tor schließt sich. Stille. Sie flohen zu dem Ort, wohin die Genommenen gebracht werden — zur Tür ihres eigenen Gottes.",
+        "text": "Danach ist alles Chaos. Dorfbewohner rennen, Vater und Sohn pressen die Stirnen aneinander, ein Blick, den ihr nicht lesen könnt. Dann laufen sie — zum Tor, wählen eine Adresse, die ihr nicht kennt, und sind hindurch, ehe ihr rufen könnt. Das Tor schließt. Stille. Was ihr habt, ist die Adresse, die ihre Hände wählten. Wohin sie flohen, dorthin fließt der Tribut.",
         "options": [
           {
             "id": "o_va_run_home",
@@ -328,7 +328,7 @@
       },
       {
         "id": "n_va_fight",
-        "text": "Ihr stoßt euch frei, und ein Stab kracht gegen Mercers Gewehr — dann ist es eine Rauferei an der Baumgrenze, stumm und verzweifelt, die Dorfbewohner kämpfen wie Menschen, die es sich nicht leisten können, gehört zu werden. Es endet falsch. Ein junger Dorfbewohner liegt am Boden, das Genick an einer Wurzel verdreht, reglos. Da beginnt der Boden zu beben.",
+        "text": "„Falle“ ist das erste Wort, das fällt, und dann geht alles zu schnell. Eine Waffe hebt sich, ein Dorfbewohner greift danach — ob um zu wehren oder zu warnen, wird nie klar — und liegt einen Herzschlag später reglos im Farn. Die Straße hallt vom Schnarren aufmerksam gewordener Drohnen.",
         "options": [
           {
             "id": "o_va_freeze",
@@ -356,7 +356,7 @@
       },
       {
         "id": "n_va_fight_exit",
-        "text": "Die Dorfbewohner holen ihre Toten schweigend zurück, und das Schweigen ist ein Urteil. Was die Schnur auch bedeutet, wohin die Genommenen auch gehen — jemand in diesem Tal weiß es, und keiner hier wird es euch je verraten. Die Glyphen auf der Schnur eines toten Jungen sind die einzige Spur, mit der ihr geht.",
+        "text": "In der Kleidung des Toten findet Mercer, was ihr braucht: eine Adresse, eingeritzt in ein Stück Horn, wie man etwas Wichtiges bei sich trägt. Das Dorf wird euch nichts mehr geben. Aber die Straße führt weiter — zu dem Ort, zu dem der Tribut fließt. Ihr geht mit Blut an den Händen und ohne einen einzigen Verbündeten.",
         "options": [
           {
             "id": "o_va_home_cold",
@@ -779,7 +779,7 @@
     "nodes": [
       {
         "id": "n_vy1_arrive",
-        "text": "Veyra. Die Tür steht offen in ihrem Wachhaus auf der Pilgerterrasse, und sie öffnet nur in eine Richtung: Die Wachen wählen niemanden hinaus ohne das Wort des Tempels. Über der Terrasse steigt die heilige Stadt empor, weißer Stein und Glockentürme, bis zum ringförmigen Bezirk der Bußstätte — wo vier Namen in frischer Tinte warten. Der Sprung hinein ist frei. Es ist die Tür nach Hause, die verschlossen ist.",
+        "text": "Veyra: kein Tal, sondern eine Stadt aus Stein und Ritus, gebaut um einen Tempel, der über allem thront. Aus jedem Winkel fließt Tribut bergauf, dieselben verschnürten Kisten, dieselben Drohnen. Und über den Toren, in Licht gemeißelt, immer wieder dasselbe Zeichen: der Erleuchtete. Hier beten Menschen. Hier verschwinden sie auch.",
         "options": [
           {
             "id": "o_vy1_arrive_porters",
@@ -834,7 +834,7 @@
           },
           {
             "id": "o_vy1_faces_run",
-            "text": "Am Wachhaus, in Büßergrau: der Junge von der Straße und sein Vater — die geflohenen Feldfamilien, gekommen, um für die toten Drohnen um Vergebung zu bitten. Der Vater presst seine Stirn an die seines Sohnes, dann sieht er euch an: Furcht und Schuld im selben Gesicht. Auch die Dorfbewohner nutzen das Netz.",
+            "text": "In der Menge der Pilger: ein Gesicht, das ihr kennt. Der Junge vom Steinabsatz — und neben ihm sein Vater, geflohen genau hierher. Der Vater erkennt Mercer, und einen Herzschlag lang ringt die Furcht mit etwas anderem. Dann, knapp: „Ihr seid dem Licht gefolgt. Wie wir alle.“ Er wird reden. Nicht aus Vertrauen — aus Schuld.",
             "requirements": [
               {
                 "type": "flag",
@@ -997,7 +997,7 @@
       },
       {
         "id": "n_vy1_pilgrims_detail",
-        "text": "Worte treiben zwischen den Prozessionen: „Oru wandelt, wo man ihn verehrt.“ Lehre, kein Beweis — aber der erste Riss darin, wie sie ihn erklären.",
+        "text": "Auf den Pilgerwegen redet man, wenn man leise redet. Der Erleuchtete — Oru — kam vor Menschengedenken aus dem Tor, sagen sie, und brachte das Licht, das nie erlischt. Er nimmt Tribut und gibt Ordnung. Er nimmt die Fehlbaren und gibt sie geläutert zurück — oder gar nicht. Niemand hat ihn je zürnen sehen. Niemand muss. Das Licht ist geduldig, sagen sie, und es hört alles.",
         "options": [
           {
             "id": "o_vy1_pilgrims_continue",
@@ -1054,7 +1054,7 @@
       },
       {
         "id": "n_vy1_plan",
-        "text": "Drei Wege hinein, und keiner davon leicht.",
+        "text": "Die Bußstätte liegt unter dem Tempel, und der Tempel wacht. Ein Weg hinein muss vorbereitet sein, ehe ihr ihn geht. Wie ihr euch nähert, entscheidet, was euch drinnen erwartet.",
         "options": [
           {
             "id": "o_vy1_uniform_choice",
@@ -1113,7 +1113,7 @@
       },
       {
         "id": "n_vy1_uniform",
-        "text": "Der Kasernenhof leert sich vor dem Schichtwechsel.",
+        "text": "Eine Tempelwache verlässt beim Schichtwechsel allein ihren Posten. Eine Uniform passt, wenn niemand zu genau hinsieht. So geht ihr durch den Haupteingang hinein — verkleidet als die, die euch hängen würden, wenn sie euch erkennten.",
         "options": [
           {
             "id": "o_vy1_knockout",

@@ -196,7 +196,15 @@ content?)` (the intro reuses the existing incident shape);
   - **Konstanten (T, tunable)** in `src/ui/narration/parseNarration.ts`:
     `BASE_WORD_MS = 340` (Grundtempo/Wort; im Playtest vom D-13-Startwert 180
     hochgesetzt, der ~2× zu schnell wirkte, über 425 und dann 20% schneller auf
-    340 eingependelt), `SHORT_PAUSE_MS = 600`, `LONG_PAUSE_MS = 1400`.
+    340 eingependelt), `SHORT_PAUSE_MS = 600`, `LONG_PAUSE_MS = 1400`,
+    `WORD_FADE_MS = 260`.
+  - **Wort-Fade (Zusatz)**: jedes enthüllte Wort ist ein eigener `<span>` und
+    blendet beim Erscheinen kurz ein (Opacity 0→1, `WORD_FADE_MS`). Nur `opacity`
+    animiert, nie die Position — layout-sicher (D-13.6). `@keyframes` als
+    einmalig injiziertes Stylesheet (App ist sonst inline-gestylt);
+    `prefers-reduced-motion` schaltet die Animation ab; `off` rendert die Spans
+    ohne Fade. Stabile Index-Keys sorgen dafür, dass bereits sichtbare Wörter
+    beim nächsten Wort nicht neu animieren.
   - **Pausen-Marken** sind freistehende, beidseitig von Leerraum umgebene
     Ampersand-Läufe: „ & " = kurze Pause, „ && " = lange Pause. Genau die
     beidseitige-Leerraum-Regel trennt eine Marke von normalem Text: „A&B",

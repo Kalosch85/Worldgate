@@ -113,6 +113,17 @@ describe("EventScreen narration (D-13)", () => {
     // No timer advance: everything is already present (no layout jump vs. skip).
     expect(narrationBox().querySelector("p")!.textContent).toBe(FULL);
     expect(optionButton()).toBeDefined();
+    // "off" renders plain word spans — no per-word fade animation.
+    expect(container.querySelectorAll(".wg-word-fade").length).toBe(0);
+  });
+
+  it("gives each revealed word its own fade-in span in 'on' mode", () => {
+    render("on");
+    runToComplete();
+    const faded = narrationBox().querySelectorAll("span.wg-word-fade");
+    // One span per word, and together they spell out the full node text.
+    expect(faded.length).toBe(FULL.split(" ").length);
+    expect(narrationBox().querySelector("p")!.textContent).toBe(FULL);
   });
 
   it("cycles the text speed through updateSettings when the toggle is pressed", () => {

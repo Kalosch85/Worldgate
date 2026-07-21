@@ -6,7 +6,7 @@
     "nodes": [
       {
         "id": "n_in_sign",
-        "text": "Ich wusste nicht, was mich erwartete, als ich unterschrieb. „Geheime Versetzung. Annehmen oder ablehnen.“ Kein Briefing, keine Einzelheiten — nur eine Unterschriftszeile und ein wartender Wagen. Eigentlich nichts Neues. Und doch schien etwas anders. Womit ich sicher nicht gerechnet hatte: mitten in einen Science-Fiction-Comic geworfen zu werden. Interstellare Reisen durch einen leuchtenden Ring. Nun. Das ist neu. Funktionsweise? Unklar. Herkunft? Unbekannt. Egal — seit Cassy fort ist, weiß ich ohnehin nicht, wohin mit mir. Da kann ich die Arbeit gebrauchen. Vielleicht mehr noch den Abstand.",
+        "text": "Ich wusste nicht, was mich erwartete, als ich unterschrieb. „Geheime Versetzung. Annehmen oder ablehnen.“ Kein Briefing, keine Einzelheiten — nur eine Unterschriftszeile und ein wartender Wagen. Eigentlich nichts Neues. Und doch schien etwas anders. Womit ich sicher nicht gerechnet hatte: mitten in einen Science-Fiction-Comic geworfen zu werden. Interstellare Reisen durch einen leuchtenden Ring. Nun. Das ist neu. Funktionsweise? Unklar. Herkunft? Unbekannt. && Egal — seit Cassy fort ist, weiß ich ohnehin nicht, wohin mit mir. Da kann ich die Arbeit gebrauchen. Vielleicht mehr noch den Abstand.",
         "options": [
           {
             "id": "o_in_down",
@@ -217,7 +217,7 @@
       },
       {
         "id": "n_va_procession",
-        "text": "Auf der weißen Straße kommen sie. Drohnen — insektenhaft, größer als ein Mensch, gepanzert in mattem Chitin, die Gelenke im Gehen knirschend. Jede schleppt Tribut: verschnürte Kisten, Körbe, Ballen, hinauf zum Tor und hindurch. Vier von ihnen tragen eine Art Stab — zwei voran, zwei zuletzt, wie eine Prozession. Niemand treibt sie. Sie brauchen niemanden. Sie tun das eine, wofür man sie gemacht hat, und sehen nichts als den Weg.",
+        "text": "Auf der weißen Straße kommen sie. Drohnen — insektenhaft, größer als ein Mensch, gepanzert in mattem Chitin, die Gelenke im Gehen knirschend. Jede schleppt Tribut: verschnürte Kisten, Körbe, Ballen, hinauf zum Tor und hindurch. Vier von ihnen tragen eine Art Stab — zwei voran, zwei zuletzt, wie eine Prozession. Niemand treibt sie. & Sie brauchen niemanden. Sie tun das eine, wofür man sie gemacht hat, und sehen nichts als den Weg.",
         "options": [
           {
             "id": "o_va_stay_down",
@@ -2529,7 +2529,7 @@
       },
       {
         "id": "n_vy3_exfil_end",
-        "text": "Der Übergang, ein letztes Mal — der kalte Ruck, der Geruch nach nassem Stein, und dann die vertraute Enge des Gewölbes vierhundert Meter unter der Erde. Recon One ist heim. Vier, längst überfällig. Und einer mehr, den keine Akte je verzeichnet hat. Was ihr auf Veyra zurückließt, wird warten. Es wartet gut.",
+        "text": "Der Übergang, ein letztes Mal — der kalte Ruck, der Geruch nach nassem Stein, und dann die vertraute Enge des Gewölbes vierhundert Meter unter der Erde. Recon One ist heim. Vier, längst überfällig. Und einer mehr, den keine Akte je verzeichnet hat. & Was ihr auf Veyra zurückließt, wird warten. Es wartet gut.",
         "options": [
           {
             "id": "o_vy3_end_convinced",

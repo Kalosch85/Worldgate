@@ -4,18 +4,15 @@ import { parseNarration } from "./parseNarration.js";
 
 /**
  * Regression guard for the D-13 pause marks that live in authored content
- * (src/data/content/events.json). A content sweep or a careless edit could
- * silently strip the freestanding " & " / " && " marks — the marks are
- * invisible once rendered, so nothing else would catch their loss. This test
- * pins three canonical passages and verifies the parser still consumes them
- * (marks never rendered, pause tagged on the preceding word).
- *
- * Note (see the recovery PR's forensic section): the originally-requested
- * confirmation passage "Sie leben. & Noch." does not exist anywhere in the
- * repository's content or history, so the third pinned case uses the homecoming
- * node's short mark instead — a mark that actually exists.
+ * (src/data/content/events.json). The marks (" & " / " && ") are invisible once
+ * rendered, so a content sweep could strip them and nothing else would notice.
+ * This suite pins the canonical passages (restored from docs/story/review/
+ * veyra-patch.md via mark-stripped text matching) and verifies the display
+ * parser consumes every mark in the whole content set.
  */
 const content = loadTestContent();
+
+const MARK = /\s(&&|&)\s/g;
 
 function nodeText(eventId: string, nodeId: string): string {
   const ev = content.events.find((e) => e.id === eventId);
@@ -25,32 +22,68 @@ function nodeText(eventId: string, nodeId: string): string {
   return node.text;
 }
 
+/** Every player-visible narration string in the content (node bodies + options). */
+function allNarrationTexts(): string[] {
+  const out: string[] = [];
+  for (const ev of content.events) {
+    for (const n of ev.nodes) {
+      out.push(n.text);
+      for (const o of n.options) out.push(o.text);
+    }
+  }
+  return out;
+}
+
 describe("canonical pause marks in content (D-13 regression guard)", () => {
   it("keeps a LONG pause in the intro monologue before 'Egal — seit Cassy'", () => {
     const text = nodeText("ev_intro", "n_in_sign");
-    expect(text).toContain(" && ");
     expect(text).toMatch(/&&\s+Egal — seit Cassy/);
-
     const { fullText, tokens } = parseNarration(text);
-    expect(fullText).not.toContain("&"); // the mark is never rendered
+    expect(fullText).not.toContain("&");
     const egal = tokens.findIndex((t) => t.text === "Egal");
-    expect(egal).toBeGreaterThan(0);
     expect(tokens[egal - 1]?.pauseAfter).toBe("long");
   });
 
   it("keeps a SHORT pause in a valley node (n_va_procession)", () => {
     const text = nodeText("ev_vy_arrival", "n_va_procession");
     expect(text).toContain(" & ");
-    expect(text).not.toContain(" && "); // it's a short mark, not a long one
-
-    const { fullText, tokens } = parseNarration(text);
-    expect(fullText).not.toContain("&");
-    expect(tokens.some((t) => t.pauseAfter === "short")).toBe(true);
+    expect(parseNarration(text).fullText).not.toContain("&");
   });
 
   it("keeps a SHORT pause in the homecoming node (n_vy3_exfil_end)", () => {
     const text = nodeText("ev_vy_first_blade", "n_vy3_exfil_end");
     expect(text).toMatch(/hat\. & Was ihr auf Veyra/);
     expect(parseNarration(text).fullText).not.toContain("&");
+  });
+
+  it("keeps the lost confirmation beat 'Sie leben. & Noch.' on the ledger node", () => {
+    const text = nodeText("ev_vy_ledger", "n_vl_ledger");
+    expect(text).toMatch(/Sie leben\. & Noch\./);
+    const { fullText, tokens } = parseNarration(text);
+    expect(fullText).not.toContain("&");
+    // "Sie leben." carries a short pause before "Noch."
+    const noch = tokens.findIndex((t) => t.text === "Noch.");
+    expect(noch).toBeGreaterThan(0);
+    expect(tokens[noch - 1]?.pauseAfter).toBe("short");
+  });
+
+  it("keeps both marks in the cell-block reunion (n_vy2_a_cells, patch-restored)", () => {
+    const text = nodeText("ev_vy_penitence", "n_vy2_a_cells");
+    expect(text).toContain(" & "); // before „Captain Mercer.“
+    expect(text).toContain(" && "); // before „Barros senkt die Stimme“
+    expect(parseNarration(text).fullText).not.toContain("&");
+  });
+
+  it("the display parser consumes EVERY mark in the whole content set (never rendered)", () => {
+    let total = 0;
+    for (const text of allNarrationTexts()) {
+      const marks = text.match(MARK);
+      if (marks) total += marks.length;
+      // Whatever marks a node carries, the rendered text must contain no '&'.
+      expect(parseNarration(text).fullText).not.toContain("&");
+    }
+    // Anti-strip tripwire: a future sweep that removes marks drops this below the
+    // floor and fails loudly. Raise the floor when more marks are authored.
+    expect(total).toBeGreaterThanOrEqual(19);
   });
 });

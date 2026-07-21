@@ -896,11 +896,11 @@ Fragen, wie Korn — und Träger — nach Veyra springen.
 
 **ORIGINAL:**
 
-> Sie dämpft das Feuer, ehe sie antwortet, als könnte der Name hören. „Als die Begnadeten zuletzt zu einer Nahme herabkamen, führte die Erste Klinge sie selbst an. Seryn Vael. Er stand am Straßenschrein und trank seine Portion — Licht, das in einem Becher stand, und er trank es wie Wasser. Betet, dass die Tür nicht in seiner Hand liegt an dem Tag, an dem ihr springt.“
+> Sie dämpft das Feuer, ehe sie antwortet, als könnte der Name hören. „Als die Gesegneten zuletzt zu einer Nahme herabkamen, führte die Erste Klinge sie selbst an. Seryn Vael. Er stand am Straßenschrein und trank seine Portion — Licht, das in einem Becher stand, und er trank es wie Wasser. Betet, dass die Tür nicht in seiner Hand liegt an dem Tag, an dem ihr springt.“
 
 **NEU:**
 
-Sie dämpft das Feuer, ehe sie antwortet, als könnte der Name hören. „Als die Begnadeten zuletzt zu einer Nahme herabkamen, führte die Erste Klinge sie selbst an. Seryn Vael. Er stand am Straßenschrein und trank seine Portion — Licht, das in einem Becher stand, und er trank es wie Wasser. Betet, dass die Tür nicht in seiner Hand liegt an dem Tag, an dem ihr springt.“
+Sie dämpft das Feuer, ehe sie antwortet, als könnte der Name hören. „Als die Gesegneten zuletzt zu einer Nahme herabkamen, führte die Erste Klinge sie selbst an. Seryn Vael. Er stand am Straßenschrein und trank seine Portion — Licht, das in einem Becher stand, und er trank es wie Wasser. Betet, dass die Tür nicht in seiner Hand liegt an dem Tag, an dem ihr springt.“
 
 ##### [P059] Option `o_vl_ask_crossing` (auf Knoten `n_vl_first`)
 
@@ -972,11 +972,11 @@ Den Gefallen ablehnen — ihr setzt als Pilger über, zu euren eigenen Bedingung
 
 **ORIGINAL:**
 
-> Ein Karren versperrt halb die Brücke. Der Junge, den Mercer rettete, ist nicht hier — seine Familie floh mit den übrigen durch das Tor, und Karsu hält ihre Häuser gefegt für eine Rückkehr, die niemand verspricht. Odel, die Müllerin, kommt allein heraus. „Ihr habt einen der Unsrigen gerettet und uns die Feldfamilien gekostet. Nach den Schüssen durchstreiften die Begnadeten einen Tag lang dieses Tal — die Leute der Ersten Klinge, auf der Jagd. Beides ist wahr. Sagt, was ihr wollt.“
+> Ein Karren versperrt halb die Brücke. Der Junge, den Mercer rettete, ist nicht hier — seine Familie floh mit den übrigen durch das Tor, und Karsu hält ihre Häuser gefegt für eine Rückkehr, die niemand verspricht. Odel, die Müllerin, kommt allein heraus. „Ihr habt einen der Unsrigen gerettet und uns die Feldfamilien gekostet. Nach den Schüssen durchstreiften die Gesegneten einen Tag lang dieses Tal — die Leute der Ersten Klinge, auf der Jagd. Beides ist wahr. Sagt, was ihr wollt.“
 
 **NEU:**
 
-Ein Karren versperrt halb die Brücke. Der Junge, den Mercer rettete, ist nicht hier — seine Familie floh mit den übrigen durch das Tor, und Karsu hält ihre Häuser gefegt für eine Rückkehr, die niemand verspricht. Odel, die Müllerin, kommt allein heraus. „Ihr habt einen der Unsrigen gerettet und uns die Feldfamilien gekostet. Nach den Schüssen durchstreiften die Begnadeten einen Tag lang dieses Tal — die Leute der Ersten Klinge, auf der Jagd. Beides ist wahr. Sagt, was ihr wollt.“
+Ein Karren versperrt halb die Brücke. Der Junge, den Mercer rettete, ist nicht hier — seine Familie floh mit den übrigen durch das Tor, und Karsu hält ihre Häuser gefegt für eine Rückkehr, die niemand verspricht. Odel, die Müllerin, kommt allein heraus. „Ihr habt einen der Unsrigen gerettet und uns die Feldfamilien gekostet. Nach den Schüssen durchstreiften die Gesegneten einen Tag lang dieses Tal — die Leute der Ersten Klinge, auf der Jagd. Beides ist wahr. Sagt, was ihr wollt.“
 
 ##### [P064] Option `o_vl_wary_ask` (auf Knoten `n_vl_wary`)
 
@@ -2792,11 +2792,11 @@ Ziehen.
 
 **ORIGINAL:**
 
-> Drei Gänge, Klinge gegen Klinge, und er ist schneller als alles, gegen das ihr geübt habt — ein Begnadeter, die Portion in ihm lodernd. Doch er ist ein Mann gegen ein Team, mit dem befreiten Recon One im Rücken, und Zahlen ermüden nicht.
+> Drei Gänge, Klinge gegen Klinge, und er ist schneller als alles, gegen das ihr geübt habt — ein Gesegneter, die Portion in ihm lodernd. Doch er ist ein Mann gegen ein Team, mit dem befreiten Recon One im Rücken, und Zahlen ermüden nicht.
 
 **NEU:**
 
-Drei Gänge, Klinge gegen Klinge, und er ist schneller als alles, gegen das ihr geübt habt — ein Begnadeter, die Portion in ihm lodernd. Doch er ist ein Mann gegen ein Team, mit dem befreiten Recon One im Rücken, und Zahlen ermüden nicht.
+Drei Gänge, Klinge gegen Klinge, und er ist schneller als alles, gegen das ihr geübt habt — ein Gesegneter, die Portion in ihm lodernd. Doch er ist ein Mann gegen ein Team, mit dem befreiten Recon One im Rücken, und Zahlen ermüden nicht.
 
 ##### [P179] Option `o_vy3_duel_clean` (auf Knoten `n_vy3_duel`)
 

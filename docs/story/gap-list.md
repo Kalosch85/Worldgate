@@ -100,10 +100,10 @@ Kanon-Entscheidungen der Fable-Stufe).
   Licht unter seiner Haut) und in der Andeutung des Verzeichnisses genannt.
 - Warum läuft er über (jeder Zweig)? — je nach Zweig beantwortet (Argument,
   Beweis oder Niederlage-dann-Zeugenschaft); die Kernaussage ist Bibel §5.
-- Was geschieht mit einem Begnadeten, der aufhört zu trinken? — über M4, M5 und
+- Was geschieht mit einem Gesegneten, der aufhört zu trinken? — über M4, M5 und
   den Eid hinweg beantwortet (Zittern, Verblassen, die Gnade, die geht); ob der
   Entzug ihn töten kann, ist **OFFEN**.
-- Gibt es weitere Begnadete, und wo waren sie während der Flucht? — **OFFEN**
+- Gibt es weitere Gesegnete, und wo waren sie während der Flucht? — **OFFEN**
   (von der Ehrengarde wird nicht gesagt, dass sie begnadet ist; die Größe des
   Kaders ist ungeschrieben — ein bewusster Akt-2-Hebel).
 - Wie bringen wir vier Gefangene und einen Trupp durch eine verschlossene Tür
@@ -130,7 +130,7 @@ Kanon-Entscheidungen der Fable-Stufe).
   das Beobachten-Ende verfasst).
 - Kampf-Pfad: Der Anker ist zerstört und ein vorläufiger Rat bildet sich — wer
   führt das freie Veyra, und was geschieht mit der Bußstätte, den Wachen, den
-  verbliebenen Begnadeten und den Gemeinde-Welten, die weiterhin Zehnt an eine
+  verbliebenen Gesegneten und den Gemeinde-Welten, die weiterhin Zehnt an eine
   dunkle Tür senden? — **OFFEN** (ev_vy_gratitude skizziert nur den Rat).
 - Wohin floh der Gott (Kampf-Pfad)? — **OFFEN** („es ist Schlimmerem als dir
   entkommen" — ein Faden für den Verwalter-Konsens-Bogen, Akt 3).

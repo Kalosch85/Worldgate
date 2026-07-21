@@ -79,8 +79,11 @@ One interpreter for each lives in `core`. Rules:
   stances ("trust_andara", "support"). Prefer variables when a thing can grow.
 - Option eligibility is always computed by the engine and returned per option.
   Rendering ineligible options is purely a UI decision:
-  `settings.showLockedOptions` (D-1: default `false`, no UI toggle in the
-  prototype). The debrief-hint hook: mission resolution reports whether any
+  `settings.showLockedOptions` (D-15: default `true`, superseding the original
+  D-1 `false`; no UI toggle in the prototype). An ineligible option may carry an
+  authored `EventOption.lockedReason` shown greyed out when rendered (D-15). The
+  debrief-hint hook (armed for hidden locks) is suppressed while locks are
+  visible: mission resolution reports whether any
   eligible-if-roster-differed options existed, as an anonymous one-liner.
 
 ## 7. Tactical model (shapes fixed here, numbers in docs/specs/tactics.md)

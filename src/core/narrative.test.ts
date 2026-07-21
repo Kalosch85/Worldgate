@@ -192,7 +192,6 @@ describe("chooseEventOption — golden paths (§5, §6)", () => {
     const base = launched("m_vy_2", ["h_mercer", "h_okafor"], undefined);
     const routed = structuredClone(base);
     routed.flags.f_vy_approach_worker = true;
-    routed.flags.f_vy_owe_ilo = true;
     let s = chooseEventOption(routed, ctx(), "o_vy2_route_worker");
     s = chooseEventOption(s, ctx(), "o_vy2_b_free_ilo");
     expect(s.missions.queuedEvents).toEqual([{ event: "ev_vy_dessik_word", fireOnDay: 6 }]); // day 1 + 5
@@ -200,8 +199,12 @@ describe("chooseEventOption — golden paths (§5, §6)", () => {
 
   it("arms the debrief hint when a node shows a squad-gated option", () => {
     // Solo Mercer at the wards: o_vy4_science is squad-gated → gatedSeen arms,
-    // and the debrief line lands on completion (showLockedOptions false).
-    const state = launched("m_vy_4", ["h_mercer", "h_okafor"]);
+    // and the debrief line lands on completion. The hint is the D-1 mitigation
+    // for HIDDEN locks, so it only fires when showLockedOptions is false — which
+    // is no longer the campaign default (D-15), so this test sets it explicitly.
+    const state = launched("m_vy_4", ["h_mercer", "h_okafor"], {
+      settings: { showLockedOptions: false },
+    });
     let s = chooseEventOption(state, ctx(), "o_vy4_quiet");
     const solo = structuredClone(s);
     solo.activeMission = { ...s.activeMission!, squad: ["h_mercer"] } as typeof solo.activeMission;

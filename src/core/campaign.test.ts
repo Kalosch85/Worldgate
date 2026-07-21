@@ -111,7 +111,7 @@ describe("D-9 unlock chain — static content walk", () => {
     return out;
   };
 
-  it("runs intro → arrival → ledger → intercept → m_vy_1..5 with no dead-end", () => {
+  it("runs intro → arrival → ledger → intercept → m_vy_1..3 with no dead-end (D-16 arc end)", () => {
     // The intro (incident, not a mission) opens the spine.
     const intro = CONTENT.events.find((e) => e.id === INTRO_EVENT)!;
     const introUnlocks = intro.outcomes.flatMap((o) =>
@@ -126,18 +126,25 @@ describe("D-9 unlock chain — static content walk", () => {
     expect(intercept).toContain("m_vy_intercept"); // defeat → regroup retry
     expect(unlocksOf("m_vy_1")).toContain("m_vy_2");
     expect(unlocksOf("m_vy_2")).toContain("m_vy_3");
-    expect(unlocksOf("m_vy_3")).toContain("m_vy_4"); // arc-veyra §M3 mandate
-    expect(unlocksOf("m_vy_4")).toContain("m_vy_5");
+    // D-16: the Act-1 arc ends after M3's exfil close; M3 no longer unlocks m_vy_4.
+    expect(unlocksOf("m_vy_3")).not.toContain("m_vy_4");
   });
 
-  it("every M3 outcome unlocks m_vy_4 (no path may strand the arc)", () => {
+  it("no M3 outcome unlocks m_vy_4 (D-16: m_vy_4/m_vy_5 deferred to Act 2)", () => {
     const fb = CONTENT.events.find((e) => e.id === "ev_vy_first_blade")!;
     for (const outcome of fb.outcomes) {
       const unlocked = outcome.effects
         .filter((e) => e.type === "unlockMission")
         .map((e) => (e as { mission: string }).mission);
-      expect(unlocked, `outcome ${outcome.id}`).toContain("m_vy_4");
+      expect(unlocked, `outcome ${outcome.id}`).not.toContain("m_vy_4");
     }
+  });
+
+  it("m_vy_4 and m_vy_5 remain in content but are unlocked by nothing (D-16)", () => {
+    expect(CONTENT.missions.find((m) => m.id === "m_vy_4")).toBeDefined();
+    expect(CONTENT.missions.find((m) => m.id === "m_vy_5")).toBeDefined();
+    const unlockers = CONTENT.missions.filter((m) => unlocksOf(m.id).has("m_vy_4"));
+    expect(unlockers).toEqual([]);
   });
 
   it("the mandatory spine tactical is free to launch (launchCost 0)", () => {

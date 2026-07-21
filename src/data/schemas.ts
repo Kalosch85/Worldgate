@@ -196,6 +196,11 @@ export const EventOption = z.object({
   text: z.string(),
   requirements: z.array(ConditionSchema).default([]),
   effects: z.array(EffectSchema).default([]),
+  // D-15 (visible locks): when an option is ineligible and rendered (per
+  // settings.showLockedOptions), the UI shows this authored reason greyed out.
+  // Absent ⇒ the UI falls back to a generic "requirement not met" hint. Flavor
+  // only — carries no rules; eligibility is still computed from `requirements`.
+  lockedReason: z.string().optional(),
   next: z.union([
     z.object({ kind: z.literal("node"), node: Id }),
     z.object({ kind: z.literal("end"), outcome: Id }),
@@ -322,7 +327,7 @@ export const GameState = z.object({
   // arc unlock chain, so pre-D-9 saves could no longer progress the spine.
   version: z.literal(2),
   campaign: z.object({ day: z.number().int().min(1), seed: z.number().int() }),
-  settings: z.object({ showLockedOptions: z.boolean() }), // D-1: default false
+  settings: z.object({ showLockedOptions: z.boolean() }), // D-15: default true (was D-1 false)
   resources: ResourceAmounts,
   variables: z.record(Id, z.number()), // must contain "support"; numeric stance tracks
   flags: z.record(Id, z.boolean()),

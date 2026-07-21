@@ -33,7 +33,7 @@ Cassy, Recon One) und alle IDs/Flags/Variablen bleiben unverändert.**
 | the Luminous One (Oru) | der Erleuchtete (Oru) |                                             |
 | sacrament              | die Segnung           |                                             |
 | the Portion            | die Portion           | verfeinertes Torlicht                       |
-| the Graced             | die Begnadeten        | Einzahl: ein Begnadeter                     |
+| the Graced             | die Gesegneten        | Einzahl: ein Gesegneter (D-14)              |
 | grace                  | die Gnade             |                                             |
 | support                | Unterstützung         | Anzeige-Label; Variable-ID bleibt `support` |
 | doubt                  | Zweifel               | Anzeige-Label; Variable-ID bleibt `doubt`   |
@@ -62,7 +62,7 @@ Cassy, Recon One) und alle IDs/Flags/Variablen bleiben unverändert.**
 | pilgrim / pilgrim terrace        | Pilger / die Pilgerterrasse                      |                              |
 | watermill village                | Mühlendorf                                       |                              |
 | porter Tenders / porters         | Träger-Drohnen / Träger                          | Drohnen-Kaste                |
-| flanker Tenders / flankers       | Flankierer-Drohnen / Flankierer                  | Drohnen-Kaste                |
+| guard Tenders / guard drones     | Wächter-Drohnen                                  | Drohnen-Rolle (D-14)         |
 | Raider(s)                        | Plünderer                                        |                              |
 
 ## UI-/Systembegriffe

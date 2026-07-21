@@ -21,7 +21,7 @@
     "id": "ut_tender_guard",
     "name": "Wächter-Drohne",
     "maxHp": 4,
-    "aim": 48,
+    "aim": 60,
     "mobility": 5,
     "damage": { "min": 1, "max": 2 },
     "abilities": ["ab_stab"]

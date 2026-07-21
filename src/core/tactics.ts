@@ -252,11 +252,13 @@ function hitChanceFromPos(
   attacker: BattleUnitT,
   fromPos: PosT,
   target: BattleUnitT,
+  accuracyBonus = 0,
 ): number {
   const aim = statsOf(state, content, attacker).aim;
   const cover = coverBonusAt(map, target.pos.x, target.pos.y);
   const dist = Math.abs(fromPos.x - target.pos.x) + Math.abs(fromPos.y - target.pos.y);
-  return clampInt(HIT_MIN, HIT_MAX, aim - cover - RANGE_PENALTY_PER_TILE * dist);
+  // veyra-kaempfe tuning v3 §1: the ability's accuracyBonus is added BEFORE the clamp.
+  return clampInt(HIT_MIN, HIT_MAX, aim + accuracyBonus - cover - RANGE_PENALTY_PER_TILE * dist);
 }
 
 function hitChanceInternal(
@@ -265,26 +267,36 @@ function hitChanceInternal(
   map: MapDefT,
   attacker: BattleUnitT,
   target: BattleUnitT,
+  accuracyBonus = 0,
 ): number {
-  return hitChanceFromPos(state, content, map, attacker, attacker.pos, target);
+  return hitChanceFromPos(state, content, map, attacker, attacker.pos, target, accuracyBonus);
+}
+
+/** The accuracyBonus of an ability id (0 when unknown/absent) — the single
+ * place the preview and the resolver read it, so both share the formula. */
+function accuracyBonusOf(content: ContentBundleT, abilityId: string | undefined): number {
+  if (abilityId === undefined) return 0;
+  return content.abilities.find((a) => a.id === abilityId)?.accuracyBonus ?? 0;
 }
 
 /**
  * Guard (§4, §7): the exact hit% the UI previews. This IS the number the
- * resolver rolls against — there is no second implementation.
+ * resolver rolls against — there is no second implementation. Pass the ability
+ * being used so its accuracyBonus (§1) is reflected in the preview.
  */
 export function hitChance(
   state: GameStateT,
   content: ContentBundleT,
   attackerId: string,
   targetId: string,
+  abilityId?: string,
 ): number {
   const { battle } = tacticalBattle(state);
   const map = mapOf(content, battle);
   const a = unitById(battle, attackerId);
   const t = unitById(battle, targetId);
   if (!a || !t) throw new RuleError("battle/unknown_unit", "Unknown attacker or target.");
-  return hitChanceInternal(state, content, map, a, t);
+  return hitChanceInternal(state, content, map, a, t, accuracyBonusOf(content, abilityId));
 }
 
 /** Legal targets for `abilityId` from `unitId` (§4, §6). Attacks need LOS and
@@ -312,6 +324,81 @@ export function visibleTargets(
       if (v.side !== u.side || v.id === u.id) continue;
       if (manhattan(u.pos, v.pos) > ab.range) continue;
       out.push(v.id);
+    }
+  }
+  return out;
+}
+
+/**
+ * Overlay guard (tuning v3 §4a): every tile a unit could target with `abilityId`
+ * from its current position — within the ability's range, and (for
+ * enemy-targeting abilities) with line of sight, mirroring `visibleTargets`'
+ * gating. Walls and the unit's own tile are excluded. The renderer's ability
+ * overlay reads THIS — it never recomputes range/LOS in the view layer (§4).
+ */
+export function abilityRangeTiles(
+  state: GameStateT,
+  content: ContentBundleT,
+  unitId: string,
+  abilityId: string,
+): PosT[] {
+  const { battle } = tacticalBattle(state);
+  const map = mapOf(content, battle);
+  const u = unitById(battle, unitId);
+  const ab = content.abilities.find((a) => a.id === abilityId);
+  if (!u || !ab) return [];
+  const needsLos = ab.targeting === "enemy";
+  const out: PosT[] = [];
+  for (let y = 0; y < map.height; y++) {
+    for (let x = 0; x < map.width; x++) {
+      if (x === u.pos.x && y === u.pos.y) continue;
+      if (tileAt(map, x, y) === "#") continue;
+      const p = { x, y };
+      if (manhattan(u.pos, p) > ab.range) continue;
+      if (needsLos && !hasLos(map, u.pos, p)) continue;
+      out.push(p);
+    }
+  }
+  return out;
+}
+
+/**
+ * Overlay guard (tuning v3 §4b): the threat zone of `unitId` — every tile it
+ * could BOTH reach next turn (its reachable move tiles, or by staying put) AND
+ * attack from there (within an enemy-targeting ability's range + LOS from that
+ * tile). Built only from `reachSet` (the reachableTiles guard) and the same
+ * range/LOS the resolver uses; the renderer never recomputes it (§4).
+ */
+export function threatenedTiles(state: GameStateT, content: ContentBundleT, unitId: string): PosT[] {
+  const { battle } = tacticalBattle(state);
+  const map = mapOf(content, battle);
+  const u = unitById(battle, unitId);
+  if (!u) return [];
+  const stats = statsOf(state, content, u);
+  const enemyAbilities = stats.abilities
+    .map((id) => content.abilities.find((a) => a.id === id))
+    .filter((a): a is AbilityDefT => a !== undefined && a.targeting === "enemy");
+  if (enemyAbilities.length === 0) return [];
+
+  // Positions the unit could fire from: its current tile plus every tile a single
+  // move action reaches (reachSet == the reachableTiles guard).
+  const froms: PosT[] = [u.pos, ...[...reachSet(battle, map, u.id, stats.mobility).keys()].map(parseKey)];
+  const maxRange = Math.max(...enemyAbilities.map((a) => a.range));
+
+  const seen = new Set<string>();
+  const out: PosT[] = [];
+  for (const from of froms) {
+    for (let y = 0; y < map.height; y++) {
+      for (let x = 0; x < map.width; x++) {
+        const k = `${x},${y}`;
+        if (seen.has(k)) continue;
+        if (tileAt(map, x, y) === "#") continue;
+        const p = { x, y };
+        if (manhattan(from, p) > maxRange) continue;
+        if (!hasLos(map, from, p)) continue;
+        seen.add(k);
+        out.push(p);
+      }
     }
   }
   return out;
@@ -399,7 +486,7 @@ function resolveAttack(
   target: BattleUnitT,
   ab: AbilityDefT,
 ): void {
-  const chance = hitChanceInternal(state, content, map, attacker, target);
+  const chance = hitChanceInternal(state, content, map, attacker, target, ab.accuracyBonus);
   const hitRoll = rng.int(1, 100);
   const hit = hitRoll <= chance;
   battle.log.push(`roll: ${attacker.id}->${target.id} hit ${hitRoll}/${chance} ${hit ? "HIT" : "MISS"}`);
@@ -561,17 +648,17 @@ function bestHitFromTile(
   players: readonly BattleUnitT[],
 ): number {
   const stats = statsOf(state, content, unit);
-  let maxRange = 0;
+  let best = 0;
+  // Each enemy-targeting ability contributes its own range + accuracyBonus (§1),
+  // so a longer-range or more accurate ability is scored on its own terms.
   for (const abId of stats.abilities) {
     const ab = content.abilities.find((a) => a.id === abId);
-    if (ab && ab.targeting === "enemy") maxRange = Math.max(maxRange, ab.range);
-  }
-  if (maxRange === 0) return 0;
-  let best = 0;
-  for (const p of players) {
-    if (manhattan(from, p.pos) > maxRange) continue;
-    if (!hasLos(map, from, p.pos)) continue;
-    best = Math.max(best, hitChanceFromPos(state, content, map, unit, from, p));
+    if (!ab || ab.targeting !== "enemy") continue;
+    for (const p of players) {
+      if (manhattan(from, p.pos) > ab.range) continue;
+      if (!hasLos(map, from, p.pos)) continue;
+      best = Math.max(best, hitChanceFromPos(state, content, map, unit, from, p, ab.accuracyBonus));
+    }
   }
   return best;
 }
@@ -607,7 +694,7 @@ function chooseEnemyAction(
     for (const p of players) {
       if (manhattan(e.pos, p.pos) > ab.range) continue;
       if (!hasLos(map, e.pos, p.pos)) continue;
-      const hit = hitChanceInternal(state, content, map, e, p);
+      const hit = hitChanceInternal(state, content, map, e, p, ab.accuracyBonus);
       const lethal = p.hp <= stats.dmgMax + ab.power - 1 ? AI_LETHAL_BONUS : 0;
       const score = AI_ATTACK_BASE + AI_ATTACK_HIT_WEIGHT * hit + lethal;
       cands.push({ type: "attack", score, tie: tileIndex(map, p.pos), ability: ab.id, target: p.id });

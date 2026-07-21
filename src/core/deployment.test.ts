@@ -14,10 +14,28 @@ import { apply, type ReducerCtx } from "./reducer.js";
 import { mulberry32 } from "./rng.js";
 import { playBattle } from "../test/greedyBattle.js";
 import { loadTestContent } from "../test/content.js";
-import type { GameStateT } from "../data/schemas.js";
+import type { ContentBundleT, GameStateT } from "../data/schemas.js";
 
-const CONTENT = loadTestContent();
+/** Shipped content plus two plain-soldier grunts, so the operation can field the
+ * spec's canonical 4-squad (§7: 4 vs 6 without Seryn). The extra heroes are only
+ * used where a battle is actually fought; the narrative/mechanic tests still run
+ * a 2-squad. */
+const CONTENT: ContentBundleT = (() => {
+  const base = loadTestContent();
+  const grunts = ["h_grunt_a", "h_grunt_b"].map((id) => ({
+    id,
+    name: id,
+    archetypes: ["soldier" as const],
+    skills: { combat: 6, science: 1, engineering: 2, diplomacy: 2, resolve: 5 },
+    abilities: ["ab_shot"],
+  }));
+  return { ...base, heroes: [...base.heroes, ...grunts] };
+})();
 const ctx = (): ReducerCtx => ({ content: CONTENT, rng: mulberry32(7) });
+
+/** The spec-canonical operation squad (§7): four combatants against the six
+ * breakout drones without the Seryn ally — "eng, aber schaffbar" (Rebase v3). */
+const OP_SQUAD = ["h_mercer", "h_okafor", "h_grunt_a", "h_grunt_b"];
 
 /** Auto-play a narrative mission to completion: at each node take the first
  * eligible option. Deterministic (narrative consumes no RNG, D-5). */
@@ -39,13 +57,20 @@ function weiter(state: GameStateT, mission: string): GameStateT {
   return apply(state, { type: "launchMission", mission, squad: state.deployment!.squad }, ctx());
 }
 
-/** A campaign parked at the worldgate with only the Tal mission available. The
- * default seed is one where the greedy driver clears both operation battles
- * (intercept and the ally-less breakout the auto-played duel path produces). */
-function startOfOperation(seed = 1): GameStateT {
+/** A campaign parked at the worldgate with only the Tal mission available, with
+ * the two grunts rostered so a 4-squad can deploy. The default seed is one where
+ * the greedy driver clears both operation battles under the Balance-Rebase v3
+ * numbers (intercept and the ally-less 4-vs-6 breakout the auto-played duel path
+ * produces). */
+function startOfOperation(seed = 3): GameStateT {
   const s = newCampaign(seed, CONTENT);
   s.activeMission = null;
   s.missions.available = ["m_vy_arrival"];
+  for (const id of ["h_grunt_a", "h_grunt_b"]) {
+    if (!s.heroes.some((h) => h.hero === id)) {
+      s.heroes.push({ hero: id, xp: 0, level: 1, fatigue: 0, injuries: [], skillBonuses: {} });
+    }
+  }
   return s;
 }
 
@@ -104,7 +129,7 @@ describe("veyra-kaempfe §2 — deployment lifecycle", () => {
 
 describe("veyra-kaempfe §8.3 — full operation chain end-to-end", () => {
   it("Tal → intercept → penitence chain → breakout → homecoming, deployment ends, recovery resumes", () => {
-    const squad = ["h_mercer", "h_okafor"];
+    const squad = OP_SQUAD;
     const fatigue: Array<{ after: string; mercer: number }> = [];
     const mark = (s: GameStateT, after: string) => fatigue.push({ after, mercer: fatigueOf(s, "h_mercer") });
 
@@ -144,8 +169,8 @@ describe("veyra-kaempfe §8.3 — full operation chain end-to-end", () => {
 
     // 5. Breakout (tactical) — win it. The auto-played first_blade takes the duel
     // (defeated) path with this squad, so no Seryn ally spawns; the greedy driver
-    // clears the six drones and gets every unit into the gate court (§8.2 harder
-    // case). f_vy_first_defeated is set here.
+    // gets the four-strong squad through the six drones and into the gate court
+    // (§7/§8.2 harder "4 vs 6 without Seryn" case). f_vy_first_defeated is set here.
     expect(s.flags.f_vy_first_defeated).toBe(true);
     s = weiter(s, "m_vy_breakout");
     expect(s.activeMission?.kind).toBe("tactical");
@@ -219,7 +244,7 @@ describe("veyra-kaempfe §2a — direct mission transitions", () => {
     // Fast-forward to a won breakout by unlocking + launching it within a deployment.
     let s = apply(
       startOfOperation(),
-      { type: "launchMission", mission: "m_vy_arrival", squad: ["h_mercer", "h_okafor"] },
+      { type: "launchMission", mission: "m_vy_arrival", squad: OP_SQUAD },
       ctx(),
     );
     s = autoNarrative(s);
@@ -250,6 +275,6 @@ describe("veyra-kaempfe §2a — direct mission transitions", () => {
       viaWorldgate.activeMission && "squad" in viaWorldgate.activeMission
         ? viaWorldgate.activeMission.squad
         : [],
-    ).toEqual(["h_mercer", "h_okafor"]);
+    ).toEqual(OP_SQUAD);
   });
 });

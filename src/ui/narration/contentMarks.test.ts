@@ -50,6 +50,20 @@ describe("canonical pause marks in content (D-13 regression guard)", () => {
     expect(parseNarration(text).fullText).not.toContain("&");
   });
 
+  it("keeps the SHORT pause in the Signaltürme lead-in beats (tuning v3 §5)", () => {
+    // The beat inserted immediately before m_vy_intercept unlocks, on both the
+    // transport and the pilgrim crossing paths — Okafor's " & Es sei denn …".
+    for (const nodeId of ["n_vl_spires_transport", "n_vl_spires_pilgrims"]) {
+      const text = nodeText("ev_vy_ledger", nodeId);
+      expect(text).toMatch(/schließen\. & Es sei denn/);
+      const { fullText, tokens } = parseNarration(text);
+      expect(fullText).not.toContain("&");
+      const esSei = tokens.findIndex((t) => t.text === "Es");
+      expect(esSei).toBeGreaterThan(0);
+      expect(tokens[esSei - 1]?.pauseAfter).toBe("short");
+    }
+  });
+
   it("keeps a SHORT pause in the homecoming node (n_vy_home, veyra-kaempfe §6)", () => {
     const text = nodeText("ev_vy_homecoming", "n_vy_home");
     expect(text).toMatch(/hat\. & Was ihr auf Veyra/);
@@ -84,6 +98,7 @@ describe("canonical pause marks in content (D-13 regression guard)", () => {
     }
     // Anti-strip tripwire: a future sweep that removes marks drops this below the
     // floor and fails loudly. Raise the floor when more marks are authored.
-    expect(total).toBeGreaterThanOrEqual(19);
+    // +2 for the tuning v3 §5 Signaltürme beats (n_vl_spires_transport/pilgrims).
+    expect(total).toBeGreaterThanOrEqual(21);
   });
 });

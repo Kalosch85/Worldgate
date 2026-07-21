@@ -1,5 +1,9 @@
 # Spec: Veyra-Kämpfe & Deployment (Fable) — v2.0
 
+> **Leitplanke (T)-Werte (Tuning v3 §6):** (T)-Werte werden nur mit
+> gleichzeitiger Aktualisierung dieser Spec geändert; Spec und Content dürfen
+> nicht divergieren.
+
 ## 1. Sanktionierte Schema-Änderungen (exakt diese, keine weiteren)
 
 a) `TacticalMapDef` erhält:
@@ -65,13 +69,22 @@ wurde. Außerhalb eines Deployments ändert sich nichts.
 
 ## 3. Neuer Gegnertyp
 
-`ut_tender_guard` (Wächter-Drohne): maxHp 4, aim 65, mobility 5,
+`ut_tender_guard` (Wächter-Drohne): maxHp 4, aim 60, mobility 5,
 damage { min: 1, max: 2 }, abilities ["ab_stab"]. (Alle Werte T.)
 `ab_stab`: apCost 1, range 1, targeting enemy, power 2, cooldown 0. (T)
 Anzeigename „Wächter-Drohne"; nutzt das vorhandene Insekten-Billboard.
 Charakter: reine Nahkampf-Rusher — die vorhandene Utility-KI erzeugt das
 gewünschte Verhalten von selbst (Annäherung dominiert, kein Deckungsspiel
 nötig; NICHT die KI-Konstanten global ändern).
+
+**Balance-Rebase v3** (ersetzt den aim-48-Workaround aus PR #41; autorisierte
+Fable-Entscheidung): `ut_tender_guard` aim **48 → 60** — die Wächter-Drohne wird
+wieder bedrohlich (Nahkampf ohne Deckung: 60 − 2×1 = ~58 %). Gleichzeitig
+Helden-Basis-Genauigkeit `HERO_AIM_BASE` **55 → 60** (tactics-engine §2; Formel
+bleibt `60 + 5 × effCombat`) — Helden fühlen sich kompetenter an. Beide Werte
+sind (T) und leben in `src/core/tacticsConstants.ts` bzw.
+`src/data/content/unit-types.json`; diese Spec und der Content sind hiermit
+synchron (siehe Leitplanke oben).
 
 ## 4. Seryn als bedingter Mitstreiter
 

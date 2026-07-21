@@ -575,8 +575,8 @@
               }
             ],
             "next": {
-              "kind": "end",
-              "outcome": "out_vl_transport"
+              "kind": "node",
+              "node": "n_vl_spires_transport"
             }
           },
           {
@@ -590,8 +590,8 @@
               }
             ],
             "next": {
-              "kind": "end",
-              "outcome": "out_vl_pilgrims"
+              "kind": "node",
+              "node": "n_vl_spires_pilgrims"
             }
           }
         ]
@@ -631,8 +631,8 @@
               }
             ],
             "next": {
-              "kind": "end",
-              "outcome": "out_vl_transport"
+              "kind": "node",
+              "node": "n_vl_spires_transport"
             }
           },
           {
@@ -646,8 +646,8 @@
               }
             ],
             "next": {
-              "kind": "end",
-              "outcome": "out_vl_pilgrims"
+              "kind": "node",
+              "node": "n_vl_spires_pilgrims"
             }
           }
         ]
@@ -686,6 +686,34 @@
                 "delta": -5
               }
             ],
+            "next": {
+              "kind": "node",
+              "node": "n_vl_spires_pilgrims"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_vl_spires_transport",
+        "text": "Auf dem Grat über der Straße: Türme, in Reihe bis zur Stadt, jeder mit demselben stehenden Licht gekrönt. Okafor braucht keine zwei Minuten: ‚Das ist der Tributruf — eine Meldekette bis vor den Tempel. Wenn wir die Bußstätte anfassen, weiß es der Erleuchtete, bevor wir die Tür hinter uns schließen. & Es sei denn, die Türme schweigen zuerst.'",
+        "options": [
+          {
+            "id": "o_vl_spires_transport",
+            "text": "Die Türme zuerst.",
+            "next": {
+              "kind": "end",
+              "outcome": "out_vl_transport"
+            }
+          }
+        ]
+      },
+      {
+        "id": "n_vl_spires_pilgrims",
+        "text": "Auf dem Grat über der Straße: Türme, in Reihe bis zur Stadt, jeder mit demselben stehenden Licht gekrönt. Okafor braucht keine zwei Minuten: ‚Das ist der Tributruf — eine Meldekette bis vor den Tempel. Wenn wir die Bußstätte anfassen, weiß es der Erleuchtete, bevor wir die Tür hinter uns schließen. & Es sei denn, die Türme schweigen zuerst.'",
+        "options": [
+          {
+            "id": "o_vl_spires_pilgrims",
+            "text": "Die Türme zuerst.",
             "next": {
               "kind": "end",
               "outcome": "out_vl_pilgrims"

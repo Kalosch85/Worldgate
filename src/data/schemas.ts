@@ -153,6 +153,10 @@ export const AbilityDef = z.object({
   // interpretation of `power` per targeting kind is defined in docs/specs/tactics.md
   power: z.number().int().min(0),
   cooldown: z.number().int().min(0).default(0),
+  // Flat aim bonus this ability adds to the attacker's hit% BEFORE the 5–95
+  // clamp (veyra-kaempfe tuning v3 §1; the shared hit path in core/tactics.ts
+  // reads it). Defaults to 0 so every existing ability is unchanged.
+  accuracyBonus: z.number().int().default(0),
 });
 
 export const UnitTypeDef = z.object({

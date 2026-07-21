@@ -221,6 +221,10 @@ export const strings = {
     interact: "Interagieren",
     cooldown: (n: number) => `AZ ${n}`,
     ap: (n: number) => `${n} AP`,
+    // Ability-bar disabled reasons (tuning v3 §2): a 2-AP ability can't share a
+    // turn with a move, and a cooling ability shows its remaining turns.
+    needsAp: (n: number) => `Benötigt ${n} AP — kein Bewegen im selben Zug`,
+    onCooldown: (n: number) => `Abklingzeit: noch ${n} ${n === 1 ? "Runde" : "Runden"}`,
     hideLog: "Protokoll verbergen",
     log: "Protokoll",
     endTurn: "Zug beenden",

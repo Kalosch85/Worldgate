@@ -38,6 +38,11 @@ const COLORS = {
   lowCover: 0x5a4a23,
   highCover: 0x7a5a1f,
   reachable: 0x4d7cff,
+  // §4a ability-range coverage — a warm amber outline, distinct from the blue
+  // movement fill so the two overlays never read as the same thing.
+  abilityRange: 0xf0b429,
+  // §4b enemy threat zone — a danger-red wash.
+  threat: 0xff5c7a,
   targetRing: 0xff6b6b,
   player: 0x4d7cff,
   enemy: 0xff6b6b,
@@ -388,6 +393,38 @@ export class BattleCanvas {
           width: 2,
           color: COLORS.reachable,
           alpha: 0.85,
+          alignment: 0,
+        });
+      }
+      this.board.addChild(g);
+    }
+
+    // 2b. Enemy threat zone (§4b) — a translucent danger-red wash across the
+    // tiles the inspected enemy could reach and attack. Drawn under units so it
+    // never covers a tap target (the tile stays ≥ 44px tappable).
+    if (view.threatZone.length > 0) {
+      const g = new Graphics();
+      for (const p of view.threatZone) {
+        g.rect(p.x * t + 1, p.y * t + 1, t - 2, t - 2).fill({ color: COLORS.threat, alpha: 0.2 });
+        g.rect(p.x * t + 1, p.y * t + 1, t - 2, t - 2).stroke({
+          width: 1,
+          color: COLORS.threat,
+          alpha: 0.55,
+          alignment: 0,
+        });
+      }
+      this.board.addChild(g);
+    }
+
+    // 2c. Ability-range coverage (§4a) — an amber outline (no heavy fill) so it
+    // reads as "in range" and stays visually distinct from the blue move fill.
+    if (view.abilityRange.length > 0) {
+      const g = new Graphics();
+      for (const p of view.abilityRange) {
+        g.rect(p.x * t + 5, p.y * t + 5, t - 10, t - 10).stroke({
+          width: 2,
+          color: COLORS.abilityRange,
+          alpha: 0.9,
           alignment: 0,
         });
       }

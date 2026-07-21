@@ -10,7 +10,7 @@
       "diplomacy": 2,
       "resolve": 5
     },
-    "abilities": ["ab_shot"],
+    "abilities": ["ab_shot", "ab_precision_shot"],
     "bio": "Berufsoffizier; meldete sich nach dem ersten Durchbruch freiwillig für das Programm. Ein Jahrzehnt an Einsätzen, manche jenseits selbst der Freigabestufe des Direktors. Nach Vorschrift: schnell, effizient, keine losen Enden."
   },
   {

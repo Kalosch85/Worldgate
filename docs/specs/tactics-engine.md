@@ -14,9 +14,10 @@ No other schema edits are authorized.
 
 ## 2. Derived hero battle stats
 
-maxHp = 5 (T, flat) · aim = 55 + 5 × effectiveCombat (T) · mobility = 4 (T) ·
-damage 1–2 (T). Enemies use UnitTypeDef values directly. Effective skills per
-economy spec §7 (so fatigue and injuries reduce battlefield performance).
+maxHp = 5 (T, flat) · aim = 60 + 5 × effectiveCombat (T; HERO_AIM_BASE 55 → 60
+per Balance-Rebase v3, veyra-kaempfe §3) · mobility = 4 (T) · damage 1–2 (T).
+Enemies use UnitTypeDef values directly. Effective skills per economy spec §7
+(so fatigue and injuries reduce battlefield performance).
 
 ## 3. Battle initialization (replaces tactical_not_implemented in launchMission)
 

@@ -4,13 +4,19 @@
  * Task 6.3 (balance pass) owns these numbers; the engine reads them from here
  * and nowhere else, so a balance session touches exactly one file. Nothing in
  * here is content — content lives in src/data/content/*.json.
+ *
+ * Leitplanke (veyra-kaempfe tuning v3 §6): (T)-Werte werden nur mit
+ * gleichzeitiger Aktualisierung von docs/specs/veyra-kaempfe.md geändert; Spec
+ * und Content dürfen nicht divergieren.
  */
 
 // ------------------------------------------------------------ §2 hero stats
 /** Flat max HP for every player hero (T). */
 export const HERO_MAX_HP = 5;
-/** aim = HERO_AIM_BASE + HERO_AIM_PER_COMBAT × effectiveCombat (T). */
-export const HERO_AIM_BASE = 55;
+/** aim = HERO_AIM_BASE + HERO_AIM_PER_COMBAT × effectiveCombat (T).
+ * Balance-Rebase v3 (veyra-kaempfe §3a): 55 → 60 — Helden fühlen sich
+ * kompetenter an, die Formel bleibt 60 + 5 × effCombat. */
+export const HERO_AIM_BASE = 60;
 export const HERO_AIM_PER_COMBAT = 5;
 /** Tiles a hero may move per move action (T). */
 export const HERO_MOBILITY = 4;

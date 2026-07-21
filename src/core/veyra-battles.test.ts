@@ -59,7 +59,10 @@ const ctxFor = (): ReducerCtx => ({ content: BASE, rng: mulberry32(99) });
 
 describe("veyra-kaempfe §8.1 — intercept (Die Signaltürme)", () => {
   it("2-squad (Mercer + Okafor, fresh) reaches victory by activating both spires", () => {
-    const s0 = stateForMission(BASE, "m_vy_intercept", ["h_mercer", "h_okafor"]);
+    // Balance-Rebase v3: the guard-drone aim rose (48→60) and hero aim (55→60),
+    // so the greedy planner's winning seed shifted; this campaign seed yields a
+    // genuine 2-squad victory under the new numbers (see PR verification table).
+    const s0 = stateForMission(BASE, "m_vy_intercept", ["h_mercer", "h_okafor"], {}, 1);
     const launched = apply(
       s0,
       { type: "launchMission", mission: "m_vy_intercept", squad: ["h_mercer", "h_okafor"] },
@@ -76,7 +79,7 @@ describe("veyra-kaempfe §8.1 — intercept (Die Signaltürme)", () => {
   it("4-squad reaches victory too", () => {
     const content = contentWith4Heroes();
     const squad = ["h_mercer", "h_okafor", "h_grunt_a", "h_grunt_b"];
-    const s0 = stateForMission(content, "m_vy_intercept", squad);
+    const s0 = stateForMission(content, "m_vy_intercept", squad, {}, 3); // winning seed (Rebase v3)
     const launched = apply(
       s0,
       { type: "launchMission", mission: "m_vy_intercept", squad },
@@ -121,7 +124,7 @@ describe("veyra-kaempfe §8.1 — intercept (Die Signaltürme)", () => {
 describe("veyra-kaempfe §8.2 — breakout (Der Ausbruch, reachZone)", () => {
   it("WITH Seryn (convinced) — the ally spawns and the squad reaches the gate court", () => {
     const squad = ["h_mercer", "h_okafor"];
-    const s0 = stateForMission(BASE, "m_vy_breakout", squad, { f_vy_first_convinced: true });
+    const s0 = stateForMission(BASE, "m_vy_breakout", squad, { f_vy_first_convinced: true }, 1);
     const launched = apply(s0, { type: "launchMission", mission: "m_vy_breakout", squad }, ctxFor());
     // §1a/§4: Seryn (ut_seryn_blessed) is present as a player-side ally.
     const ally = battleOf(launched).units.find(

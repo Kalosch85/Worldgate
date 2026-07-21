@@ -3,7 +3,7 @@ import { newCampaign } from "../core/campaign.js";
 import { launchMission } from "../core/missions.js";
 import { apply, type ReducerCtx } from "../core/reducer.js";
 import { mulberry32 } from "../core/rng.js";
-import { hitChance, reachableTiles } from "../core/tactics.js";
+import { abilityRangeTiles, hitChance, reachableTiles, threatenedTiles } from "../core/tactics.js";
 import { loadTestContent } from "../test/content.js";
 import type { GameStateT } from "../data/schemas.js";
 import { actablePlayers, buildBattleView, interactButtonTap, interpretTap } from "./battleModel.js";
@@ -98,6 +98,81 @@ describe("buildBattleView (§11)", () => {
     expect(view.canInteract).toBe(true);
     // Console B is not next yet.
     expect(view.consoles.find((c) => c.id === "con_b")!.isNext).toBe(false);
+  });
+});
+
+// tuning v3 §4: the range/threat overlays are exactly the core guards' output —
+// the view never recomputes range or LOS.
+describe("range & threat overlays (§4)", () => {
+  const sortKeys = (ps: { x: number; y: number }[]): string[] => ps.map((p) => `${p.x},${p.y}`).sort();
+
+  it("the ability-range overlay equals abilityRangeTiles() (§4a)", () => {
+    const s = apply(launched(), { type: "battleMove", unit: "u_h_mercer", to: { x: 3, y: 1 } }, ctx);
+    const view = buildBattleView(s, CONTENT, {
+      selectedUnit: "u_h_mercer",
+      mode: { kind: "ability", ability: "ab_shot" },
+    })!;
+    expect(sortKeys(view.abilityRange)).toEqual(
+      sortKeys(abilityRangeTiles(s, CONTENT, "u_h_mercer", "ab_shot")),
+    );
+    expect(view.abilityRange.length).toBeGreaterThan(0);
+    // No ability selected → no coverage overlay.
+    const moveView = buildBattleView(s, CONTENT, { selectedUnit: "u_h_mercer", mode: { kind: "move" } })!;
+    expect(moveView.abilityRange).toHaveLength(0);
+  });
+
+  it("the threat-zone overlay equals threatenedTiles() for the inspected enemy (§4b)", () => {
+    const s = launched();
+    const view = buildBattleView(s, CONTENT, {
+      selectedUnit: "u_h_mercer",
+      mode: { kind: "move" },
+      inspectedEnemy: "u_eg_guards_0",
+    })!;
+    expect(view.inspectedEnemy).toBe("u_eg_guards_0");
+    expect(sortKeys(view.threatZone)).toEqual(sortKeys(threatenedTiles(s, CONTENT, "u_eg_guards_0")));
+    expect(view.threatZone.length).toBeGreaterThan(0);
+    // No inspection → no threat overlay.
+    const plain = buildBattleView(s, CONTENT, { selectedUnit: "u_h_mercer", mode: { kind: "move" } })!;
+    expect(plain.threatZone).toHaveLength(0);
+  });
+
+  it("tapping an enemy toggles its inspection; re-tap or empty tap clears it (§4b)", () => {
+    const s = launched(); // raiders at (6,4) and (7,5)
+    const fresh = buildBattleView(s, CONTENT, { selectedUnit: "u_h_mercer", mode: { kind: "move" } })!;
+    // First tap on the enemy tile → inspect it.
+    expect(interpretTap(fresh, 6, 4)).toEqual({ kind: "inspect", enemy: "u_eg_guards_0" });
+    // With it inspected, tapping the same enemy again clears it.
+    const inspecting = buildBattleView(s, CONTENT, {
+      selectedUnit: "u_h_mercer",
+      mode: { kind: "move" },
+      inspectedEnemy: "u_eg_guards_0",
+    })!;
+    expect(interpretTap(inspecting, 6, 4)).toEqual({ kind: "inspect", enemy: null });
+    // Tapping empty floor while inspecting also dismisses it.
+    expect(interpretTap(inspecting, 7, 2)).toEqual({ kind: "inspect", enemy: null });
+  });
+});
+
+// tuning v3 §2: a 2-AP ability stays visible on the bar, disabled, with a reason.
+describe("ability bar (§2)", () => {
+  it("keeps Präzisionsschuss visible-but-disabled with a reason below 2 AP", () => {
+    const s = launched();
+    battle(s).units.find((u) => u.id === "u_h_mercer")!.ap = 1; // one AP left — can't afford apCost 2
+    const view = buildBattleView(s, CONTENT, { selectedUnit: "u_h_mercer", mode: { kind: "move" } })!;
+    const precision = view.abilities.find((a) => a.id === "ab_precision_shot")!;
+    expect(precision).toBeDefined(); // still shown
+    expect(precision.ready).toBe(false); // but disabled
+    expect(precision.disabledReason).toBe("Benötigt 2 AP — kein Bewegen im selben Zug");
+    // The plain shot (1 AP) is still ready.
+    expect(view.abilities.find((a) => a.id === "ab_shot")!.ready).toBe(true);
+  });
+
+  it("Präzisionsschuss is ready with 2 AP off cooldown (no reason)", () => {
+    const s = launched();
+    const view = buildBattleView(s, CONTENT, { selectedUnit: "u_h_mercer", mode: { kind: "move" } })!;
+    const precision = view.abilities.find((a) => a.id === "ab_precision_shot")!;
+    expect(precision.ready).toBe(true);
+    expect(precision.disabledReason).toBeNull();
   });
 });
 

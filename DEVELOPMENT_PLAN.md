@@ -194,9 +194,9 @@ content?)` (the intro reuses the existing incident shape);
   Präsentation im UI-Layer — der Sim-Core bleibt unberührt, die Animation läuft
   über `setTimeout` im UI, niemals im Reducer (ARCHITECTURE §1). Umsetzung:
   - **Konstanten (T, tunable)** in `src/ui/narration/parseNarration.ts`:
-    `BASE_WORD_MS = 340` (Grundtempo/Wort; im Playtest vom D-13-Startwert 180
-    hochgesetzt, der ~2× zu schnell wirkte), `SHORT_PAUSE_MS = 600`,
-    `LONG_PAUSE_MS = 1400`.
+    `BASE_WORD_MS = 425` (Grundtempo/Wort; im Playtest vom D-13-Startwert 180
+    hochgesetzt, der ~2× zu schnell wirkte, dann nochmals ~25% langsamer:
+    340 → 425), `SHORT_PAUSE_MS = 600`, `LONG_PAUSE_MS = 1400`.
   - **Pausen-Marken** sind freistehende, beidseitig von Leerraum umgebene
     Ampersand-Läufe: „ & " = kurze Pause, „ && " = lange Pause. Genau die
     beidseitige-Leerraum-Regel trennt eine Marke von normalem Text: „A&B",

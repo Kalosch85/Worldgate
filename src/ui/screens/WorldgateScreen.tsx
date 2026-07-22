@@ -164,6 +164,26 @@ export function WorldgateScreen({
                   {strings.worldgate.squadRange(mission.squad.min, mission.squad.max)}
                 </div>
 
+                {/* v3-Nachtrag (§7): a mission tagged with an operation opens a
+                    no-return deployment — warn about the recommended team size so
+                    the player doesn't lock in an under-strength squad. */}
+                {mission.operation !== undefined && (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.4rem",
+                      marginTop: "0.35rem",
+                      fontSize: "0.78rem",
+                      fontWeight: 600,
+                      color: "#f0b45e",
+                    }}
+                  >
+                    <span aria-hidden="true">⚠️</span>
+                    <span>{strings.worldgate.operationWarning}</span>
+                  </div>
+                )}
+
                 <button
                   type="button"
                   style={{

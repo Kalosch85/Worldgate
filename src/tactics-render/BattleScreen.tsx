@@ -86,6 +86,8 @@ export function BattleScreen({
 
   const [selectedUnit, setSelectedUnit] = useState<string | null>(null);
   const [mode, setMode] = useState<Mode>({ kind: "move" });
+  // Enemy whose threat zone is shown on the board (§4b); null = none.
+  const [inspectedEnemy, setInspectedEnemy] = useState<string | null>(null);
   const [replay, setReplay] = useState<ReplayState | null>(null);
   const [summary, setSummary] = useState<Summary | null>(null);
   const [showLog, setShowLog] = useState(false);
@@ -123,8 +125,15 @@ export function BattleScreen({
   // The view the canvas draws. During a replay we drop the selection so no
   // move/target overlay shows over the enemy's turn.
   const view = useMemo(
-    () => buildBattleView(state, content, { selectedUnit: replaying ? null : selectedUnit, mode }),
-    [state, content, selectedUnit, mode, replaying],
+    () =>
+      buildBattleView(state, content, {
+        selectedUnit: replaying ? null : selectedUnit,
+        mode,
+        // The threat-zone overlay is a player-phase affordance; drop it while the
+        // enemy phase replays so it doesn't linger over the enemy's own turn.
+        inspectedEnemy: replaying ? null : inspectedEnemy,
+      }),
+    [state, content, selectedUnit, mode, replaying, inspectedEnemy],
   );
 
   // Activation flow (spec §11): keep the current unit selected while it still
@@ -167,6 +176,8 @@ export function BattleScreen({
       dispatchBattle(result.action);
     } else if (result.kind === "message") {
       showToast(result.text);
+    } else if (result.kind === "inspect") {
+      setInspectedEnemy(result.enemy);
     }
   };
 
@@ -462,7 +473,9 @@ export function BattleScreen({
             key={ab.id}
             label={ab.name}
             icon={ABILITY_ICONS[ab.id]}
-            hint={ab.cooldown > 0 ? strings.battle.cooldown(ab.cooldown) : strings.battle.ap(ab.apCost)}
+            // Ready → AP cost; otherwise the single blocking reason (§2), so a
+            // 2-AP ability stays visible-but-disabled with "Benötigt 2 AP …".
+            hint={ab.disabledReason ?? strings.battle.ap(ab.apCost)}
             active={ab.active}
             disabled={replaying || !ab.ready}
             onClick={() => setMode({ kind: "ability", ability: ab.id })}

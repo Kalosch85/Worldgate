@@ -13,7 +13,14 @@
  */
 import { RuleError } from "../core/errors.js";
 import type { BattleAction } from "../core/tactics.js";
-import { hitChance, nextInteractables, reachableTiles, visibleTargets } from "../core/tactics.js";
+import {
+  abilityRangeTiles,
+  hitChance,
+  nextInteractables,
+  reachableTiles,
+  threatenedTiles,
+  visibleTargets,
+} from "../core/tactics.js";
 import { HERO_MAX_HP } from "../core/tacticsConstants.js";
 import type { ContentBundleT, GameStateT, PosT } from "../data/schemas.js";
 import { strings } from "../ui/strings.js";
@@ -72,6 +79,9 @@ export interface AbilityBarItem {
   ready: boolean; // has AP + off cooldown
   targeting: "enemy" | "ally" | "self" | "tile";
   active: boolean; // currently the selected mode
+  /** Why the ability is shown but unusable right now, or null when ready. The
+   * bar keeps it visible-but-disabled with this reason (tuning v3 §2). */
+  disabledReason: string | null;
 }
 
 export interface BattleView {
@@ -86,6 +96,16 @@ export interface BattleView {
   reachable: PosT[];
   /** Highlighted attack/ability targets (ability mode). */
   targets: TargetView[];
+  /** Tiles inside the selected ability's range + LOS (ability mode) — the §4a
+   * coverage overlay, drawn distinctly from movement. Exactly the core guard's
+   * output; never recomputed here. */
+  abilityRange: PosT[];
+  /** Threat zone of the inspected enemy (§4b): every tile it could reach and
+   * attack from next turn. Empty unless an enemy is inspected. Exactly the core
+   * guard's output. */
+  threatZone: PosT[];
+  /** The enemy whose threat zone is shown, or null. */
+  inspectedEnemy: string | null;
   round: number;
   phase: "player" | "enemy";
   banner: string;
@@ -102,11 +122,15 @@ export type TapResult =
   | { kind: "select"; unit: string }
   | { kind: "action"; action: BattleAction }
   | { kind: "message"; text: string }
+  // §4b: toggle the threat-zone overlay for an enemy (or clear it on empty tap).
+  | { kind: "inspect"; enemy: string | null }
   | { kind: "none" };
 
 export interface BattleUi {
   selectedUnit: string | null;
   mode: Mode;
+  /** Enemy whose threat zone to show (§4b). null / absent = none. */
+  inspectedEnemy?: string | null;
 }
 
 function activeTactical(state: GameStateT): TacticalActiveT | null {
@@ -191,7 +215,10 @@ export function buildBattleView(state: GameStateT, content: ContentBundleT, ui: 
 
   // Target overlay: only in ability mode, using the shared visibleTargets +
   // hitChance guards so the labels equal what the reducer will roll against.
+  // The ability id is passed to hitChance so its accuracyBonus (§1) is in the
+  // previewed number too — preview stays == resolution.
   const targets: TargetView[] = [];
+  const abilityRange: PosT[] = [];
   if (selectablePlayer && ui.mode.kind === "ability" && selectablePlayer.ap > 0) {
     const abilityId = ui.mode.ability;
     const ids = safe(() => visibleTargets(state, content, selectablePlayer.id, abilityId), []);
@@ -201,11 +228,23 @@ export function buildBattleView(state: GameStateT, content: ContentBundleT, ui: 
       if (!t) continue;
       const hitPct =
         ability?.targeting === "enemy"
-          ? safe(() => hitChance(state, content, selectablePlayer.id, id), 0)
+          ? safe(() => hitChance(state, content, selectablePlayer.id, id, abilityId), 0)
           : 100; // ally abilities always land (spec §7: no roll)
       targets.push({ unit: id, pos: { x: t.pos.x, y: t.pos.y }, hitPct });
     }
+    // §4a coverage overlay: the reachable-by-this-ability tiles (range + LOS),
+    // straight from the core guard — no second range implementation here.
+    abilityRange.push(...safe(() => abilityRangeTiles(state, content, selectablePlayer.id, abilityId), []));
   }
+
+  // §4b threat-zone overlay: an inspected enemy's reach-and-attack tiles, from
+  // the core guard. Only for a living enemy; a stale/dead id yields nothing.
+  const inspected = ui.inspectedEnemy ?? null;
+  const inspectedUnit = inspected ? battle.units.find((u) => u.id === inspected) : undefined;
+  const threatZone: PosT[] =
+    inspectedUnit && inspectedUnit.side === "enemy" && inspectedUnit.hp > 0
+      ? safe(() => threatenedTiles(state, content, inspected!), [])
+      : [];
 
   // Player-facing console names by sequence position ("Console A", "Console B",
   // …) and the id each sequence expects next — both drive §11 tap feedback.
@@ -263,14 +302,25 @@ export function buildBattleView(state: GameStateT, content: ContentBundleT, ui: 
       const def = content.abilities.find((a) => a.id === abId);
       if (!def) continue;
       const cd = selectablePlayer.cooldowns[abId] ?? 0;
+      const hasAp = selectablePlayer.ap >= def.apCost;
+      const ready = hasAp && cd === 0;
+      // The single reason the ability is shown-but-disabled (tuning v3 §2):
+      // cooldown takes precedence, then insufficient AP (the "needs N AP — no
+      // moving in the same turn" case for the 2-AP Präzisionsschuss).
+      const disabledReason = ready
+        ? null
+        : cd > 0
+          ? strings.battle.onCooldown(cd)
+          : strings.battle.needsAp(def.apCost);
       abilities.push({
         id: abId,
         name: def.name,
         apCost: def.apCost,
         cooldown: cd,
-        ready: selectablePlayer.ap >= def.apCost && cd === 0,
+        ready,
         targeting: def.targeting,
         active: ui.mode.kind === "ability" && ui.mode.ability === abId,
+        disabledReason,
       });
     }
   }
@@ -288,6 +338,9 @@ export function buildBattleView(state: GameStateT, content: ContentBundleT, ui: 
     mode: ui.mode,
     reachable,
     targets,
+    abilityRange,
+    threatZone,
+    inspectedEnemy: inspected,
     round: battle.round,
     phase: battle.activeSide,
     banner: strings.battle.round(battle.round),
@@ -355,6 +408,14 @@ export function interpretTap(view: BattleView, x: number, y: number): TapResult 
     }
   }
 
+  // A tap on a living enemy toggles its threat-zone inspection (§4b): a fresh
+  // enemy shows it, re-tapping the same one clears it. (An enemy that was a
+  // valid ability target is already handled above.)
+  const enemy = view.units.find((u) => u.side === "enemy" && u.alive && u.pos.x === x && u.pos.y === y);
+  if (enemy) {
+    return { kind: "inspect", enemy: enemy.id === view.inspectedEnemy ? null : enemy.id };
+  }
+
   // A tap on a console: activate if eligible, otherwise ALWAYS say why (§11 —
   // never a silent no-op). An eligible interact wins even over reselecting the
   // unit standing on the console tile.
@@ -379,6 +440,8 @@ export function interpretTap(view: BattleView, x: number, y: number): TapResult 
   }
 
   if (player) return { kind: "select", unit: player.id };
+  // A tap into empty space dismisses any threat-zone overlay (§4b).
+  if (view.inspectedEnemy) return { kind: "inspect", enemy: null };
   return { kind: "none" };
 }
 

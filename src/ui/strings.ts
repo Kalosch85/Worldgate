@@ -194,6 +194,10 @@ export const strings = {
     // locked and only that operation's missions are offered.
     deploymentActive: "Team im Einsatz — Rückkehr erst nach Abschluss der Operation",
     continueOperation: "Operation fortsetzen",
+    // v3-Nachtrag (§7): warn before committing to a no-return operation so a
+    // player doesn't lock in an under-strength squad (deployment lock + retry
+    // fatigue spiral). Shown on any mission carrying an `operation` field.
+    operationWarning: "Operation ohne Rückkehr — empfohlene Teamstärke: 4",
   },
 
   event: {
@@ -221,6 +225,10 @@ export const strings = {
     interact: "Interagieren",
     cooldown: (n: number) => `AZ ${n}`,
     ap: (n: number) => `${n} AP`,
+    // Ability-bar disabled reasons (tuning v3 §2): a 2-AP ability can't share a
+    // turn with a move, and a cooling ability shows its remaining turns.
+    needsAp: (n: number) => `Benötigt ${n} AP — kein Bewegen im selben Zug`,
+    onCooldown: (n: number) => `Abklingzeit: noch ${n} ${n === 1 ? "Runde" : "Runden"}`,
     hideLog: "Protokoll verbergen",
     log: "Protokoll",
     endTurn: "Zug beenden",

@@ -142,7 +142,7 @@ describe("eligibleOptions (§5)", () => {
 
 describe("chooseEventOption — golden paths (§5, §6)", () => {
   it("hide route: the address freely given, with the exact end state", () => {
-    const state = launched("m_vy_arrival", ["h_mercer", "h_okafor"]);
+    const state = launched("m_vy_arrival", ["h_mercer", "h_okafor", "h_brandt"]);
     let s = chooseEventOption(state, ctx(), "o_va_road");
     s = chooseEventOption(s, ctx(), "o_va_trust");
     s = chooseEventOption(s, ctx(), "o_va_stay_down");
@@ -168,7 +168,7 @@ describe("chooseEventOption — golden paths (§5, §6)", () => {
   });
 
   it("violent route: trust_andara −3, vy_villager_killed, with the exact end state", () => {
-    const state = launched("m_vy_arrival", ["h_mercer", "h_okafor"]);
+    const state = launched("m_vy_arrival", ["h_mercer", "h_okafor", "h_brandt"]);
     let s = chooseEventOption(state, ctx(), "o_va_road");
     s = chooseEventOption(s, ctx(), "o_va_refuse");
     expect(s.variables.trust_andara).toBe(-3);
@@ -233,7 +233,7 @@ describe("chooseEventOption — golden paths (§5, §6)", () => {
   });
 
   it("does not mutate the input state", () => {
-    const state = launched("m_vy_arrival", ["h_mercer", "h_okafor"]);
+    const state = launched("m_vy_arrival", ["h_mercer", "h_okafor", "h_brandt"]);
     const before = JSON.stringify(state);
     chooseEventOption(state, ctx(), "o_va_road");
     expect(JSON.stringify(state)).toBe(before);
@@ -246,7 +246,7 @@ describe("chooseEventOption — invalid inputs (§5.1)", () => {
   });
 
   it("throws on an option not on the current node", () => {
-    const state = launched("m_vy_arrival", ["h_mercer", "h_okafor"]);
+    const state = launched("m_vy_arrival", ["h_mercer", "h_okafor", "h_brandt"]);
     try {
       chooseEventOption(state, ctx(), "o_va_home"); // belongs to n_va_told, not n_va_gate
       throw new Error("expected throw");
@@ -275,7 +275,11 @@ describe("fireDueIncident / endDay integration (§7)", () => {
   /** A campaign with two queued incidents due, plus an exhausted hero. */
   function queuedState(): GameStateT {
     const s = newCampaign(1);
-    s.heroes.find((h) => h.hero === "h_okafor")!.fatigue = 90; // exhausted, excluded
+    // Exhaust everyone but Mercer so the incident squad is exactly [h_mercer]
+    // (Roster-Erweiterung: four starters — the extras are exhausted here too).
+    for (const id of ["h_okafor", "h_brandt", "h_okonkwo"]) {
+      s.heroes.find((h) => h.hero === id)!.fatigue = 90; // exhausted, excluded
+    }
     s.campaign.day = 40;
     s.missions.queuedEvents = [
       { event: "ev_vy_regroup", fireOnDay: 35 },
@@ -312,7 +316,7 @@ describe("fireDueIncident / endDay integration (§7)", () => {
   });
 
   it("is a no-op when a mission is already active", () => {
-    const active = launched("m_vy_arrival", ["h_mercer", "h_okafor"]);
+    const active = launched("m_vy_arrival", ["h_mercer", "h_okafor", "h_brandt"]);
     active.missions.queuedEvents = [{ event: "ev_vy_regroup", fireOnDay: 1 }];
     expect(fireDueIncident(active, CONTENT)).toBe(active);
   });

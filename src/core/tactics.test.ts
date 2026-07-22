@@ -5,7 +5,14 @@ import { newCampaign } from "./campaign.js";
 import { launchMission } from "./missions.js";
 import { apply, type Action, type ReducerCtx } from "./reducer.js";
 import { mulberry32 } from "./rng.js";
-import { hitChance, nextInteractables, reachableTiles, visibleTargets } from "./tactics.js";
+import {
+  abilityRangeTiles,
+  hitChance,
+  nextInteractables,
+  reachableTiles,
+  threatenedTiles,
+  visibleTargets,
+} from "./tactics.js";
 
 /**
  * Tactical engine tests (docs/specs/tactics-engine.md §13). The battle stream is
@@ -69,25 +76,32 @@ const unit = (s: GameStateT, id: string) => battleOf(s)!.units.find((u) => u.id 
 
 // ============================================================ golden battle
 describe("golden battle (§13)", () => {
-  /** Fixed campaign → derived seed, a scripted firefight on map_relay. Locks
-   * every unit's hp/pos and the exact hit/miss sequence from the log. */
+  /**
+   * Fixed campaign → derived seed, a scripted battle on map_relay that runs to a
+   * genuine console victory. Balance-Rebase v3 (veyra-kaempfe §3d) re-recorded
+   * this once: the higher hero/enemy aim shifted every hit roll, so the old
+   * kill-everything script no longer resolved cleanly. This recording is stable
+   * across two independent runs, and NO 0-hp unit ever acts in the log (asserted
+   * below — the Dead-Units precedent).
+   *
+   * The list ends on the con_b interact that completes the interactSequence and
+   * resolves the battle to victory; every action before it leaves the battle
+   * live, so the firefight log up to that point is locked exactly.
+   */
   const GOLDEN: Action[] = [
     { type: "battleMove", unit: "u_h_mercer", to: { x: 3, y: 1 } },
-    { type: "battleAbility", unit: "u_h_mercer", ability: "ab_shot", target: "u_eg_guards_0" },
+    { type: "battleMove", unit: "u_h_mercer", to: { x: 6, y: 0 } },
     { type: "battleMove", unit: "u_h_okafor", to: { x: 5, y: 0 } },
-    { type: "battleMove", unit: "u_h_okafor", to: { x: 6, y: 3 } },
     { type: "battleEndTurn" },
-    { type: "battleAbility", unit: "u_h_mercer", ability: "ab_shot", target: "u_eg_guards_0" },
+    { type: "battleInteract", unit: "u_h_mercer", interactable: "con_a" },
+    { type: "battleMove", unit: "u_h_mercer", to: { x: 7, y: 3 } },
+    { type: "battleMove", unit: "u_h_okafor", to: { x: 7, y: 2 } },
     { type: "battleAbility", unit: "u_h_okafor", ability: "ab_shot", target: "u_eg_guards_0" },
     { type: "battleEndTurn" },
-    { type: "battleAbility", unit: "u_h_mercer", ability: "ab_shot", target: "u_eg_guards_0" },
-    { type: "battleAbility", unit: "u_h_okafor", ability: "ab_shot", target: "u_eg_guards_1" },
-    { type: "battleEndTurn" },
-    { type: "battleAbility", unit: "u_h_mercer", ability: "ab_shot", target: "u_eg_guards_1" },
-    { type: "battleAbility", unit: "u_h_okafor", ability: "ab_shot", target: "u_eg_guards_1" },
-    { type: "battleEndTurn" },
-    { type: "battleAbility", unit: "u_h_mercer", ability: "ab_shot", target: "u_eg_guards_1" },
+    { type: "battleInteract", unit: "u_h_mercer", interactable: "con_b" },
   ];
+  /** Everything except the final, battle-resolving con_b interact. */
+  const PRE_RESOLUTION = GOLDEN.slice(0, -1);
 
   function launched(): GameStateT {
     const s = newCampaign(12345);
@@ -96,55 +110,62 @@ describe("golden battle (§13)", () => {
     return launchMission(s, CONTENT, "m_relay", ["h_mercer", "h_okafor"]);
   }
 
-  it("reproduces the exact end-state and log", () => {
+  /** Assert no unit acts after it was downed: once "<id> is down" appears, no
+   * later log line may start with that id (spec §3d: no 0-hp unit handles). */
+  function assertNoDownedActor(log: readonly string[]): void {
+    const downed = new Set<string>();
+    for (const line of log) {
+      const downMatch = /^(\S+) is down$/.exec(line);
+      if (downMatch) {
+        downed.add(downMatch[1]!);
+        continue;
+      }
+      const actor = /^(u_\S+?)(?:->| moves| activates| patches)/.exec(line);
+      if (actor && downed.has(actor[1]!)) {
+        throw new Error(`downed unit ${actor[1]} acted: "${line}"`);
+      }
+    }
+  }
+
+  it("reproduces the exact pre-resolution firefight, then resolves to victory", () => {
     let s = launched();
-    for (const a of GOLDEN) s = apply(s, a, ctx);
+    for (const a of PRE_RESOLUTION) s = apply(s, a, ctx);
     const b = battleOf(s)!;
 
+    expect(b.round).toBe(3);
     expect(b.units.map((u) => ({ id: u.id, pos: u.pos, hp: u.hp, ap: u.ap }))).toEqual([
-      { id: "u_h_mercer", pos: { x: 3, y: 1 }, hp: 5, ap: 0 },
-      { id: "u_h_okafor", pos: { x: 6, y: 3 }, hp: 2, ap: 2 },
-      { id: "u_eg_guards_0", pos: { x: 6, y: 4 }, hp: 0, ap: 0 },
-      { id: "u_eg_guards_1", pos: { x: 7, y: 5 }, hp: 0, ap: 0 },
+      { id: "u_h_mercer", pos: { x: 7, y: 3 }, hp: 2, ap: 2 },
+      { id: "u_h_okafor", pos: { x: 7, y: 2 }, hp: 5, ap: 2 },
+      { id: "u_eg_guards_0", pos: { x: 6, y: 4 }, hp: 4, ap: 0 },
+      { id: "u_eg_guards_1", pos: { x: 7, y: 5 }, hp: 4, ap: 0 },
     ]);
-    expect(b.round).toBe(5);
     expect(b.log).toEqual([
       "u_h_mercer moves to (3,1)",
-      "roll: u_h_mercer->u_eg_guards_0 hit 75/73 MISS",
+      "u_h_mercer moves to (6,0)",
       "u_h_okafor moves to (5,0)",
-      "u_h_okafor moves to (6,3)",
       "-- enemy phase (round 1) --",
-      "roll: u_eg_guards_0->u_h_okafor hit 8/63 HIT",
-      "roll: u_h_okafor dmg 1=1 (hp 4/5)",
-      "roll: u_eg_guards_1->u_h_okafor hit 77/59 MISS",
+      "roll: u_eg_guards_0->u_h_mercer hit 75/57 MISS",
+      "roll: u_eg_guards_1->u_h_mercer hit 8/53 HIT",
+      "roll: u_h_mercer dmg 1=1 (hp 4/5)",
       "-- round 2 --",
-      "roll: u_h_mercer->u_eg_guards_0 hit 6/73 HIT",
-      "roll: u_eg_guards_0 dmg 1=1 (hp 3/4)",
-      "roll: u_h_okafor->u_eg_guards_0 hit 43/63 HIT",
-      "roll: u_eg_guards_0 dmg 1=1 (hp 2/4)",
+      "u_h_mercer activates con_a",
+      "u_h_mercer moves to (7,3)",
+      "u_h_okafor moves to (7,2)",
+      "roll: u_h_okafor->u_eg_guards_0 hit 77/64 MISS",
       "-- enemy phase (round 2) --",
-      "roll: u_eg_guards_0->u_h_okafor hit 69/63 MISS",
-      "roll: u_eg_guards_1->u_h_okafor hit 59/59 HIT",
-      "roll: u_h_okafor dmg 2=2 (hp 2/5)",
+      "roll: u_eg_guards_0->u_h_mercer hit 6/61 HIT",
+      "roll: u_h_mercer dmg 1=1 (hp 3/5)",
+      "roll: u_eg_guards_1->u_h_mercer hit 43/61 HIT",
+      "roll: u_h_mercer dmg 1=1 (hp 2/5)",
       "-- round 3 --",
-      "roll: u_h_mercer->u_eg_guards_0 hit 63/73 HIT",
-      "roll: u_eg_guards_0 dmg 2=2 (hp 0/4)",
-      "u_eg_guards_0 is down",
-      "roll: u_h_okafor->u_eg_guards_1 hit 5/59 HIT",
-      "roll: u_eg_guards_1 dmg 2=2 (hp 2/4)",
-      "-- enemy phase (round 3) --",
-      "roll: u_eg_guards_1->u_h_okafor hit 63/59 MISS",
-      "-- round 4 --",
-      "roll: u_h_mercer->u_eg_guards_1 hit 26/69 HIT",
-      "roll: u_eg_guards_1 dmg 1=1 (hp 1/4)",
-      "roll: u_h_okafor->u_eg_guards_1 hit 61/59 MISS",
-      "-- enemy phase (round 4) --",
-      "roll: u_eg_guards_1->u_h_okafor hit 73/59 MISS",
-      "-- round 5 --",
-      "roll: u_h_mercer->u_eg_guards_1 hit 32/69 HIT",
-      "roll: u_eg_guards_1 dmg 2=2 (hp 0/4)",
-      "u_eg_guards_1 is down",
     ]);
+    // §3d invariant: no downed unit ever acted.
+    assertNoDownedActor(b.log);
+
+    // The final interact completes the console sequence and resolves the battle.
+    const done = apply(s, GOLDEN[GOLDEN.length - 1]!, ctx);
+    expect(done.activeMission).toBeNull();
+    expect(done.missions.completed).toContainEqual({ mission: "m_relay", outcome: "victory", day: 1 });
   });
 
   it("is fully deterministic — same campaign runs identically twice", () => {
@@ -154,33 +175,34 @@ describe("golden battle (§13)", () => {
       a = apply(a, act, ctx);
       b = apply(b, act, ctx);
     }
-    expect(JSON.stringify(battleOf(a))).toBe(JSON.stringify(battleOf(b)));
+    // Both resolve to victory (activeMission null); the whole resolved state matches.
+    expect(JSON.stringify(a)).toBe(JSON.stringify(b));
   });
 });
 
 // ======================================================== hit% & preview===res
 describe("hit% (§7)", () => {
   it("clamps to the upper bound of 95", () => {
-    // mercer with a big combat bonus: aim = 55 + 5 × effectiveCombat.
+    // mercer with a big combat bonus: aim = 60 + 5 × effectiveCombat (Rebase v3).
     const s = game([player("u_h_mercer", "h_mercer", 2, 1), enemy("u_e", 2, 2)], { obj_consoles: 0 });
-    s.heroes.find((h) => h.hero === "h_mercer")!.skillBonuses = { combat: 5 }; // effCombat 11 → aim 110
-    // dist 1, no cover → 110 − 0 − 2 = 108, clamped to 95.
+    s.heroes.find((h) => h.hero === "h_mercer")!.skillBonuses = { combat: 5 }; // effCombat 11 → aim 115
+    // dist 1, no cover → 115 − 0 − 2 = 113, clamped to 95.
     expect(hitChance(s, CONTENT, "u_h_mercer", "u_e")).toBe(95);
   });
 
   it("clamps to the lower bound of 5", () => {
-    // okafor ground-down: tired (−1) + wounded (−2) → effCombat −1 → aim 50.
+    // okafor ground-down: tired (−1) + wounded (−2) → effCombat −1 → aim 55.
     const s = game([player("u_h_okafor", "h_okafor", 7, 5), enemy("u_e", 3, 2)], { obj_consoles: 0 });
     const okf = s.heroes.find((h) => h.hero === "h_okafor")!;
     okf.fatigue = 60;
     okf.injuries = [{ injury: "inj_wounded", daysRemaining: 5 }];
-    // target on "+" (cover 40), dist 7 → 50 − 40 − 14 = −4, clamped to 5.
+    // target on "+" (cover 40), dist 7 → 55 − 40 − 14 = 1, clamped to 5.
     expect(hitChance(s, CONTENT, "u_h_okafor", "u_e")).toBe(5);
   });
 
   it("preview IS resolution — the rolled chance equals hitChance()", () => {
     const s = game([player("u_h_mercer", "h_mercer", 4, 4), enemy("u_e", 6, 4)], { obj_consoles: 0 });
-    const chance = hitChance(s, CONTENT, "u_h_mercer", "u_e"); // 85 − 0 − 4 = 81
+    const chance = hitChance(s, CONTENT, "u_h_mercer", "u_e"); // 90 − 0 − 4 = 86 (Rebase v3)
     const next = apply(
       s,
       { type: "battleAbility", unit: "u_h_mercer", ability: "ab_shot", target: "u_e" },
@@ -188,7 +210,7 @@ describe("hit% (§7)", () => {
     );
     const rollLine = battleOf(next)!.log.find((l) => l.includes("u_h_mercer->u_e hit"))!;
     expect(rollLine).toContain(`/${chance} `);
-    expect(chance).toBe(81);
+    expect(chance).toBe(86);
   });
 });
 
@@ -248,14 +270,160 @@ describe("line of sight (§6)", () => {
     // …but an enemy standing ON the high cover is targetable (endpoint never blocks).
     const onCover = game([player("u_h_mercer", "h_mercer", 3, 0), enemy("u_e", 3, 2)], { obj_consoles: 0 });
     expect(visibleTargets(onCover, CONTENT, "u_h_mercer", "ab_shot")).toEqual(["u_e"]);
-    // and the cover bonus (40) is applied to the hit%.
-    expect(hitChance(onCover, CONTENT, "u_h_mercer", "u_e")).toBe(85 - 40 - 2 * 2);
+    // and the cover bonus (40) is applied to the hit%. (Rebase v3: mercer aim 90.)
+    expect(hitChance(onCover, CONTENT, "u_h_mercer", "u_e")).toBe(90 - 40 - 2 * 2);
   });
 
   it('"-" low cover never blocks', () => {
     // (1,1) is low cover between (1,0) and (1,2).
     const s = game([player("u_h_mercer", "h_mercer", 1, 0), enemy("u_e", 1, 2)], { obj_consoles: 0 });
     expect(visibleTargets(s, CONTENT, "u_h_mercer", "ab_shot")).toEqual(["u_e"]);
+  });
+});
+
+// ================================================ overlay guards (tuning v3 §4)
+describe("overlay guards (tuning v3 §4)", () => {
+  const k = (p: { x: number; y: number }): string => `${p.x},${p.y}`;
+
+  it("abilityRangeTiles: within range, LOS-gated, wall/own-tile excluded (§4a)", () => {
+    // mercer at (4,1); (5,1) is a wall directly east.
+    const s = game([player("u_h_mercer", "h_mercer", 4, 1), enemy("u_e", 7, 5)], { obj_consoles: 0 });
+    const tiles = abilityRangeTiles(s, CONTENT, "u_h_mercer", "ab_shot").map(k);
+    expect(tiles).not.toContain("4,1"); // own tile excluded
+    expect(tiles).not.toContain("5,1"); // a wall is never a coverage tile
+    expect(tiles).not.toContain("6,1"); // occluded by the (5,1) wall → no LOS
+    expect(tiles).toContain("4,3"); // clear LOS straight down, in range
+    // Everything returned is inside the ability's Manhattan range.
+    for (const p of abilityRangeTiles(s, CONTENT, "u_h_mercer", "ab_shot")) {
+      expect(Math.abs(p.x - 4) + Math.abs(p.y - 1)).toBeLessThanOrEqual(8);
+    }
+  });
+
+  it("threatenedTiles: a melee drone threatens where it can move + strike (§4b)", () => {
+    // A lone Wächter-Drohne (mobility 5, ab_stab range 1) tucked in the corner.
+    const s = game(
+      [player("u_h_mercer", "h_mercer", 7, 5), enemy("u_e", 0, 0, { unitType: "ut_tender_guard" })],
+      { obj_consoles: 0 },
+      { squad: ["h_mercer"] },
+    );
+    const threat = threatenedTiles(s, CONTENT, "u_e").map(k);
+    expect(threat).toContain("1,0"); // adjacent to its start tile
+    expect(threat).toContain("0,1");
+    // Beyond move(5)+strike(1) reach → never threatened.
+    expect(threat).not.toContain("7,0");
+    // The zone is non-empty and never includes a wall tile.
+    expect(threat.length).toBeGreaterThan(0);
+    expect(threat).not.toContain("1,3"); // (1,3) is a wall
+  });
+});
+
+// ============================== accuracyBonus & Präzisionsschuss (tuning v3 §1,§2)
+describe("accuracyBonus / Präzisionsschuss (tuning v3 §1, §2)", () => {
+  it("adds the ability's accuracyBonus BEFORE the 5–95 clamp", () => {
+    // mercer (combat 6) aim 90. Enemy at dist 8, open ground.
+    const s = game([player("u_h_mercer", "h_mercer", 0, 0), enemy("u_e", 0, 8)], { obj_consoles: 0 });
+    // Plain shot: 90 − 0 − 2×8 = 74.
+    expect(hitChance(s, CONTENT, "u_h_mercer", "u_e", "ab_shot")).toBe(74);
+    // Präzisionsschuss adds +20 before the clamp: 90 + 20 − 16 = 94 (still < 95).
+    expect(hitChance(s, CONTENT, "u_h_mercer", "u_e", "ab_precision_shot")).toBe(94);
+  });
+
+  it("the accuracyBonus is clamped at the 95 ceiling", () => {
+    // Close range: plain shot already high, precision pushes past 95 → clamped.
+    const s = game([player("u_h_mercer", "h_mercer", 4, 4), enemy("u_e", 6, 4)], { obj_consoles: 0 });
+    expect(hitChance(s, CONTENT, "u_h_mercer", "u_e", "ab_shot")).toBe(86); // 90 − 4
+    // 90 + 20 − 4 = 106 → clamp 95.
+    expect(hitChance(s, CONTENT, "u_h_mercer", "u_e", "ab_precision_shot")).toBe(95);
+  });
+
+  it("preview IS resolution for the bonus — the rolled chance equals hitChance(ability)", () => {
+    const s = game([player("u_h_mercer", "h_mercer", 4, 4), enemy("u_e", 6, 4)], { obj_consoles: 0 });
+    const chance = hitChance(s, CONTENT, "u_h_mercer", "u_e", "ab_precision_shot"); // 95 (clamped)
+    const next = apply(
+      s,
+      { type: "battleAbility", unit: "u_h_mercer", ability: "ab_precision_shot", target: "u_e" },
+      ctx,
+    );
+    const rollLine = battleOf(next)!.log.find((l) => l.includes("u_h_mercer->u_e hit"))!;
+    expect(rollLine).toContain(`/${chance} `);
+    expect(chance).toBe(95);
+  });
+
+  it("deals 2–3 damage (power 2 → +1 on a 1–2 roll)", () => {
+    // Fire it a handful of seeds; every landed hit removes 2 or 3 hp.
+    for (let seed = 1; seed <= 8; seed++) {
+      const s = game(
+        [player("u_h_mercer", "h_mercer", 4, 4), enemy("u_e", 6, 4, { hp: 9 })],
+        {
+          obj_consoles: 0,
+        },
+        { seed },
+      );
+      const next = apply(
+        s,
+        { type: "battleAbility", unit: "u_h_mercer", ability: "ab_precision_shot", target: "u_e" },
+        ctx,
+      );
+      const dmgLine = battleOf(next)!.log.find((l) => l.includes("u_e dmg"));
+      if (!dmgLine) continue; // a rare miss — nothing to assert this seed
+      const total = Number(/=(\d+) /.exec(dmgLine)![1]);
+      expect(total).toBeGreaterThanOrEqual(2);
+      expect(total).toBeLessThanOrEqual(3);
+    }
+  });
+
+  it("cannot be fired with only 1 AP left — no moving in the same turn (apCost 2)", () => {
+    const s = game([player("u_h_mercer", "h_mercer", 4, 4), enemy("u_e", 6, 4)], { obj_consoles: 0 });
+    // Spend one AP moving; 1 AP remains, below the 2-AP cost.
+    const moved = apply(s, { type: "battleMove", unit: "u_h_mercer", to: { x: 4, y: 3 } }, ctx);
+    expect(unit(moved, "u_h_mercer").ap).toBe(1);
+    expect(() =>
+      apply(
+        moved,
+        { type: "battleAbility", unit: "u_h_mercer", ability: "ab_precision_shot", target: "u_e" },
+        ctx,
+      ),
+    ).toThrow(/AP/);
+  });
+
+  it("is on cooldown for three rounds after use, then usable again", () => {
+    // Lone mercer (padded hp so the enemy phase can't down him) vs a fat target.
+    const s = game([player("u_h_mercer", "h_mercer", 2, 2, { hp: 20 }), enemy("u_e", 2, 4, { hp: 20 })], {
+      obj_consoles: 0,
+    });
+    let g = apply(
+      s,
+      { type: "battleAbility", unit: "u_h_mercer", ability: "ab_precision_shot", target: "u_e" },
+      ctx,
+    );
+    expect(unit(g, "u_h_mercer").ap).toBe(0); // ability ends activation
+    expect(unit(g, "u_h_mercer").cooldowns.ab_precision_shot).toBe(3);
+
+    // Round 2: cd 3 → 2 (decrement at player phase start), still unusable.
+    g = apply(g, { type: "battleEndTurn" }, ctx);
+    expect(unit(g, "u_h_mercer").cooldowns.ab_precision_shot).toBe(2);
+    expect(() =>
+      apply(
+        g,
+        { type: "battleAbility", unit: "u_h_mercer", ability: "ab_precision_shot", target: "u_e" },
+        ctx,
+      ),
+    ).toThrow(/cooldown/);
+
+    // Round 3: cd → 1, still unusable.
+    g = apply(g, { type: "battleEndTurn" }, ctx);
+    expect(unit(g, "u_h_mercer").cooldowns.ab_precision_shot).toBe(1);
+
+    // Round 4: cd → 0, usable again.
+    g = apply(g, { type: "battleEndTurn" }, ctx);
+    expect(unit(g, "u_h_mercer").cooldowns.ab_precision_shot).toBe(0);
+    expect(() =>
+      apply(
+        g,
+        { type: "battleAbility", unit: "u_h_mercer", ability: "ab_precision_shot", target: "u_e" },
+        ctx,
+      ),
+    ).not.toThrow();
   });
 });
 

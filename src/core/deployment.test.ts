@@ -14,10 +14,21 @@ import { apply, type ReducerCtx } from "./reducer.js";
 import { mulberry32 } from "./rng.js";
 import { playBattle } from "../test/greedyBattle.js";
 import { loadTestContent } from "../test/content.js";
-import type { GameStateT } from "../data/schemas.js";
+import type { ContentBundleT, GameStateT } from "../data/schemas.js";
 
-const CONTENT = loadTestContent();
+// Roster-Erweiterung (Softlock-Fix): the shipped start roster is now four heroes,
+// so the operation fields the spec-canonical 4-squad (§7: 4 vs 6 without Seryn)
+// with the REAL starting cast — no test-only grunts needed.
+const CONTENT: ContentBundleT = loadTestContent();
 const ctx = (): ReducerCtx => ({ content: CONTENT, rng: mulberry32(7) });
+
+/** The spec-canonical operation squad (§7): the four real starters against the
+ * six breakout drones without the Seryn ally — "eng, aber schaffbar". */
+const OP_SQUAD = ["h_mercer", "h_okafor", "h_brandt", "h_okonkwo"];
+
+/** The smallest legal operation squad (veyra-kaempfe §7, squad.min 3), for the
+ * lifecycle/mechanic tests that don't fight a battle. */
+const TRIO = ["h_mercer", "h_okafor", "h_brandt"];
 
 /** Auto-play a narrative mission to completion: at each node take the first
  * eligible option. Deterministic (narrative consumes no RNG, D-5). */
@@ -39,9 +50,11 @@ function weiter(state: GameStateT, mission: string): GameStateT {
   return apply(state, { type: "launchMission", mission, squad: state.deployment!.squad }, ctx());
 }
 
-/** A campaign parked at the worldgate with only the Tal mission available. The
- * default seed is one where the greedy driver clears both operation battles
- * (intercept and the ally-less breakout the auto-played duel path produces). */
+/** A campaign parked at the worldgate with only the Tal mission available (the
+ * real four-hero start roster). The default seed is one where the greedy driver
+ * clears both operation battles under the Balance-Rebase v3 numbers with the
+ * canonical roster (intercept and the ally-less 4-vs-6 breakout the auto-played
+ * duel path produces). */
 function startOfOperation(seed = 1): GameStateT {
   const s = newCampaign(seed, CONTENT);
   s.activeMission = null;
@@ -54,7 +67,7 @@ const fatigueOf = (s: GameStateT, hero: string): number => s.heroes.find((h) => 
 describe("veyra-kaempfe §2 — deployment lifecycle", () => {
   it("the Tal mission opens the deployment and locks the squad", () => {
     const s0 = startOfOperation();
-    const squad = ["h_mercer", "h_okafor"];
+    const squad = TRIO; // min 3 (veyra-kaempfe §7)
     const s1 = apply(s0, { type: "launchMission", mission: "m_vy_arrival", squad }, ctx());
     expect(s1.deployment).toEqual({ operation: "vy", squad });
   });
@@ -63,31 +76,20 @@ describe("veyra-kaempfe §2 — deployment lifecycle", () => {
     let s = startOfOperation();
     s.heroes.find((h) => h.hero === "h_okafor")!.fatigue = 95; // exhausted
     // Outside a deployment an exhausted hero blocks the launch…
-    expect(() => launchMission(s, CONTENT, "m_vy_arrival", ["h_mercer", "h_okafor"])).toThrow();
+    expect(() => launchMission(s, CONTENT, "m_vy_arrival", TRIO)).toThrow();
     // …but once the operation is running (squad already locked), the team must
     // press on tired. Simulate by opening the deployment with a fresh squad then
     // fatiguing a member and continuing to the next operation mission.
-    s = apply(
-      startOfOperation(),
-      { type: "launchMission", mission: "m_vy_arrival", squad: ["h_mercer", "h_okafor"] },
-      ctx(),
-    );
+    s = apply(startOfOperation(), { type: "launchMission", mission: "m_vy_arrival", squad: TRIO }, ctx());
     s = autoNarrative(s);
     s.heroes.find((h) => h.hero === "h_okafor")!.fatigue = 95;
     const next = weiter(s, "m_vy_ledger"); // continuation ignores exhaustion
     expect(next.activeMission?.kind).toBe("narrative");
-    expect(next.activeMission && "squad" in next.activeMission ? next.activeMission.squad : []).toEqual([
-      "h_mercer",
-      "h_okafor",
-    ]);
+    expect(next.activeMission && "squad" in next.activeMission ? next.activeMission.squad : []).toEqual(TRIO);
   });
 
   it("endDay recovery skips the deployed squad, then resumes after endDeployment", () => {
-    let s = apply(
-      startOfOperation(),
-      { type: "launchMission", mission: "m_vy_arrival", squad: ["h_mercer", "h_okafor"] },
-      ctx(),
-    );
+    let s = apply(startOfOperation(), { type: "launchMission", mission: "m_vy_arrival", squad: TRIO }, ctx());
     s = autoNarrative(s); // arrival done; deployment still running
     s.heroes.forEach((h) => (h.fatigue = 40));
     const rested = endDay(s, ctx());
@@ -104,7 +106,7 @@ describe("veyra-kaempfe §2 — deployment lifecycle", () => {
 
 describe("veyra-kaempfe §8.3 — full operation chain end-to-end", () => {
   it("Tal → intercept → penitence chain → breakout → homecoming, deployment ends, recovery resumes", () => {
-    const squad = ["h_mercer", "h_okafor"];
+    const squad = OP_SQUAD;
     const fatigue: Array<{ after: string; mercer: number }> = [];
     const mark = (s: GameStateT, after: string) => fatigue.push({ after, mercer: fatigueOf(s, "h_mercer") });
 
@@ -144,8 +146,8 @@ describe("veyra-kaempfe §8.3 — full operation chain end-to-end", () => {
 
     // 5. Breakout (tactical) — win it. The auto-played first_blade takes the duel
     // (defeated) path with this squad, so no Seryn ally spawns; the greedy driver
-    // clears the six drones and gets every unit into the gate court (§8.2 harder
-    // case). f_vy_first_defeated is set here.
+    // gets the four-strong squad through the six drones and into the gate court
+    // (§7/§8.2 harder "4 vs 6 without Seryn" case). f_vy_first_defeated is set here.
     expect(s.flags.f_vy_first_defeated).toBe(true);
     s = weiter(s, "m_vy_breakout");
     expect(s.activeMission?.kind).toBe("tactical");
@@ -174,11 +176,7 @@ describe("veyra-kaempfe §8.3 — full operation chain end-to-end", () => {
 
 describe("veyra-kaempfe §2a — direct mission transitions", () => {
   it("offers exactly one next mission for the Weiter button after each operation mission", () => {
-    let s = apply(
-      startOfOperation(),
-      { type: "launchMission", mission: "m_vy_arrival", squad: ["h_mercer", "h_okafor"] },
-      ctx(),
-    );
+    let s = apply(startOfOperation(), { type: "launchMission", mission: "m_vy_arrival", squad: TRIO }, ctx());
     const before = s;
     s = autoNarrative(s);
     const unlocked = newlyUnlockedMissions(before, s);
@@ -187,10 +185,11 @@ describe("veyra-kaempfe §2a — direct mission transitions", () => {
   });
 
   it("narrative→tactical: first_blade's Weiter launches the breakout directly with the locked squad", () => {
-    // Walk the chain up to first_blade's completion.
+    // Walk the chain up to first_blade's completion (real 4-squad wins the
+    // intercept battle at seed 1 — see the §8.3 chain).
     let s = apply(
       startOfOperation(),
-      { type: "launchMission", mission: "m_vy_arrival", squad: ["h_mercer", "h_okafor"] },
+      { type: "launchMission", mission: "m_vy_arrival", squad: OP_SQUAD },
       ctx(),
     );
     s = autoNarrative(s);
@@ -212,14 +211,14 @@ describe("veyra-kaempfe §2a — direct mission transitions", () => {
     expect(launched.activeMission?.kind).toBe("tactical");
     expect(
       launched.activeMission && "squad" in launched.activeMission ? launched.activeMission.squad : [],
-    ).toEqual(["h_mercer", "h_okafor"]);
+    ).toEqual(OP_SQUAD);
   });
 
   it("tactical→narrative: breakout's Weiter launches homecoming directly; worldgate fallback also works", () => {
     // Fast-forward to a won breakout by unlocking + launching it within a deployment.
     let s = apply(
       startOfOperation(),
-      { type: "launchMission", mission: "m_vy_arrival", squad: ["h_mercer", "h_okafor"] },
+      { type: "launchMission", mission: "m_vy_arrival", squad: OP_SQUAD },
       ctx(),
     );
     s = autoNarrative(s);
@@ -250,6 +249,6 @@ describe("veyra-kaempfe §2a — direct mission transitions", () => {
       viaWorldgate.activeMission && "squad" in viaWorldgate.activeMission
         ? viaWorldgate.activeMission.squad
         : [],
-    ).toEqual(["h_mercer", "h_okafor"]);
+    ).toEqual(OP_SQUAD);
   });
 });

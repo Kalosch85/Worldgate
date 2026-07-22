@@ -39,13 +39,14 @@ function launchError(state: GameStateT, mission: string, squad: string[]): RuleE
 describe("launchMission — narrative hand-off", () => {
   it("opens the narrative mission at the event script's entry node", () => {
     const state = stateWith();
-    const next = launchMission(state, CONTENT, "m_vy_arrival", ["h_mercer", "h_okafor"]);
+    // m_vy_arrival requires a squad of 3–4 (veyra-kaempfe §7 + Roster-Erweiterung).
+    const next = launchMission(state, CONTENT, "m_vy_arrival", ["h_mercer", "h_okafor", "h_brandt"]);
     expect(next.activeMission).toEqual({
       kind: "narrative",
       mission: "m_vy_arrival",
       script: "ev_vy_arrival",
       node: "n_va_gate", // ev_vy_arrival.entryNode
-      squad: ["h_mercer", "h_okafor"],
+      squad: ["h_mercer", "h_okafor", "h_brandt"],
       gatedSeen: false,
     });
   });
@@ -53,7 +54,7 @@ describe("launchMission — narrative hand-off", () => {
   it("does not mutate the input state", () => {
     const state = stateWith();
     const before = JSON.stringify(state);
-    launchMission(state, CONTENT, "m_vy_arrival", ["h_mercer", "h_okafor"]);
+    launchMission(state, CONTENT, "m_vy_arrival", ["h_mercer", "h_okafor", "h_brandt"]);
     expect(JSON.stringify(state)).toBe(before);
   });
 
@@ -62,7 +63,7 @@ describe("launchMission — narrative hand-off", () => {
     const mercer = state.heroes.find((h) => h.hero === "h_mercer")!;
     mercer.injuries = [{ injury: "inj_wounded", daysRemaining: 3 }];
     mercer.fatigue = 79; // injured and tired, but below the 80 exhausted line
-    const next = launchMission(state, CONTENT, "m_vy_arrival", ["h_mercer", "h_okafor"]);
+    const next = launchMission(state, CONTENT, "m_vy_arrival", ["h_mercer", "h_okafor", "h_brandt"]);
     expect(next.activeMission?.kind).toBe("narrative");
   });
 });
@@ -92,9 +93,12 @@ describe("launchMission — RuleError guards (§3)", () => {
   });
 
   it("rejects a squad smaller than the mission minimum", () => {
-    // m_vy_arrival min is 2; a solo squad is below it.
+    // m_vy_arrival min is 3 (veyra-kaempfe §7): solo AND a 2-hero squad are below it.
     expect(launchError(stateWith(), "m_vy_arrival", ["h_mercer"]).code).toBe("launchMission/squad_size");
     expect(launchError(stateWith(), "m_vy_arrival", []).code).toBe("launchMission/squad_size");
+    expect(launchError(stateWith(), "m_vy_arrival", ["h_mercer", "h_okafor"]).code).toBe(
+      "launchMission/squad_size",
+    );
   });
 
   it("rejects a squad larger than the mission maximum", () => {
@@ -106,13 +110,14 @@ describe("launchMission — RuleError guards (§3)", () => {
   });
 
   it("rejects an unknown hero id", () => {
-    expect(launchError(stateWith(), "m_vy_arrival", ["h_mercer", "h_ghost"]).code).toBe(
+    // Size-valid squad (3) so the hero lookup — not the size guard — trips.
+    expect(launchError(stateWith(), "m_vy_arrival", ["h_mercer", "h_okafor", "h_ghost"]).code).toBe(
       "launchMission/squad_unknown_hero",
     );
   });
 
   it("rejects a duplicate hero id", () => {
-    expect(launchError(stateWith(), "m_vy_arrival", ["h_mercer", "h_mercer"]).code).toBe(
+    expect(launchError(stateWith(), "m_vy_arrival", ["h_mercer", "h_okafor", "h_mercer"]).code).toBe(
       "launchMission/squad_duplicate",
     );
   });
@@ -120,7 +125,7 @@ describe("launchMission — RuleError guards (§3)", () => {
   it("rejects an exhausted hero (fatigue ≥ 80)", () => {
     const state = stateWith();
     state.heroes.find((h) => h.hero === "h_okafor")!.fatigue = 80;
-    expect(launchError(state, "m_vy_arrival", ["h_mercer", "h_okafor"]).code).toBe(
+    expect(launchError(state, "m_vy_arrival", ["h_mercer", "h_okafor", "h_brandt"]).code).toBe(
       "launchMission/squad_exhausted",
     );
   });
@@ -219,7 +224,9 @@ describe("launchMission — tactical launch (§3)", () => {
 
 describe("canLaunchMission — UI guard", () => {
   it("true for a valid narrative launch", () => {
-    expect(canLaunchMission(stateWith(), CONTENT, "m_vy_arrival", ["h_mercer", "h_okafor"])).toBe(true);
+    expect(canLaunchMission(stateWith(), CONTENT, "m_vy_arrival", ["h_mercer", "h_okafor", "h_brandt"])).toBe(
+      true,
+    );
   });
 
   it("false for an unavailable mission", () => {
@@ -246,6 +253,50 @@ describe("canLaunchMission — UI guard", () => {
     expect(canLaunchMission(rich, CONTENT, "m_relay", ["h_mercer", "h_okafor"])).toBe(true);
     rich.resources.materials = 4;
     expect(canLaunchMission(rich, CONTENT, "m_relay", ["h_mercer", "h_okafor"])).toBe(false);
+  });
+});
+
+// Roster-Erweiterung (Softlock-Fix): a mandatory mission must never demand more
+// heroes than can exist at the time it is reached, or the campaign softlocks.
+describe("startability invariant (Roster-Erweiterung §3)", () => {
+  /** Heroes that can exist right after newCampaign — the four starters. Seryn is
+   * NOT among them (he joins mid-operation via ev_vy_first_blade). */
+  const startRoster = newCampaign(1).heroes.map((h) => h.hero);
+  const missionById = (id: string) => CONTENT.missions.find((m) => m.id === id)!;
+  const arrival = missionById("m_vy_arrival");
+
+  it("the Tal mission is startable with exactly the start roster (no recruits yet)", () => {
+    expect(startRoster).not.toContain("h_seryn");
+    expect(arrival.squad.min).toBeLessThanOrEqual(startRoster.length); // 3 ≤ 4
+    const state = {
+      ...newCampaign(1),
+      missions: { ...newCampaign(1).missions, available: ["m_vy_arrival"] },
+    };
+    expect(canLaunchMission(state, CONTENT, "m_vy_arrival", startRoster)).toBe(true);
+    // A minimal 3-hero deployment is also accepted.
+    expect(canLaunchMission(state, CONTENT, "m_vy_arrival", startRoster.slice(0, 3))).toBe(true);
+  });
+
+  it("every operation-'vy' mission accepts the squad the arrival mission locks in", () => {
+    // The deployment squad is fixed at arrival (size in [arrival.min, arrival.max])
+    // and reused for every later operation mission (spec §2). So each such mission
+    // must accept both the smallest and the largest deployment arrival can open —
+    // otherwise a legal deployment strands the operation mid-arc.
+    for (const m of CONTENT.missions.filter((m) => m.operation === "vy")) {
+      expect(m.squad.min).toBeLessThanOrEqual(arrival.squad.min);
+      expect(m.squad.max).toBeGreaterThanOrEqual(arrival.squad.max);
+    }
+  });
+
+  it("the breakout is startable with the start roster (without the Seryn ally)", () => {
+    // A deployment locked with the four real starters reaches the breakout: it
+    // reuses that squad and must accept it (min 2 ≤ 4 ≤ max 4).
+    const state: GameStateT = {
+      ...newCampaign(1),
+      missions: { ...newCampaign(1).missions, available: ["m_vy_breakout"] },
+      deployment: { operation: "vy", squad: startRoster },
+    };
+    expect(canLaunchMission(state, CONTENT, "m_vy_breakout", startRoster)).toBe(true);
   });
 });
 

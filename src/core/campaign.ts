@@ -25,9 +25,13 @@ export function newCampaign(seed: number, content?: ContentBundleT): GameStateT 
     flags: {},
     journal: [],
     modifiers: {},
+    // Roster-Erweiterung (Softlock-Fix, veyra-kaempfe §7): the operation's Tal
+    // mission needs squad.min 3, so the campaign starts with four heroes.
     heroes: [
       { hero: "h_mercer", xp: 0, level: 1, fatigue: 0, injuries: [], skillBonuses: {} },
       { hero: "h_okafor", xp: 0, level: 1, fatigue: 0, injuries: [], skillBonuses: {} },
+      { hero: "h_brandt", xp: 0, level: 1, fatigue: 0, injuries: [], skillBonuses: {} },
+      { hero: "h_okonkwo", xp: 0, level: 1, fatigue: 0, injuries: [], skillBonuses: {} },
     ],
     personnel: { total: 20, assignments: { logistics: 12, research: 6, infirmary: 2 } },
     research: { current: null, completed: [] },

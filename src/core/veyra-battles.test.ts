@@ -144,6 +144,21 @@ describe("veyra-kaempfe §8.2 — breakout (Der Ausbruch, reachZone)", () => {
     const { outcome } = playBattle(launched, BASE, { content: BASE, rng: mulberry32(6) });
     expect(outcome).toBe("victory");
   });
+
+  it("WITHOUT Seryn — winnable with EXACTLY the four real starters (Roster-Erweiterung §8.2)", () => {
+    // The canonical no-return squad after the roster expansion: the four shipped
+    // starters (Mercer, Okafor, Brandt, Okonkwo) — no grunts, no Seryn ally. This
+    // is the real "4 vs 6 without Seryn" the campaign actually fields (§7).
+    const squad = ["h_mercer", "h_okafor", "h_brandt", "h_okonkwo"];
+    const s0 = stateForMission(BASE, "m_vy_breakout", squad, {}, 1); // no convince/doubt flag → no ally
+    const launched = apply(s0, { type: "launchMission", mission: "m_vy_breakout", squad }, ctxFor());
+    const players = battleOf(launched).units.filter((u) => u.side === "player");
+    expect(players.length).toBe(4);
+    expect(players.some((u) => u.unitType === "ut_seryn_blessed")).toBe(false); // no ally
+    const { state, outcome } = playBattle(launched, BASE, { content: BASE, rng: mulberry32(6) });
+    expect(outcome).toBe("victory");
+    expect(state.missions.available).toContain("m_vy_home");
+  });
 });
 
 describe("veyra-kaempfe §8.5 — retry path", () => {

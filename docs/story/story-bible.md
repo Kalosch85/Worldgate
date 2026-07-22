@@ -92,11 +92,18 @@ einem Becher steht; niemals „Naniten", niemals geliehene Segnungen.
   bis zum Schwur. Was den Entzug überlebt, ist sein eigen. In der Basis ist er
   ein Pulverfass: seine Anwesenheit eröffnet veyranische Optionen und kostet
   veyranisches Ansehen (Backlog B-2: Basis-Events, die auf ihn ausgelegt sind).
-- Geplante Rekruten: ein **Ingenieur** (Arbeitskeim: I. Brandt,
-  Konsortiums-Inspektor, der einheimisch geworden ist) und ein **Späher**
-  (Arbeitskeim: R. Okonkwo — Herkunft nach D-10 bewusst offen; der
-  Akt-2-Rivalenblock-Keim mag sie beanspruchen oder nicht). Vervollständigt die
-  Archetyp-Abdeckung, sodass das D-1-Gating volle Bandbreite hat.
+- **I. Brandt** (Ingenieurin) — Konsortiums-Ingenieurin, die die Torhalterung
+  baute und blieb, als klar wurde, dass niemand sie versteht wie sie.
+  Aktive Startheldin (siehe Roster-Erweiterung unten).
+- **R. Okonkwo** (Späher) — Aufklärer aus Mercers alter Einheit; sieht zuerst,
+  spricht zuletzt. Aktiver Startheld.
+- **Roster-Erweiterung (Softlock-Fix):** Brandt und Okonkwo sind keine
+  „geplanten Rekruten" mehr, sondern **aktive Starthelden**. Der Startkader
+  umfasst damit vier Helden (Mercer, Okafor, Brandt, Okonkwo) — nötig, damit die
+  Operations-Erstmission (veyra-kaempfe §7, squad.min 3) startbar ist — und deckt
+  die Archetypen ab Tag eins ab, sodass das D-1-Gating volle Bandbreite hat.
+  Okonkwos Herkunft trägt keinerlei Rivalenblock-Bezug mehr (dieser Keim ist
+  gestrichen).
 - Generische (V-4): namenlose Spezialisten, aus dem Personal gezogen; können
   sterben; ihr Ersatz kostet Quartierskapazität und Material — die Ökonomie des
   Verlusts. Helden bleiben durch D-3 geschützt.

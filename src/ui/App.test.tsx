@@ -111,11 +111,15 @@ describe("App shell", () => {
     expect(container!.textContent).toContain("0 untätig / 20");
   });
 
-  it("opens the roster screen and shows a hero card with skills", () => {
+  it("opens the roster screen and shows all four starting heroes with skills", () => {
     render();
     startCampaign();
     click("Team");
+    // Roster-Erweiterung: four starters, each with effective skills shown.
     expect(container!.textContent).toContain("Mercer");
+    expect(container!.textContent).toContain("Okafor");
+    expect(container!.textContent).toContain("Brandt");
+    expect(container!.textContent).toContain("Okonkwo");
     expect(container!.textContent).toContain("Kampf");
     expect(container!.textContent).toContain("Fit");
     click("Basis"); // back to base
@@ -137,9 +141,10 @@ describe("App shell", () => {
     startCampaign();
     click("Weltentor");
     expect(container!.textContent).toContain("Das stille Tal");
-    // m_vy_arrival requires both heroes.
+    // m_vy_arrival is an operation mission with squad.min 3 — pick three heroes.
     click("Mercer");
     click("Okafor");
+    click("Brandt");
     click("Mission starten");
     // The event screen takes over with the arrival node's body text.
     skip();
@@ -181,6 +186,7 @@ describe("App shell", () => {
     click("Weltentor");
     click("Mercer");
     click("Okafor");
+    click("Brandt");
     click("Mission starten");
     skip();
     expect(container!.textContent).toContain("Recon Ones zweiter Meldung");

@@ -74,7 +74,8 @@ describe("apply — Phase 1 economy actions dispatch to their handlers", () => {
     const state = newCampaign(1);
     const next = apply(state, { type: "endDay" }, REAL_CTX);
     expect(next.campaign.day).toBe(2);
-    expect(next.resources.funds).toBe(112);
+    // income 36 (support 5) − upkeep 28 (20 + 4 heroes × 2) = net +8 (Roster-Erweiterung).
+    expect(next.resources.funds).toBe(108);
   });
 
   it("startResearch sets research.current", () => {

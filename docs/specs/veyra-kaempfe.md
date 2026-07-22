@@ -172,25 +172,22 @@ randomSquadMember inj_shaken, log „Zurückgeschlagen in die Zellen."
 
 ## 7. Squad-Größe der Operation
 
-Die Tal-/Erstmission der Operation setzt min 2 / max 4. Mit Seryn im
+Die Tal-/Erstmission der Operation setzt **min 3 / max 4**. Mit Seryn im
 Breakout kämpfen also maximal 5 Einheiten gegen 6 Drohnen; ohne ihn 4
 gegen 6 — absichtlich härter (Belohnung der Überzeugen-Route), aber
 schaffbar (siehe §8).
 
-**v3-Nachtrag: Spielerfalle „Unterbesetzte Operation" (empfohlene
-Teamstärke, KEIN harter min-3-Gate).** Deployment-Sperre plus Retry-Fatigue
-macht 2er-Operationen zur Spirale (die Exhausted-Sperre entfällt im
-laufenden Deployment, Fatigue steigt monoton, und ein verlorener Kampf
-verletzt zusätzlich). Ursprünglich als `squad.min 3` geplant — bei der
-Umsetzung zeigte sich jedoch ein **Softlock**: der Startkader umfasst nur
-zwei Helden (Mercer, Okafor), und der einzige weitere Held (Seryn) tritt
-erst tief in derselben Operation bei (`ev_vy_first_blade`, nach
-`m_vy_arrival`). Ein harter min 3 macht die Erstmission — den Hauptstrang —
-unstartbar. Daher bleibt `m_vy_arrival` bei min 2, und die Falle wird über
-eine **Empfehlung** geschlossen: die Squad-Auswahl-UI zeigt bei jeder
-Mission mit `operation`-Feld den Hinweis „Operation ohne Rückkehr —
-empfohlene Teamstärke: 4". Ein echter min-3-Gate erfordert vorher einen
-dritten früh verfügbaren Held (Content/Kanon-Aufgabe, Fable-Tier).
+**Spielerfalle „Unterbesetzte Operation" (v3-Nachtrag → Hotfix aufgelöst).**
+Deployment-Sperre plus Retry-Fatigue macht 2er-Operationen zur Spirale (die
+Exhausted-Sperre entfällt im laufenden Deployment, Fatigue steigt monoton, und
+ein verlorener Kampf verletzt zusätzlich), daher `m_vy_arrival` squad.min **3**.
+Der v3-Nachtrag musste das zunächst zurückstellen, weil der Startkader nur zwei
+Helden umfasste (Softlock — die Erstmission wäre unstartbar). Der Hotfix
+(**Roster-Erweiterung**, economy-and-roster §2) fügt zwei Starthelden hinzu
+(I. Brandt, R. Okonkwo → Startkader = vier), womit min 3 startbar ist; der
+Startbarkeits-Invariant-Test hält das fest. Zusätzlich zeigt die Squad-Auswahl-
+UI bei jeder Mission mit `operation`-Feld den Hinweis „Operation ohne Rückkehr —
+empfohlene Teamstärke: 4".
 
 ## 8. Pflicht-Verifikation (headless, Ergebnisse in den PR)
 

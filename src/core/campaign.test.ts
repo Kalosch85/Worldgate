@@ -30,7 +30,7 @@ describe("newCampaign intro launch (D-9)", () => {
       mission: undefined,
       script: INTRO_EVENT,
       node: script.entryNode,
-      squad: ["h_mercer", "h_okafor"],
+      squad: ["h_mercer", "h_okafor", "h_brandt", "h_okonkwo"], // Roster-Erweiterung: four starters
       gatedSeen: false,
     });
   });

@@ -23,8 +23,11 @@ No other schema edits are authorized.
 day 1 · funds 100 · materials 40 · intel 0 · exotics 0 ·
 variables `{ support: 5, trust_andara: 0 }` (D-10) · flags `{}` · modifiers `{}` ·
 journal `[]` · personnel total 20, assignments `{ logistics: 12, research: 6,
-infirmary: 2 }` · heroes: `h_mercer`, `h_okafor` (xp 0, level 1, fatigue 0,
-no injuries, empty skillBonuses) · research `{ current: null, completed: [] }` ·
+infirmary: 2 }` · heroes: `h_mercer`, `h_okafor`, `h_brandt`, `h_okonkwo` (xp 0,
+level 1, fatigue 0, no injuries, empty skillBonuses) —
+**Roster-Erweiterung, Softlock-Fix:** vier Starthelden, damit die Operations-
+Erstmission (veyra-kaempfe §7, squad.min 3) startbar ist; der Upkeep steigt
+damit auf `20 + 4×2 = 28` · research `{ current: null, completed: [] }` ·
 missions `{ available: [], completed: [], queuedEvents: [] }` ·
 settings `{ showLockedOptions: false }`.
 
@@ -120,15 +123,20 @@ journal; `unlockMission` appends to `missions.available` if absent;
 
 ## 8. Golden scenarios — required tests, exact values
 
-- **A. Idle:** newCampaign, 5× endDay ⇒ day 6, funds 160 (income 36, upkeep
-  24, net +12/day), materials 40.
+Roster-Erweiterung (Softlock-Fix): der Startkader umfasst vier Helden, daher
+Upkeep `20 + 4×2 = 28` (zuvor 24). Die folgenden Werte sind die aktualisierten
+Kanon-Zahlen.
+
+- **A. Idle:** newCampaign, 5× endDay ⇒ day 6, funds 140 (income 36, upkeep
+  28, net +8/day), materials 40.
 - **B. Research:** startResearch `t_gate_stabilizer` on day 1, 4× endDay ⇒
   completed during the 4th tick (RP 6/day: 6,12,18,24 ≥ 20), `m_relay` in
-  available, journal contains the tech's log line, funds 148, day 5.
+  available, journal contains the tech's log line, funds 132, day 5.
 - **C. Low support:** state with support 0, one endDay ⇒ income
-  floor(36 × 0.75) = 27, funds +3 net.
+  floor(36 × 0.75) = 27, net **−1** (funds 100 → 99). Die Basis läuft bei
+  support 0 jetzt defizitär — gewollt (der Spieler muss Rückhalt aufbauen).
 - **D. Insolvency:** funds 0, support −5 (mult clamps at 0.5): one endDay ⇒
-  income 18, upkeep 24, funds 0, support −6, journal has "Zahltag verpasst."
+  income 18, upkeep 28, funds 0, support −6, journal has "Zahltag verpasst."
 
 Plus: effects-interpreter unit tests per effect kind, and RuleError tests for
 each invalid action path.

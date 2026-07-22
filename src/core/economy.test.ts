@@ -28,10 +28,12 @@ function tick(state: GameStateT, times: number): GameStateT {
 }
 
 describe("golden scenarios (docs/specs/economy-and-roster.md §8)", () => {
-  it("A. Idle: 5x endDay -> day 6, funds 160 (net +12/day), materials 40", () => {
+  // Roster-Erweiterung: the start roster is now four heroes, so daily upkeep is
+  // 20 + 4×2 = 28 (was 24). Every §8 value below is the post-expansion figure.
+  it("A. Idle: 5x endDay -> day 6, funds 140 (income 36, upkeep 28, net +8/day), materials 40", () => {
     const state = tick(newCampaign(1), 5);
     expect(state.campaign.day).toBe(6);
-    expect(state.resources.funds).toBe(160);
+    expect(state.resources.funds).toBe(140);
     expect(state.resources.materials).toBe(40);
   });
 
@@ -44,18 +46,20 @@ describe("golden scenarios (docs/specs/economy-and-roster.md §8)", () => {
     expect(state.journal.some((j) => j.text === "Das Tor hält zum ersten Mal eine stabile Verbindung.")).toBe(
       true,
     );
-    expect(state.resources.funds).toBe(148);
+    expect(state.resources.funds).toBe(132);
     expect(state.campaign.day).toBe(5);
   });
 
-  it("C. Low support: income floor(36 x 0.75) = 27, funds +3 net", () => {
+  it("C. Low support: income floor(36 x 0.75) = 27, net −1 (base runs a deficit at support 0)", () => {
     const base = newCampaign(1);
     const state: GameStateT = { ...base, variables: { ...base.variables, support: 0 } };
     const next = endDay(state, ctx());
-    expect(next.resources.funds).toBe(state.resources.funds + 3);
+    // income 27 − upkeep 28 = −1: intentionally deficitary at support 0 (spec §8).
+    expect(next.resources.funds).toBe(state.resources.funds - 1);
+    expect(next.resources.funds).toBe(99);
   });
 
-  it("D. Insolvency: income 18, upkeep 24, funds clamp to 0, support -6, journal notes missed payroll", () => {
+  it("D. Insolvency: income 18, upkeep 28, funds clamp to 0, support -6, journal notes missed payroll", () => {
     const base = newCampaign(1);
     const state: GameStateT = {
       ...base,

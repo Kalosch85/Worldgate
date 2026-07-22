@@ -69,7 +69,7 @@ wurde. Außerhalb eines Deployments ändert sich nichts.
 
 ## 3. Neuer Gegnertyp
 
-`ut_tender_guard` (Wächter-Drohne): maxHp 4, aim 60, mobility 5,
+`ut_tender_guard` (Wächter-Drohne): maxHp 2, aim 60, mobility 5,
 damage { min: 1, max: 2 }, abilities ["ab_stab"]. (Alle Werte T.)
 `ab_stab`: apCost 1, range 1, targeting enemy, power 2, cooldown 0. (T)
 Anzeigename „Wächter-Drohne"; nutzt das vorhandene Insekten-Billboard.
@@ -85,6 +85,12 @@ bleibt `60 + 5 × effCombat`) — Helden fühlen sich kompetenter an. Beide Wert
 sind (T) und leben in `src/core/tacticsConstants.ts` bzw.
 `src/data/content/unit-types.json`; diese Spec und der Content sind hiermit
 synchron (siehe Leitplanke oben).
+
+**HP-Tuning (autorisiert):** `ut_tender_guard` maxHp **4 → 2** — die
+Wächter-Drohnen fallen jetzt zu einem gezielten Treffer (Helden-Schaden 1–2,
+Präzisionsschuss 2–3). Die §8-Siegs-Szenarien bleiben gültig (schneller);
+die Niederlagen-Szenarien (passiver Trupp) hängen nicht an der Drohnen-HP.
+(Der ungenutzte Typ `ut_tender` „Drohne" bleibt unverändert.)
 
 ## 4. Seryn als bedingter Mitstreiter
 

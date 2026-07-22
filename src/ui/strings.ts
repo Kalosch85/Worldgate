@@ -194,6 +194,10 @@ export const strings = {
     // locked and only that operation's missions are offered.
     deploymentActive: "Team im Einsatz — Rückkehr erst nach Abschluss der Operation",
     continueOperation: "Operation fortsetzen",
+    // v3-Nachtrag (§7): warn before committing to a no-return operation so a
+    // player doesn't lock in an under-strength squad (deployment lock + retry
+    // fatigue spiral). Shown on any mission carrying an `operation` field.
+    operationWarning: "Operation ohne Rückkehr — empfohlene Teamstärke: 4",
   },
 
   event: {

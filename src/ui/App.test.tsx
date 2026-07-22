@@ -166,6 +166,15 @@ describe("App shell", () => {
     expect(container!.textContent).not.toContain("Eine Mission läuft");
   });
 
+  it("warns about the no-return operation on the arrival mission (v3-Nachtrag §7)", () => {
+    render();
+    startCampaign();
+    click("Weltentor");
+    // m_vy_arrival carries operation "vy" → the recommended-strength warning shows.
+    expect(container!.textContent).toContain("Das stille Tal");
+    expect(container!.textContent).toContain("Operation ohne Rückkehr — empfohlene Teamstärke: 4");
+  });
+
   it("plays the arrival fight path to its own outcome", () => {
     render();
     startCampaign();
